@@ -11,8 +11,8 @@ An iOS app combining **weather tracking** with **habit management**, built with 
 <p align="center">
   <img src="screenshots/weather.png" width="250" alt="Weather View"/>
   <img src="screenshots/weathersearch.png" width="250" alt="Weather Search"/>
-  <img src="screenshots/habits.png" width="250" alt="Habits View"/>
-  <img src="screenshots/addhabits.png" width="250" alt="Add Habits"/>
+  <img src="screenshots/habbits.png" width="250" alt="Habits View"/>
+  <img src="screenshots/addhabbits.png" width="250" alt="Add Habits"/>
   <img src="screenshots/habit-detail.png" width="250" alt="Habit Detail"/>
   <img src="screenshots/settings.png" width="250" alt="Settings"/>
 </p>
