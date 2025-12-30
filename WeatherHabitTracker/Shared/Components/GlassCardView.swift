@@ -46,7 +46,7 @@ struct NativeGlassButtonStyle: ButtonStyle {
     var isProminent: Bool = false
     
     func makeBody(configuration: Configuration) -> some View {
-        #if compiler(>=6.1)
+        #if compiler(>=7.0)
         if #available(iOS 26.0, macOS 26.0, *) {
             configuration.label
                 .padding(.horizontal, 24)
@@ -83,7 +83,7 @@ struct GlassButtonStyle: ButtonStyle {
     var isProminent: Bool = false
     
     func makeBody(configuration: Configuration) -> some View {
-        #if compiler(>=6.1)
+        #if compiler(>=7.0)
         if #available(iOS 26.0, macOS 26.0, *) {
             configuration.label
                 .padding(.horizontal, 24)

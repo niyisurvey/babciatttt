@@ -10,7 +10,7 @@ struct NativeLiquidGlass: ViewModifier {
     var cornerRadius: CGFloat = 24
     
     func body(content: Content) -> some View {
-        #if compiler(>=6.1)
+        #if compiler(>=7.0)
         if #available(iOS 26.0, macOS 26.0, *) {
             content
                 .glassEffect(.regular.interactive(true), in: .rect(cornerRadius: cornerRadius))
@@ -38,7 +38,7 @@ extension View {
     /// Prominent glass effect for buttons
     @ViewBuilder
     func liquidGlassProminent(cornerRadius: CGFloat = 24) -> some View {
-        #if compiler(>=6.1)
+        #if compiler(>=7.0)
         if #available(iOS 26.0, macOS 26.0, *) {
             self.glassEffect(.regular.tint(.accentColor), in: .rect(cornerRadius: cornerRadius))
         } else {
@@ -52,7 +52,7 @@ extension View {
     /// Subtle glass effect
     @ViewBuilder
     func subtleGlass() -> some View {
-        #if compiler(>=6.1)
+        #if compiler(>=7.0)
         if #available(iOS 26.0, macOS 26.0, *) {
             self.glassEffect(.regular, in: .rect(cornerRadius: 12))
         } else {
@@ -66,7 +66,7 @@ extension View {
     /// Concentric clip shape for nested elements
     @ViewBuilder
     func concentricClipShape(cornerRadius: CGFloat = 20) -> some View {
-        #if compiler(>=6.1)
+        #if compiler(>=7.0)
         if #available(iOS 26.0, macOS 26.0, *) {
             self.clipShape(ConcentricRectangle())
         } else {
