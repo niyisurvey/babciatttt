@@ -76,14 +76,28 @@ struct WeatherView: View {
     
     // MARK: - Background
     
-    /// Dynamic gradient background based on weather conditions
+    /// Dynamic gradient background based on weather conditions using MeshGradient
     private var weatherBackground: some View {
-        LinearGradient(
-            colors: viewModel.backgroundColors,
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
+        TimelineView(.animation(minimumInterval: 3)) { timeline in
+            MeshGradient(
+                width: 3,
+                height: 3,
+                points: animatedMeshPoints(for: timeline.date),
+                colors: viewModel.backgroundColors + viewModel.backgroundColors.suffix(from: max(0, viewModel.backgroundColors.count - 3))
+            )
+        }
         .ignoresSafeArea()
+    }
+    
+    /// Animated mesh points for subtle background movement
+    private func animatedMeshPoints(for date: Date) -> [SIMD2<Float>] {
+        let time = Float(date.timeIntervalSince1970)
+        let offset = sin(time * 0.1) * 0.05
+        return [
+            [0.0, 0.0], [0.5, 0.0], [1.0, 0.0],
+            [0.0, 0.5], [0.5 + offset, 0.5 - offset], [1.0, 0.5],
+            [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
+        ]
     }
     
     // MARK: - Current Weather Card

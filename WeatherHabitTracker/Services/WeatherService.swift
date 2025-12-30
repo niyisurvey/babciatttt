@@ -17,9 +17,33 @@ actor WeatherService {
     // MARK: - Configuration
     
     /// OpenWeatherMap API configuration
-    /// NOTE: Replace with your own API key from https://openweathermap.org/api
+    /// API key is loaded from Secrets.plist for security
     private struct Config {
-        static let apiKey = "YOUR_OPENWEATHERMAP_API_KEY" // Replace with actual API key
+        static let apiKey: String = {
+            // Try to find Secrets.plist in the SwiftPM resource bundle, then fall back to the main bundle
+            let secretsURL = Bundle.module.url(forResource: "Secrets", withExtension: "plist")
+                ?? Bundle.main.url(forResource: "Secrets", withExtension: "plist")
+            guard let url = secretsURL else {
+                print("⚠️ Warning: Secrets.plist not found in any bundle")
+                return ""
+            }
+            do {
+                let data = try Data(contentsOf: url)
+                guard let plist = try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any] else {
+                    print("⚠️ Warning: Secrets.plist at \(url) is not a valid property list")
+                    return ""
+                }
+                let rawKey = (plist["OPENWEATHERMAP_API_KEY"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                guard !rawKey.isEmpty else {
+                    print("⚠️ Warning: OPENWEATHERMAP_API_KEY is missing or empty in Secrets.plist at \(url)")
+                    return ""
+                }
+                return rawKey
+            } catch {
+                print("⚠️ Warning: Failed to read Secrets.plist at \(url): \(error.localizedDescription)")
+                return ""
+            }
+        }()
         static let baseURL = "https://api.openweathermap.org/data/2.5"
         static let oneCallURL = "https://api.openweathermap.org/data/3.0/onecall"
         static let units = "metric" // Use Celsius
@@ -61,7 +85,14 @@ actor WeatherService {
     /// - Returns: WeatherResponseDTO with current conditions
     /// - Throws: WeatherError if the request fails
     func fetchCurrentWeather() async throws -> WeatherResponseDTO {
-        let location = try await locationService.requestLocation()
+        let location: CLLocation
+        do {
+            location = try await locationService.requestLocation()
+        } catch {
+            print("Location request failed: \(error.localizedDescription). Using default location (San Francisco).")
+            location = CLLocation(latitude: 37.7749, longitude: -122.4194)
+        }
+        
         return try await fetchCurrentWeather(
             latitude: location.coordinate.latitude,
             longitude: location.coordinate.longitude
@@ -108,7 +139,14 @@ actor WeatherService {
     /// - Returns: ForecastResponseDTO
     /// - Throws: WeatherError if the request fails
     func fetchForecast() async throws -> ForecastResponseDTO {
-        let location = try await locationService.requestLocation()
+        let location: CLLocation
+        do {
+            location = try await locationService.requestLocation()
+        } catch {
+            print("Location request failed: \(error.localizedDescription). Using default location (San Francisco).")
+            location = CLLocation(latitude: 37.7749, longitude: -122.4194)
+        }
+        
         return try await fetchForecast(
             latitude: location.coordinate.latitude,
             longitude: location.coordinate.longitude

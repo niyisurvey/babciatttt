@@ -1,0 +1,115 @@
+/* 
+  Localizable.strings
+  WeatherHabitTracker
+
+  English localization strings for the WeatherHabitTracker app.
+*/
+
+// MARK: - General
+"app_name" = "WeatherHabit";
+"ok" = "OK";
+"cancel" = "Cancel";
+"done" = "Done";
+"save" = "Save";
+"delete" = "Delete";
+"edit" = "Edit";
+"add" = "Add";
+"retry" = "Retry";
+"dismiss" = "Dismiss";
+"loading" = "Loading...";
+"error" = "Error";
+"success" = "Success";
+
+// MARK: - Tabs
+"tab_weather" = "Weather";
+"tab_habits" = "Habits";
+
+// MARK: - Weather
+"weather_title" = "Weather";
+"weather_current" = "Current Weather";
+"weather_forecast" = "7-Day Forecast";
+"weather_humidity" = "Humidity";
+"weather_wind" = "Wind";
+"weather_uv_index" = "UV Index";
+"weather_visibility" = "Visibility";
+"weather_pressure" = "Pressure";
+"weather_sunrise" = "Sunrise";
+"weather_sunset" = "Sunset";
+"weather_feels_like" = "Feels like %@";
+"weather_high_low" = "H:%@° L:%@°";
+"weather_loading" = "Loading weather...";
+"weather_unavailable" = "Weather Unavailable";
+"weather_unavailable_message" = "Pull to refresh or check your internet connection";
+"weather_updated" = "Updated %@";
+
+// MARK: - UV Index Descriptions
+"uv_low" = "Low";
+"uv_moderate" = "Moderate";
+"uv_high" = "High";
+"uv_very_high" = "Very High";
+"uv_extreme" = "Extreme";
+
+// MARK: - Habits
+"habits_title" = "Habits";
+"habits_empty_title" = "No Habits Yet";
+"habits_empty_message" = "Start building good habits by adding your first one!";
+"habits_add_first" = "Add Your First Habit";
+"habits_add_new" = "New Habit";
+"habits_edit" = "Edit Habit";
+"habits_delete_confirm" = "Are you sure you want to delete this habit?";
+"habits_completed_today" = "Completed Today";
+"habits_not_completed" = "Not Completed";
+"habits_all" = "All";
+
+// MARK: - Habit Form
+"habit_name" = "Habit Name";
+"habit_description" = "Description (optional)";
+"habit_icon" = "Icon";
+"habit_color" = "Color";
+"habit_daily_target" = "Daily Target";
+"habit_target_times" = "%d time(s)";
+"habit_reminders" = "Reminders";
+"habit_enable_reminders" = "Enable Reminders";
+"habit_reminder_time" = "Reminder Time";
+"habit_preview" = "Preview";
+
+// MARK: - Habit Detail
+"habit_current_streak" = "Current Streak";
+"habit_total_completions" = "Total Completions";
+"habit_target_per_day" = "Target/Day";
+"habit_days_tracked" = "Days Tracked";
+"habit_this_week" = "This Week";
+"habit_recent_activity" = "Recent Activity";
+"habit_no_completions" = "No completions yet";
+"habit_mark_complete" = "Mark Complete";
+"habit_completed" = "Completed!";
+"habit_great_job" = "Great job!";
+"habit_keep_streak" = "Keep up the streak!";
+
+// MARK: - Statistics
+"stats_best_streak" = "Best Streak";
+"stats_total_done" = "Total Done";
+"stats_today" = "Today";
+"stats_day_streak" = "%d day streak";
+
+// MARK: - Errors
+"error_network" = "Connection Error";
+"error_network_message" = "Please check your internet connection and try again.";
+"error_location" = "Location Error";
+"error_location_message" = "Unable to access your location. Please check your settings.";
+"error_loading" = "Loading Error";
+"error_loading_message" = "Unable to load data. Please try again later.";
+"error_permission" = "Permission Required";
+"error_open_settings" = "Open Settings";
+
+// MARK: - Time
+"time_today" = "Today";
+"time_tomorrow" = "Tomorrow";
+"time_yesterday" = "Yesterday";
+
+// MARK: - Accessibility
+"accessibility_complete_habit" = "Mark habit as complete";
+"accessibility_incomplete_habit" = "Mark habit as incomplete";
+"accessibility_add_habit" = "Add new habit";
+"accessibility_refresh_weather" = "Refresh weather data";
+"accessibility_habit_streak" = "%d day streak";

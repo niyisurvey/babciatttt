@@ -38,13 +38,7 @@ struct MainTabView: View {
                 HabitListView(viewModel: habitViewModel)
             }
         }
-        #if os(iOS)
-        // Use iOS 26 sidebar adaptable style - system applies Liquid Glass automatically
         .tabViewStyle(.sidebarAdaptable)
-        // Enable tab bar minimization on scroll for better content focus
-        .tabBarMinimizeBehavior(.onScrollDown)
-        #endif
-        .tint(.primary)
         .onAppear {
             setupViewModels()
         }

@@ -61,16 +61,21 @@ struct HabitListView: View {
     
     // MARK: - Background
     
-    /// Gradient background for the habit list
+    /// Gradient background for the habit list using MeshGradient
     private var backgroundGradient: some View {
-        LinearGradient(
-            colors: [
-                Color.green.opacity(0.15),
-                Color.teal.opacity(0.1),
-                Color.blue.opacity(0.15)
+        MeshGradient(
+            width: 3,
+            height: 3,
+            points: [
+                [0.0, 0.0], [0.5, 0.0], [1.0, 0.0],
+                [0.0, 0.5], [0.5, 0.5], [1.0, 0.5],
+                [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
             ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
+            colors: [
+                .green.opacity(0.25), .teal.opacity(0.2), .cyan.opacity(0.25),
+                .mint.opacity(0.15), .green.opacity(0.2), .teal.opacity(0.2),
+                .teal.opacity(0.2), .mint.opacity(0.15), .green.opacity(0.25)
+            ]
         )
         .ignoresSafeArea()
     }
