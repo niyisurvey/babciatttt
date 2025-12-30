@@ -83,7 +83,7 @@ struct HabitRowView: View {
                         .font(.caption)
                         .fontWeight(.bold)
                         .foregroundStyle(.white)
-                        .scaleEffect(isAnimating ? 1.3 : 1.0)
+                        .symbolEffect(.bounce, value: habit.isCompletedToday)
                 }
                 
                 // Progress ring for multi-target habits

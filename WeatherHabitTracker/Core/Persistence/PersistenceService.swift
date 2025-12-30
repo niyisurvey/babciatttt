@@ -1,49 +1,32 @@
-//
-//  PersistenceService.swift
-//  WeatherHabitTracker
-//
-//  Service responsible for SwiftData persistence operations.
-//  Provides methods for saving, fetching, and managing persisted data.
-//
+// PersistenceService.swift
+// WeatherHabitTracker
 
 import Foundation
 import SwiftData
 
-/// Service that handles all SwiftData persistence operations.
-/// Provides a clean interface for CRUD operations on models.
-/// Thread-safe and designed for use with async/await.
 @MainActor
 final class PersistenceService {
     
     // MARK: - Properties
     
-    /// The SwiftData model context for database operations
     private let modelContext: ModelContext
     
     // MARK: - Initialization
     
-    /// Creates a new PersistenceService with the given model context
-    /// - Parameter modelContext: The SwiftData model context to use
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
     }
     
     // MARK: - Generic CRUD Operations
     
-    /// Saves any pending changes to the persistent store
-    /// - Throws: Error if save fails
     func save() throws {
         try modelContext.save()
     }
     
-    /// Inserts a new model into the context
-    /// - Parameter model: The model to insert
     func insert<T: PersistentModel>(_ model: T) {
         modelContext.insert(model)
     }
     
-    /// Deletes a model from the context
-    /// - Parameter model: The model to delete
     func delete<T: PersistentModel>(_ model: T) {
         modelContext.delete(model)
     }

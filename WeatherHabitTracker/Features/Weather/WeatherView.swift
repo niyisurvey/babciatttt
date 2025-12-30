@@ -121,10 +121,12 @@ struct WeatherView: View {
                     Image(systemName: weather.conditionIconName)
                         .font(.system(size: 80))
                         .symbolRenderingMode(.multicolor)
+                        .symbolEffect(.breathe, options: .repeating)
                     
                     VStack(alignment: .leading, spacing: 4) {
                         Text(weather.temperatureFormatted)
                             .font(.system(size: 72, weight: .thin, design: .rounded))
+                            .contentTransition(.numericText())
                         
                         Text(weather.conditionDescription)
                             .font(.title3)
@@ -144,6 +146,12 @@ struct WeatherView: View {
             }
             .padding(.vertical, 20)
         }
+        .scrollTransition { content, phase in
+            content
+                .opacity(phase.isIdentity ? 1 : 0.8)
+                .scaleEffect(phase.isIdentity ? 1 : 0.98)
+                .blur(radius: phase.isIdentity ? 0 : 2)
+        }
     }
     
     // MARK: - Smart Insight
@@ -156,6 +164,7 @@ struct WeatherView: View {
                     Image(systemName: "sparkles")
                         .foregroundStyle(.yellow)
                         .font(.title3)
+                        .symbolEffect(.pulse, options: .repeating)
                     Text("Smart Insight")
                         .font(.headline)
                     Spacer()
@@ -190,6 +199,12 @@ struct WeatherView: View {
                 .transition(.scale.combined(with: .opacity))
                 .offset(y: -80)
             }
+        }
+        .scrollTransition { content, phase in
+            content
+                .opacity(phase.isIdentity ? 1 : 0.8)
+                .scaleEffect(phase.isIdentity ? 1 : 0.98)
+                .blur(radius: phase.isIdentity ? 0 : 2)
         }
     }
     

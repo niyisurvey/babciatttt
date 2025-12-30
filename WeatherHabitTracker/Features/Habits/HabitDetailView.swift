@@ -132,6 +132,7 @@ struct HabitDetailView: View {
                     Image(systemName: habit.iconName)
                         .font(.system(size: 44))
                         .foregroundStyle(habit.color)
+                        .symbolEffect(.bounce, value: habit.isCompletedToday)
                 }
                 
                 // Description
@@ -160,6 +161,12 @@ struct HabitDetailView: View {
                 }
             }
             .padding(.vertical, 12)
+        }
+        .scrollTransition { content, phase in
+            content
+                .opacity(phase.isIdentity ? 1 : 0.8)
+                .scaleEffect(phase.isIdentity ? 1 : 0.98)
+                .blur(radius: phase.isIdentity ? 0 : 2)
         }
     }
     
@@ -194,10 +201,12 @@ struct HabitDetailView: View {
             HStack(spacing: 12) {
                 Image(systemName: habit.isCompletedToday ? "checkmark.circle.fill" : "circle")
                     .font(.title2)
+                    .contentTransition(.symbolEffect(.replace))
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(habit.isCompletedToday ? "Completed!" : "Mark Complete")
                         .font(.headline)
+                        .contentTransition(.numericText())
                     
                     if habit.targetFrequency > 1 {
                         Text("\(habit.todayCompletionCount)/\(habit.targetFrequency) today")
@@ -211,6 +220,7 @@ struct HabitDetailView: View {
                 if habit.isCompletedToday && habit.todayCompletionCount >= habit.targetFrequency {
                     Image(systemName: "star.fill")
                         .foregroundStyle(.yellow)
+                        .symbolEffect(.bounce, value: habit.isCompletedToday)
                 }
             }
             .padding()
@@ -227,6 +237,12 @@ struct HabitDetailView: View {
         }
         .buttonStyle(.plain)
         .sensoryFeedback(.success, trigger: habit.isCompletedToday)
+        .scrollTransition { content, phase in
+            content
+                .opacity(phase.isIdentity ? 1 : 0.8)
+                .scaleEffect(phase.isIdentity ? 1 : 0.98)
+                .blur(radius: phase.isIdentity ? 0 : 2)
+        }
     }
     
     // MARK: - Statistics Section

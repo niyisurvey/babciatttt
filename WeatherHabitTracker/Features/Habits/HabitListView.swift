@@ -104,6 +104,7 @@ struct HabitListView: View {
                         Text("\(viewModel.completedTodayCount)/\(viewModel.totalHabitsCount)")
                             .font(.title2)
                             .fontWeight(.bold)
+                            .contentTransition(.numericText())
                         Text("Today")
                             .font(.caption)
                             .foregroundStyle(.secondary)
@@ -144,6 +145,12 @@ struct HabitListView: View {
                 .transition(.scale.combined(with: .opacity))
                 .offset(y: -120)
             }
+        }
+        .scrollTransition { content, phase in
+            content
+                .opacity(phase.isIdentity ? 1 : 0.8)
+                .scaleEffect(phase.isIdentity ? 1 : 0.98)
+                .blur(radius: phase.isIdentity ? 0 : 2)
         }
     }
     
@@ -189,14 +196,20 @@ struct HabitListView: View {
                             withAnimation(.spring(response: 0.3)) {
                                 viewModel.toggleCompletion(for: habit)
                             }
-                            hapticFeedback(.success)
                         }
                     )
                 }
                 .buttonStyle(.plain)
                 .contextMenu { habitContextMenu(for: habit) }
+                .scrollTransition { content, phase in
+                    content
+                        .opacity(phase.isIdentity ? 1 : 0.5)
+                        .scaleEffect(phase.isIdentity ? 1 : 0.95)
+                        .blur(radius: phase.isIdentity ? 0 : 2)
+                }
             }
         }
+        .sensoryFeedback(.success, trigger: viewModel.totalCompletions)
     }
     
     private func habitContextMenu(for habit: Habit) -> some View {
