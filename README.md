@@ -6,7 +6,7 @@
 ![SwiftData](https://img.shields.io/badge/SwiftData-1.0+-purple.svg)
 ![License](https://img.shields.io/badge/License-MIT-gray.svg)
 
-A modern iOS app combining **weather tracking** with **habit management**, built with Swift 6+, SwiftUI, and SwiftData. Features Apple's beautiful **Liquid Glass** design language for a premium user experience.
+An iOS app combining **weather tracking** with **habit management**, built with Swift 6+, SwiftUI, and SwiftData. 
 
 <p align="center">
   <img src="screenshots/weather.png" width="250" alt="Weather View"/>
@@ -17,16 +17,16 @@ A modern iOS app combining **weather tracking** with **habit management**, built
   <img src="screenshots/settings.png" width="250" alt="Settings"/>
 </p>
 
-## ✨ Features
+## Features
 
-### 🌤️ Weather System
+### Weather System
 - **Current Weather**: Real-time temperature, conditions, and location
 - **7-Day Forecast**: Detailed daily forecasts with high/low temperatures
 - **Weather Details**: Humidity, wind speed, UV index, visibility, and pressure
 - **Offline Caching**: Weather data cached locally with SwiftData
 - **Location-Based**: Automatic weather based on user location
 
-### ✅ Habit Tracker
+### Habit Tracker
 - **Create & Manage Habits**: Add, edit, and delete habits easily
 - **Daily Tracking**: Mark habits complete with optional notes
 - **Streak Tracking**: Visualize your consistency with streak counts
@@ -34,11 +34,9 @@ A modern iOS app combining **weather tracking** with **habit management**, built
 - **Statistics Dashboard**: Overview of completion rates and streaks
 - **Local Notifications**: Customizable daily reminders
 
-### 🎨 Design
-- **Liquid Glass UI**: Beautiful glass-morphism effects throughout
+### Design
 - **Dark Mode Support**: Full support for light and dark themes
 - **Smooth Animations**: Delightful micro-interactions
-- **Accessibility**: Full VoiceOver support and accessibility labels
 
 ## 🏗️ Architecture
 
@@ -116,7 +114,7 @@ WeatherHabitTracker/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/WeatherHabitTracker.git
+   git clone https://github.com/melkor/WeatherHabitTracker.git
    cd WeatherHabitTracker
    ```
 
@@ -206,16 +204,3 @@ cloudKitDatabase: .automatic
 - [ ] Data export functionality
 - [ ] Siri Shortcuts integration
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- [OpenWeatherMap](https://openweathermap.org/) for weather data API
-- [SF Symbols](https://developer.apple.com/sf-symbols/) for beautiful icons
-- Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/)
-
----
-
-Built with ❤️ using SwiftUI and SwiftData
