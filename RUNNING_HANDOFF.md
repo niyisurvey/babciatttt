@@ -22,7 +22,7 @@ Project Identity (Current State)
 - README removed per instruction
 
 High-Level Goal
-Use the WeatherHabitTracker UI as the baseline, then build a strict design system layer so the art director can change semantic colors, gradient palettes, and font family, while preserving the layout and “liquid glass” feel. Motion is configurable only via slow/normal/fast preset.
+Use the baseline UI as the reference, then build a strict design system layer so the art director can change semantic colors, gradient palettes, and font family, while preserving the layout and “liquid glass” feel. Motion is configurable only via slow/normal/fast preset.
 
 What Was Done (AppHost Conversion)
 1) Renamed the app throughout the package:
