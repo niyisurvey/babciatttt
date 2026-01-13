@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// A row view displaying a single area with its icon, name, and bowl progress.
-struct HabitRowView: View {
+struct AreaRowView: View {
 
     // MARK: - Properties
 
@@ -91,7 +91,7 @@ struct HabitRowView: View {
 #Preview {
     VStack(spacing: 12) {
         ForEach(Area.sampleAreas) { area in
-            HabitRowView(area: area)
+            AreaRowView(area: area)
         }
     }
     .padding()

@@ -130,7 +130,7 @@ enum HapticStyle {
         
         FeatureTooltip(
             title: "Smart Insights",
-            description: "Get personalized suggestions based on weather conditions to optimize your daily habits.",
+            description: "Get personalized suggestions based on weather conditions to plan your daily areas.",
             icon: "sparkles",
             isVisible: .constant(true)
         )

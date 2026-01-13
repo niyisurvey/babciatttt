@@ -61,13 +61,14 @@ final class PersistenceService {
         try modelContext.save()
     }
     
-    func createBowl(for area: Area, tasks: [CleaningTask]) throws {
-        let bowl = AreaBowl(createdAt: Date(), verificationStatus: .none)
+    func createBowl(for area: Area, tasks: [CleaningTask], verificationRequested: Bool) throws -> AreaBowl {
+        let bowl = AreaBowl(createdAt: Date(), verificationRequested: verificationRequested)
         bowl.area = area
         bowl.tasks = tasks
         area.bowls?.append(bowl)
         modelContext.insert(bowl)
         try modelContext.save()
+        return bowl
     }
     
     func completeTask(_ task: CleaningTask) throws {
@@ -80,8 +81,9 @@ final class PersistenceService {
         try modelContext.save()
     }
     
-    func verifyBowl(_ bowl: AreaBowl, superVerified: Bool = false) throws {
-        bowl.verificationStatus = superVerified ? .superVerified : .verified
+    func verifyBowl(_ bowl: AreaBowl, tier: BowlVerificationTier, outcome: BowlVerificationOutcome) throws {
+        bowl.verificationTier = tier
+        bowl.verificationOutcome = outcome
         bowl.verifiedAt = Date()
         try modelContext.save()
     }

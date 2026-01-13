@@ -275,7 +275,7 @@ private struct SmartInsightCard: View {
             if showTooltip {
                 FeatureTooltip(
                     title: "Smart Insights",
-                    description: "Personalized suggestions based on current weather to help you plan outdoor activities and habits.",
+                    description: "Personalized suggestions based on current weather to help you plan outdoor activities and areas.",
                     icon: "sparkles",
                     isVisible: $showTooltip
                 )
@@ -294,7 +294,7 @@ private struct SmartInsightCard: View {
     private var insightText: String {
         if weather.conditionDescription.localizedCaseInsensitiveContains("rain") ||
            weather.conditionDescription.localizedCaseInsensitiveContains("drizzle") {
-            return "It's raining outside. Perfect weather to focus on indoor habits like Reading or Meditation."
+            return "It's raining outside. Perfect weather to focus on indoor bowls like tidying or resetting a room."
         } else if weather.temperature > 28 {
             return "It's quite warm! Stay hydrated and consider early morning or late evening for outdoor activities."
         } else if weather.temperature < 10 {

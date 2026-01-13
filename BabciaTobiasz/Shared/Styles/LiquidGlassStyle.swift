@@ -103,13 +103,13 @@ struct LiquidGlassBackground: View {
     var style: BackgroundStyle = .default
     @Environment(\.dsTheme) private var theme
     
-    enum BackgroundStyle { case `default`, weather, habits }
+    enum BackgroundStyle { case `default`, weather, areas }
     
     var body: some View {
         switch style {
         case .default: defaultBackground
         case .weather: weatherBackground
-        case .habits: habitsBackground
+        case .areas: areasBackground
         }
     }
     
@@ -143,12 +143,12 @@ struct LiquidGlassBackground: View {
         .ignoresSafeArea()
     }
     
-    private var habitsBackground: some View {
+    private var areasBackground: some View {
         TimelineView(.animation(minimumInterval: theme.motion.meshAnimationInterval)) { timeline in
             MeshGradient(
                 width: 3, height: 3,
                 points: animatedMeshPoints(for: timeline.date),
-                colors: theme.gradients.backgroundHabits
+                colors: theme.gradients.backgroundAreas
             )
         }
         .ignoresSafeArea()

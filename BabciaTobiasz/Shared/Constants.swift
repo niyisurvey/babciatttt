@@ -58,32 +58,25 @@ enum Constants {
         static let longAnimation: Double = 0.5
     }
     
-    // MARK: - Habit Defaults
+    // MARK: - Area Defaults
     
-    enum Habits {
-        /// Maximum habit name length
+    enum Areas {
+        /// Maximum area name length
         static let maxNameLength = 50
         
         /// Maximum description length
         static let maxDescriptionLength = 200
-        
-        /// Default reminder time (9:00 AM)
-        static let defaultReminderHour = 9
-        static let defaultReminderMinute = 0
-        
-        /// Minimum streak to show celebration
-        static let celebrationStreakThreshold = 7
     }
     
     // MARK: - Notifications
     
     enum Notifications {
         /// Notification category identifiers
-        static let habitReminderCategory = "HABIT_REMINDER"
+        static let areaReminderCategory = "AREA_REMINDER"
         static let weatherAlertCategory = "WEATHER_ALERT"
         
         /// Action identifiers
-        static let completeHabitAction = "COMPLETE_HABIT"
-        static let snoozeAction = "SNOOZE"
+        static let completeBowlAction = "COMPLETE_BOWL"
+        static let snoozeAction = "SNOOZE_BOWL"
     }
 }

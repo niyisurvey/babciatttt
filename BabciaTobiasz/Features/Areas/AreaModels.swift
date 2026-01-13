@@ -1,5 +1,5 @@
 //
-//  Area.swift
+//  AreaModels.swift
 //  BabciaTobiasz
 //
 //  SwiftData models for Babcia areas, bowls, and tasks.
@@ -9,10 +9,17 @@ import Foundation
 import SwiftData
 import SwiftUI
 
-enum BowlVerificationStatus: String, Codable, CaseIterable {
+enum BowlVerificationTier: String, Codable, CaseIterable {
     case none
-    case verified
-    case superVerified
+    case blue
+    case golden
+}
+
+enum BowlVerificationOutcome: String, Codable, CaseIterable {
+    case pending
+    case passed
+    case failed
+    case skipped
 }
 
 @Model
@@ -54,7 +61,11 @@ final class Area {
     }
 
     var activeBowl: AreaBowl? {
-        bowls?.first { !$0.isCompleted } ?? latestBowl
+        latestBowl
+    }
+
+    var inProgressBowl: AreaBowl? {
+        bowls?.first { !$0.isCompleted }
     }
 }
 
@@ -62,9 +73,15 @@ final class Area {
 final class AreaBowl {
     var id: UUID
     var createdAt: Date
-    var verificationStatusRaw: String
+    var completedAt: Date?
+    var verificationRequested: Bool
+    var verificationTierRaw: String
+    var verificationOutcomeRaw: String
     var verificationRequestedAt: Date?
     var verifiedAt: Date?
+    var basePoints: Int
+    var bonusMultiplier: Double
+    var totalPoints: Double
 
     var area: Area?
 
@@ -73,17 +90,27 @@ final class AreaBowl {
 
     init(
         createdAt: Date = Date(),
-        verificationStatus: BowlVerificationStatus = .none
+        verificationRequested: Bool = false
     ) {
         self.id = UUID()
         self.createdAt = createdAt
-        self.verificationStatusRaw = verificationStatus.rawValue
+        self.verificationRequested = verificationRequested
+        self.verificationTierRaw = BowlVerificationTier.none.rawValue
+        self.verificationOutcomeRaw = verificationRequested ? BowlVerificationOutcome.pending.rawValue : BowlVerificationOutcome.skipped.rawValue
+        self.basePoints = 0
+        self.bonusMultiplier = 1
+        self.totalPoints = 0
         self.tasks = []
     }
 
-    var verificationStatus: BowlVerificationStatus {
-        get { BowlVerificationStatus(rawValue: verificationStatusRaw) ?? .none }
-        set { verificationStatusRaw = newValue.rawValue }
+    var verificationTier: BowlVerificationTier {
+        get { BowlVerificationTier(rawValue: verificationTierRaw) ?? .none }
+        set { verificationTierRaw = newValue.rawValue }
+    }
+
+    var verificationOutcome: BowlVerificationOutcome {
+        get { BowlVerificationOutcome(rawValue: verificationOutcomeRaw) ?? .pending }
+        set { verificationOutcomeRaw = newValue.rawValue }
     }
 
     var isCompleted: Bool {
@@ -92,7 +119,11 @@ final class AreaBowl {
     }
 
     var isVerified: Bool {
-        verificationStatus != .none
+        verificationOutcome == .passed
+    }
+
+    var isVerificationPending: Bool {
+        verificationRequested && verificationOutcome == .pending
     }
 }
 
@@ -101,14 +132,16 @@ final class CleaningTask {
     var id: UUID
     var title: String
     var detail: String?
+    var points: Int
     var createdAt: Date
     var completedAt: Date?
     var bowl: AreaBowl?
 
-    init(title: String, detail: String? = nil, createdAt: Date = Date()) {
+    init(title: String, detail: String? = nil, points: Int = 1, createdAt: Date = Date()) {
         self.id = UUID()
         self.title = title
         self.detail = detail
+        self.points = points
         self.createdAt = createdAt
     }
 

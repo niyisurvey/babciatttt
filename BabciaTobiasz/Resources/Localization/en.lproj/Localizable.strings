@@ -22,7 +22,7 @@
 
 // MARK: - Tabs
 "tab_weather" = "Weather";
-"tab_habits" = "Habits";
+"tab_areas" = "Areas";
 
 // MARK: - Weather
 "weather_title" = "Weather";
@@ -49,42 +49,39 @@
 "uv_very_high" = "Very High";
 "uv_extreme" = "Extreme";
 
-// MARK: - Habits
-"habits_title" = "Habits";
-"habits_empty_title" = "No Habits Yet";
-"habits_empty_message" = "Start building good habits by adding your first one!";
-"habits_add_first" = "Add Your First Habit";
-"habits_add_new" = "New Habit";
-"habits_edit" = "Edit Habit";
-"habits_delete_confirm" = "Are you sure you want to delete this habit?";
-"habits_completed_today" = "Completed Today";
-"habits_not_completed" = "Not Completed";
-"habits_all" = "All";
+// MARK: - Areas
+"areas_title" = "Areas";
+"areas_empty_title" = "No Areas Yet";
+"areas_empty_message" = "Start by adding your first area.";
+"areas_add_first" = "Add Your First Area";
+"areas_add_new" = "New Area";
+"areas_edit" = "Edit Area";
+"areas_delete_confirm" = "Are you sure you want to delete this area?";
+"areas_completed_today" = "Completed Today";
+"areas_not_completed" = "Not Completed";
+"areas_all" = "All";
 
-// MARK: - Habit Form
-"habit_name" = "Habit Name";
-"habit_description" = "Description (optional)";
-"habit_icon" = "Icon";
-"habit_color" = "Color";
-"habit_daily_target" = "Daily Target";
-"habit_target_times" = "%d time(s)";
-"habit_reminders" = "Reminders";
-"habit_enable_reminders" = "Enable Reminders";
-"habit_reminder_time" = "Reminder Time";
-"habit_preview" = "Preview";
+// MARK: - Area Form
+"area_name" = "Area Name";
+"area_description" = "Description (optional)";
+"area_icon" = "Icon";
+"area_color" = "Color";
+"area_daily_target" = "Daily Target";
+"area_target_times" = "%d time(s)";
+"area_preview" = "Preview";
 
-// MARK: - Habit Detail
-"habit_current_streak" = "Current Streak";
-"habit_total_completions" = "Total Completions";
-"habit_target_per_day" = "Target/Day";
-"habit_days_tracked" = "Days Tracked";
-"habit_this_week" = "This Week";
-"habit_recent_activity" = "Recent Activity";
-"habit_no_completions" = "No completions yet";
-"habit_mark_complete" = "Mark Complete";
-"habit_completed" = "Completed!";
-"habit_great_job" = "Great job!";
-"habit_keep_streak" = "Keep up the streak!";
+// MARK: - Area Detail
+"area_current_streak" = "Current Streak";
+"area_total_completions" = "Total Completions";
+"area_target_per_day" = "Target/Day";
+"area_days_tracked" = "Days Tracked";
+"area_this_week" = "This Week";
+"area_recent_activity" = "Recent Activity";
+"area_no_completions" = "No completions yet";
+"area_mark_complete" = "Mark Complete";
+"area_completed" = "Completed!";
+"area_great_job" = "Great job!";
+"area_keep_streak" = "Keep up the streak!";
 
 // MARK: - Statistics
 "stats_best_streak" = "Best Streak";
@@ -108,8 +105,8 @@
 "time_yesterday" = "Yesterday";
 
 // MARK: - Accessibility
-"accessibility_complete_habit" = "Mark habit as complete";
-"accessibility_incomplete_habit" = "Mark habit as incomplete";
-"accessibility_add_habit" = "Add new habit";
+"accessibility_complete_bowl" = "Mark bowl as complete";
+"accessibility_incomplete_bowl" = "Mark bowl as incomplete";
+"accessibility_add_area" = "Add new area";
 "accessibility_refresh_weather" = "Refresh weather data";
-"accessibility_habit_streak" = "%d day streak";
+"accessibility_area_streak" = "%d day streak";

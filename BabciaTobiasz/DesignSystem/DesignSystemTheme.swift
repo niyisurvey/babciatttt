@@ -32,9 +32,9 @@ struct DSPalette {
 struct DSGradients {
     var backgroundDefault: [Color]
     var backgroundWeather: [Color]
-    var backgroundHabits: [Color]
+    var backgroundAreas: [Color]
     var splash: [Color]
-    var habitsProgress: [Color]
+    var areasProgress: [Color]
     var sunrise: [Color]
     var day: [Color]
     var sunset: [Color]
@@ -248,7 +248,7 @@ extension DesignSystemTheme {
                 Color(red: 0.5, green: 0.75, blue: 0.9), Color(red: 0.55, green: 0.8, blue: 0.92), Color(red: 0.6, green: 0.82, blue: 0.95),
                 Color(red: 0.5, green: 0.7, blue: 0.85), Color(red: 0.55, green: 0.75, blue: 0.88), Color(red: 0.6, green: 0.78, blue: 0.9)
             ],
-            backgroundHabits: [
+            backgroundAreas: [
                 .green.opacity(0.25), .teal.opacity(0.2), .cyan.opacity(0.25),
                 .mint.opacity(0.15), .green.opacity(0.2), .teal.opacity(0.2),
                 .teal.opacity(0.2), .mint.opacity(0.15), .green.opacity(0.25)
@@ -256,7 +256,7 @@ extension DesignSystemTheme {
             splash: [
                 .blue.opacity(0.3), .purple.opacity(0.2), .cyan.opacity(0.3)
             ],
-            habitsProgress: [
+            areasProgress: [
                 .green, .teal
             ],
             sunrise: Color.sunriseGradient,

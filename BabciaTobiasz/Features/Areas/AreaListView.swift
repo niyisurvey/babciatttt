@@ -1,11 +1,11 @@
-// HabitListView.swift
+// AreaListView.swift
 // BabciaTobiasz
 
 import SwiftUI
 import SwiftData
 
-/// Main habit list with management and statistics
-struct HabitListView: View {
+/// Main area list with management and statistics
+struct AreaListView: View {
     @Bindable var viewModel: AreaViewModel
     @State private var showStatsTooltip = false
     @State private var headerProgress: CGFloat = 0
@@ -19,7 +19,7 @@ struct HabitListView: View {
                 backgroundGradient
                 
                 if viewModel.isLoading {
-                    HabitSkeletonLoadingView()
+                    AreaSkeletonLoadingView()
                         .transition(.opacity)
                 } else {
                     areasScrollContent
@@ -34,7 +34,7 @@ struct HabitListView: View {
             #endif
             .toolbar { toolbarContent }
             .sheet(isPresented: $viewModel.showAreaForm) {
-                HabitFormView(viewModel: viewModel, area: viewModel.editingArea)
+                AreaFormView(viewModel: viewModel, area: viewModel.editingArea)
             }
             .safeAreaInset(edge: .bottom) {
                 areasSearchBar
@@ -51,7 +51,7 @@ struct HabitListView: View {
     // MARK: - Background
     
     private var backgroundGradient: some View {
-        LiquidGlassBackground(style: .habits)
+        LiquidGlassBackground(style: .areas)
     }
     
     // MARK: - Content
@@ -69,12 +69,12 @@ struct HabitListView: View {
             )
         } content: {
             VStack(spacing: 20) {
-                if viewModel.habits.isEmpty {
+                if viewModel.areas.isEmpty {
                     emptyStateView
                 } else {
                     statisticsCard
                     filterPicker
-                    habitsList
+                    areasList
                 }
             }
             .padding()
@@ -88,7 +88,7 @@ struct HabitListView: View {
                     .font(.system(size: theme.grid.iconSmall))
                     .foregroundStyle(.secondary)
                 
-            TextField(
+                TextField(
                     "",
                     text: $viewModel.searchText,
                     prompt: Text("Search areas")
@@ -119,7 +119,7 @@ struct HabitListView: View {
                     Circle()
                         .trim(from: 0, to: viewModel.todayCompletionPercentage)
                         .stroke(
-                            LinearGradient(colors: theme.gradients.habitsProgress, startPoint: .topLeading, endPoint: .bottomTrailing),
+                            LinearGradient(colors: theme.gradients.areasProgress, startPoint: .topLeading, endPoint: .bottomTrailing),
                             style: StrokeStyle(lineWidth: 12, lineCap: .round)
                         )
                         .frame(width: theme.grid.ringSize, height: theme.grid.ringSize)
@@ -137,11 +137,32 @@ struct HabitListView: View {
                 }
                 
                 HStack(spacing: 30) {
-                    statisticItem(icon: "flame.fill", value: "\(viewModel.bestStreak)", label: "Best Streak", color: .orange)
+                    statisticItem(icon: "flame.fill", value: "\(viewModel.bestStreak)", label: "Streak", color: .orange)
                     
                     Divider().frame(height: 40)
                     
                     statisticItem(icon: "checkmark.circle.fill", value: "\(viewModel.totalCompletions)", label: "Total Done", color: .green)
+                }
+
+                Divider()
+
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Daily target")
+                            .dsFont(.headline, weight: .bold)
+                        Text(viewModel.isKitchenClosed ? "Kitchen Closed" : "Kitchen Open")
+                            .dsFont(.caption)
+                            .foregroundStyle(viewModel.isKitchenClosed ? .red : .secondary)
+                    }
+
+                    Spacer()
+
+                    Stepper(value: $viewModel.dailyBowlTarget, in: 1...10) {
+                        Text("\(viewModel.dailyBowlTarget)")
+                            .dsFont(.headline, weight: .bold)
+                            .frame(minWidth: 28, alignment: .trailing)
+                    }
+                    .labelsHidden()
                 }
             }
             .padding(.vertical, 12)
@@ -162,8 +183,8 @@ struct HabitListView: View {
         .overlay {
             if showStatsTooltip {
                 FeatureTooltip(
-                    title: "Habit Statistics",
-                    description: "Track your progress with streaks and completion counts. Build consistency to increase your streak!",
+                    title: "Area Statistics",
+                    description: "Track bowls completed, streaks, and your daily target. Keep the kitchen open by pacing bowls.",
                     icon: "chart.bar.fill",
                     isVisible: $showStatsTooltip
                 )
@@ -208,13 +229,13 @@ struct HabitListView: View {
         }
     }
     
-    // MARK: - Habits List
+    // MARK: - Areas List
     
-    private var habitsList: some View {
+    private var areasList: some View {
         LazyVStack(spacing: 12) {
             ForEach(viewModel.filteredAreas) { area in
-                NavigationLink(destination: HabitDetailView(area: area, viewModel: viewModel)) {
-                    HabitRowView(area: area)
+                NavigationLink(destination: AreaDetailView(area: area, viewModel: viewModel)) {
+                    AreaRowView(area: area)
                 }
                 .buttonStyle(.plain)
                 .contextMenu { areaContextMenu(for: area) }
@@ -324,7 +345,7 @@ private struct AreasHeroHeader: View {
 }
 
 #Preview {
-    HabitListView(viewModel: AreaViewModel())
-        .modelContainer(for: Area.self, inMemory: true)
+    AreaListView(viewModel: AreaViewModel())
+        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self], inMemory: true)
         .environment(AppDependencies())
 }

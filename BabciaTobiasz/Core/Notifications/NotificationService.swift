@@ -59,15 +59,19 @@ final class NotificationService {
     
     // MARK: - Scheduling
     
-    /// Schedules a daily reminder notification for a habit
+    /// Schedules a daily reminder notification for an area
     /// - Parameters:
-    ///   - habit: The habit to schedule notifications for
+    ///   - areaName: The area name to display
+    ///   - areaDescription: Optional description for the reminder body
+    ///   - reminderTime: The time of day to remind
+    ///   - areaId: The area identifier for tracking
     /// - Throws: NotificationError if scheduling fails
-    func scheduleHabitReminder(for habit: Habit) async throws {
-        guard habit.notificationsEnabled,
-              let reminderTime = habit.reminderTime else {
-            return
-        }
+    func scheduleAreaReminder(
+        areaName: String,
+        areaDescription: String?,
+        reminderTime: Date,
+        areaId: UUID
+    ) async throws {
         
         // Ensure we have authorization
         var authorized = isAuthorized
@@ -81,12 +85,12 @@ final class NotificationService {
         
         // Create notification content
         let content = UNMutableNotificationContent()
-        content.title = "Time for \(habit.name)"
-        content.body = habit.habitDescription ?? "Don't forget to complete your habit!"
+        content.title = "Time for \(areaName)"
+        content.body = areaDescription ?? "Don't forget to complete your bowl!"
         content.sound = .default
         content.badge = 1
-        content.categoryIdentifier = "HABIT_REMINDER"
-        content.userInfo = ["habitId": habit.id.uuidString]
+        content.categoryIdentifier = "AREA_REMINDER"
+        content.userInfo = ["areaId": areaId.uuidString]
         
         // Create daily trigger based on reminder time
         let calendar = Calendar.current
@@ -94,7 +98,7 @@ final class NotificationService {
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
         
         // Create request with habit ID as identifier
-        let identifier = "habit-\(habit.id.uuidString)"
+        let identifier = "area-\(areaId.uuidString)"
         let request = UNNotificationRequest(
             identifier: identifier,
             content: content,
@@ -107,25 +111,31 @@ final class NotificationService {
         }
     }
     
-    /// Cancels notification for a specific habit
-    /// - Parameter habit: The habit to cancel notifications for
-    func cancelHabitReminder(for habit: Habit) {
-        let identifier = "habit-\(habit.id.uuidString)"
+    /// Cancels notification for a specific area
+    /// - Parameter areaId: The area to cancel notifications for
+    func cancelAreaReminder(for areaId: UUID) {
+        let identifier = "area-\(areaId.uuidString)"
         notificationCenter?.removePendingNotificationRequests(withIdentifiers: [identifier])
     }
     
-    /// Updates notification for a habit (cancels existing and schedules new)
-    /// - Parameter habit: The habit to update notifications for
-    func updateHabitReminder(for habit: Habit) async throws {
-        cancelHabitReminder(for: habit)
-        
-        if habit.notificationsEnabled {
-            try await scheduleHabitReminder(for: habit)
-        }
+    /// Updates notification for an area (cancels existing and schedules new)
+    func updateAreaReminder(
+        areaName: String,
+        areaDescription: String?,
+        reminderTime: Date,
+        areaId: UUID
+    ) async throws {
+        cancelAreaReminder(for: areaId)
+        try await scheduleAreaReminder(
+            areaName: areaName,
+            areaDescription: areaDescription,
+            reminderTime: reminderTime,
+            areaId: areaId
+        )
     }
     
-    /// Cancels all pending habit notifications
-    func cancelAllHabitReminders() {
+    /// Cancels all pending area notifications
+    func cancelAllAreaReminders() {
         notificationCenter?.removeAllPendingNotificationRequests()
     }
     
@@ -154,29 +164,29 @@ final class NotificationService {
     
     /// Registers notification categories and actions
     func registerNotificationCategories() {
-        // Action to mark habit as complete from notification
+        // Action to mark bowl as complete from notification
         let completeAction = UNNotificationAction(
-            identifier: "COMPLETE_HABIT",
+            identifier: "COMPLETE_BOWL",
             title: "Mark Complete",
             options: [.foreground]
         )
         
         // Action to snooze the reminder
         let snoozeAction = UNNotificationAction(
-            identifier: "SNOOZE_HABIT",
+            identifier: "SNOOZE_BOWL",
             title: "Remind in 1 hour",
             options: []
         )
         
-        // Define the habit reminder category
-        let habitCategory = UNNotificationCategory(
-            identifier: "HABIT_REMINDER",
+        // Define the area reminder category
+        let areaCategory = UNNotificationCategory(
+            identifier: "AREA_REMINDER",
             actions: [completeAction, snoozeAction],
             intentIdentifiers: [],
             options: [.customDismissAction]
         )
         
-        notificationCenter?.setNotificationCategories([habitCategory])
+        notificationCenter?.setNotificationCategories([areaCategory])
     }
 }
 
@@ -204,29 +214,29 @@ extension NotificationService {
     /// Handles a notification action
     /// - Parameters:
     ///   - actionIdentifier: The action that was selected
-    ///   - habitId: The habit ID from the notification
+    ///   - areaId: The area ID from the notification
     /// - Returns: The action type that was performed
     func handleNotificationAction(
         actionIdentifier: String,
-        habitId: String
+        areaId: String
     ) -> NotificationAction {
         switch actionIdentifier {
-        case "COMPLETE_HABIT":
-            return .complete(habitId: habitId)
-        case "SNOOZE_HABIT":
-            return .snooze(habitId: habitId)
+        case "COMPLETE_BOWL":
+            return .complete(areaId: areaId)
+        case "SNOOZE_BOWL":
+            return .snooze(areaId: areaId)
         case UNNotificationDismissActionIdentifier:
             return .dismiss
         default:
-            return .open(habitId: habitId)
+            return .open(areaId: areaId)
         }
     }
 }
 
 /// Actions that can be performed from a notification
 enum NotificationAction {
-    case complete(habitId: String)
-    case snooze(habitId: String)
+    case complete(areaId: String)
+    case snooze(areaId: String)
     case dismiss
-    case open(habitId: String)
+    case open(areaId: String)
 }

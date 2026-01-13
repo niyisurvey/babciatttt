@@ -20,15 +20,15 @@ struct MainTabView: View {
             }
             
             Tab("Areas", systemImage: "square.grid.2x2.fill", value: MainTabViewModel.Tab.areas) {
-                AreasView(viewModel: weatherViewModel)
+                AreaListView(viewModel: areaViewModel)
             }
 
             Tab("Babcia", systemImage: "camera.fill", value: MainTabViewModel.Tab.babcia) {
-                PlaceholderScreen(title: "Babcia", subtitle: "Camera coming soon")
+                BabciaStatusView(viewModel: areaViewModel)
             }
 
             Tab("Gallery", systemImage: "photo.on.rectangle", value: MainTabViewModel.Tab.gallery) {
-                HabitListView(viewModel: areaViewModel)
+                PlaceholderScreen(title: "Gallery", subtitle: "Coming soon")
             }
             
             Tab("Settings", systemImage: "gear", value: MainTabViewModel.Tab.settings) {
@@ -82,6 +82,6 @@ private struct PlaceholderScreen: View {
 
 #Preview {
     MainTabView()
-        .modelContainer(for: [Area.self, WeatherData.self, WeatherForecast.self], inMemory: true)
+        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, WeatherData.self, WeatherForecast.self], inMemory: true)
         .environment(AppDependencies())
 }

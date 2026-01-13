@@ -157,9 +157,9 @@ struct SkeletonBox: View {
     }
 }
 
-// MARK: - Habit Skeleton
+// MARK: - Area Skeleton
 
-struct HabitSkeletonLoadingView: View {
+struct AreaSkeletonLoadingView: View {
     @Environment(\.dsTheme) private var theme
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -170,8 +170,8 @@ struct HabitSkeletonLoadingView: View {
                 // Filter skeleton
                 filterSkeleton
                 
-                // Habit rows skeleton
-                habitRowsSkeleton
+                // Area rows skeleton
+                areaRowsSkeleton
             }
             .padding()
         }
@@ -214,7 +214,7 @@ struct HabitSkeletonLoadingView: View {
         .background(theme.glass.strength.fallbackMaterial, in: RoundedRectangle(cornerRadius: 8))
     }
     
-    private var habitRowsSkeleton: some View {
+    private var areaRowsSkeleton: some View {
         LazyVStack(spacing: 12) {
             ForEach(0..<4, id: \.self) { _ in
                 HStack(spacing: 12) {
@@ -247,10 +247,10 @@ struct HabitSkeletonLoadingView: View {
     }
 }
 
-#Preview("Habit Skeleton") {
+#Preview("Area Skeleton") {
     ZStack {
         LinearGradient(colors: [.green.opacity(0.3), .teal.opacity(0.3)], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
-        HabitSkeletonLoadingView()
+        AreaSkeletonLoadingView()
     }
 }

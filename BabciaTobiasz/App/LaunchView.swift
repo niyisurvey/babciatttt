@@ -60,10 +60,10 @@ struct LaunchView: View {
                 .scaleEffect(iconScale)
                 
                 VStack(spacing: 8) {
-                    Text("WeatherHabit")
+                    Text("The Pierogi Protocol")
                         .dsFont(.largeTitle, weight: .bold)
                     
-                    Text("Track weather & build habits")
+                    Text("Weather, areas, and bowls")
                         .dsFont(.subheadline)
                         .foregroundStyle(.secondary)
                 }

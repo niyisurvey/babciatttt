@@ -3,7 +3,7 @@
 //  BabciaTobiasz
 //
 //  Created on 2024-12-30.
-//  A modern iOS app combining weather tracking with habit management.
+//  A modern iOS app combining weather tracking with area management.
 //  Built with Swift 6+, SwiftUI, SwiftData, and Apple's Liquid Glass design.
 //
 

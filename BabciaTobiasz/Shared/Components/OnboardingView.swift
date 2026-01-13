@@ -18,20 +18,20 @@ struct OnboardingView: View {
         ),
         OnboardingPage(
             icon: "checklist",
-            title: "Build Better Habits",
-            description: "Track daily habits with smart reminders. Build streaks and see your progress over time.",
+            title: "Areas & Bowls",
+            description: "Name your areas, start a bowl, and get up to five tasks to finish.",
             accentColor: .green
         ),
         OnboardingPage(
             icon: "sparkles",
             title: "Smart Insights",
-            description: "Get personalized suggestions based on weather. Perfect for planning outdoor activities.",
+            description: "Get personalized suggestions based on weather to plan your day.",
             accentColor: .purple
         ),
         OnboardingPage(
-            icon: "bell.badge.fill",
-            title: "Stay on Track",
-            description: "Customizable reminders help you never miss a habit. Build consistency effortlessly.",
+            icon: "checkmark.seal.fill",
+            title: "Babcia's Verdict",
+            description: "Request verification and earn Blue or Golden totals for completed bowls.",
             accentColor: .orange
         )
     ]

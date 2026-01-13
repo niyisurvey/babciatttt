@@ -6,7 +6,7 @@
 import SwiftUI
 
 /// Form view for adding or editing an area.
-struct HabitFormView: View {
+struct AreaFormView: View {
 
     @Environment(\.dismiss) private var dismiss
 
@@ -290,9 +290,9 @@ struct HabitFormView: View {
 }
 
 #Preview("New Area") {
-    HabitFormView(viewModel: AreaViewModel(), area: nil)
+    AreaFormView(viewModel: AreaViewModel(), area: nil)
 }
 
 #Preview("Edit Area") {
-    HabitFormView(viewModel: AreaViewModel(), area: Area.sampleAreas[0])
+    AreaFormView(viewModel: AreaViewModel(), area: Area.sampleAreas[0])
 }
