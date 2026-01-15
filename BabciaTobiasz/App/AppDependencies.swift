@@ -15,18 +15,26 @@ final class AppDependencies {
     let weatherService: WeatherService
     let notificationService: NotificationService
     let locationService: LocationService
+    let dreamPipelineService: DreamPipelineService
+    // Added 2026-01-14 22:55 GMT
+    let scanPipelineService: BabciaScanPipelineService
     
     // MARK: - Init
     
     init(
         weatherService: WeatherService? = nil,
         notificationService: NotificationService? = nil,
-        locationService: LocationService? = nil
+        locationService: LocationService? = nil,
+        dreamPipelineService: DreamPipelineService? = nil,
+        // Added 2026-01-14 22:55 GMT
+        scanPipelineService: BabciaScanPipelineService? = nil
     ) {
         let location = locationService ?? LocationService()
         self.locationService = location
         self.weatherService = weatherService ?? WeatherService(locationService: location)
         self.notificationService = notificationService ?? NotificationService()
+        self.dreamPipelineService = dreamPipelineService ?? DreamPipelineService()
+        self.scanPipelineService = scanPipelineService ?? BabciaScanPipelineService()
     }
 }
 

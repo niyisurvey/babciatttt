@@ -61,8 +61,8 @@ final class PersistenceService {
         try modelContext.save()
     }
     
-    func createBowl(for area: Area, tasks: [CleaningTask], verificationRequested: Bool) throws -> AreaBowl {
-        let bowl = AreaBowl(createdAt: Date(), verificationRequested: verificationRequested)
+    func createBowl(for area: Area, tasks: [CleaningTask], verificationRequested: Bool, beforePhotoData: Data?) throws -> AreaBowl {
+        let bowl = AreaBowl(createdAt: Date(), verificationRequested: verificationRequested, beforePhotoData: beforePhotoData)
         bowl.area = area
         bowl.tasks = tasks
         area.bowls?.append(bowl)

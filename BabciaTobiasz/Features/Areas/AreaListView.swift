@@ -232,13 +232,19 @@ struct AreaListView: View {
     // MARK: - Areas List
     
     private var areasList: some View {
-        LazyVStack(spacing: 12) {
-            ForEach(viewModel.filteredAreas) { area in
+        let items = Array(viewModel.filteredAreas.enumerated())
+        let overlap = theme.grid.listSpacing * 0.4
+        return LazyVStack(spacing: -overlap) {
+            ForEach(items, id: \.element.id) { index, area in
+                let stackScale = 1 - min(Double(index) * 0.02, 0.08)
                 NavigationLink(destination: AreaDetailView(area: area, viewModel: viewModel)) {
                     AreaRowView(area: area)
                 }
                 .buttonStyle(.plain)
                 .contextMenu { areaContextMenu(for: area) }
+                .scaleEffect(stackScale)
+                .offset(y: CGFloat(index) * overlap)
+                .zIndex(Double(viewModel.filteredAreas.count - index))
                 .scrollTransition { content, phase in
                     content
                         .opacity(phase.isIdentity ? 1 : 0.5)
@@ -280,7 +286,7 @@ struct AreaListView: View {
                     .foregroundStyle(.secondary)
                 
                 VStack(spacing: 8) {
-                    Text("No Areas Yet")
+                    Text("Empty Pot")
                         .dsFont(.title2, weight: .bold)
                     
                     Text("Create your first area to get started.")

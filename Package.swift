@@ -9,6 +9,10 @@ let package = Package(
     platforms: [
         .iOS(.v18)
     ],
+    dependencies: [
+        .package(path: "DreamRoomEngine"),
+        .package(path: "BabciaScanPipeline") // Added 2026-01-14 22:55 GMT
+    ],
     products: [
         .library(
             name: "BabciaTobiasz",
@@ -17,7 +21,10 @@ let package = Package(
     targets: [
         .target(
             name: "BabciaTobiasz",
-            dependencies: [],
+            dependencies: [
+                .product(name: "DreamRoomEngine", package: "DreamRoomEngine"),
+                .product(name: "BabciaScanPipeline", package: "BabciaScanPipeline") // Added 2026-01-14 22:55 GMT
+            ],
             path: "BabciaTobiasz",
             exclude: [
                 "Info.plist"

@@ -38,6 +38,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
+Latest files are the source of truth. Older notes may be inaccurate; prefer the newest docs and logs when there is a conflict.
+
 **BabciaTobiasz** is an iOS-only SwiftUI application combining weather tracking with habit management, built with Swift 6+, SwiftData, and Apple's Liquid Glass design. The app uses a dual-target structure: a Swift Package for all source code and an Xcode app host for building and running.
 
 **Bundle ID:** com.babcia.tobiasz
@@ -161,6 +163,8 @@ BabciaTobiasz/
 │   └── Settings/                   # App settings
 │
 ├── Core/                         # Services & business logic
+│   ├── Dream/                      # Dream pipeline services
+│   ├── Security/                   # Keychain helpers
 │   ├── Persistence/                # SwiftData service
 │   ├── Location/                   # LocationService
 │   ├── Notifications/              # NotificationService
@@ -219,11 +223,16 @@ Models are registered in `BabciaTobiaszAppView.init()` via `ModelContainer`.
 - `WeatherService`
 - `LocationService`
 - `NotificationService`
+- `DreamPipelineService`
 
 Injected via `.environment(\.appDependencies, dependencies)` at app root.
 
 ### Secrets Management
 API keys stored in `BabciaTobiasz/Resources/Secrets.plist` (gitignored). Access via `WeatherService` which loads the plist at runtime.
+DreamRoom API key is stored in Keychain via Settings -> Dream Engine, and falls back to `DREAMROOM_API_KEY` in Secrets.plist for local dev.
+
+### Dream Pipeline (Dev System)
+See `DREAM_PIPELINE_GUIDE.md` for the full workflow, prompt editing rules, and fallback art mapping.
 
 ## Project Rules
 

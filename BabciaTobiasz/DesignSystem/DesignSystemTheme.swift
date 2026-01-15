@@ -94,6 +94,7 @@ enum DSGlassStrength {
 struct DSGlass {
     var strength: DSGlassStrength
     var prominentStrength: DSGlassStrength
+    var tintOpacity: Double
 }
 
 enum DSMotionPreset: String, CaseIterable {
@@ -307,7 +308,8 @@ extension DesignSystemTheme {
         ),
         glass: DSGlass(
             strength: .regular,
-            prominentStrength: .thin
+            prominentStrength: .thin,
+            tintOpacity: 0.02
         )
     )
 }

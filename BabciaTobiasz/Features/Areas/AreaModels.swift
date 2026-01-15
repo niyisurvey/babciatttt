@@ -22,6 +22,67 @@ enum BowlVerificationOutcome: String, Codable, CaseIterable {
     case skipped
 }
 
+enum BabciaPersona: String, Codable, CaseIterable, Identifiable {
+    case classic
+    case baroness
+    case warrior
+    case wellness
+    case coach
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .classic: return "Classic Babcia"
+        case .baroness: return "The Baroness"
+        case .warrior: return "Warrior Babcia"
+        case .wellness: return "Wellness-X"
+        case .coach: return "Tough Life Coach"
+        }
+    }
+
+    var tagline: String {
+        switch self {
+        case .classic: return "My dear… come, we tidy."
+        case .baroness: return "This is beneath us."
+        case .warrior: return "DEFEAT THE CLUTTER."
+        case .wellness: return "Restore harmony."
+        case .coach: return "Do it anyway."
+        }
+    }
+
+    var dreamVisionPrompt: String {
+        DreamPromptOverrides.prompt(for: self) ?? ""
+    }
+
+    // Added 2026-01-14 22:55 GMT
+    var voiceGuidance: String {
+        switch self {
+        case .classic:
+            return "Speak like a loving Polish grandmother. Use 'Oj' and gentle guilt. Mention that you brought food. Be warm but notice everything."
+        case .baroness:
+            return "Speak with refined aristocratic disappointment. Use 'darling' and subtle shade."
+        case .warrior:
+            return "Speak like a battle commander. Use caps for emphasis. Treat cleaning as an epic quest."
+        case .wellness:
+            return "Speak like a calm robot companion. Use 'initiating' and 'protocol'."
+        case .coach:
+            return "Speak like an efficient office manager. Be direct, slightly exasperated."
+        }
+    }
+
+    // Added 2026-01-14 22:02 GMT
+    var headshotImageName: String {
+        switch self {
+        case .classic: return "R1_Classic_Headshot_Neutral"
+        case .baroness: return "R2_Baroness_Headshot_Neutral"
+        case .warrior: return "R3_Warrior_Headshot_Neutral"
+        case .wellness: return "R4_Wellness_Headshot_Neutral"
+        case .coach: return "R5_ToughLifecoach_Headshot_Neutral"
+        }
+    }
+}
+
 @Model
 final class Area {
     var id: UUID
@@ -31,6 +92,7 @@ final class Area {
     var colorHex: String
     var createdAt: Date
     var dreamImageName: String?
+    var personaRaw: String
 
     @Relationship(deleteRule: .cascade)
     var bowls: [AreaBowl]?
@@ -40,7 +102,8 @@ final class Area {
         description: String? = nil,
         iconName: String = "square.grid.2x2.fill",
         colorHex: String = "#2DD4BF",
-        dreamImageName: String? = nil
+        dreamImageName: String? = nil,
+        persona: BabciaPersona = .classic
     ) {
         self.id = UUID()
         self.name = name
@@ -49,11 +112,17 @@ final class Area {
         self.colorHex = colorHex
         self.createdAt = Date()
         self.dreamImageName = dreamImageName
+        self.personaRaw = persona.rawValue
         self.bowls = []
     }
 
     var color: Color {
         Color(hex: colorHex) ?? .teal
+    }
+
+    var persona: BabciaPersona {
+        get { BabciaPersona(rawValue: personaRaw) ?? .classic }
+        set { personaRaw = newValue.rawValue }
     }
 
     var latestBowl: AreaBowl? {
@@ -82,6 +151,12 @@ final class AreaBowl {
     var basePoints: Int
     var bonusMultiplier: Double
     var totalPoints: Double
+    var beforePhotoData: Data?
+    var afterPhotoData: Data?
+    var dreamHeroImageData: Data?
+    var dreamRawImageData: Data?
+    var dreamFilterId: String?
+    var dreamGeneratedAt: Date?
 
     var area: Area?
 
@@ -90,7 +165,8 @@ final class AreaBowl {
 
     init(
         createdAt: Date = Date(),
-        verificationRequested: Bool = false
+        verificationRequested: Bool = false,
+        beforePhotoData: Data? = nil
     ) {
         self.id = UUID()
         self.createdAt = createdAt
@@ -100,6 +176,12 @@ final class AreaBowl {
         self.basePoints = 0
         self.bonusMultiplier = 1
         self.totalPoints = 0
+        self.beforePhotoData = beforePhotoData
+        self.afterPhotoData = nil
+        self.dreamHeroImageData = nil
+        self.dreamRawImageData = nil
+        self.dreamFilterId = nil
+        self.dreamGeneratedAt = nil
         self.tasks = []
     }
 
@@ -153,8 +235,8 @@ final class CleaningTask {
 extension Area {
     static var sampleAreas: [Area] {
         [
-            Area(name: "Kitchen Table", description: "Where I eat", iconName: "cup.and.saucer.fill", colorHex: "#2DD4BF"),
-            Area(name: "Bedroom", description: "Sleep + reset", iconName: "bed.double.fill", colorHex: "#7C3AED")
+            Area(name: "Kitchen Table", description: "Where I eat", iconName: "cup.and.saucer.fill", colorHex: "#2DD4BF", persona: .classic),
+            Area(name: "Bedroom", description: "Sleep + reset", iconName: "bed.double.fill", colorHex: "#7C3AED", persona: .baroness)
         ]
     }
 }

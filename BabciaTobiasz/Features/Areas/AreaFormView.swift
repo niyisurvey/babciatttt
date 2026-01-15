@@ -18,6 +18,7 @@ struct AreaFormView: View {
     @State private var description: String = ""
     @State private var selectedIcon: String = "square.grid.2x2.fill"
     @State private var selectedColor: Color = .teal
+    @State private var selectedPersona: BabciaPersona = .classic
 
     private let iconOptions = [
         "square.grid.2x2.fill", "bed.double.fill", "cup.and.saucer.fill", "fork.knife",
@@ -92,6 +93,23 @@ struct AreaFormView: View {
                                             .foregroundStyle(.secondary)
 
                                         colorPicker
+                                    }
+                                }
+                            }
+                        }
+
+                        VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
+                            Text("Persona")
+                                .dsFont(.headline, weight: .bold)
+                                .padding(.horizontal, 4)
+
+                            GlassCardView {
+                                VStack(spacing: 12) {
+                                    ForEach(BabciaPersona.allCases) { persona in
+                                        personaRow(persona)
+                                        if persona != BabciaPersona.allCases.last {
+                                            Divider()
+                                        }
                                     }
                                 }
                             }
@@ -228,6 +246,7 @@ struct AreaFormView: View {
         description = area.areaDescription ?? ""
         selectedIcon = area.iconName
         selectedColor = area.color
+        selectedPersona = area.persona
     }
 
     private func saveArea() {
@@ -237,6 +256,7 @@ struct AreaFormView: View {
                 area.areaDescription = description.isEmpty ? nil : description
                 area.iconName = selectedIcon
                 area.colorHex = selectedColor.hexString
+                area.persona = selectedPersona
 
                 await viewModel.updateArea(area)
             } else {
@@ -245,7 +265,8 @@ struct AreaFormView: View {
                     description: description.isEmpty ? nil : description,
                     iconName: selectedIcon,
                     colorHex: selectedColor.hexString,
-                    dreamImageName: nil
+                    dreamImageName: nil,
+                    persona: selectedPersona
                 )
             }
 
@@ -286,6 +307,30 @@ struct AreaFormView: View {
             [0.0, 0.5], [0.5 + offset, 0.5 - offset], [1.0, 0.5],
             [0.0, 1.0], [0.5 - offset2, 1.0], [1.0, 1.0]
         ]
+    }
+
+    private func personaRow(_ persona: BabciaPersona) -> some View {
+        Button {
+            selectedPersona = persona
+        } label: {
+            HStack(spacing: 12) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(persona.displayName)
+                        .dsFont(.headline, weight: .bold)
+                    Text(persona.tagline)
+                        .dsFont(.caption)
+                        .foregroundStyle(.secondary)
+                }
+
+                Spacer()
+
+                Image(systemName: selectedPersona == persona ? "checkmark.circle.fill" : "circle")
+                    .foregroundStyle(selectedPersona == persona ? selectedColor : .secondary)
+                    .dsFont(.title3)
+            }
+            .padding(.vertical, 4)
+        }
+        .buttonStyle(.plain)
     }
 }
 

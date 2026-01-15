@@ -20,6 +20,10 @@ final class AreaViewModel {
     var editingArea: Area?
     var searchText: String = ""
     var filterOption: FilterOption = .all
+    // Added 2026-01-14 20:55 GMT
+    var isGeneratingDream: Bool = false
+    // Added 2026-01-14 20:55 GMT
+    var dreamStatusMessage: String?
     var dailyBowlTarget: Int = 1 {
         didSet {
             if dailyBowlTarget < 1 {
@@ -54,12 +58,17 @@ final class AreaViewModel {
     
     private var persistenceService: PersistenceService?
     private var notificationService: NotificationService?
+    // Added 2026-01-14 22:55 GMT
+    private var scanPipelineService: BabciaScanPipelineService?
     @ObservationIgnored private let userDefaults = UserDefaults.standard
 
     private enum StorageKeys {
         static let dailyBowlTarget = "dailyBowlTarget"
         static let streakCount = "streakCount"
         static let lastPhotoDayTimestamp = "lastPhotoDayTimestamp"
+        static let spentPoints = "spentPoints"
+        static let unlockedFilters = "unlockedFilters"
+        static let activeFilterId = "activeFilterId"
     }
     
     // MARK: - Computed Properties
@@ -107,6 +116,18 @@ final class AreaViewModel {
         }
     }
 
+    var totalPotPoints: Int {
+        let total = areas
+            .compactMap { $0.bowls }
+            .flatMap { $0 }
+            .reduce(0.0) { $0 + $1.totalPoints }
+        return max(0, Int(total.rounded()))
+    }
+
+    var availablePotPoints: Int {
+        max(0, totalPotPoints - spentPoints)
+    }
+
     var hasVerifiedToday: Bool {
         !bowlsVerifiedToday.isEmpty
     }
@@ -117,17 +138,28 @@ final class AreaViewModel {
     
     // MARK: - Initialization
     
-    init(persistenceService: PersistenceService? = nil, notificationService: NotificationService? = nil) {
+    init(
+        persistenceService: PersistenceService? = nil,
+        notificationService: NotificationService? = nil,
+        scanPipelineService: BabciaScanPipelineService? = nil
+    ) {
         self.persistenceService = persistenceService
         self.notificationService = notificationService
+        self.scanPipelineService = scanPipelineService
         loadPersistentState()
     }
     
     // MARK: - Configuration
     
-    func configure(persistenceService: PersistenceService, notificationService: NotificationService) {
+    func configure(
+        persistenceService: PersistenceService,
+        notificationService: NotificationService,
+        // Added 2026-01-14 22:55 GMT
+        scanPipelineService: BabciaScanPipelineService
+    ) {
         self.persistenceService = persistenceService
         self.notificationService = notificationService
+        self.scanPipelineService = scanPipelineService
     }
 
     private func loadPersistentState() {
@@ -148,6 +180,21 @@ final class AreaViewModel {
         } else {
             lastPhotoDayTimestamp = 0
         }
+    }
+
+    private var spentPoints: Int {
+        get { userDefaults.object(forKey: StorageKeys.spentPoints) as? Int ?? 0 }
+        set { userDefaults.set(max(0, newValue), forKey: StorageKeys.spentPoints) }
+    }
+
+    private var unlockedFilterIds: Set<String> {
+        get { Set(userDefaults.stringArray(forKey: StorageKeys.unlockedFilters) ?? []) }
+        set { userDefaults.set(Array(newValue), forKey: StorageKeys.unlockedFilters) }
+    }
+
+    var activeFilterId: String? {
+        get { userDefaults.string(forKey: StorageKeys.activeFilterId) }
+        set { userDefaults.set(newValue, forKey: StorageKeys.activeFilterId) }
     }
     
     // MARK: - Data Loading
@@ -172,7 +219,8 @@ final class AreaViewModel {
         description: String?,
         iconName: String,
         colorHex: String,
-        dreamImageName: String? = nil
+        dreamImageName: String? = nil,
+        persona: BabciaPersona = .classic
     ) async {
         guard let persistenceService = persistenceService else { return }
         
@@ -181,7 +229,8 @@ final class AreaViewModel {
             description: description,
             iconName: iconName,
             colorHex: colorHex,
-            dreamImageName: dreamImageName
+            dreamImageName: dreamImageName,
+            persona: persona
         )
         
         do {
@@ -221,7 +270,7 @@ final class AreaViewModel {
     
     // MARK: - Bowl + Task Operations
     
-    func startBowl(for area: Area, verificationRequested: Bool) {
+    func startBowl(for area: Area, verificationRequested: Bool, beforePhotoData: Data?) async {
         guard let persistenceService = persistenceService else { return }
 
         guard canStartBowlToday else {
@@ -230,21 +279,79 @@ final class AreaViewModel {
             return
         }
 
-        guard area.inProgressBowl == nil else { return }
-
-        let tasks = genericTaskTemplates().prefix(5).map { CleaningTask(title: $0) }
+        // Added 2026-01-14 21:13 GMT
+        guard area.inProgressBowl == nil else {
+            errorMessage = "Finish the current session before starting a new scan."
+            showError = true
+            return
+        }
+        // Added 2026-01-14 21:13 GMT
+        guard let beforePhotoData else {
+            errorMessage = "Scan photo required to start a session."
+            showError = true
+            return
+        }
 
         do {
+            isLoading = true
+            // Added 2026-01-14 22:55 GMT
+            isGeneratingDream = true
+            dreamStatusMessage = "Scanning..."
+            defer {
+                isLoading = false
+                isGeneratingDream = false
+            }
+
+            let fallbackTasks = Array(genericTaskTemplates().prefix(5))
+            let scanResult = await scanPipelineService?.runScan(
+                beforePhotoData: beforePhotoData,
+                persona: area.persona,
+                filterId: activeFilterId,
+                fallbackTasks: fallbackTasks
+            ) ?? BabciaScanPipelineOutput(
+                tasks: fallbackTasks,
+                advice: "Start small. You have got this.",
+                dreamHeroImageData: nil,
+                dreamRawImageData: nil,
+                dreamFilterId: activeFilterId,
+                taskErrorMessage: "Scan pipeline unavailable.",
+                dreamErrorMessage: "Scan pipeline unavailable.",
+                metadata: nil
+            )
+
+            let tasks = scanResult.tasks.prefix(5).map { CleaningTask(title: $0) }
             let bowl = try persistenceService.createBowl(
                 for: area,
                 tasks: Array(tasks),
-                verificationRequested: verificationRequested
+                verificationRequested: verificationRequested,
+                beforePhotoData: beforePhotoData
             )
             if verificationRequested {
                 bowl.verificationRequestedAt = Date()
             }
             updateStreakForNewBowl()
+
+            if let heroData = scanResult.dreamHeroImageData {
+                bowl.dreamHeroImageData = heroData
+                bowl.dreamRawImageData = scanResult.dreamRawImageData
+                bowl.dreamFilterId = scanResult.dreamFilterId
+                bowl.dreamGeneratedAt = Date()
+                area.dreamImageName = nil
+                dreamStatusMessage = "Dream updated."
+            } else {
+                area.dreamImageName = fallbackDreamAssetName(for: area.persona)
+                dreamStatusMessage = "Dream failed; using Babcia reference art."
+            }
+
             try persistenceService.save()
+
+            if let taskError = scanResult.taskErrorMessage, !taskError.isEmpty {
+                errorMessage = taskError
+                showError = true
+            } else if let dreamError = scanResult.dreamErrorMessage, !dreamError.isEmpty {
+                errorMessage = dreamError
+                showError = true
+            }
         } catch {
             handleError(error)
         }
@@ -269,12 +376,15 @@ final class AreaViewModel {
         }
     }
     
-    func finalizeVerification(for bowl: AreaBowl, tier: BowlVerificationTier, outcome: BowlVerificationOutcome) {
+    func finalizeVerification(for bowl: AreaBowl, tier: BowlVerificationTier, outcome: BowlVerificationOutcome, afterPhotoData: Data?) {
         guard let persistenceService = persistenceService else { return }
         do {
             bowl.verificationTier = tier
             bowl.verificationOutcome = outcome
             bowl.verifiedAt = Date()
+            if let afterPhotoData {
+                bowl.afterPhotoData = afterPhotoData
+            }
             updateBowlTotals(bowl)
             try persistenceService.save()
         } catch {
@@ -309,6 +419,26 @@ final class AreaViewModel {
     func dismissError() {
         showError = false
         errorMessage = nil
+    }
+
+    // MARK: - Filters / Economy
+
+    func isFilterUnlocked(_ id: String) -> Bool {
+        unlockedFilterIds.contains(id)
+    }
+
+    func unlockFilter(_ id: String, cost: Int) {
+        guard availablePotPoints >= cost else {
+            errorMessage = "Not enough points."
+            showError = true
+            return
+        }
+        spentPoints += cost
+        unlockedFilterIds.insert(id)
+    }
+
+    func applyFilter(_ id: String) {
+        activeFilterId = id
     }
 }
 
@@ -463,5 +593,20 @@ extension AreaViewModel {
             "Collect trash",
             "Reset the area"
         ]
+    }
+
+    private func fallbackDreamAssetName(for persona: BabciaPersona) -> String {
+        switch persona {
+        case .classic:
+            return "R1_Classic_Reference_NormalizedFull"
+        case .baroness:
+            return "R2_Baroness_Reference_NormalizedFull"
+        case .warrior:
+            return "R3_Warrior_Reference_NormalizedFull"
+        case .wellness:
+            return "R4_Wellness_Reference_NormalizedFull"
+        case .coach:
+            return "R5_ToughLifecoach_Reference_NormalizedFull"
+        }
     }
 }

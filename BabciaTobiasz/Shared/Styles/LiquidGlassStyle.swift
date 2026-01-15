@@ -39,7 +39,7 @@ struct LiquidGlassProminentModifier: ViewModifier {
         let resolvedCornerRadius = cornerRadius ?? theme.shape.glassCornerRadius
         #if compiler(>=7.0)
         if #available(iOS 26.0, macOS 26.0, *) {
-            content.glassEffect(.regular.tint(theme.palette.primary), in: .rect(cornerRadius: resolvedCornerRadius))
+            content.glassEffect(.regular.tint(theme.palette.primary.opacity(theme.glass.tintOpacity)), in: .rect(cornerRadius: resolvedCornerRadius))
         } else {
             content.background(theme.glass.prominentStrength.fallbackMaterial, in: RoundedRectangle(cornerRadius: resolvedCornerRadius, style: .continuous))
         }

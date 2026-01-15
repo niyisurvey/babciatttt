@@ -25,6 +25,9 @@ TARGETED_DEVICE_FAMILY = 1
 // ==========================================
 GENERATE_INFOPLIST_FILE = YES
 INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = We use your location to show local weather conditions.
+// Added 2026-01-14 20:55 GMT
+INFOPLIST_KEY_NSCameraUsageDescription = We use the camera to capture your room scan for Dream generation.
+INFOPLIST_KEY_NSPhotoLibraryUsageDescription = We use your photo library only if you choose to import a scan photo.
 INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait
 
 // ==========================================

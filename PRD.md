@@ -1,369 +1,613 @@
 # PRODUCT REQUIREMENTS DOCUMENT: BABCIA
-**Version:** 1.0 (The Pierogi Protocol)  
-**Target Audience:** ADHD / Executive Dysfunction  
-**Core Metaphor:** THE PIEROGI PROTOCOL (Resource-Provisioning Brain Support)
 
-## THE EMOTIONAL MENU (CORE PERSONAS)
-
-1. **Classic Babcia (R1):** Warm, lovingly judgmental, pierogi-energy. *"My dear, this room. What has happened. Come, let's eat and tidy."*
-2. **The Baroness (R2):** Aristocratic perfectionist, offended by chaos. *"This squalor is beneath us."*
-3. **Warrior Babcia (R3):** Arch-nemesis hype, aggressive motivation (superhero high-achiever vibe). *"DEFEAT THE CLUTTER. VICTORY IS YOURS."*
-4. **Wellness-X (R4):** Calming-but-powerful, Baymax-ish companion energy. *"Must restore harmony. User cortisol Levels too high. Space not according to protocol."*
-5. **Tough Life Coach (R5):** Direct, blunt, motivational-pressure. The Feng Shui expert. *"Listen to the crystal. It always knows right."*
-
----
-
----
-
-## 1. CORE PHILOSOPHY: THE REVERSE TAMAGOTCHI
-The application operates on the "Reverse Tamagotchi" principle: unlike traditional models that require the user to maintain (feed) the agent, Babcia provides resources (food) to the user via task completion.
-
-*   **Logic:** A clean environment is equated to a "full stomach" (satiation). A cluttered environment is equated to "starvation."
-*   **Goal:** Consistency over punishment. The application acts as a provider of executive function support.
-
-### 1.1. SECONDARY MOTIVATOR: THE EMOTIONAL APPROVAL LOOP
-While the core system focus is Resource Provisioning (App feeds User), the system integrates an **Additional Motivation Layer**: Seeking approval from the "Babcia" persona.
-
-*   **Logic:** Users with ADHD often respond positively to externalized "body doubling" and social approval.
-*   **Mechanism:** Completing tasks doesn't just "feed" the user; it generates approving responses from Babcia. The desire to "make her proud" acts as a secondary behavioral anchor.
-
-**Evidence Rationale:**
-> Users with ADHD demonstrate 38% higher retention in applications utilizing "supportive/nurturing" framing compared to "punitive/maintenance" framing. "Gamified shame" triggers avoidance behaviors in 62% of neurodivergent users.  
-> — *The Efficacy of Compassion-Focused Digital Interventions on Executive Dysfunction (Journal of Digital Psychiatry, 2025)*
-
----
-
-## 2. ONBOARDING & DYNAMIC INTERVENTION
-### 2.1. The Emotional Menu
-To minimize decision fatigue, users select one of the five Babcia personas:
-*   **Classic Babcia (R1)** - Warm, lovingly judgmental.
-*   **The Baroness (R2)** - Aristocratic perfectionist.
-*   **Warrior Babcia (R3)** - High-energy drill-sergeant vibe.
-*   **Wellness-X (R4)** - Calming, supportive.
-*   **Tough Life Coach (R5)** - Blunt, motivational pressure.
-*   **Persona affects tone only** (voice and vibe). It does not change workload or verification rules.
-*   **Persona affects tone only** (voice and vibe). It does not change workload or verification rules.
-
-**Evidence Rationale:**
-> Systems that allow user-defined "Arousal State" input prior to task generation increase task initiation by 4.5x.  
-> — *Just-in-Time Adaptive Interventions (JITAI) for Emotional Regulation in ADHD (Proceedings of CHI 2026)*
-
-### 2.2. Scaffolding Logic (Background Feature)
-This is future-facing only. For now, the persona is user-chosen and remains tone-only without automatic switching.
-
-**Evidence Rationale:**
-> High-intensity prompts during low-dopamine states (burnout) cause immediate churn. Dynamic calibration prevents the "Wall of Awful."  
-> — *Dynamic Calibration in Behavioral Activation (2025)*
-
----
-
-## 3. HOME SCREEN ARCHITECTURE
-### 3.1. The Room Stack (Visual Metaphor)
-Rooms are represented as vertical cards stacked similarly to a digital wallet. Tapping a card transitions to a detailed Room View.
-
-### 3.2. The Empty State (The Pot)
-When no rooms are active, the UI visualizes an "Empty Pot" to indicate a lack of available resources for the user.
-
-**Evidence Rationale:**
-> Complex dashboards overwhelm Working Memory Capacity (WMC). A "Single Focal Point" design (The Pot) utilizes "Salience Filtering" to bypass decision fatigue associated with list management.  
-> — *Visualizing Scarcity: Cognitive Load and UI Metaphors (International Journal of HCI, Late 2025)*
-
----
-
-## 4. THE TASK ENGINE (THE KITCHEN)
-### 4.1. Input & Analysis
-Users take a photo of the environment. AI Analysis decomposes the scene into exactly 5 discrete tasks.
-
-### 4.2. The Rule of 5 (Task Generation)
-The system never serves more than 5 tasks at a time to prevent analysis paralysis.
-Each area can have no more than 5 active tasks at any time.
-
-### 4.3. The Bowl (Portion) Rule
-One "bowl" equals exactly 5 tasks generated from a single photo of one area.
-(User may also take a photo of the same area, and at roughly the same angle, if the user chooses to verify that bowl.)
-
-### 4.4. Daily Bowl Target (User-Set)
-The user chooses their daily bowl target. Babcia persona affects tone only, not the amount of work.
-
-**Evidence Rationale:**
-> Effective Working Memory for unmedicated ADHD brains in digital environments is strictly 3 to 5 items.  
-> — *Re-evaluating Miller’s Law in the Age of Digital Distraction (Cognitive Science Review, 2025)*
-
-### 4.5. Visuospatial Weight (3D Pierogi Proxies)
-Abstract tasks are assigned physical representations (3D objects/Pierogis) that land in a bowl with gravity and mass. Text remains static; 3D objects serve as visual indicators of task "weight."
-
-**Evidence Rationale:**
-> Assigning physical physics (gravity/thud) to abstract tasks creates "Tangibility." Users perceive tasks as movable objects rather than abstract concepts.  
-> — *Haptic and Visuospatial Feedback in Digital To-Do Lists (User Experience Magazine, 2026)*
-
----
-
-## 5. THE COMPLETION LOOP (THE FEAST)
-### 5.1. Sensory Feedback
-*   **Action:** Tapping a task triggers a "Crunch" and "Burp" SFX.
-*   **Visual:** One 3D proxy disappears (is eaten). 
-
-### 5.2. Variable Reward (The Slot Machine)
-*   **Standard Drop:** Completion grants Ingredients/XP.
-*   **Rare Drop (5%):** "Golden Pierogi" appears, granting a "Cheat Card" (e.g., skip a day without losing streak).
-
-### 5.3. Session Completion (The Empty Bowl)
-When all 5 tasks are completed, the system triggers a "Party State" (Confetti, Folk Music).
-*   **User Check-In:** Babcia asks: "Are you full?" (Done) or "One more bowl?" (Load 5 more tasks).
-*   **Constraint:** The daily bowl target is user-defined; once the target is reached, Babcia ends the session.
-*   **Verification Prompt:** After a bowl is completed, Babcia offers "Verify bowl?" (optional). Occasionally, Babcia offers **Super Verify** instead.
-
-### 5.4. Streak (Presence Check)
-Streak = number of days the user takes a room photo (manual scan or scheduled reminder scan).
-Verification photos do not count toward streak; only the daily room photo does.
-
----
-
-## 6. VERIFICATION & ACCOUNTABILITY
-### 6.1. Verification (Optional, Rewarded)
-Verification is optional and off by default.
-Tasks are always checked off manually. After a full bowl (5 tasks) is complete, the user can choose to verify the bowl.
-*   **Verify:** Uses one photo from the same viewpoint as the original bowl photo.
-*   **Points:** Manual completion grants fewer points. Verified bowls grant significantly more points.
-*   **Visual:** Use a blue-tick style icon for verified bowls.
-*   **Timing:** The verification prompt should wait and allow the user time to tidy before taking the verification photo.
-
-### 6.2. Recovery Logic
-If verification fails, the system **does not punish**. It simply offers another bowl later.
-
-### 6.3. Superverify (Rare Bonus)
-Randomly, a verified bowl earns a **gold tick** (Superverify) that grants **10x points**.
-
-**Evidence Rationale:**
-> Punishment Sensitivity and Rejection Sensitive Dysphoria (RSD) are high in ADHD. Systems that reframe errors as new distinct tasks maintain dopamine flow without triggering cortisol spikes.  
-> — *Errorless Learning Protocols in Adult ADHD (Journal of Behavioral Therapy, 2025)*
-
----
-
-## 7. ECONOMY & PROGRESSION (THE PANTRY)
-### 7.1. Ingredient Logistics
-*   **Common Ingredients:** Flour, Potatoes, Water (Granted for any task).
-*   **Uncommon Ingredients:** Cheese, Mushrooms, Meat (Granted for any task).
-*   **Rare Ingredients:** Dill, Saffron (Granted for streaks).
-
-### 7.2. The Pantry & Crafting
-Users accumulate ingredients in a dedicated "Pantry" view. Ingredients are combined to "Cook" (Unlock) Dream Vision Filters (e.g., "Cozy Cottage" or "Comic Book") which modify the aesthetic of AI-generated "After" header images.
-
----
-
-## 8. BURNOUT PROTECTION (KITCHEN CLOSED)
-When the user reaches their daily bowl target, the system initiates "Kitchen Closed" mode. The UI dims, Babcia refuses more tasks, and the room is locked for the rest of the day.
-No punishment for a missed streak. No pause tokens. The system simply resets the next day.
-
-**Evidence Rationale:**
-> Uncapped gamification leads to "Binge-Crash Cycles." Enforced "Cool-down Periods" increase Day-30 retention by 220% by breaking flow to sustain long-term adherence.  
-> — *The Hyperfocus Paradox: Breaking Flow to Sustain Long-Term Adherence (Nature Digital Medicine, 2025)*
-
----
-
-## 9. THE ULTIMATE GOAL: STREAMING CAMERAS (FUTURE)
-Babcia supports a modular "Streaming Camera Providers" system so live room monitoring feels intentional. This allows for remote analysis without manual photo uploads.
-
-### 9.1. Modular Provider Interface
-Planned support for interchangeable camera sources:
-*   **TP-Link Tapo (RTSP):** Standardized RTSP frame capture.
-*   **Generic RTSP:** Universal support for power users (Ubiquiti, Hikvision, etc.).
-*   **Home Assistant Native:** Integration via HA camera proxy endpoints for "Smart Home Native" experience.
-
-### 9.2. Product Utility: The Remote Coach
-This feature eliminates the "walk over there" ritual, allowing for immediate environmental verification and task generation from a distance.
-
-**Evidence Rationale:**
-> Removing physical rituals (e.g., walking to a room) lowers the "mental load" and reduces initiation friction for individuals with ADHD. Ambient Light and video data capture provide objective digital markers for symptom management.  
-> — *Ambient Assisted Living (AAL) for Executive Dysfunction (2025); JMIR Digital Health (2025)*
-
----
-
-## 10. TECHNICAL & ASSET GUIDELINES
-*   **UI System:** Liquid Glass (Animated MeshGradients, GlassCardView).
-*   **Typography:** **Linux Libertine** (Mandatory).
-*   **Input Mechanism:** AI-Driven Photo Analysis.
-
-
-
-
-
-
-
-
-
-
->>>>>>>>>>>>>>
-
-TUESDAY 13TH -- TIGHTER PRD FOR CLAUDE SO WE CAN ZOOM THROUGH THIS.
-
-IF THERE ARE ANY INCONSISTENCIES THEN PLEASE SAY !! : 
-
-PRODUCT REQUIREMENTS DOCUMENT: BABCIA
-Version: 1.0 — The Pierogi Protocol
+Version: 1.0 (V1 Shipping Spec)
+Product name: BABCIA
 Target: UK 16+ (ADHD / Executive Dysfunction)
-Tagline: Reverse Tamagotchi cleaning game: the app “feeds” you resources when you clean.
-0) One-paragraph summary
-Babcia is a gamified cleaning companion for executive dysfunction. Users take a photo of an area, the AI generates up to 5 tasks (“a bowl”), the user ticks tasks off, and earns points into a pot. Optional verification (strict, not guaranteed) can award large bonus points (Blue or Golden) based on an after-photo. Points buy “ingredient-themed” filters that stylize saved “after” images.
-1) Goals and non-goals
-Goals
-Make starting cleaning fast: photo → a small set of tasks.
-Keep sessions bounded: never more than 5 tasks visible at once.
-Deliver strong motivation without punishment: progress > perfection.
-Make verification feel earned and valuable (strict, no retries).
-Keep economy simple enough for a solo dev.
-Non-goals (V1)
-No backlog/queue of extra tasks from a single photo.
-No variable random loot rewards.
-No dynamic persona switching/JITAI scaffolding.
-No streaming cameras / continuous monitoring.
-2) Core metaphor & principle
-The Reverse Tamagotchi
-Most apps require you to “feed” the app. Babcia flips it: completing real-world cleaning tasks feeds the user (points/resources), making the app feel like support rather than demand.
-Secondary motivator: emotional approval loop
-Users select a Babcia persona (tone-only). Completing tasks triggers approval/banter that acts like externalized accountability.
-3) Key terms (use consistently)
-Area: A user-defined place (e.g., “Desk”, “Bedroom corner”, “Kitchen counter”).
-Bowl: A single cleaning session generated from one photo of one area, containing up to 5 tasks.
-Task: A discrete action produced by the AI (or generic fallback tasks if needed).
-Verification: Optional after-photo check for a bowl (strict, may fail).
-4) Personas (tone-only)
-Available personas (“Emotional Menu”):
-Classic Babcia — warm, lovingly judgmental: “My dear… come, we tidy.”
-The Baroness — aristocratic perfectionist: “This is beneath us.”
-Warrior Babcia — hype / enemy mode: “DEFEAT THE CLUTTER.”
-Wellness-X — calm companion: “Restore harmony.”
-Tough Life Coach — blunt: “Do it anyway.”
-Persona rules
-Global default persona is set in Settings.
-Each Area has a pinned Babcia persona chosen when the area is created (cannot be changed in V1).
-Persona affects tone only, never workload or verification rules.
-5) Core UX
-5.1 Areas Home (Area Stack)
-Areas displayed as stacked cards (wallet-like).
-Tap an area → Area View.
-Empty state: “Empty Pot” (no areas yet).
-5.2 Area View
-Shows pinned Babcia persona for that area.
-Primary action: Take Photo (starts a bowl).
-Verification is off by default; user may enable verification for this bowl before starting (simple toggle).
-5.3 Camera / Bowl creation
-Entry points:
-From Areas page → Area View → Camera (normal flow).
-From Camera-first (if you support it): after capture, user selects which Area it belongs to.
-5.4 Bowl Task Screen
-Shows up to 5 tasks.
-User ticks tasks off one-by-one.
-Points: each task tick immediately grants base points into the pot
-Default: 1 point per task (tunable)
-5.5 Bowl completion
-When all tasks in the bowl are ticked:
-“Party State” feedback (confetti + sound)
-Babcia asks:
-“Are you full?” → end session
-“One more bowl?” → user must take a new photo (no backlog; always a new bowl from a fresh photo)
-5.6 Verification flow (optional)
-Verification screen appears only if verification was enabled for this bowl.
-The verification screen:
-is visually “paused” so the user can tidy more before submitting the after photo.
-offers:
-No (finish without verifying)
-Blue Verify
-Golden Verify (only sometimes; see rules below)
-Important behavioral promise (to cover AI uncertainty):
-Verification is strict and not guaranteed.
-Babcia’s verdict is final.
-No detailed reasons for failure in V1.
-No retries in V1.
-6) Task engine (AI) — “Up to 5”
-6.1 Input
-User takes a photo of the area.
-6.2 Output rules
-AI generates up to 5 tasks.
-If AI finds fewer than 5, it returns fewer (no padding).
-If AI finds 0 actionable tasks, prompt user to retake photo.
-6.3 If AI sees more than 5 possible tasks
-AI selects the best 5 for this bowl:
-quick wins
-visible impact
-safe / low-risk
-No backlog (extras are not stored).
-7) Points, verification bonuses, and “Golden” logic
-7.1 Base points
-Each task tick awards base points immediately.
-Let:
-base = sum(task_points) (default: number of tasks completed)
-7.2 Finish without verifying
-User taps No on verification screen:
-Bowl finalizes unverified
-User keeps base points already earned
-No bonus applied
-7.3 Blue Verify (always available)
-User submits after photo:
-Pass: total for the bowl becomes 4× base
-Fail: award half of the Blue bonus
-Blue bonus (pass) = +3× base
-Half-bonus = +1.5× base
-So fail total becomes 2.5× base
-If fail: bowl remains unverified, no retry
-7.4 Golden Verify (conditional, not random)
-Golden Verify is not a loot drop. It appears when the system detects the user:
-hasn’t verified recently and/or
-is behind their self-set goal
-User submits after photo:
-Pass: total becomes 10× base
-Fail: award half of the Golden bonus
-Golden bonus (pass) = +9× base
-Half-bonus = +4.5× base
-So fail total becomes 5.5× base
-If fail: bowl remains unverified, no retry
-8) Economy & rewards (solo-dev simple)
-8.1 Points are the only currency
-The pot holds points (e.g., “2,000 points”).
-8.2 Filters shop (ingredient-themed pricing)
-Users unlock Dream Vision Filters by spending points.
-Each filter has a clear point price (e.g., 4,000 points).
-The cost is also represented by ingredient icons (e.g., “4 onions + 7 tomatoes”) as visual theme only.
-Purchase is one transaction: spend points → unlock filter.
-No separate ingredient inventory is required in V1.
-8.3 Filter output
-Filters stylize the AI-generated After header image.
-Filtered images are saved and can be shared.
-9) Burnout protection
-Daily bowl target (user-set)
-User selects a daily bowl target.
+Tagline: Reverse Tamagotchi cleaning game — the app “feeds” you resources when you clean.
+
+## 0) One-paragraph summary (the real hook)
+
+BABCIA is a gamified cleaning companion designed for executive dysfunction. Users create Areas (real spaces like “Desk”, “Kitchen counter”), then start a short cleaning session by taking a photo scan. The system generates (1) a Dream Image for that Area (the motivational “wow” header) and (2) up to 5 AI tasks for a bounded cleaning session. Users tick tasks off to gain points immediately into a Pot. When all tasks are completed, the app celebrates with a “pierogis fall into the bowl” moment (the “bowl” is primarily the completion/reward beat). Optional strict Verification (no retries, no failure reasons) uses an after-photo to award large bonus points (Blue or Golden) using fixed multipliers. Points unlock Filters in the Sklep (Shop); filters stylise the Dream Image generated from scans. The filtered Dream Image becomes the full-bleed header for that Area Detail page and is saved into the Gallery as a core artifact of progress.
+
+## 0.1) Current build notes (dev)
+
+- 2026-01-14 21:13 GMT: Area Detail scan is camera-only, shows scan preview + Dream status feedback, and surfaces scan/Dream errors via alerts.
+- 2026-01-14 22:02 GMT: Area Detail now shows only the Dream header + sparkly Babcia card + floating camera button; bowl UI and extra cards removed.
+- 2026-01-14 22:28 GMT: Floating camera button now uses existing DS button style (no custom component). Dream error popup shows the raw engine error text for debugging.
+- 2026-01-14 22:29 GMT: Babcia card head icon scaled up to DS iconXL for comfortable fit.
+- 2026-01-14 22:39 GMT: Floating camera button now directly reuses the existing DS CTA button label style (matches “Add Your First Area”).
+- 2026-01-14 23:05 GMT: Added BabciaScanPipeline module (Dream + Gemini tasks) and wired Area scans to use it with LocalDreamPrompts.json as the prompt source.
+- 2026-01-14 23:24 GMT: Area Detail now shows a task list card (Weather forecast layout) with five slots; tasks are tickable with haptic feedback.
+- 2026-01-14 23:26 GMT: Fixed task list icon styling to use ShapeStyle correctly (build fix).
+- 2026-01-14 23:28 GMT: Device build succeeded; install/launch failed due to CoreDeviceService not locating the device (identifier mismatch).
+- 2026-01-14 23:56 GMT: Dream prompts now support editable base + geometry + output sections via LocalDreamPrompts.json; pipeline passes a full prompt override to DreamRoomEngine. Prompt loader now searches bundle overrides and optional Documents override.
+- 2026-01-15 00:31 GMT: Added a temporary Buttons Lab page accessible from Settings to preview button styles.
+- 2026-01-15 00:34 GMT: Fixed Buttons Lab system glass button to disambiguate SwiftUI.GlassButtonStyle (build fix).
+- 2026-01-15 00:36 GMT: Clean build + device build succeeded; app installed and launched on device (PID 10758). Awaiting user verification of Buttons Lab and button styles.
+- 2026-01-15 00:38 GMT: Buttons Lab now includes five card style samples for comparison.
+- 2026-01-15 00:40 GMT: Clean build + device build succeeded; app installed and launched on device (PID 10835). Awaiting user verification of card samples.
+- 2026-01-15 00:46 GMT: Buttons Lab expanded into a Liquid Glass Lab showcasing glass variants, shapes, containers, morphing, unions, transitions, background effects, and glass button styles.
+- 2026-01-15 00:47 GMT: Fixed Liquid Glass Lab build error by adding iOS 26 availability to Glass helpers.
+- 2026-01-15 00:50 GMT: Fixed Liquid Glass Lab build errors by removing unsupported glassBackgroundEffect and replacing containerConcentric with DS radius; added iOS 26 guards for glass sheet buttons.
+- 2026-01-15 00:52 GMT: Clean build + device build succeeded; app installed and launched on device (PID 10873). Awaiting user verification of Liquid Glass Lab.
+- 2026-01-15 00:59 GMT: Liquid Glass Lab updated with clear-glass cards, clearer button-on-card sections, and a more translucent sheet.
+- 2026-01-15 01:02 GMT: Clean build + device build succeeded; app installed and launched on device (PID 10896). Awaiting user verification of translucency changes.
+
+## 1) Product principles (non-negotiables)
+
+### 1.1 Reverse Tamagotchi principle
+
+The app should feel like it feeds the user, not the other way around. Cleaning produces immediate rewards: points, approval, and the Dream header transformation.
+
+### 1.2 Bounded sessions (anti-overwhelm)
+
+A session never shows more than 5 tasks. No backlog. No “infinite list of shame”.
+
+### 1.3 Progress over perfection
+
+Language and interaction must avoid punishment. Missing a day does not cause scolding. Verification is strict, but failure is handled gently.
+
+### 1.4 Dream Image is the backbone
+
+The Dream Image is not decoration. It explains why the app exists:
+
+- It is the “wow” motivational loop.
+- It is what filters are for.
+- It is what the gallery is for.
+- It is why points matter (points buy better Dream transformations).
+
+If the Dream pipeline is degraded, the entire product’s emotional payoff collapses.
+
+## 2) Goals and non-goals
+
+### 2.1 Goals (V1)
+
+- Make starting cleaning fast: Area → Scan → Tasks.
+- Keep sessions bounded: ≤5 tasks.
+- Provide immediate reward: points per task tick and a Dream header transformation.
+- Make verification feel earned and valuable: strict, final verdict, no retries.
+- Keep economy simple: one currency (points), straightforward shop unlocks.
+- Keep UI coherent: everything uses the design system (no Frankenstein UI).
+
+### 2.2 Non-goals (V1)
+
+- No backlog/queue of tasks from a scan.
+- No random loot drops.
+- No dynamic persona switching or adaptive coaching logic.
+- No streaming camera / Home Assistant / monitoring.
+- No separate ingredient inventory (ingredients may be purely visual theme).
+
+## 3) Key terms (use consistently)
+
+### 3.1 Area
+
+A user-defined place: “Desk”, “Bedroom corner”, “Kitchen counter”.
+
+### 3.2 Scan (Before photo)
+
+The act of taking a photo to start a session. This is the streak trigger (first scan of the day).
+
+### 3.3 Dream Image (Dream Vision output)
+
+An AI-generated, stylised image created from the scan. This image is the Area’s header after filtering is applied.
+
+### 3.4 Filter
+
+A stylisation preset applied to the Dream Image (not primarily to after photos). Filters are unlocked in the Shop via points. A chosen filter becomes part of the area’s “look”.
+
+### 3.5 Task
+
+A discrete cleaning action suggested by AI. Up to 5.
+
+### 3.6 Session
+
+One cleaning run created from one scan photo. A session generates: Dream Image + Tasks. (Internal model names may use Bowl; UX should not over-emphasize “bowl” except in the completion moment.)
+
+### 3.7 Bowl moment
+
+The celebration moment that happens when all tasks are completed: pierogis fall into the bowl. This is the emotional “completion” beat.
+
+### 3.8 Verification
+
+Optional strict after-photo check. No retries. No detailed failure reasons.
+
+### 3.9 Pot
+
+The user’s points balance (single currency).
+
+### 3.10 Gallery
+
+A collection of saved Dream Images (filtered) and potentially related artifacts per Area/session. (Exact contents defined below.)
+
+## 4) Personas (tone-only)
+
+### 4.1 Persona menu (“Emotional Menu”)
+
+- Classic Babcia — warm, lovingly judgmental: “My dear… come, we tidy.”
+- The Baroness — aristocratic perfectionist: “This is beneath us.”
+- Warrior Babcia — hype/enemy mode: “DEFEAT THE CLUTTER.”
+- Wellness-X — calm companion: “Restore harmony.”
+- Tough Life Coach — blunt: “Do it anyway.”
+
+### 4.2 Persona rules
+
+- Global default persona is set in Settings.
+- Each Area has a pinned persona chosen when Area is created (cannot be changed in V1 unless you later decide otherwise).
+- Persona affects tone only:
+  - task count: unchanged
+  - scoring multipliers: unchanged
+  - golden eligibility rules: unchanged
+  - verification strictness: unchanged
+
+## 5) Navigation and information architecture (tabs)
+
+V1 shipping tabs (your structure):
+
+1. Home (dashboard cards)
+2. Areas (areas overview stack)
+3. Camera (scan entry point)
+4. Gallery
+5. Settings
+
+Important: No Weather tab in shipping product. Weather screen may remain in codebase as a design system reference, but it is not part of product navigation.
+
+## 6) Home tab (dashboard hub)
+
+Home is the “control room” / overview. It is not a list of areas.
+
+### 6.1 Home layout concept (card-driven)
+
+Home contains a small set of high-value cards. At minimum (as you stated):
+
+- A card that goes to Sklep (Shop / buy filters)
+- A card that goes to Stats Progress overview
+
+Plus recommended core cards (consistent with your points/streak system):
+
+- Pot card (current points)
+- Daily progress card (daily target progress + Kitchen Closed state)
+- Streak card (counts first scan only)
+- Optional “Latest Dream” card preview (links to Gallery or last Area)
+
+### 6.2 Home must communicate (no confusion)
+
+Home must make these truths obvious:
+
+- “Scan creates Dream header + tasks”
+- “Points unlock filters”
+- “Filters change your Area’s Dream header”
+- “Gallery is where your Dream images live”
+
+### 6.3 Stats Progress overview
+
+The stats dashboard shows personal data only (no global leaderboard for V1). Displays:
+- Total Pierogis earned (lifetime)
+- Current Streak
+- Trends and history
+- Golden vs Blue verification counts
+
+## 7) Areas tab (overview stack)
+
+### 7.1 Areas displayed as stacked cards
+
+Wallet-like stack presentation. Tap → Area Detail.
+
+### 7.2 Areas empty state
+
+“Empty Pot” (no areas yet). Copy should be encouraging.
+
+### 7.3 Area creation
+
+Create Area requires:
+
+- name
+- (mandatory) pinned filter for the Area’s Dream style (tied to the chosen Babcia)
+
+## 8) Area Detail (Room page) — the Dream header page (core screen)
+
+This is where the “hook” must be unmistakable.
+
+### 8.1 Full-bleed Dream header
+
+- Uses the current Area’s Dream Image (filtered) as a full-bleed hero/header.
+- The header should support a “pull down / grow” feel (if implemented).
+- As you scroll, header visually collapses (details below in UI/interaction requirements).
+
+### 8.2 What appears on Area Detail
+
+Must show:
+
+- Area name
+- pinned persona indicator
+- primary action: Scan / Take Photo
+- verification toggle before scan (for next session only)
+- tasks list for current session (up to 5)
+- progress + points earned
+- after completion: bowl moment + next action prompt
+
+### 8.3 Dream header update rule (critical)
+
+When user starts a session by scanning:
+
+1. Capture scan image.
+2. Generate Dream Image.
+3. Apply active filter selection (if any).
+4. Save filtered Dream Image as the Area’s current header.
+5. Persist linkage: Dream Image is tied to the Area and the session that generated it.
+
+This prevents drift. Shop, gallery, points all depend on this.
+
+## 9) Camera tab (scan entry point)
+
+Camera exists because “start cleaning” must be instant.
+
+### 9.1 Entry flow options (TBD)
+
+Two valid patterns, but which you ship is a product choice:
+
+- Camera-first: scan immediately → then assign to Area (or create new Area)
+- Area-first: pick Area → scan
+
+You have not specified which. Do not invent.
+
+### 9.2 What Camera must do in V1
+
+- Capture a scan image
+- Attach it to an Area (before or after capture depending on flow)
+- Trigger Dream Image generation
+- Trigger Task generation (up to 5)
+- Record that this was a “scan action” for streak logic (first scan of day only)
+
+## 10) Task engine (AI) rules
+
+### 10.1 Input
+
+- Scan photo
+- Area context (name, maybe prior tasks history — optional)
+- Safety constraints (no risky tasks)
+
+### 10.2 Output rules
+
+- Up to 5 tasks.
+- Fewer allowed (no padding).
+- If 0 tasks: prompt user to retake scan.
+
+### 10.3 When >5 tasks are visible in the photo
+
+Select best 5:
+
+- quick wins
+- visible impact
+- safe / low-risk
+- low friction
+
+### 10.4 No backlog rule
+
+Extra tasks are discarded. No hidden queue.
+
+## 11) Points, Pot, and scoring (fixed math)
+
+### 11.1 Base points
+
+Each task tick immediately awards base points into the pot. Default: 1 point per task (tunable later). Let base = sum(task_points) for that session.
+
+### 11.2 Completion moment (“bowl”)
+
+When all tasks are ticked:
+
+- play celebration (pierogis fall in)
+- then show completion prompt:
+  - “Are you full?” ends session
+  - “One more bowl?” requires new scan (new session)
+
+Important: bowl is mainly shown here. It is not a permanent “bowl management UI”.
+
+## 12) Verification flow (optional, strict, paused)
+
+### 12.1 Verification toggle timing (must be before starting)
+
+Verification is off by default. User may enable it before scan for that session.
+
+### 12.2 Verification trigger flow
+
+1. When all tasks (up to 5) are ticked off, the app asks: "Do you want to verify? (Yes / No)"
+2. If the user chooses "Yes," the system immediately decides and reveals the reward tier for this session (Blue or Golden).
+
+### 12.3 Verification screen behavior (The Psychological Trap)
+
+The screen enters a "paused" state once the tier is revealed:
+- The app communicates: “The reward is waiting. You can tidy more before you submit the final photo.”
+- This acts as a psychological trap/incentive to ensure the user actually made an effort if they were lying about the tasks.
+- No auto-close, no timer. The app waits (even hours) until the user is ready to face the camera and snap the verification photo.
+
+### 12.4 Verification options
+
+- "I changed my mind / Forget it" (Finish without verifying, keep base points only)
+- "Complete & Snap" (Activates camera to take the final proof-of-work photo)
+
+### 12.5 Verification strictness promises
+
+- strict and not guaranteed
+- verdict final
+- no detailed reasons
+- no retries
+
+## 13) Verification multipliers (exact totals)
+
+### 13.1 No verify
+
+- Keep base points already earned
+- No bonus
+
+### 13.2 Blue verify
+
+After photo submitted:
+
+- Pass: total becomes 4x base (bonus = +3x base)
+- Fail: award half the Blue bonus (half bonus = +1.5x base)
+- Fail total = 2.5x base
+- If fail: session remains unverified; no retry
+
+### 13.3 Golden verify (conditional)
+
+After photo submitted:
+
+- Pass: total becomes 10x base (bonus = +9x base)
+- Fail: award half the Golden bonus (half bonus = +4.5x base)
+- Fail total = 5.5x base
+- If fail: session remains unverified; no retry
+
+## 14) Golden eligibility (deterministic, not random)
+
+Golden appears when the system detects the user:
+
+- hasn’t verified recently and/or
+- is behind their self-set daily goal
+
+Exact thresholds can be defined in implementation, but the principle is: no loot randomness. Golden must feel deserved and purposeful.
+
+(If you already have exact rules in code, those rules are the truth; this document describes the intent.)
+
+## 15) Filters and Shop (Sklep) — what they actually do
+
+### 15.1 Filters are for Dream Images (your rule)
+
+Filters apply to the Dream Image generated from scans. The filtered Dream Image becomes:
+
+- the Area Detail full-bleed header
+- a saved artifact in Gallery
+
+Filters are not primarily “photo effects for after pics”. (If after photos also get stylised later, that’s optional; not the backbone.)
+
+### 15.2 Filter ownership model (V1)
+
+- Filter choice is tied directly to the Babcia selection for that Area.
+- The Babcia persona decides the tone, the filter style, and the "Dream" assets.
+- Filter only applies to the specific scans and Dream images for that Area.
+
+### 15.3 Sklep (Shop) requirements
+
+- Displays locked/unlocked filters
+- Each filter has a point price
+- Purchase is one transaction: spend points → unlock filter
+- Clear feedback on successful unlock
+- No ingredient inventory (ingredient icons are visual theme only)
+
+### 15.4 Pot rules
+
+- Single currency
+- Pot updates immediately on task ticks
+- Verification bonuses apply when verification resolves
+
+## 16) Gallery — why it exists (and what it contains)
+
+Gallery exists to hold the product’s “trophies”: Dream images.
+
+### 16.1 Gallery contents (V1)
+
+Must include:
+
+- saved Dream Images (filtered)
+- grouped by Area and/or date
+- supports viewing full-screen
+- supports sharing (nice-to-have if not required)
+
+Optional (only if already built / cheap):
+
+- show the original scan thumbnail alongside the Dream image
+
+But the Dream image is the hero.
+
+### 16.2 Gallery role in motivation
+
+Gallery is proof of progress. It reinforces:
+
+- “I did something”
+- “my room looks transformed”
+- “filters matter”
+- “points were used for a visible upgrade”
+
+## 17) Burnout protection
+
+### 17.1 Daily target (user-set)
+
+User selects daily target (default 1).
+
 When target is hit: Kitchen Closed
-UI dims
-Babcia refuses more bowls for the day
-No punishment language
-Streak
-Streak = number of days the user takes an area photo
-Counts max once per day (first area photo)
-Verification photos do not count
-No punishment for missed streaks
-10) Tech & asset guidelines (V1)
-Input mechanism: AI-driven photo analysis → tasks (up to 5).
-UI style: Liquid Glass / mesh gradients / glass cards (optional).
-Typography: Linux Libertine (if you still want this constraint).
-SFX: satisfying “crunch” on tick; party sound on bowl completion.
-11) Future ideas (explicitly not V1)
-Streaming camera providers / RTSP / Home Assistant integration
-Automatic persona switching / scaffolding logic
-Advanced reminders / smart scheduling
-12) Build checklist (what “done” means)
-Must-haves
-Create/manage Areas (name + pinned persona)
-Photo capture per bowl
-AI → generate up to 5 tasks
-Tick tasks off → points awarded per tick
-Bowl completion → “Are you full?” / “One more bowl?” (new photo)
-Verification toggle per bowl (default off)
-Verification screen (paused)
-Blue verify pass/fail rules (4× or 2.5×)
-Golden verify conditional eligibility + pass/fail rules (10× or 5.5×)
-No retries, no failure reasons
-Points pot display
-Filter shop: spend points, unlock, apply to After image
-Nice-to-haves (still V1-possible, not required)
-Confetti / folk music polish
-Share sheet for After images
+
+- UI dims / closes
+- Babcia refuses additional scans for the day
+- No punishment language
+
+### 17.2 Streak rule (very specific)
+
+Streak = number of days the user takes a scan photo.
+
+- increments once per day on the first scan action
+- verification photos do not count
+- task completion does not count
+- no punishment for missed days
+
+## 18) UI / design system constraints (anti-Frankenstein)
+
+### 18.1 Design system is the source of truth for styling
+
+- Glass cards, spacing, radii, typography, gradients, shadows must come from the design system tokens/components.
+- Do not import random third-party UI components if they conflict visually.
+- If you copy an interaction pattern (like scaling header), re-implement using design system primitives.
+
+### 18.2 Area Detail header interaction requirement (high-level)
+
+The Dream header should feel premium:
+
+- full-bleed image at top
+- collapses/scrolls elegantly into content
+- supports pull-down stretch (if feasible)
+
+### 18.3 Typography lockdown
+
+- **LINUX LIBERTINE EVERYWHERE.**
+- This font is the absolute source of truth for all text in the app.
+- No system-font defaults (San Francisco, Inter, etc.) are allowed to leak through. 
+- Must be enforced across headings, body text, buttons, and card content.
+
+## 19) Error states and guardrails (V1)
+
+### 19.1 AI returns 0 tasks
+
+- Prompt: retake scan photo
+- Do not create an empty session
+
+### 19.2 AI fails to generate Dream Image
+
+- Fallback: Show a premium Babcia illustration specific to that Area (Kitchen, Lounge, etc.) showing her as the "Dream" they are working towards. 
+- **Rule:** Never show the messy raw scan as the "Dream" goal. Babcia stepping in as the voucher is the brand-safe fallback.
+
+### 19.3 Verification uncertainty
+
+- strict, final, no reasons
+- avoid blaming the user
+- keep copy short and emotionally safe
+
+## 20) “Done” checklist (acceptance criteria)
+
+V1 is done when:
+
+- Tabs are: Home, Areas, Camera, Gallery, Settings
+- Home has at least:
+  - Shop card → Sklep
+  - Stats Progress card → overview
+- Areas list shows stacked cards + Empty Pot state
+- Area Detail has full-bleed Dream header
+- Each scan produces:
+  - Dream Image (filtered) that becomes the Area header
+  - up to 5 tasks
+- Task ticking awards points immediately
+- Completion triggers bowl moment (pierogi drop)
+- Verification toggle exists pre-scan, default off
+- Verification paused screen exists with No / Blue / Golden
+- Blue and Golden scoring totals match exactly (4x/2.5x, 10x/5.5x)
+- Golden is deterministic, not random
+- Daily target + Kitchen Closed works
+- Streak increments only on first scan of day
+- Shop unlocks filters using points
+- Filters apply to Dream Images and thereby change Area headers
+- Gallery shows saved Dream Images (filtered)
+
+## 21) Implementation Plan (non-binding)
+
+This section is execution guidance only. It does not change product requirements.
+
+### 21.1 Milestone 1 - Dream pipeline as reusable module (required)
+
+Interfaces (contracts only)
+- DreamRoomEngine (core, UI-free) from TempDreamStuff/DreamRoomEngine.zip
+  - Input: beforePhotoData + DreamRoomContext (characterPrompt) + DreamRoomConfig (apiKey, endpoint, timeout)
+  - Output: DreamRoomResult (heroImageData 1200x1600, rawImageData, metadata)
+- DreamOutputStore (app boundary)
+  - Save and load Dream output by Area and Session
+  - Provide latest Dream image for Area header
+  - Provide list for Gallery
+- FilterApplier (app boundary)
+  - Apply FilterPreset to Dream output (not after photos)
+- DreamPipelineCoordinator (app service boundary)
+  - Orchestrates scan -> DreamRoomEngine -> filter -> persistence -> header update
+
+Wiring points
+- Camera/Scan flow calls DreamPipelineCoordinator on scan completion
+- Area Detail header reads latest Dream output from DreamOutputStore
+- Gallery reads Dream outputs grouped by Area/date
+- Shop/Filters selection provides FilterPreset to DreamPipelineCoordinator
+
+Acceptance criteria
+- Every scan yields a hero image at 1200x1600 and retains raw output
+- Area header updates to the new Dream output
+- Gallery shows the stored Dream outputs
+- Filters visibly change Dream outputs
+- DreamRoomEngine remains UI-free and unchanged unless explicitly tasked
+- If Dream generation fails, use Babcia illustration fallback, never the raw scan
+
+### 21.2 Milestone 2 - Session and bounded task generation
+
+Interfaces
+- Session model ties scan, Dream output, tasks (0 to 5), and base points
+- TaskGenerator returns up to 5 tasks, no backlog
+
+Wiring points
+- Scan creates a Session and task list for Area Detail
+- Task completion updates points immediately
+
+Acceptance criteria
+- No more than 5 tasks per session
+- If 0 tasks, prompt rescan and do not create an empty session
+
+### 21.3 Milestone 3 - Verification flow and scoring
+
+Interfaces
+- VerificationState with off/blue/golden and paused reveal state
+- Scoring service applies fixed multipliers
+
+Wiring points
+- Pre-scan verification toggle
+- Post-completion prompt and paused reveal screen
+- After-photo capture for verification
+- Scoring updates pot totals
+
+Acceptance criteria
+- Blue totals: pass 4x base, fail 2.5x base
+- Golden totals: pass 10x base, fail 5.5x base
+- Strict and final, no retries, no detailed reasons
+
+### 21.4 Milestone 4 - Home hub and Gallery UX
+
+Interfaces
+- Home dashboard data: pot, streak, daily target, shop link, stats link, latest Dream preview
+- Gallery index grouped by Area/date, Dream images are primary artifact
+
+Wiring points
+- Replace Weather tab usage with Home hub cards
+- Gallery shows Dream outputs as trophies
+
+Acceptance criteria
+- Home communicates scan -> Dream -> points -> filters -> Gallery
+- Gallery is Dream-first and grouped by Area/date
+
+### 21.5 Milestone 5 - Burnout protection and streak rules
+
+Interfaces
+- Daily target settings (default 1)
+- Streak counter (first scan per day only)
+
+Wiring points
+- Kitchen Closed state blocks additional scans after target
+- Streak increments only on first scan of the day
+
+Acceptance criteria
+- Kitchen Closed UI is visible and gentle
+- Streak ignores verification photos and task ticks
+
+### 21.6 Out of scope (V1 non-goals)
+
+- Persona switching logic
+- Streaming cameras / Home Assistant monitoring
+- Ingredient inventory beyond visual theming

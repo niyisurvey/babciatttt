@@ -1,0 +1,41 @@
+{
+  "object" : {
+    "artifacts" : [
+
+    ],
+    "dependencies" : [
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "babciascanpipeline",
+          "kind" : "fileSystem",
+          "location" : "/Users/Shared/Developer/BabciaTobiasz/BabciaScanPipeline",
+          "name" : "BabciaScanPipeline"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/Shared/Developer/BabciaTobiasz/BabciaScanPipeline"
+        },
+        "subpath" : "babciascanpipeline"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "dreamroomengine",
+          "kind" : "fileSystem",
+          "location" : "/Users/Shared/Developer/BabciaTobiasz/DreamRoomEngine",
+          "name" : "DreamRoomEngine"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/Shared/Developer/BabciaTobiasz/DreamRoomEngine"
+        },
+        "subpath" : "dreamroomengine"
+      }
+    ],
+    "prebuilts" : [
+
+    ]
+  },
+  "version" : 7
+}

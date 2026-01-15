@@ -28,7 +28,9 @@ struct MainTabView: View {
             }
 
             Tab("Gallery", systemImage: "photo.on.rectangle", value: MainTabViewModel.Tab.gallery) {
-                PlaceholderScreen(title: "Gallery", subtitle: "Coming soon")
+                NavigationStack {
+                    FilterShopView(viewModel: areaViewModel)
+                }
             }
             
             Tab("Settings", systemImage: "gear", value: MainTabViewModel.Tab.settings) {
@@ -53,7 +55,9 @@ struct MainTabView: View {
         
         areaViewModel.configure(
             persistenceService: persistenceService,
-            notificationService: dependencies.notificationService
+            notificationService: dependencies.notificationService,
+            // Added 2026-01-14 22:55 GMT
+            scanPipelineService: dependencies.scanPipelineService
         )
     }
 }

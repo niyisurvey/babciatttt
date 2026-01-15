@@ -18,6 +18,32 @@ struct BabciaStatusView: View {
                     .frame(maxWidth: 260)
                     .shadow(color: .black.opacity(0.12), radius: 20, x: 0, y: 10)
 
+                GlassCardView {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Points Pot")
+                                .dsFont(.caption)
+                                .foregroundStyle(.secondary)
+                            Text("\(viewModel.availablePotPoints)")
+                                .dsFont(.title2, weight: .bold)
+                            Text("Available")
+                                .dsFont(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+
+                        Spacer()
+
+                        VStack(alignment: .trailing, spacing: 4) {
+                            Text("All Time")
+                                .dsFont(.caption)
+                                .foregroundStyle(.secondary)
+                            Text("\(viewModel.totalPotPoints)")
+                                .dsFont(.headline, weight: .bold)
+                        }
+                    }
+                    .padding(.vertical, 8)
+                }
+
                 VStack(spacing: 8) {
                     Text(status.title)
                         .dsFont(.title2, weight: .bold)
