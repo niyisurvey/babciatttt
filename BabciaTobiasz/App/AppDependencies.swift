@@ -5,6 +5,7 @@
 
 import Foundation
 import SwiftUI
+import UserNotifications
 
 /// Dependency injection container for app services
 @Observable @MainActor
@@ -18,6 +19,8 @@ final class AppDependencies {
     let dreamPipelineService: DreamPipelineService
     // Added 2026-01-14 22:55 GMT
     let scanPipelineService: BabciaScanPipelineService
+    let services: ServiceContainer
+    let reminderNotificationRouter: ReminderNotificationRouter
     
     // MARK: - Init
     
@@ -27,7 +30,10 @@ final class AppDependencies {
         locationService: LocationService? = nil,
         dreamPipelineService: DreamPipelineService? = nil,
         // Added 2026-01-14 22:55 GMT
-        scanPipelineService: BabciaScanPipelineService? = nil
+        scanPipelineService: BabciaScanPipelineService? = nil,
+        reminderScheduler: ReminderSchedulerProtocol? = nil,
+        progressionService: ProgressionServiceProtocol? = nil,
+        reminderNotificationRouter: ReminderNotificationRouter? = nil
     ) {
         let location = locationService ?? LocationService()
         self.locationService = location
@@ -35,6 +41,12 @@ final class AppDependencies {
         self.notificationService = notificationService ?? NotificationService()
         self.dreamPipelineService = dreamPipelineService ?? DreamPipelineService()
         self.scanPipelineService = scanPipelineService ?? BabciaScanPipelineService()
+        let progression = progressionService ?? ProgressionService()
+        let reminders = reminderScheduler ?? ReminderScheduler()
+        self.services = ServiceContainer(progression: progression, reminders: reminders)
+        self.reminderNotificationRouter = reminderNotificationRouter ?? ReminderNotificationRouter()
+        UNUserNotificationCenter.current().delegate = self.reminderNotificationRouter
+        self.reminderNotificationRouter.registerNotificationCategories()
     }
 }
 

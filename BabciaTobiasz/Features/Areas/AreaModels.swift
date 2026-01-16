@@ -125,6 +125,24 @@ final class Area {
         set { personaRaw = newValue.rawValue }
     }
 
+    var hasDreamVision: Bool {
+        if let heroData = latestBowl?.dreamHeroImageData, !heroData.isEmpty {
+            return true
+        }
+        if let name = dreamImageName, !name.isEmpty {
+            return true
+        }
+        return false
+    }
+
+    var ageInDays: Int {
+        let calendar = Calendar.current
+        let start = calendar.startOfDay(for: createdAt)
+        let end = calendar.startOfDay(for: Date())
+        let dayCount = calendar.dateComponents([.day], from: start, to: end).day ?? 0
+        return max(1, dayCount + 1)
+    }
+
     var latestBowl: AreaBowl? {
         bowls?.sorted { $0.createdAt > $1.createdAt }.first
     }
@@ -217,7 +235,8 @@ final class CleaningTask {
     var points: Int
     var createdAt: Date
     var completedAt: Date?
-    var bowl: AreaBowl?
+    @Relationship(inverse: \AreaBowl.tasks) var bowl: AreaBowl?
+    @Relationship(inverse: \Session.tasks) var session: Session?
 
     init(title: String, detail: String? = nil, points: Int = 1, createdAt: Date = Date()) {
         self.id = UUID()

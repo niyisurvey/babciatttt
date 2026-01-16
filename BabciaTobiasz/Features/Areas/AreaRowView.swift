@@ -14,6 +14,7 @@ struct AreaRowView: View {
 
     /// The area to display
     let area: Area
+    let milestone: MilestoneDisplay?
     @Environment(\.dsTheme) private var theme
 
     // MARK: - Body
@@ -84,14 +85,44 @@ struct AreaRowView: View {
                     .foregroundStyle(.tertiary)
                     .lineLimit(1)
             }
+
+            HStack(spacing: 8) {
+                Text(ageLabel)
+                    .dsFont(.caption2)
+                    .foregroundStyle(.secondary)
+
+                if let milestone {
+                    milestoneBadge(milestone)
+                }
+            }
         }
+    }
+
+    private var ageLabel: String {
+        let format = NSLocalizedString("area_age_days", comment: "Area age in days")
+        return String.localizedStringWithFormat(format, area.ageInDays)
+    }
+
+    private func milestoneBadge(_ milestone: MilestoneDisplay) -> some View {
+        HStack(spacing: 4) {
+            if let badge = milestone.badgeSystemName {
+                Image(systemName: badge)
+                    .font(.system(size: theme.grid.iconTiny))
+            }
+            Text("Day \(milestone.day)")
+                .dsFont(.caption2, weight: .bold)
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(area.color.opacity(0.15), in: Capsule())
+        .foregroundStyle(area.color)
     }
 }
 
 #Preview {
     VStack(spacing: 12) {
         ForEach(Area.sampleAreas) { area in
-            AreaRowView(area: area)
+            AreaRowView(area: area, milestone: nil)
         }
     }
     .padding()

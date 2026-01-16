@@ -36,6 +36,26 @@ final class PersistenceService {
         let descriptor = FetchDescriptor<T>(predicate: predicate)
         return try modelContext.fetch(descriptor)
     }
+
+    // MARK: - User
+
+    /// Fetches the current user if one exists.
+    func fetchUser() throws -> User? {
+        var descriptor = FetchDescriptor<User>(sortBy: [SortDescriptor(\.id)])
+        descriptor.fetchLimit = 1
+        return try modelContext.fetch(descriptor).first
+    }
+
+    /// Fetches the current user or creates a default one if missing.
+    func fetchOrCreateUser() throws -> User {
+        if let existing = try fetchUser() {
+            return existing
+        }
+        let user = User()
+        modelContext.insert(user)
+        try modelContext.save()
+        return user
+    }
     
     // MARK: - Areas
     
@@ -59,6 +79,22 @@ final class PersistenceService {
     func deleteArea(_ area: Area) throws {
         modelContext.delete(area)
         try modelContext.save()
+    }
+
+    func fetchReminderConfig(for areaId: UUID) throws -> ReminderConfig? {
+        let predicate = #Predicate<ReminderConfig> { config in
+            config.areaId == areaId
+        }
+        var descriptor = FetchDescriptor<ReminderConfig>(predicate: predicate)
+        descriptor.fetchLimit = 1
+        return try modelContext.fetch(descriptor).first
+    }
+
+    func deleteReminderConfig(for areaId: UUID) throws {
+        if let config = try fetchReminderConfig(for: areaId) {
+            modelContext.delete(config)
+            try modelContext.save()
+        }
     }
     
     func createBowl(for area: Area, tasks: [CleaningTask], verificationRequested: Bool, beforePhotoData: Data?) throws -> AreaBowl {

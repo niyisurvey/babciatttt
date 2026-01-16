@@ -110,3 +110,34 @@
 "accessibility_add_area" = "Add new area";
 "accessibility_refresh_weather" = "Refresh weather data";
 "accessibility_area_streak" = "%d day streak";
+
+// MARK: - Area Age
+"area_age_days" = "%d days";
+
+// MARK: - Milestones (Classic Babcia)
+"milestone.classic.day1" = "Oj, you came back. That's something.";
+"milestone.classic.day3" = "Maybe you won't disappoint me after all.";
+"milestone.classic.day5" = "Now you're eating properly.";
+"milestone.classic.day7" = "I'm giving you my apron. Don't ruin it.";
+"milestone.classic.day14" = "I never share this. You earned it.";
+"milestone.classic.day30" = "You clean like family now.";
+
+// MARK: - Milestones (Baroness)
+"milestone.baroness.day1" = "Well. At least you showed up.";
+"milestone.baroness.day7" = "You may sit at my table.";
+"milestone.baroness.day30" = "You have my blessing. Don't waste it.";
+
+// MARK: - Milestones (Warrior)
+"milestone.warrior.day1" = "THE BATTLE BEGINS!";
+"milestone.warrior.day7" = "A WEEK OF CONQUEST!";
+"milestone.warrior.day30" = "THE ROOM BOWS TO YOU, WARRIOR!";
+
+// MARK: - Milestones (Wellness)
+"milestone.wellness.day1" = "Balance protocol: day 1 complete.";
+"milestone.wellness.day7" = "One week. Inner peace unlocked.";
+"milestone.wellness.day30" = "You have become the room.";
+
+// MARK: - Milestones (Coach)
+"milestone.coach.day1" = "Fine. You did a thing. Don't get cocky.";
+"milestone.coach.day7" = "A full week? Who are you?";
+"milestone.coach.day30" = "You're one of the good ones now.";

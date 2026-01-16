@@ -1,0 +1,20 @@
+[
+  { "persona": "classic", "day": 1, "badgeSystemName": "sparkles", "bonusPoints": 5, "copyKey": "milestone.classic.day1" },
+  { "persona": "classic", "day": 3, "badgeSystemName": "leaf.fill", "bonusPoints": 8, "copyKey": "milestone.classic.day3" },
+  { "persona": "classic", "day": 5, "badgeSystemName": "cup.and.saucer.fill", "bonusPoints": 10, "copyKey": "milestone.classic.day5" },
+  { "persona": "classic", "day": 7, "badgeSystemName": "tshirt.fill", "bonusPoints": 12, "copyKey": "milestone.classic.day7" },
+  { "persona": "classic", "day": 14, "badgeSystemName": "heart.fill", "bonusPoints": 20, "copyKey": "milestone.classic.day14" },
+  { "persona": "classic", "day": 30, "badgeSystemName": "star.fill", "bonusPoints": 30, "copyKey": "milestone.classic.day30" },
+  { "persona": "baroness", "day": 1, "badgeSystemName": "crown.fill", "bonusPoints": 5, "copyKey": "milestone.baroness.day1" },
+  { "persona": "baroness", "day": 7, "badgeSystemName": "crown", "bonusPoints": 12, "copyKey": "milestone.baroness.day7" },
+  { "persona": "baroness", "day": 30, "badgeSystemName": "seal.fill", "bonusPoints": 30, "copyKey": "milestone.baroness.day30" },
+  { "persona": "warrior", "day": 1, "badgeSystemName": "flame.fill", "bonusPoints": 5, "copyKey": "milestone.warrior.day1" },
+  { "persona": "warrior", "day": 7, "badgeSystemName": "shield.fill", "bonusPoints": 12, "copyKey": "milestone.warrior.day7" },
+  { "persona": "warrior", "day": 30, "badgeSystemName": "flag.checkered", "bonusPoints": 30, "copyKey": "milestone.warrior.day30" },
+  { "persona": "wellness", "day": 1, "badgeSystemName": "waveform.path.ecg", "bonusPoints": 5, "copyKey": "milestone.wellness.day1" },
+  { "persona": "wellness", "day": 7, "badgeSystemName": "sparkles", "bonusPoints": 12, "copyKey": "milestone.wellness.day7" },
+  { "persona": "wellness", "day": 30, "badgeSystemName": "circle.grid.cross.fill", "bonusPoints": 30, "copyKey": "milestone.wellness.day30" },
+  { "persona": "coach", "day": 1, "badgeSystemName": "bolt.fill", "bonusPoints": 5, "copyKey": "milestone.coach.day1" },
+  { "persona": "coach", "day": 7, "badgeSystemName": "bolt.circle.fill", "bonusPoints": 12, "copyKey": "milestone.coach.day7" },
+  { "persona": "coach", "day": 30, "badgeSystemName": "trophy.fill", "bonusPoints": 30, "copyKey": "milestone.coach.day30" }
+]

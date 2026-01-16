@@ -4,11 +4,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 /// Form view for adding or editing an area.
 struct AreaFormView: View {
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
 
     @Bindable var viewModel: AreaViewModel
     let area: Area?
@@ -111,6 +113,22 @@ struct AreaFormView: View {
                                             Divider()
                                         }
                                     }
+                                }
+                            }
+                        }
+
+                        VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
+                            Text("Reminders")
+                                .dsFont(.headline, weight: .bold)
+                                .padding(.horizontal, 4)
+
+                            if let area {
+                                ReminderConfigView(area: area)
+                            } else {
+                                GlassCardView {
+                                    Text("Create the area first to enable reminders.")
+                                        .dsFont(.subheadline)
+                                        .foregroundStyle(.secondary)
                                 }
                             }
                         }
@@ -257,6 +275,7 @@ struct AreaFormView: View {
                 area.iconName = selectedIcon
                 area.colorHex = selectedColor.hexString
                 area.persona = selectedPersona
+                updateReminderConfig(for: area)
 
                 await viewModel.updateArea(area)
             } else {
@@ -271,6 +290,20 @@ struct AreaFormView: View {
             }
 
             dismiss()
+        }
+    }
+
+    private func updateReminderConfig(for area: Area) {
+        let predicate = #Predicate<ReminderConfig> { config in
+            config.areaId == area.id
+        }
+        let descriptor = FetchDescriptor<ReminderConfig>(predicate: predicate)
+        guard let config = try? modelContext.fetch(descriptor).first else { return }
+        config.updateAreaInfo(name: area.name, description: area.areaDescription)
+        do {
+            try modelContext.save()
+        } catch {
+            // Best-effort update; ignore to avoid blocking the form.
         }
     }
 
@@ -336,8 +369,12 @@ struct AreaFormView: View {
 
 #Preview("New Area") {
     AreaFormView(viewModel: AreaViewModel(), area: nil)
+        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self], inMemory: true)
+        .environment(AppDependencies())
 }
 
 #Preview("Edit Area") {
     AreaFormView(viewModel: AreaViewModel(), area: Area.sampleAreas[0])
+        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self], inMemory: true)
+        .environment(AppDependencies())
 }

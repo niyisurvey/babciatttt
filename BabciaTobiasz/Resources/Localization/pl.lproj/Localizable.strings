@@ -1,0 +1,37 @@
+/*
+  Localizable.strings
+  BabciaTobiasz
+
+  Polish localization strings for the BabciaTobiasz app.
+*/
+
+// MARK: - Area Age
+"area_age_days" = "%d dni";
+
+// MARK: - Milestones (Classic Babcia)
+"milestone.classic.day1" = "Oj, wróciłeś. Coś z tego będzie.";
+"milestone.classic.day3" = "Może jednak mnie nie zawiedziesz.";
+"milestone.classic.day5" = "Teraz jesz porządnie.";
+"milestone.classic.day7" = "Daję ci mój fartuch. Nie zniszcz go.";
+"milestone.classic.day14" = "Tym się nie dzielę. Zasłużyłeś.";
+"milestone.classic.day30" = "Sprzątasz jak rodzina.";
+
+// MARK: - Milestones (Baroness)
+"milestone.baroness.day1" = "Cóż. Przynajmniej się pojawiłeś.";
+"milestone.baroness.day7" = "Możesz usiąść przy moim stole.";
+"milestone.baroness.day30" = "Masz moje błogosławieństwo. Nie zmarnuj go.";
+
+// MARK: - Milestones (Warrior)
+"milestone.warrior.day1" = "BITWA SIĘ ZACZYNA!";
+"milestone.warrior.day7" = "TYDZIEŃ PODBOJÓW!";
+"milestone.warrior.day30" = "POKÓJ KŁANIA SIĘ TOBIE, WOJOWNIKU!";
+
+// MARK: - Milestones (Wellness)
+"milestone.wellness.day1" = "Protokół równowagi: dzień 1 ukończony.";
+"milestone.wellness.day7" = "Jeden tydzień. Wewnętrzny spokój odblokowany.";
+"milestone.wellness.day30" = "Stałeś się pokojem.";
+
+// MARK: - Milestones (Coach)
+"milestone.coach.day1" = "Dobra. Zrobiłeś coś. Nie zadzieraj nosa.";
+"milestone.coach.day7" = "Cały tydzień? Kim ty jesteś?";
+"milestone.coach.day30" = "Teraz jesteś jednym z tych dobrych.";

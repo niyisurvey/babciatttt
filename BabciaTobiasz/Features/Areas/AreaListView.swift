@@ -14,7 +14,7 @@ struct AreaListView: View {
     private let heroImageName = "R2_Baroness_Headshot_Neutral"
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $viewModel.navigationPath) {
             ZStack {
                 backgroundGradient
                 
@@ -44,6 +44,13 @@ struct AreaListView: View {
                 Button("OK") { viewModel.dismissError() }
             } message: {
                 Text(viewModel.errorMessage ?? "An error occurred")
+            }
+        }
+        .navigationDestination(for: UUID.self) { areaId in
+            if let area = viewModel.area(for: areaId) {
+                AreaDetailView(area: area, viewModel: viewModel)
+            } else {
+                Text("Area not found")
             }
         }
     }
@@ -237,8 +244,8 @@ struct AreaListView: View {
         return LazyVStack(spacing: -overlap) {
             ForEach(items, id: \.element.id) { index, area in
                 let stackScale = 1 - min(Double(index) * 0.02, 0.08)
-                NavigationLink(destination: AreaDetailView(area: area, viewModel: viewModel)) {
-                    AreaRowView(area: area)
+                NavigationLink(value: area.id) {
+                    AreaRowView(area: area, milestone: viewModel.milestone(for: area))
                 }
                 .buttonStyle(.plain)
                 .contextMenu { areaContextMenu(for: area) }
@@ -352,6 +359,6 @@ private struct AreasHeroHeader: View {
 
 #Preview {
     AreaListView(viewModel: AreaViewModel())
-        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self], inMemory: true)
+        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self], inMemory: true)
         .environment(AppDependencies())
 }

@@ -31,13 +31,7 @@ public struct BabciaTobiaszAppView: View {
     public init() {
         do {
             // Configure the schema with all SwiftData models
-            let schema = Schema([
-                Area.self,
-                AreaBowl.self,
-                CleaningTask.self,
-                WeatherData.self,
-                WeatherForecast.self
-            ])
+            let schema = Schema(SchemaV1.models)
             
             // Create model configuration with CloudKit preparation
             let modelConfiguration = ModelConfiguration(
@@ -46,7 +40,11 @@ public struct BabciaTobiaszAppView: View {
                 cloudKitDatabase: .none // Ready to switch to .automatic for CloudKit
             )
             
-            modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
+            modelContainer = try ModelContainer(
+                for: SchemaV1.self,
+                migrationPlan: AppSchema.self,
+                configurations: [modelConfiguration]
+            )
             
             // Note: iOS 26+ automatically applies Liquid Glass to standard components.
             // No custom appearance configuration needed - system handles it.

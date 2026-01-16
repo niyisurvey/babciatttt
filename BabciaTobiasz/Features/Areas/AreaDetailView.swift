@@ -19,6 +19,8 @@ struct AreaDetailView: View {
     @State private var showCameraCapture = false
     @State private var showCameraAlert = false
     @State private var cameraAlertMessage = ""
+    @State private var showReminderPrompt = false
+    @State private var cameraFlowViewModel = CameraFlowViewModel()
     @State private var showVerificationPrompt = false
     @State private var showGoldenUnlock = false
     @State private var showVerificationReady = false
@@ -27,6 +29,7 @@ struct AreaDetailView: View {
     @State private var verificationTier: BowlVerificationTier = .blue
     @State private var verificationPassed: Bool = false
     @State private var verificationBowl: AreaBowl?
+    @State private var showDeleteConfirmation = false
 
     var body: some View {
         ZStack {
@@ -56,6 +59,18 @@ struct AreaDetailView: View {
         .toolbar { toolbarContent }
         .sheet(isPresented: $viewModel.showAreaForm) {
             AreaFormView(viewModel: viewModel, area: viewModel.editingArea)
+        }
+        .sheet(isPresented: $showReminderPrompt) {
+            RoomReminderPromptView(
+                area: area,
+                onStart: {
+                    showReminderPrompt = false
+                    requestCameraCapture()
+                },
+                onDismiss: {
+                    showReminderPrompt = false
+                }
+            )
         }
         // Added 2026-01-14 20:55 GMT
         .fullScreenCover(isPresented: $showCameraCapture) {
@@ -108,6 +123,12 @@ struct AreaDetailView: View {
         } message: {
             Text(verificationCelebrationMessage)
         }
+        .alert("Delete area?", isPresented: $showDeleteConfirmation) {
+            Button("Delete", role: .destructive) { viewModel.deleteArea(area) }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text(deleteWarningMessage)
+        }
         // Added 2026-01-14 21:13 GMT
         .alert("Error", isPresented: $viewModel.showError) {
             Button("OK") { viewModel.dismissError() }
@@ -117,6 +138,12 @@ struct AreaDetailView: View {
         // Added 2026-01-14 22:02 GMT
         .overlay(alignment: .bottomTrailing) {
             floatingCameraButton
+        }
+        .onAppear {
+            cameraFlowViewModel.configure(areaViewModel: viewModel)
+            if viewModel.consumeReminderPrompt(for: area.id) {
+                showReminderPrompt = true
+            }
         }
     }
 
@@ -173,7 +200,8 @@ struct AreaDetailView: View {
             viewModel.showError = true
             return
         }
-        if area.inProgressBowl != nil {
+        let flowMode = cameraFlowViewModel.determineMode(for: area)
+        if area.inProgressBowl != nil, flowMode != .appendTasks {
             viewModel.errorMessage = "Finish the current session before starting a new scan."
             viewModel.showError = true
             return
@@ -214,11 +242,7 @@ struct AreaDetailView: View {
             return
         }
         Task {
-            await viewModel.startBowl(
-                for: area,
-                verificationRequested: false,
-                beforePhotoData: data
-            )
+            await cameraFlowViewModel.handleCapture(image: data, for: area)
             hapticFeedback(.medium)
         }
     }
@@ -227,6 +251,13 @@ struct AreaDetailView: View {
     private func presentCameraAlert(_ message: String) {
         cameraAlertMessage = message
         showCameraAlert = true
+    }
+
+    private var deleteWarningMessage: String {
+        if let milestone = viewModel.milestone(for: area) {
+            return "Deleting now will remove your day \(milestone.day) milestone."
+        }
+        return "Are you sure you want to delete this area?"
     }
 
     // MARK: - Babcia Card
@@ -494,7 +525,7 @@ struct AreaDetailView: View {
                 Divider()
 
                 Button(role: .destructive) {
-                    viewModel.deleteArea(area)
+                    showDeleteConfirmation = true
                 } label: {
                     Label("Delete Area", systemImage: "trash")
                 }
@@ -510,5 +541,6 @@ struct AreaDetailView: View {
     NavigationStack {
         AreaDetailView(area: Area.sampleAreas[0], viewModel: AreaViewModel())
     }
-    .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self], inMemory: true)
+    .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self], inMemory: true)
+    .environment(AppDependencies())
 }

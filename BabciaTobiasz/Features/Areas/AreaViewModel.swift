@@ -20,6 +20,7 @@ final class AreaViewModel {
     var editingArea: Area?
     var searchText: String = ""
     var filterOption: FilterOption = .all
+    var navigationPath: NavigationPath = NavigationPath()
     // Added 2026-01-14 20:55 GMT
     var isGeneratingDream: Bool = false
     // Added 2026-01-14 20:55 GMT
@@ -57,14 +58,16 @@ final class AreaViewModel {
     // MARK: - Dependencies
     
     private var persistenceService: PersistenceService?
-    private var notificationService: NotificationService?
+    private var reminderScheduler: ReminderSchedulerProtocol?
     // Added 2026-01-14 22:55 GMT
     private var scanPipelineService: BabciaScanPipelineService?
     private var potService: PotService?
     private var currentUser: User?
+    private var progressionService: ProgressionServiceProtocol?
     private let verificationJudge: VerificationJudgeProtocol
     private let scoringService: ScoringService
     @ObservationIgnored private let userDefaults = UserDefaults.standard
+    @ObservationIgnored private var pendingReminderAreaId: UUID?
 
     private enum StorageKeys {
         static let dailyBowlTarget = "dailyBowlTarget"
@@ -139,23 +142,29 @@ final class AreaViewModel {
     var hasCompletedUnverifiedToday: Bool {
         bowlsCompletedToday.contains { $0.verificationOutcome != .passed }
     }
+
+    func milestone(for area: Area) -> MilestoneDisplay? {
+        progressionService?.getMilestone(for: area)
+    }
     
     // MARK: - Initialization
     
     init(
         persistenceService: PersistenceService? = nil,
-        notificationService: NotificationService? = nil,
+        reminderScheduler: ReminderSchedulerProtocol? = nil,
         scanPipelineService: BabciaScanPipelineService? = nil,
         potService: PotService? = nil,
         currentUser: User? = nil,
+        progressionService: ProgressionServiceProtocol? = nil,
         verificationJudge: VerificationJudgeProtocol? = nil,
         scoringService: ScoringService? = nil
     ) {
         self.persistenceService = persistenceService
-        self.notificationService = notificationService
+        self.reminderScheduler = reminderScheduler
         self.scanPipelineService = scanPipelineService
         self.potService = potService
         self.currentUser = currentUser
+        self.progressionService = progressionService
         self.verificationJudge = verificationJudge ?? VerificationJudgeService()
         self.scoringService = scoringService ?? ScoringService()
         loadPersistentState()
@@ -165,17 +174,27 @@ final class AreaViewModel {
     
     func configure(
         persistenceService: PersistenceService,
-        notificationService: NotificationService,
+        reminderScheduler: ReminderSchedulerProtocol,
         // Added 2026-01-14 22:55 GMT
         scanPipelineService: BabciaScanPipelineService,
         potService: PotService? = nil,
-        currentUser: User? = nil
+        currentUser: User? = nil,
+        progressionService: ProgressionServiceProtocol? = nil
     ) {
         self.persistenceService = persistenceService
-        self.notificationService = notificationService
+        self.reminderScheduler = reminderScheduler
         self.scanPipelineService = scanPipelineService
         self.potService = potService
         self.currentUser = currentUser
+        self.progressionService = progressionService
+
+        if let progressionService = progressionService as? ProgressionService,
+           let potService,
+           let currentUser {
+            progressionService.configureAwardHandler { points in
+                try potService.addPoints(points, to: currentUser)
+            }
+        }
     }
 
     private func loadPersistentState() {
@@ -271,6 +290,8 @@ final class AreaViewModel {
         guard let persistenceService = persistenceService else { return }
         
         do {
+            reminderScheduler?.cancelAll(for: area.id)
+            try persistenceService.deleteReminderConfig(for: area.id)
             try persistenceService.deleteArea(area)
             areas.removeAll { $0.id == area.id }
         } catch {
@@ -318,22 +339,7 @@ final class AreaViewModel {
                 isGeneratingDream = false
             }
 
-            let fallbackTasks = Array(genericTaskTemplates().prefix(5))
-            let scanResult = await scanPipelineService?.runScan(
-                beforePhotoData: beforePhotoData,
-                persona: area.persona,
-                filterId: activeFilterId,
-                fallbackTasks: fallbackTasks
-            ) ?? BabciaScanPipelineOutput(
-                tasks: fallbackTasks,
-                advice: "Start small. You have got this.",
-                dreamHeroImageData: nil,
-                dreamRawImageData: nil,
-                dreamFilterId: activeFilterId,
-                taskErrorMessage: "Scan pipeline unavailable.",
-                dreamErrorMessage: "Scan pipeline unavailable.",
-                metadata: nil
-            )
+            let scanResult = await runScan(beforePhotoData: beforePhotoData, persona: area.persona)
 
             let tasks = scanResult.tasks.prefix(5).map { CleaningTask(title: $0) }
             let bowl = try persistenceService.createBowl(
@@ -371,6 +377,124 @@ final class AreaViewModel {
         } catch {
             handleError(error)
         }
+    }
+
+    func startTasksOnlyBowl(for area: Area, beforePhotoData: Data?) async {
+        guard let persistenceService = persistenceService else { return }
+
+        guard canStartBowlToday else {
+            errorMessage = "Kitchen Closed. Daily target reached."
+            showError = true
+            return
+        }
+
+        guard area.inProgressBowl == nil else {
+            errorMessage = "Finish the current session before starting a new scan."
+            showError = true
+            return
+        }
+
+        guard let beforePhotoData else {
+            errorMessage = "Scan photo required to start a session."
+            showError = true
+            return
+        }
+
+        do {
+            isLoading = true
+            dreamStatusMessage = "Scanning..."
+            defer {
+                isLoading = false
+            }
+
+            let scanResult = await runScan(beforePhotoData: beforePhotoData, persona: area.persona)
+            let tasks = scanResult.tasks.prefix(5).map { CleaningTask(title: $0) }
+            let bowl = try persistenceService.createBowl(
+                for: area,
+                tasks: Array(tasks),
+                verificationRequested: false,
+                beforePhotoData: beforePhotoData
+            )
+
+            bowl.dreamHeroImageData = nil
+            bowl.dreamRawImageData = nil
+            bowl.dreamFilterId = nil
+            bowl.dreamGeneratedAt = nil
+            dreamStatusMessage = "Tasks refreshed."
+
+            updateStreakForNewBowl()
+            try persistenceService.save()
+
+            if let taskError = scanResult.taskErrorMessage, !taskError.isEmpty {
+                errorMessage = taskError
+                showError = true
+            }
+        } catch {
+            handleError(error)
+        }
+    }
+
+    func appendTasks(for area: Area, beforePhotoData: Data?) async {
+        guard let persistenceService = persistenceService else { return }
+
+        guard let beforePhotoData else {
+            errorMessage = "Scan photo required to append tasks."
+            showError = true
+            return
+        }
+
+        guard let bowl = area.inProgressBowl else {
+            errorMessage = "No active session to append tasks."
+            showError = true
+            return
+        }
+
+        do {
+            isLoading = true
+            dreamStatusMessage = "Scanning..."
+            defer {
+                isLoading = false
+            }
+
+            let scanResult = await runScan(beforePhotoData: beforePhotoData, persona: area.persona)
+            let tasks = scanResult.tasks.prefix(5).map { CleaningTask(title: $0) }
+            if bowl.tasks == nil {
+                bowl.tasks = []
+            }
+            for task in tasks {
+                task.bowl = bowl
+                bowl.tasks?.append(task)
+                persistenceService.insert(task)
+            }
+            dreamStatusMessage = "Tasks appended."
+            try persistenceService.save()
+
+            if let taskError = scanResult.taskErrorMessage, !taskError.isEmpty {
+                errorMessage = taskError
+                showError = true
+            }
+        } catch {
+            handleError(error)
+        }
+    }
+
+    private func runScan(beforePhotoData: Data, persona: BabciaPersona) async -> BabciaScanPipelineOutput {
+        let fallbackTasks = Array(genericTaskTemplates().prefix(5))
+        return await scanPipelineService?.runScan(
+            beforePhotoData: beforePhotoData,
+            persona: persona,
+            filterId: activeFilterId,
+            fallbackTasks: fallbackTasks
+        ) ?? BabciaScanPipelineOutput(
+            tasks: fallbackTasks,
+            advice: "Start small. You have got this.",
+            dreamHeroImageData: nil,
+            dreamRawImageData: nil,
+            dreamFilterId: activeFilterId,
+            taskErrorMessage: "Scan pipeline unavailable.",
+            dreamErrorMessage: "Scan pipeline unavailable.",
+            metadata: nil
+        )
     }
     
     func toggleTaskCompletion(_ task: CleaningTask) {
@@ -518,6 +642,27 @@ final class AreaViewModel {
     func closeForm() {
         showAreaForm = false
         editingArea = nil
+    }
+
+    // MARK: - Navigation
+
+    func openAreaFromReminder(_ areaId: UUID) {
+        if areas.isEmpty {
+            loadAreas()
+        }
+        pendingReminderAreaId = areaId
+        navigationPath = NavigationPath()
+        navigationPath.append(areaId)
+    }
+
+    func consumeReminderPrompt(for areaId: UUID) -> Bool {
+        guard pendingReminderAreaId == areaId else { return false }
+        pendingReminderAreaId = nil
+        return true
+    }
+
+    func area(for areaId: UUID) -> Area? {
+        areas.first { $0.id == areaId }
     }
     
     // MARK: - Error Handling
@@ -677,6 +822,9 @@ extension AreaViewModel {
         if bowl.isCompleted {
             if bowl.completedAt == nil {
                 bowl.completedAt = Date()
+                if let area = bowl.area {
+                    Task { await progressionService?.awardBonus(for: area) }
+                }
             }
         } else {
             bowl.completedAt = nil
