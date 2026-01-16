@@ -8,6 +8,8 @@
 # Build generated
 build/
 DerivedData/
+AppHost/.derivedData/
+AppHost/.derivedData-sim/
 
 # Various settings
 *.pbxuser
@@ -148,6 +150,7 @@ coverage/
 # ========================
 docs/_build/
 *.docset
+DocsArchive/
 
 # ========================
 # Logs
@@ -171,7 +174,7 @@ logs/
 # API Keys (if stored in a file)
 APIConfig.swift
 
-# Screenshots for README (optional - uncomment if you want to track them)
-# screenshots/
+# Screenshots
+screenshots/
 Secrets.plist
 BabciaTobiasz/Resources/LocalDreamPrompts.json
