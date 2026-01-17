@@ -72,6 +72,7 @@ struct DSGrid {
     var ringSize: CGFloat
     var detailCardHeightSmall: CGFloat
     var detailCardHeightLarge: CGFloat
+    var heroHeaderCollapsedHeight: CGFloat
     var heroCardHeight: CGFloat
 }
 
@@ -304,6 +305,7 @@ extension DesignSystemTheme {
             ringSize: 100,
             detailCardHeightSmall: 120,
             detailCardHeightLarge: 150,
+            heroHeaderCollapsedHeight: 120,
             heroCardHeight: 260
         ),
         glass: DSGlass(

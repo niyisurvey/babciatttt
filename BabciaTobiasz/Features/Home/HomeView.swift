@@ -164,8 +164,7 @@ private struct HomeDashboardContent: View {
 
             // Stats Progress
             StatsCard(lifetimePierogis: viewModel.lifetimePierogis) {
-                // TODO: Navigate to StatsProgressView
-                print("Navigate to Stats Progress")
+                onAnalyticsTap()
             }
 
             // Latest Dream (optional)

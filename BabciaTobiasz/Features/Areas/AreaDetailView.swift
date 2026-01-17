@@ -37,7 +37,7 @@ struct AreaDetailView: View {
 
             ScalingHeaderScrollView(
                 maxHeight: theme.grid.heroCardHeight,
-                minHeight: 120,  // TODO: Add DSGrid.heroHeaderCollapsedHeight token
+                minHeight: theme.grid.heroHeaderCollapsedHeight,
                 snapMode: .none,
                 progress: $headerProgress
             ) { progress in

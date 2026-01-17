@@ -3,12 +3,15 @@
 
 import Foundation
 import UserNotifications
+import os
 
 @MainActor
 @Observable
 final class NotificationService {
     
     // MARK: - Properties
+    
+    private let logger = Logger(subsystem: "com.babcia.tobiasz", category: "notifications")
     
     private var notificationCenter: UNUserNotificationCenter? {
         guard Bundle.main.bundleIdentifier != nil else { return nil }
@@ -39,7 +42,7 @@ final class NotificationService {
     @discardableResult
     func requestAuthorization() async -> Bool {
         guard let center = notificationCenter else {
-            print("Notification authorization skipped: No bundle identifier")
+            logger.warning("Notification authorization skipped: missing bundle identifier.")
             return false
         }
 
@@ -52,7 +55,7 @@ final class NotificationService {
             }
             return granted
         } catch {
-            print("Notification authorization error: \(error.localizedDescription)")
+            logger.error("Notification authorization failed: \(error.localizedDescription, privacy: .public)")
             return false
         }
     }

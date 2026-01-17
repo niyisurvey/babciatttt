@@ -283,12 +283,11 @@ struct ErrorOverlayModifier: ViewModifier {
             // Default error
             ErrorView(
                 message: "An unexpected error occurred. Please try again.",
-                retryAction: { print("Retry tapped") }
+                retryAction: {}
             )
             
             // Network error
             ErrorView.networkError {
-                print("Retry network")
             }
             
             // Location error
@@ -296,7 +295,6 @@ struct ErrorOverlayModifier: ViewModifier {
             
             // Error banner
             ErrorBanner(message: "Unable to sync your data") {
-                print("Dismissed")
             }
         }
         .padding()
