@@ -112,7 +112,7 @@ struct AreaDetailView: View {
         } message: {
             Text("Congrats — you unlocked Golden verification for extra points.")
         }
-        .alert("ARE YOU READY TO VERIFY HAHAHAH", isPresented: $showVerificationReady) {
+        .alert("Ready to Verify?", isPresented: $showVerificationReady) {
             Button("Start verification") { showVerificationCapture = true }
             Button("Not now", role: .cancel) { }
         } message: {

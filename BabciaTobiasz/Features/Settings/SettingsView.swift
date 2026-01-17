@@ -5,7 +5,6 @@ import SwiftUI
 
 struct SettingsView: View {
     @AppStorage("appTheme") private var appTheme: AppTheme = .system
-    @AppStorage("temperatureUnit") private var temperatureUnit: TemperatureUnit = .celsius
     
     @Environment(\.dsTheme) private var theme
     
@@ -35,23 +34,7 @@ struct SettingsView: View {
                             }
                         }
                         
-                        // Units Section
-                        VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-                            Text("Units")
-                                .dsFont(.headline, weight: .bold)
-                                .padding(.horizontal, 4)
-                            
-                            GlassCardView {
-                                Picker("Temperature", selection: $temperatureUnit) {
-                                    ForEach(TemperatureUnit.allCases) { unit in
-                                        Text(unit.rawValue.capitalized).tag(unit)
-                                            .dsFont(.body)
-                                    }
-                                }
-                                .pickerStyle(.segmented)
-                                .padding(.vertical, 4)
-                            }
-                        }
+
 
                         APIKeysSectionView()
 
@@ -169,10 +152,7 @@ enum AppTheme: String, CaseIterable, Identifiable {
     var id: Self { self }
 }
 
-enum TemperatureUnit: String, CaseIterable, Identifiable {
-    case celsius, fahrenheit
-    var id: Self { self }
-}
+
 
 #Preview {
     SettingsView()

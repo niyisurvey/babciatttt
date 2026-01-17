@@ -19,7 +19,10 @@ public struct BabciaTobiaszAppView: View {
     @State private var dependencies = AppDependencies()
     
     /// SwiftData model container for persistent storage
-    private let modelContainer: ModelContainer
+    private let modelContainer: ModelContainer?
+    
+    /// Error if model container failed to initialize
+    private let initError: Error?
     
     /// App Theme Storage
     @AppStorage("appTheme") private var appTheme: AppTheme = .system
@@ -44,21 +47,56 @@ public struct BabciaTobiaszAppView: View {
                 for: schema,
                 configurations: [modelConfiguration]
             )
+            initError = nil
             
             // Note: iOS 26+ automatically applies Liquid Glass to standard components.
             // No custom appearance configuration needed - system handles it.
         } catch {
-            fatalError("Failed to initialize SwiftData ModelContainer: \(error.localizedDescription)")
+            modelContainer = nil
+            initError = error
         }
     }
     
     // MARK: - Body
     
     public var body: some View {
-        LaunchView()
-            .environment(\.appDependencies, dependencies)
-            .modelContainer(modelContainer)
-            .preferredColorScheme(appTheme.colorScheme)
+        if let modelContainer = modelContainer {
+            LaunchView()
+                .environment(\.appDependencies, dependencies)
+                .modelContainer(modelContainer)
+                .preferredColorScheme(appTheme.colorScheme)
+        } else {
+            DatabaseErrorView(error: initError)
+        }
+    }
+}
+
+/// Error view shown when SwiftData fails to initialize
+private struct DatabaseErrorView: View {
+    let error: Error?
+    
+    var body: some View {
+        VStack(spacing: 24) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.system(size: 60))
+                .foregroundStyle(.red)
+            
+            Text("Unable to Load Data")
+                .font(.title.bold())
+            
+            Text("The app couldn't initialize its database. Try restarting the app or reinstalling if the problem persists.")
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.secondary)
+                .padding(.horizontal)
+            
+            if let error = error {
+                Text(error.localizedDescription)
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+                    .padding(.horizontal)
+            }
+        }
+        .padding()
     }
 }
 
