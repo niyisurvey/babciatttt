@@ -15,9 +15,8 @@ enum VerificationTier: String, Codable, Sendable {
 }
 
 /// SwiftData model for a cleaning session with scan, dream, and verification data.
-@MainActor
 @Model
-final class Session: @unchecked Sendable {
+final class Session {
 
     // MARK: - Identity
 

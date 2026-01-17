@@ -9,9 +9,8 @@ import Foundation
 import SwiftData
 
 /// SwiftData model for user progression and points.
-@MainActor
 @Model
-final class User: @unchecked Sendable {
+final class User {
 
     /// Unique user identifier.
     @Attribute(.unique) var id: UUID

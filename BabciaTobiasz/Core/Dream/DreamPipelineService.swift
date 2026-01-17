@@ -39,7 +39,7 @@ struct DreamPipelineService {
 
     init(
         engine: DreamRoomEngine = DreamRoomEngine(),
-        apiKeyProvider: @Sendable @escaping () -> String? = DreamRoomSecrets.apiKey
+        apiKeyProvider: @Sendable @escaping () -> String? = { DreamRoomSecrets.apiKey() }
     ) {
         self.engine = engine
         self.apiKeyProvider = apiKeyProvider
