@@ -109,6 +109,6 @@ private struct PlaceholderScreen: View {
 
 #Preview {
     MainTabView()
-        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, WeatherData.self, WeatherForecast.self, ReminderConfig.self], inMemory: true)
+        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self], inMemory: true)
         .environment(AppDependencies())
 }

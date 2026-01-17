@@ -15,8 +15,6 @@ enum SchemaV1: VersionedSchema {
         TaskCompletionEvent.self,
         Session.self,
         User.self,
-        WeatherData.self,
-        WeatherForecast.self,
         ReminderConfig.self
     ]
 }

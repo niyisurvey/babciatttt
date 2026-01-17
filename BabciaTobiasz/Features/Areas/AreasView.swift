@@ -3,18 +3,19 @@
 
 import SwiftUI
 
-/// Areas screen uses the Weather layout with a hero image card in place of the weather card.
+/// Areas screen highlights a hero image card.
 struct AreasView: View {
-    @Bindable var viewModel: WeatherViewModel
-
     var body: some View {
-        WeatherView(
-            viewModel: viewModel,
-            title: "Areas",
-            headerCardBuilder: { _ in
-                AnyView(AreasHeroCard())
+        NavigationStack {
+            ZStack {
+                LiquidGlassBackground(style: .areas)
+                ScrollView {
+                    AreasHeroCard()
+                        .padding()
+                }
             }
-        )
+            .navigationTitle("Areas")
+        }
     }
 }
 
@@ -40,6 +41,6 @@ private struct AreasHeroCard: View {
 }
 
 #Preview {
-    AreasView(viewModel: WeatherViewModel())
+    AreasView()
         .environment(AppDependencies())
 }

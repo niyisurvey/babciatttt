@@ -27,7 +27,7 @@ public struct BabciaTobiaszAppView: View {
     // MARK: - Initialization
     
     /// Initializes the app and configures the SwiftData model container.
-    /// Sets up persistence for Area and WeatherData models.
+    /// Sets up persistence for core app models.
     public init() {
         do {
             // Configure the schema with all SwiftData models
@@ -41,8 +41,7 @@ public struct BabciaTobiaszAppView: View {
             )
             
             modelContainer = try ModelContainer(
-                for: SchemaV1.self,
-                migrationPlan: AppSchema.self,
+                for: schema,
                 configurations: [modelConfiguration]
             )
             

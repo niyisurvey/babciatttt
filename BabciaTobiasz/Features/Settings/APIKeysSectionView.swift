@@ -19,7 +19,6 @@ struct APIKeysSectionView: View {
             VStack(spacing: theme.grid.listSpacing) {
                 DreamAPIKeyCardView()
                 GeminiAPIKeyCardView()
-                WeatherAPIKeyCardView()
             }
         }
     }
