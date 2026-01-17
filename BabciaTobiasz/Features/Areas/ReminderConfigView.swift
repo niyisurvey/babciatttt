@@ -18,7 +18,8 @@ struct ReminderConfigView: View {
 
     init(area: Area) {
         self.area = area
-        _configs = Query(filter: #Predicate<ReminderConfig> { $0.areaId == area.id })
+        let areaId = area.id
+        _configs = Query(filter: #Predicate<ReminderConfig> { $0.areaId == areaId })
     }
 
     var body: some View {
@@ -36,9 +37,6 @@ struct ReminderConfigView: View {
             } else {
                 emptyState
             }
-        }
-        .onAppear {
-            ensureConfig()
         }
         .alert("Reminders", isPresented: $showError) {
             Button("OK", role: .cancel) {}
@@ -62,17 +60,8 @@ struct ReminderConfigView: View {
         .padding(.vertical, 4)
     }
 
-    private func ensureConfig() {
-        guard configs.isEmpty else { return }
-        createConfig()
-    }
-
     private func createConfig() {
-        let config = ReminderConfig(
-            areaId: area.id,
-            areaName: area.name,
-            areaDescription: area.areaDescription
-        )
+        let config = ReminderConfig(area: area)
         modelContext.insert(config)
         do {
             try modelContext.save()
@@ -170,8 +159,6 @@ private struct ReminderConfigEditor: View {
     }
 
     private func saveAndSchedule() {
-        config.updateAreaInfo(name: area.name, description: area.areaDescription)
-
         do {
             try modelContext.save()
         } catch {

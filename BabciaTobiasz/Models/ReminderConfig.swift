@@ -11,9 +11,8 @@ final class ReminderConfig {
     static let maxSlots = 3
 
     var id: UUID
-    var areaId: UUID
-    var areaName: String
-    var areaDescription: String?
+    @Attribute(.unique) var areaId: UUID
+    var area: Area?
     var isEnabled: Bool
     var slot1Time: Date?
     var slot2Time: Date?
@@ -22,18 +21,15 @@ final class ReminderConfig {
     var updatedAt: Date
 
     init(
-        areaId: UUID,
-        areaName: String,
-        areaDescription: String? = nil,
+        area: Area,
         isEnabled: Bool = false,
         slot1Time: Date? = nil,
         slot2Time: Date? = nil,
         slot3Time: Date? = nil
     ) {
         self.id = UUID()
-        self.areaId = areaId
-        self.areaName = areaName
-        self.areaDescription = areaDescription
+        self.area = area
+        self.areaId = area.id
         self.isEnabled = isEnabled
         self.slot1Time = slot1Time
         self.slot2Time = slot2Time
@@ -48,12 +44,6 @@ final class ReminderConfig {
 
     var activeSlotTimes: [Date] {
         slotTimes.compactMap { $0 }
-    }
-
-    func updateAreaInfo(name: String, description: String?) {
-        areaName = name
-        areaDescription = description
-        updatedAt = Date()
     }
 
     func updateSlot(_ index: Int, time: Date?) {

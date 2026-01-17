@@ -21,7 +21,7 @@ struct MilestoneDisplay: Identifiable, Hashable {
 
 @MainActor
 final class ProgressionService: ProgressionServiceProtocol {
-    typealias AwardHandler = @Sendable (Int) throws -> Void
+    typealias AwardHandler = @MainActor @Sendable (Int) async throws -> Void
 
     private let metadata: [MilestoneMetadata]
     private let userDefaults: UserDefaults
@@ -67,7 +67,7 @@ final class ProgressionService: ProgressionServiceProtocol {
 
         do {
             if let awardHandler {
-                try awardHandler(milestone.bonusPoints)
+                try await awardHandler(milestone.bonusPoints)
             }
             awardedDays.append(milestone.day)
             userDefaults.set(awardedDays, forKey: areaKey)

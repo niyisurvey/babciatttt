@@ -45,8 +45,10 @@ struct ReminderScheduler: ReminderSchedulerProtocol {
             let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
 
             let content = UNMutableNotificationContent()
-            content.title = config.areaName
-            content.body = config.areaDescription ?? "Time to complete a bowl."
+            let title = config.area?.name ?? NSLocalizedString("app_name", comment: "Reminder default title")
+            let body = config.area?.areaDescription ?? NSLocalizedString("reminder_default_body", comment: "Reminder default body")
+            content.title = title
+            content.body = body
             content.sound = .default
             content.badge = 1
             content.categoryIdentifier = "AREA_REMINDER"

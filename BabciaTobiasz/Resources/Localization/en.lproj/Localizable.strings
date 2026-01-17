@@ -83,6 +83,9 @@
 "area_great_job" = "Great job!";
 "area_keep_streak" = "Keep up the streak!";
 
+// MARK: - Reminders
+"reminder_default_body" = "Time to complete a bowl.";
+
 // MARK: - Statistics
 "stats_best_streak" = "Best Streak";
 "stats_total_done" = "Total Done";

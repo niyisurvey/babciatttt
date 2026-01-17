@@ -5,8 +5,14 @@
   Polish localization strings for the BabciaTobiasz app.
 */
 
+// MARK: - General
+"app_name" = "BabciaTobiasz";
+
 // MARK: - Area Age
 "area_age_days" = "%d dni";
+
+// MARK: - Reminders
+"reminder_default_body" = "Czas na ukończenie miski.";
 
 // MARK: - Milestones (Classic Babcia)
 "milestone.classic.day1" = "Oj, wróciłeś. Coś z tego będzie.";

@@ -4,13 +4,11 @@
 //
 
 import SwiftUI
-import SwiftData
 
 /// Form view for adding or editing an area.
 struct AreaFormView: View {
 
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.modelContext) private var modelContext
 
     @Bindable var viewModel: AreaViewModel
     let area: Area?
@@ -275,7 +273,6 @@ struct AreaFormView: View {
                 area.iconName = selectedIcon
                 area.colorHex = selectedColor.hexString
                 area.persona = selectedPersona
-                updateReminderConfig(for: area)
 
                 await viewModel.updateArea(area)
             } else {
@@ -290,20 +287,6 @@ struct AreaFormView: View {
             }
 
             dismiss()
-        }
-    }
-
-    private func updateReminderConfig(for area: Area) {
-        let predicate = #Predicate<ReminderConfig> { config in
-            config.areaId == area.id
-        }
-        let descriptor = FetchDescriptor<ReminderConfig>(predicate: predicate)
-        guard let config = try? modelContext.fetch(descriptor).first else { return }
-        config.updateAreaInfo(name: area.name, description: area.areaDescription)
-        do {
-            try modelContext.save()
-        } catch {
-            // Best-effort update; ignore to avoid blocking the form.
         }
     }
 
