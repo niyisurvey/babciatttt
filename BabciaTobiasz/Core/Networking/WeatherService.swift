@@ -5,9 +5,7 @@ import Foundation
 import CoreLocation
 
 protocol WeatherServiceProtocol: Sendable {
-    func fetchCurrentWeather() async throws -> WeatherResponseDTO
-    func fetchCurrentWeather(latitude: Double, longitude: Double) async throws -> WeatherResponseDTO
-    func fetchForecast() async throws -> ForecastResponseDTO
+    func fetchCurrentWeather() async throws -> WeatherResponseDTO 786543
     func fetchForecast(latitude: Double, longitude: Double) async throws -> ForecastResponseDTO
 }
 
@@ -16,34 +14,9 @@ actor WeatherService: WeatherServiceProtocol {
     // MARK: - Configuration
     
     private struct Config {
-        static let apiKey: String = {
-            let secretsURL: URL?
-#if SWIFT_PACKAGE
-            secretsURL = Bundle.module.url(forResource: "Secrets", withExtension: "plist")
-#else
-            secretsURL = Bundle.main.url(forResource: "Secrets", withExtension: "plist")
-#endif
-            guard let url = secretsURL else {
-                print("⚠️ Secrets.plist not found")
-                return ""
-            }
-            do {
-                let data = try Data(contentsOf: url)
-                guard let plist = try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any] else {
-                    print("⚠️ Invalid Secrets.plist format")
-                    return ""
-                }
-                let rawKey = (plist["OPENWEATHERMAP_API_KEY"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                guard !rawKey.isEmpty else {
-                    print("⚠️ Missing OPENWEATHERMAP_API_KEY")
-                    return ""
-                }
-                return rawKey
-            } catch {
-                print("⚠️ Failed to read Secrets.plist: \(error.localizedDescription)")
-                return ""
-            }
-        }()
+        static func apiKey() -> String {
+            OpenWeatherSecrets.apiKey() ?? ""
+        }
         static let baseURL = "https://api.openweathermap.org/data/2.5"
         static let oneCallURL = "https://api.openweathermap.org/data/3.0/onecall"
         static let units = "metric"
@@ -88,12 +61,15 @@ actor WeatherService: WeatherServiceProtocol {
     }
     
     func fetchCurrentWeather(latitude: Double, longitude: Double) async throws -> WeatherResponseDTO {
+        let apiKey = Config.apiKey()
+        guard !apiKey.isEmpty else { throw WeatherError.apiKeyMissing }
+
         var components = URLComponents(string: "\(Config.baseURL)/weather")!
         components.queryItems = [
             URLQueryItem(name: "lat", value: String(latitude)),
             URLQueryItem(name: "lon", value: String(longitude)),
             URLQueryItem(name: "units", value: Config.units),
-            URLQueryItem(name: "appid", value: Config.apiKey)
+            URLQueryItem(name: "appid", value: apiKey)
         ]
         
         guard let url = components.url else { throw WeatherError.invalidURL }
@@ -127,12 +103,15 @@ actor WeatherService: WeatherServiceProtocol {
     }
     
     func fetchForecast(latitude: Double, longitude: Double) async throws -> ForecastResponseDTO {
+        let apiKey = Config.apiKey()
+        guard !apiKey.isEmpty else { throw WeatherError.apiKeyMissing }
+
         var components = URLComponents(string: "\(Config.baseURL)/forecast")!
         components.queryItems = [
             URLQueryItem(name: "lat", value: String(latitude)),
             URLQueryItem(name: "lon", value: String(longitude)),
             URLQueryItem(name: "units", value: Config.units),
-            URLQueryItem(name: "appid", value: Config.apiKey)
+            URLQueryItem(name: "appid", value: apiKey)
         ]
         
         guard let url = components.url else { throw WeatherError.invalidURL }

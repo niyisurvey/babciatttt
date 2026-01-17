@@ -29,6 +29,6 @@ protocol VerificationJudgeAPIKeyProvider: Sendable {
 
 struct GeminiKeychainAPIKeyProvider: VerificationJudgeAPIKeyProvider {
     func loadAPIKey() -> String? {
-        GeminiKeychain.load()
+        GeminiSecrets.apiKey()
     }
 }

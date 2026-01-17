@@ -6,8 +6,6 @@ import SwiftUI
 struct SettingsView: View {
     @AppStorage("appTheme") private var appTheme: AppTheme = .system
     @AppStorage("temperatureUnit") private var temperatureUnit: TemperatureUnit = .celsius
-    @State private var dreamApiKey: String = DreamRoomKeychain.load() ?? ""
-    @State private var dreamKeyStatus: String?
     
     @Environment(\.dsTheme) private var theme
     
@@ -55,71 +53,24 @@ struct SettingsView: View {
                             }
                         }
 
-                        // Dream Engine Section
+                        APIKeysSectionView()
+
+
+                        
+
+
+                        // Analytics Section
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-                            Text("Dream Engine")
-                                .dsFont(.headline, weight: .bold)
-                                .padding(.horizontal, 4)
-
-                            GlassCardView {
-                                VStack(alignment: .leading, spacing: 12) {
-                                    Text("API Key")
-                                        .dsFont(.caption)
-                                        .foregroundStyle(.secondary)
-
-                                    SecureField("Enter DREAMROOM_API_KEY", text: $dreamApiKey)
-                                        .dsFont(.body)
-                                        .textInputAutocapitalization(.never)
-                                        .autocorrectionDisabled()
-
-                                    HStack(spacing: 12) {
-                                        Button("Save") {
-                                            let trimmed = dreamApiKey.trimmingCharacters(in: .whitespacesAndNewlines)
-                                            guard !trimmed.isEmpty else {
-                                                dreamKeyStatus = "Enter a key before saving."
-                                                return
-                                            }
-                                            dreamApiKey = trimmed
-                                            dreamKeyStatus = DreamRoomKeychain.save(trimmed) ? "Saved to Keychain." : "Save failed."
-                                        }
-                                        .buttonStyle(.nativeGlassProminent)
-
-                                        Button("Clear") {
-                                            let removed = DreamRoomKeychain.delete()
-                                            dreamApiKey = ""
-                                            dreamKeyStatus = removed ? "Removed from Keychain." : "Remove failed."
-                                        }
-                                        .buttonStyle(.nativeGlass)
-
-                                        Spacer()
-                                    }
-
-                                    Text("Stored securely on this device. Overrides Secrets.plist if set.")
-                                        .dsFont(.caption2)
-                                        .foregroundStyle(.secondary)
-
-                                    if let dreamKeyStatus {
-                                        Text(dreamKeyStatus)
-                                            .dsFont(.caption)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                }
-                            }
-                        }
-
-                        // Added 2026-01-15 08:10 GMT
-                        // Liquid Glass Lab Section (temporary)
-                        VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-                            Text("Liquid Glass Lab")
+                            Text("Analytics")
                                 .dsFont(.headline, weight: .bold)
                                 .padding(.horizontal, 4)
 
                             GlassCardView {
                                 NavigationLink {
-                                    ButtonsShowcaseView()
+                                    AnalyticsView()
                                 } label: {
                                     HStack {
-                                        Text("Open Liquid Glass Lab")
+                                        Text("View task analytics")
                                             .dsFont(.headline)
                                         Spacer()
                                         Image(systemName: "chevron.right")

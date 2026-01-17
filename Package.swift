@@ -9,14 +9,14 @@ let package = Package(
     platforms: [
         .iOS(.v18)
     ],
-    dependencies: [
-        .package(path: "DreamRoomEngine"),
-        .package(path: "BabciaScanPipeline") // Added 2026-01-14 22:55 GMT
-    ],
     products: [
         .library(
             name: "BabciaTobiasz",
             targets: ["BabciaTobiasz"]),
+    ],
+    dependencies: [
+        .package(path: "DreamRoomEngine"),
+        .package(path: "BabciaScanPipeline") // Added 2026-01-14 22:55 GMT
     ],
     targets: [
         .target(

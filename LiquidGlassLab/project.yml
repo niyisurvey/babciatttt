@@ -1,0 +1,36 @@
+name: LiquidGlassLab
+options:
+  bundleIdPrefix: com.liquidglass
+  deploymentTarget:
+    iOS: 18.0
+targets:
+  LiquidGlassLab:
+    type: application
+    platform: iOS
+    sources: [LiquidGlassLab]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.liquidglass.LiquidGlassLab
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        IPHONEOS_DEPLOYMENT_TARGET: 18.0
+        SUPPORTED_PLATFORMS: "iphoneos iphonesimulator"
+        SDKROOT: iphoneos
+        TARGETED_DEVICE_FAMILY: "1,2"
+        MARKETING_VERSION: 1.0.0
+        CURRENT_PROJECT_VERSION: 1
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 3Q34UKQ9FM
+schemes:
+  LiquidGlassLab:
+    build:
+      targets:
+        LiquidGlassLab: all
+    run:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
