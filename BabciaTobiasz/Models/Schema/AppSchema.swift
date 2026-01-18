@@ -15,7 +15,8 @@ enum SchemaV1: VersionedSchema {
         TaskCompletionEvent.self,
         Session.self,
         User.self,
-        ReminderConfig.self
+        ReminderConfig.self,
+        StreamingCameraConfig.self
     ]
 }
 
@@ -28,7 +29,8 @@ enum SchemaV2: VersionedSchema {
         TaskCompletionEvent.self,
         Session.self,
         User.self,
-        ReminderConfig.self
+        ReminderConfig.self,
+        StreamingCameraConfig.self
     ]
 }
 

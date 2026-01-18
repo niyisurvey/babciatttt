@@ -19,9 +19,13 @@ struct GalleryDetailView: View {
         bowl.area?.name ?? String(localized: "gallery.detail.area.fallback")
     }
 
-    private var personaName: String {
+    private var persona: BabciaPersona {
         let raw = bowl.area?.personaRaw ?? BabciaPersona.classic.rawValue
-        return BabciaPersona(rawValue: raw)?.localizedDisplayName ?? raw.capitalized
+        return BabciaPersona(rawValue: raw) ?? .classic
+    }
+
+    private var personaName: String {
+        persona.localizedDisplayName
     }
 
     private var verificationLabel: String {
@@ -80,9 +84,14 @@ struct GalleryDetailView: View {
 
     private var imageCard: some View {
         GlassCardView {
-            GalleryImageView(imageData: bowl.galleryImageData)
-                .frame(height: theme.grid.heroCardHeight)
-                .padding(theme.grid.cardPadding)
+            ZStack(alignment: .bottomTrailing) {
+                GalleryImageView(imageData: bowl.galleryImageData)
+                    .frame(height: theme.grid.heroCardHeight)
+                    .padding(theme.grid.cardPadding)
+
+                personaBadge
+                    .padding(theme.grid.cardPadding)
+            }
         }
     }
 
@@ -90,6 +99,7 @@ struct GalleryDetailView: View {
         GlassCardView {
             VStack(spacing: 12) {
                 metadataRow(label: String(localized: "gallery.detail.meta.created"), value: bowl.createdAt.formatted(date: .abbreviated, time: .shortened))
+                metadataRow(label: String(localized: "gallery.detail.meta.babcia"), value: personaName)
                 metadataRow(label: String(localized: "gallery.detail.meta.verification"), value: verificationLabel)
                 metadataRow(label: String(localized: "gallery.detail.meta.outcome"), value: outcomeLabel)
                 metadataRow(label: String(localized: "gallery.detail.meta.basePoints"), value: "\(bowl.basePoints)")
@@ -135,6 +145,41 @@ struct GalleryDetailView: View {
             Spacer()
             Text(value)
                 .dsFont(.subheadline, weight: .bold)
+        }
+    }
+
+    private var personaBadge: some View {
+        HStack(spacing: 8) {
+            personaHeadshot
+            Text(persona.localizedDisplayName)
+                .dsFont(.caption, weight: .bold)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(.ultraThinMaterial, in: Capsule())
+        .overlay(
+            Capsule()
+                .stroke(theme.palette.glassTint.opacity(0.2), lineWidth: 1)
+        )
+    }
+
+    @ViewBuilder
+    private var personaHeadshot: some View {
+        if let uiImage = UIImage(named: persona.headshotImageName) {
+            Image(uiImage: uiImage)
+                .resizable()
+                .scaledToFill()
+                .frame(width: theme.grid.iconSmall, height: theme.grid.iconSmall)
+                .clipShape(Circle())
+        } else {
+            Circle()
+                .fill(theme.glass.strength.fallbackMaterial)
+                .frame(width: theme.grid.iconSmall, height: theme.grid.iconSmall)
+                .overlay(
+                    Image(systemName: "sparkles")
+                        .font(.system(size: theme.grid.iconTiny))
+                        .foregroundStyle(theme.palette.secondary)
+                )
         }
     }
 

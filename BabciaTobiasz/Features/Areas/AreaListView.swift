@@ -8,12 +8,31 @@ import OSLog
 /// Main area list with management and statistics
 struct AreaListView: View {
     @Bindable var viewModel: AreaViewModel
+    @AppStorage("primaryPersonaRaw") private var primaryPersonaRaw: String = BabciaPersona.classic.rawValue
+    @AppStorage("needsFirstArea") private var needsFirstArea = false
     @State private var showStatsTooltip = false
     @State private var headerProgress: CGFloat = 0
+    @State private var showVictoryHero = false
     @Environment(\.dsTheme) private var theme
     private let logger = Logger(subsystem: "com.babcia.tobiasz", category: "navigation")
-    
-    private let heroImageName = "R2_Baroness_Headshot_Neutral"
+
+    private var heroImageName: String {
+        let persona = BabciaPersona(rawValue: primaryPersonaRaw) ?? .classic
+        if viewModel.isInactiveForHero {
+            return persona.portraitSadImageName
+        }
+        return persona.fullBodyImageName(for: heroPose)
+    }
+
+    private var heroPose: BabciaPose {
+        if viewModel.isInactiveForHero {
+            return .sadDisappointed
+        }
+        if showVictoryHero {
+            return .victory
+        }
+        return .happy
+    }
     
     var body: some View {
         NavigationStack(path: $viewModel.navigationPath) {
@@ -41,7 +60,18 @@ struct AreaListView: View {
             .safeAreaInset(edge: .bottom) {
                 areasSearchBar
             }
-            .onAppear { viewModel.loadAreas() }
+            .onAppear {
+                viewModel.loadAreas()
+                handleFirstAreaIfNeeded()
+            }
+            .onChange(of: viewModel.totalCompletions) { _, _ in
+                guard viewModel.isInactiveForHero == false else { return }
+                showVictoryHero = true
+                Task { @MainActor in
+                    try? await Task.sleep(for: .seconds(2))
+                    showVictoryHero = false
+                }
+            }
             .alert(String(localized: "common.error.title"), isPresented: $viewModel.showError) {
                 Button(String(localized: "common.ok")) { viewModel.dismissError() }
             } message: {
@@ -69,6 +99,17 @@ struct AreaListView: View {
             }
         }
     }
+
+    private func handleFirstAreaIfNeeded() {
+        guard needsFirstArea else { return }
+        guard viewModel.areas.isEmpty else {
+            needsFirstArea = false
+            return
+        }
+        DispatchQueue.main.async {
+            viewModel.addNewArea()
+        }
+    }
     
     // MARK: - Background
     
@@ -82,11 +123,12 @@ struct AreaListView: View {
         ScalingHeaderScrollView(
             maxHeight: 260,
             minHeight: 120,
-            snapMode: .afterAcceleration,
+            snapMode: .none,
             progress: $headerProgress
         ) { progress in
             AreasHeroHeader(
                 imageName: heroImageName,
+                message: heroMessage,
                 progress: progress
             )
         } content: {
@@ -312,6 +354,10 @@ struct AreaListView: View {
             }
         }
     }
+
+    private var heroMessage: String? {
+        viewModel.isInactiveForHero ? String(localized: "areas.hero.inactive") : nil
+    }
     
     // MARK: - Empty State
     
@@ -369,6 +415,7 @@ struct AreaListView: View {
 
 private struct AreasHeroHeader: View {
     let imageName: String
+    let message: String?
     let progress: CGFloat
     @Environment(\.dsTheme) private var theme
 
@@ -381,6 +428,16 @@ private struct AreasHeroHeader: View {
                 .frame(maxWidth: .infinity)
                 .padding(.top, theme.grid.sectionSpacing)
                 .opacity(fade)
+            if let message {
+                Text(message)
+                    .dsFont(.caption, weight: .bold)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, theme.grid.cardPadding)
+                    .padding(.vertical, theme.grid.cardPaddingTight)
+                    .background(.ultraThinMaterial, in: Capsule())
+                    .padding(.bottom, theme.grid.cardPadding)
+                    .opacity(fade)
+            }
         }
         .frame(maxWidth: .infinity)
         .animation(.easeOut(duration: 0.2), value: progress)
@@ -389,6 +446,6 @@ private struct AreasHeroHeader: View {
 
 #Preview {
     AreaListView(viewModel: AreaViewModel())
-        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self], inMemory: true)
+        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self, StreamingCameraConfig.self], inMemory: true)
         .environment(AppDependencies())
 }

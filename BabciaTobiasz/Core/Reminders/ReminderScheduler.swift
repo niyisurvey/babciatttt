@@ -25,7 +25,7 @@ struct ReminderScheduler: ReminderSchedulerProtocol {
         UNUserNotificationCenter.current()
     }
 
-    func schedule(for areaId: UUID, config: ReminderConfig) async throws {
+    func schedule(for areaId: UUID, config: ReminderConfigSnapshot) async throws {
         guard config.isEnabled else {
             cancelAll(for: areaId)
             return
@@ -45,8 +45,8 @@ struct ReminderScheduler: ReminderSchedulerProtocol {
             let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
 
             let content = UNMutableNotificationContent()
-            let title = config.area?.name ?? NSLocalizedString("app_name", comment: "Reminder default title")
-            let body = config.area?.areaDescription ?? NSLocalizedString("reminder_default_body", comment: "Reminder default body")
+            let title = config.areaName ?? NSLocalizedString("app_name", comment: "Reminder default title")
+            let body = config.areaDescription ?? NSLocalizedString("reminder_default_body", comment: "Reminder default body")
             content.title = title
             content.body = body
             content.sound = .default

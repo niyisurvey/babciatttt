@@ -269,7 +269,7 @@ final class AreaViewModel {
         persona: BabciaPersona = .classic
     ) async {
         guard let persistenceService = persistenceService else { return }
-        
+
         let area = Area(
             name: name,
             description: description,
@@ -278,10 +278,14 @@ final class AreaViewModel {
             dreamImageName: dreamImageName,
             persona: persona
         )
-        
+
         do {
             try persistenceService.createArea(area)
             areas.insert(area, at: 0)
+            if userDefaults.bool(forKey: "needsFirstArea") {
+                userDefaults.set(false, forKey: "needsFirstArea")
+                openArea(area.id)
+            }
         } catch {
             handleError(error)
         }
@@ -738,6 +742,20 @@ extension AreaViewModel {
             totalCompletions: totalCompletions,
             completionRate: todayCompletionPercentage
         )
+    }
+
+    var daysSinceLastScan: Int? {
+        guard lastPhotoDayTimestamp > 0 else { return nil }
+        let calendar = Calendar.current
+        let lastDate = Date(timeIntervalSince1970: lastPhotoDayTimestamp)
+        let from = calendar.startOfDay(for: lastDate)
+        let to = calendar.startOfDay(for: Date())
+        return calendar.dateComponents([.day], from: from, to: to).day
+    }
+
+    var isInactiveForHero: Bool {
+        guard let daysSinceLastScan else { return false }
+        return daysSinceLastScan >= 7
     }
     
     func weeklyCompletionData() -> [(date: Date, count: Int)] {

@@ -165,9 +165,11 @@ private struct ReminderConfigEditor: View {
             onError(error.localizedDescription)
         }
 
+        let areaId = area.id
+        let snapshot = config.snapshot
         Task {
             do {
-                try await scheduler.schedule(for: area.id, config: config)
+                try await scheduler.schedule(for: areaId, config: snapshot)
             } catch let error as ReminderError {
                 onError(error.localizedDescription)
             } catch {

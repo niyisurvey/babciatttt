@@ -55,4 +55,20 @@ final class ReminderConfig {
         }
         updatedAt = Date()
     }
+
+    var snapshot: ReminderConfigSnapshot {
+        ReminderConfigSnapshot(
+            isEnabled: isEnabled,
+            slotTimes: slotTimes,
+            areaName: area?.name,
+            areaDescription: area?.areaDescription
+        )
+    }
+}
+
+struct ReminderConfigSnapshot: Sendable {
+    let isEnabled: Bool
+    let slotTimes: [Date?]
+    let areaName: String?
+    let areaDescription: String?
 }

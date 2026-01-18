@@ -12,11 +12,14 @@ import SwiftData
 struct AreaDetailView: View {
     let area: Area
     @Bindable var viewModel: AreaViewModel
+    @Environment(\.modelContext) private var modelContext
     @Environment(\.dsTheme) private var theme
+    @Query private var reminderConfigs: [ReminderConfig]
 
     @State private var headerProgress: CGFloat = 0
     // Added 2026-01-14 20:55 GMT
     @State private var showCameraCapture = false
+    @State private var showCameraHeroPrompt = false
     @State private var showCameraAlert = false
     @State private var cameraAlertMessage = ""
     @State private var showReminderPrompt = false
@@ -29,7 +32,23 @@ struct AreaDetailView: View {
     @State private var verificationPassed: Bool = false
     @State private var verificationBowl: AreaBowl?
     @State private var showDeleteConfirmation = false
-    @State private var expandedTaskId: UUID?
+    @State private var streamingManager = StreamingCameraManager()
+    @State private var showVerificationSourcePicker = false
+    @State private var showStreamingCameraPicker = false
+    @State private var isStreamingCaptureLoading = false
+    @State private var showCameraSourcePicker = false
+    @State private var showStreamingCameraPickerForScan = false
+    @AppStorage("areaDetail.taskTapHintShown") private var taskTapHintShown = false
+    @State private var showTaskTapHint = false
+    @State private var showCompletionSummary = false
+    @AppStorage("needsFirstScan") private var needsFirstScan = false
+
+    init(area: Area, viewModel: AreaViewModel) {
+        self.area = area
+        self._viewModel = Bindable(wrappedValue: viewModel)
+        let areaId = area.id
+        _reminderConfigs = Query(filter: #Predicate<ReminderConfig> { $0.areaId == areaId })
+    }
 
     var body: some View {
         ZStack {
@@ -72,6 +91,18 @@ struct AreaDetailView: View {
                 }
             )
         }
+        .fullScreenCover(isPresented: $showCameraHeroPrompt) {
+            CameraHeroPromptView(
+                area: area,
+                onStart: {
+                    showCameraHeroPrompt = false
+                    startCameraCapture()
+                },
+                onDismiss: {
+                    showCameraHeroPrompt = false
+                }
+            )
+        }
         // Added 2026-01-14 20:55 GMT
         .fullScreenCover(isPresented: $showCameraCapture) {
             CameraCaptureView(
@@ -101,14 +132,28 @@ struct AreaDetailView: View {
             Text(cameraAlertMessage)
         }
         .fullScreenCover(isPresented: $showPierogiDrop) {
-            PierogiDropView(tier: verificationTier) { tier in
+            PierogiDropView(tier: verificationTier, autoReveal: true) { tier in
                 verificationTier = tier
                 showPierogiDrop = false
-                showVerificationReady = true
+                showCompletionSummary = true
             }
         }
+        .fullScreenCover(isPresented: $showCompletionSummary) {
+            CompletionSummaryView(
+                persona: area.persona,
+                tier: verificationTier,
+                onVerify: {
+                    showCompletionSummary = false
+                    showVerificationSourcePicker = true
+                },
+                onDone: {
+                    showCompletionSummary = false
+                    AppExitHelper.requestExit()
+                }
+            )
+        }
         .alert(String(localized: "areaDetail.verify.ready.title"), isPresented: $showVerificationReady) {
-            Button(String(localized: "areaDetail.verify.ready.primary")) { showVerificationCapture = true }
+            Button(String(localized: "areaDetail.verify.ready.primary")) { showVerificationSourcePicker = true }
             Button(String(localized: "areaDetail.verify.ready.secondary"), role: .cancel) { markVerificationPending() }
         } message: {
             Text(verificationReadyMessage)
@@ -124,6 +169,50 @@ struct AreaDetailView: View {
         } message: {
             Text(deleteWarningMessage)
         }
+        .confirmationDialog(
+            String(localized: "cameraSource.title"),
+            isPresented: $showVerificationSourcePicker,
+            titleVisibility: .visible
+        ) {
+            Button(String(localized: "cameraSource.device")) { showVerificationCapture = true }
+            if !streamingManager.configs.isEmpty {
+                Button(String(localized: "cameraSource.streaming")) { showStreamingCameraPicker = true }
+            }
+            Button(String(localized: "common.cancel"), role: .cancel) { }
+        } message: {
+            Text(String(localized: "cameraSource.message"))
+        }
+        .confirmationDialog(
+            String(localized: "cameraSource.title"),
+            isPresented: $showCameraSourcePicker,
+            titleVisibility: .visible
+        ) {
+            Button(String(localized: "cameraSource.device")) { requestDeviceCameraCapture() }
+            Button(String(localized: "cameraSource.streaming")) { showStreamingCameraPickerForScan = true }
+            Button(String(localized: "common.cancel"), role: .cancel) { }
+        } message: {
+            Text(String(localized: "cameraSource.message"))
+        }
+        .sheet(isPresented: $showStreamingCameraPicker) {
+            StreamingCameraPickerView(
+                cameras: streamingManager.configs,
+                onSelect: { config in
+                    showStreamingCameraPicker = false
+                    handleStreamingVerificationCapture(config)
+                },
+                onCancel: { showStreamingCameraPicker = false }
+            )
+        }
+        .sheet(isPresented: $showStreamingCameraPickerForScan) {
+            StreamingCameraPickerView(
+                cameras: streamingManager.configs,
+                onSelect: { config in
+                    showStreamingCameraPickerForScan = false
+                    handleStreamingScanCapture(config)
+                },
+                onCancel: { showStreamingCameraPickerForScan = false }
+            )
+        }
         // Added 2026-01-14 21:13 GMT
         .alert(String(localized: "common.error.title"), isPresented: $viewModel.showError) {
             Button(String(localized: "common.ok")) { viewModel.dismissError() }
@@ -134,10 +223,29 @@ struct AreaDetailView: View {
         .overlay(alignment: .bottomTrailing) {
             floatingCameraButton
         }
+        .overlay {
+            LoadingOverlay(
+                message: String(localized: "cameraSource.loading"),
+                isLoading: $isStreamingCaptureLoading
+            )
+        }
+        .overlay {
+            if viewModel.isGeneratingDream {
+                ScanProcessingOverlayView(persona: area.persona)
+            }
+        }
         .onAppear {
             cameraFlowViewModel.configure(areaViewModel: viewModel)
+            streamingManager.configure(modelContext: modelContext)
+            streamingManager.loadConfigs()
             if viewModel.consumeReminderPrompt(for: area.id) {
                 showReminderPrompt = true
+            }
+            if needsFirstScan, area.latestBowl == nil, showReminderPrompt == false {
+                needsFirstScan = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                    requestCameraCapture()
+                }
             }
         }
     }
@@ -158,7 +266,7 @@ struct AreaDetailView: View {
 
     @ViewBuilder
     private var dreamHeaderImageView: some View {
-        if let data = area.latestBowl?.dreamHeroImageData,
+        if let data = area.latestDreamBowl?.dreamHeroImageData,
            let uiImage = UIImage(data: data) {
             Image(uiImage: uiImage)
                 .resizable()
@@ -205,11 +313,30 @@ struct AreaDetailView: View {
             viewModel.showError = true
             return
         }
+        if !streamingManager.configs.isEmpty {
+            showCameraSourcePicker = true
+        } else {
+            requestDeviceCameraCapture()
+        }
+#else
+        presentCameraAlert(String(localized: "areaDetail.camera.error.notSupported"))
+#endif
+    }
+
+    private func requestDeviceCameraCapture() {
+#if os(iOS)
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
             presentCameraAlert(String(localized: "areaDetail.camera.error.unavailable"))
             return
         }
+        showCameraHeroPrompt = true
+#else
+        presentCameraAlert(String(localized: "areaDetail.camera.error.notSupported"))
+#endif
+    }
 
+    private func startCameraCapture() {
+#if os(iOS)
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         switch status {
         case .authorized:
@@ -240,7 +367,7 @@ struct AreaDetailView: View {
             presentCameraAlert(String(localized: "areaDetail.camera.error.captureFailed"))
             return
         }
-        Task {
+        Task { @MainActor in
             await cameraFlowViewModel.handleCapture(image: data, for: area)
             hapticFeedback(.medium)
         }
@@ -280,6 +407,7 @@ struct AreaDetailView: View {
                     Text(area.persona.localizedTagline)
                         .dsFont(.subheadline)
                         .foregroundStyle(.secondary)
+                    reminderPreviewRow
                 }
 
                 Spacer()
@@ -296,18 +424,46 @@ struct AreaDetailView: View {
             Image(uiImage: uiImage)
                 .resizable()
                 .scaledToFill()
-                .frame(width: theme.grid.iconXL, height: theme.grid.iconXL)
+                .frame(width: theme.grid.iconXXXL, height: theme.grid.iconXXXL)
                 .clipShape(Circle())
         } else {
             ZStack {
                 Circle()
                     .fill(theme.glass.strength.fallbackMaterial)
                 Image(systemName: "person.fill")
-                    .font(.system(size: theme.grid.iconMedium))
+                    .font(.system(size: theme.grid.iconXL))
                     .foregroundStyle(theme.palette.secondary)
             }
-            .frame(width: theme.grid.iconXL, height: theme.grid.iconXL)
+            .frame(width: theme.grid.iconXXXL, height: theme.grid.iconXXXL)
         }
+    }
+
+    private var reminderPreviewRow: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "bell.badge")
+                .font(.system(size: theme.grid.iconTiny))
+                .foregroundStyle(.secondary)
+            Text(String(localized: "reminders.preview.label"))
+                .dsFont(.caption2)
+                .foregroundStyle(.secondary)
+            Text(reminderTimesText)
+                .dsFont(.caption2, weight: .bold)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+        }
+    }
+
+    private var reminderTimesText: String {
+        guard let config = reminderConfigs.first,
+              config.isEnabled,
+              !config.activeSlotTimes.isEmpty else {
+            return String(localized: "reminders.preview.off")
+        }
+
+        return config.activeSlotTimes
+            .sorted()
+            .map { $0.formatted(date: .omitted, time: .shortened) }
+            .joined(separator: " • ")
     }
 
     // MARK: - Task List
@@ -319,99 +475,49 @@ struct AreaDetailView: View {
                 .dsFont(.headline, weight: .bold)
                 .padding(.horizontal, 4)
 
-            GlassCardView {
-                VStack(spacing: 0) {
-                    ForEach(taskRowItems.indices, id: \.self) { index in
-                        taskRow(taskRowItems[index])
-                        if index < taskRowItems.count - 1 {
-                            Divider().padding(.vertical, 8)
-                        }
-                    }
+            TaskPierogiDropCard(
+                tasks: taskDropTasks,
+                goldenChancePercent: AppConfigService.shared.pierogiGoldenChancePercent
+            ) { task in
+                withAnimation(theme.motion.listSpring) {
+                    viewModel.toggleTaskCompletion(task)
                 }
+                hapticFeedback(.success)
+                checkForVerificationPrompt()
+            } onToggleTask: { task in
+                withAnimation(theme.motion.listSpring) {
+                    viewModel.toggleTaskCompletion(task)
+                }
+                hapticFeedback(.selection)
+                checkForVerificationPrompt()
+            }
+        }
+        .overlay(alignment: .topLeading) {
+            if showTaskTapHint {
+                FeatureTooltip(
+                    title: String(localized: "areaDetail.tasks.hint.title"),
+                    description: String(localized: "areaDetail.tasks.hint.message"),
+                    icon: "hand.tap.fill",
+                    isVisible: $showTaskTapHint
+                )
+                .offset(x: 12, y: -8)
+            }
+        }
+        .onAppear {
+            if taskTapHintShown == false, taskDropTasks.isEmpty == false {
+                showTaskTapHint = true
+            }
+        }
+        .onChange(of: showTaskTapHint) { _, isVisible in
+            if isVisible == false {
+                taskTapHintShown = true
             }
         }
     }
 
-    // Added 2026-01-14 23:20 GMT
-    private var taskRowItems: [CleaningTask?] {
-        let pendingTasks = (area.inProgressBowl?.tasks ?? [])
-            .filter { !$0.isCompleted }
-            .prefix(5)
-        let visibleTasks = Array(pendingTasks)
-        let placeholders = max(0, 5 - visibleTasks.count)
-        return visibleTasks + Array(repeating: nil, count: placeholders)
-    }
-
-
-    @ViewBuilder
-    private func taskStatusSymbol(isPlaceholder: Bool) -> some View {
-        if isPlaceholder {
-            SafeSystemImage("circle.dotted", fallback: "circle")
-        } else {
-            Image(systemName: "sparkles")
-        }
-    }
-
-    // Added 2026-01-14 23:20 GMT
-    @ViewBuilder
-    private func taskRow(_ task: CleaningTask?) -> some View {
-        let isPlaceholder = task == nil
-        if let task {
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text(task.title)
-                        .dsFont(.body)
-                        .foregroundStyle(.primary)
-                        .lineLimit(1)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    taskStatusSymbol(isPlaceholder: false)
-                        .font(.system(size: theme.grid.iconTitle3))
-                        .foregroundStyle(theme.palette.warmAccent)
-                        .frame(width: 36)
-
-                    Button {
-                        withAnimation(theme.motion.listSpring) {
-                            viewModel.toggleTaskCompletion(task)
-                        }
-                        hapticFeedback(.success)
-                        checkForVerificationPrompt()
-                    } label: {
-                        Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "checkmark.circle")
-                            .dsFont(.headline)
-                            .foregroundStyle(theme.palette.warmAccent)
-                            .frame(width: 36, alignment: .trailing)
-                    }
-                    .buttonStyle(.plain)
-                    .disabled(task.isCompleted)
-                }
-                .padding(.vertical, 4)
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    withAnimation(theme.motion.listSpring) {
-                        expandedTaskId = (expandedTaskId == task.id) ? nil : task.id
-                    }
-                }
-
-                if expandedTaskId == task.id {
-                    Text(task.title)
-                        .dsFont(.caption)
-                        .foregroundStyle(.secondary)
-                        .padding(.top, 4)
-                }
-            }
-            .transition(.opacity.combined(with: .move(edge: .trailing)))
-            .accessibilityLabel(task.title)
-        } else {
-            HStack {
-                Spacer()
-                taskStatusSymbol(isPlaceholder: true)
-                    .font(.system(size: theme.grid.iconTitle3))
-                    .foregroundStyle(.tertiary)
-                    .frame(width: 36)
-            }
-            .padding(.vertical, 4)
-        }
+    private var taskDropTasks: [CleaningTask] {
+        let tasks = area.inProgressBowl?.tasks ?? []
+        return Array(tasks.sorted { $0.createdAt < $1.createdAt }.prefix(5))
     }
 
     // MARK: - Verification Callout
@@ -519,6 +625,35 @@ struct AreaDetailView: View {
         }
     }
 
+    private func handleStreamingVerificationCapture(_ config: StreamingCameraConfig) {
+        Task {
+            isStreamingCaptureLoading = true
+            defer { isStreamingCaptureLoading = false }
+            do {
+                let image = try await streamingManager.captureFrame(for: config)
+                handleVerificationCapturedImage(image)
+            } catch {
+                viewModel.errorMessage = error.localizedDescription
+                viewModel.showError = true
+            }
+        }
+    }
+
+    private func handleStreamingScanCapture(_ config: StreamingCameraConfig) {
+        Task { @MainActor in
+            isStreamingCaptureLoading = true
+            defer { isStreamingCaptureLoading = false }
+            do {
+                let provider = try streamingManager.provider(for: config)
+                await cameraFlowViewModel.handleStreamingCapture(provider: provider, for: area)
+                hapticFeedback(.medium)
+            } catch {
+                viewModel.errorMessage = error.localizedDescription
+                viewModel.showError = true
+            }
+        }
+    }
+
     private var verificationCelebrationTitle: String {
         if verificationPassed {
             return verificationTier == .golden
@@ -579,6 +714,6 @@ struct AreaDetailView: View {
     NavigationStack {
         AreaDetailView(area: Area.sampleAreas[0], viewModel: AreaViewModel())
     }
-    .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self], inMemory: true)
+    .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self, StreamingCameraConfig.self], inMemory: true)
     .environment(AppDependencies())
 }

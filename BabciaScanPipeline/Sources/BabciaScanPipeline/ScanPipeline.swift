@@ -9,10 +9,10 @@ import DreamRoomEngine
 import Foundation
 import UIKit
 
-public struct ScanPipeline {
+public struct ScanPipeline: Sendable {
     private let taskService: GeminiTaskService
     private let dreamEngine: DreamRoomEngine
-    private let promptSource: DreamPromptSource
+    private let promptSource: any DreamPromptSource
 
     public init(
         taskService: GeminiTaskService = GeminiTaskService(),

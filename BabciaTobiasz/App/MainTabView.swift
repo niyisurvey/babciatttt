@@ -30,8 +30,11 @@ struct MainTabView: View {
             }
 
             Tab(String(localized: "mainTab.babcia.label"), systemImage: "camera.fill", value: MainTabViewModel.Tab.babcia) {
-                MicroTidyView {
+                SpotCheckView {
                     viewModel.selectedTab = .areas
+                    DispatchQueue.main.async {
+                        areaViewModel.addNewArea()
+                    }
                 }
             }
 
@@ -137,6 +140,6 @@ private struct PlaceholderScreen: View {
 
 #Preview {
     MainTabView()
-        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self], inMemory: true)
+        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self, StreamingCameraConfig.self], inMemory: true)
         .environment(AppDependencies())
 }

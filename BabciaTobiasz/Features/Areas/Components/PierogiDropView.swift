@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PierogiDropView: View {
     let tier: BowlVerificationTier
+    let autoReveal: Bool
     let onComplete: (BowlVerificationTier) -> Void
 
     @Environment(\.dsTheme) private var theme
@@ -18,8 +19,15 @@ struct PierogiDropView: View {
     @State private var showBoil = false
     @State private var showReveal = false
     @State private var hasCompleted = false
+    @State private var hasAutoDropped = false
 
     private let pierogiCount = 5
+    private enum PierogiAsset {
+        static let normal = "Pierogi_Clay_Normal"
+        static let golden = "Pierogi_Clay_Golden"
+        static let bowlNatural = "Bowl_Clay_Natural"
+        static let bowlBlue = "Bowl_Clay_Blue"
+    }
 
     var body: some View {
         GeometryReader { proxy in
@@ -33,20 +41,22 @@ struct PierogiDropView: View {
 
                 VStack(spacing: theme.grid.sectionSpacing) {
                     VStack(spacing: theme.grid.cardPaddingTight) {
-                        Text(String(localized: "pierogiDrop.title"))
+                        Text(String(localized: autoReveal ? "pierogiDrop.reveal.title" : "pierogiDrop.title"))
                             .dsFont(.title2, weight: .bold)
-                        Text(String(localized: "pierogiDrop.subtitle"))
+                        Text(String(localized: autoReveal ? "pierogiDrop.reveal.subtitle" : "pierogiDrop.subtitle"))
                             .dsFont(.subheadline)
                             .foregroundStyle(.secondary)
-                        Text(
-                            String(
-                                format: String(localized: "pierogiDrop.progress"),
-                                droppedCount,
-                                pierogiCount
+                        if !autoReveal {
+                            Text(
+                                String(
+                                    format: String(localized: "pierogiDrop.progress"),
+                                    droppedCount,
+                                    pierogiCount
+                                )
                             )
-                        )
-                        .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                            .dsFont(.caption)
+                            .foregroundStyle(.secondary)
+                        }
                     }
                     .multilineTextAlignment(.center)
                 }
@@ -74,6 +84,12 @@ struct PierogiDropView: View {
                 withAnimation(theme.motion.fadeStandard.repeatForever(autoreverses: true)) {
                     isFloating = true
                 }
+                if autoReveal && !hasAutoDropped {
+                    hasAutoDropped = true
+                    Task { @MainActor in
+                        await autoDropSequence(center: potCenter)
+                    }
+                }
             }
         }
         .ignoresSafeArea()
@@ -86,18 +102,11 @@ struct PierogiDropView: View {
         let glowColor = tierGlowColor
 
         return ZStack {
-            MeshGradient(
-                width: 3,
-                height: 3,
-                points: meshPoints,
-                colors: meshColors
-            )
-            .frame(width: baseSize, height: baseSize)
-            .clipShape(Circle())
-            .overlay(
-                Circle()
-                    .stroke(theme.palette.glassTint.opacity(theme.glass.tintOpacity * 2), lineWidth: theme.shape.borderWidth)
-            )
+            Image(potAssetName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: baseSize, height: baseSize)
+                .shadow(color: theme.palette.glassTint.opacity(0.2), radius: theme.grid.iconSmall, x: 0, y: theme.grid.iconSmall / 2)
 
             if showBoil {
                 boilEffect(color: glowColor)
@@ -109,9 +118,7 @@ struct PierogiDropView: View {
                     .frame(width: baseSize + theme.grid.iconLarge, height: baseSize + theme.grid.iconLarge)
                     .shadow(color: glowColor.opacity(theme.glass.glowOpacityHigh), radius: theme.grid.iconMedium)
 
-                Text(tier == .golden ? "🥇" : "💙")
-                    .dsFont(.title, weight: .bold)
-                    .scaleEffect(theme.grid.pierogiEmojiScale)
+                TierBadgeView(tier: tier)
             }
         }
         .scaleEffect(scale)
@@ -141,16 +148,16 @@ struct PierogiDropView: View {
         safeInsets: EdgeInsets
     ) -> some View {
         let floatOffset = floatingOffset(for: item)
-        return Text("🥟")
-            .dsFont(.title2, weight: .bold)
-            .scaleEffect(theme.grid.pierogiEmojiScale)
+        return Image(pierogiAssetName)
+            .resizable()
+            .scaledToFit()
             .frame(width: theme.grid.pierogiSize, height: theme.grid.pierogiSize)
             .position(item.position)
             .offset(item.isDropped ? .zero : floatOffset)
             .opacity(item.isDropped ? 0 : 1)
             .animation(theme.motion.fadeStandard, value: isFloating)
             .animation(theme.motion.fadeStandard, value: item.isDropped)
-            .gesture(item.isDropped ? nil : dragGesture(for: item, center: center, dropRadius: dropRadius, container: container, safeInsets: safeInsets))
+            .gesture((item.isDropped || autoReveal) ? nil : dragGesture(for: item, center: center, dropRadius: dropRadius, container: container, safeInsets: safeInsets))
     }
 
     private func dragGesture(
@@ -209,6 +216,30 @@ struct PierogiDropView: View {
             hapticFeedback(tier == .golden ? .success : .medium)
             try? await Task.sleep(for: .seconds(theme.motion.shimmerDuration))
             onComplete(tier)
+        }
+    }
+
+    private var potAssetName: String {
+        tier == .blue ? PierogiAsset.bowlBlue : PierogiAsset.bowlNatural
+    }
+
+    private var pierogiAssetName: String {
+        tier == .golden ? PierogiAsset.golden : PierogiAsset.normal
+    }
+
+    @MainActor
+    private func autoDropSequence(center: CGPoint) async {
+        let ids = pierogis.map(\.id)
+        for id in ids {
+            withAnimation(theme.motion.pressSpring) {
+                updatePierogi(id) { pierogi in
+                    pierogi.position = center
+                    pierogi.isDropped = true
+                }
+            }
+            updateDroppedCount()
+            hapticFeedback(.light)
+            try? await Task.sleep(for: .seconds(0.12))
         }
     }
 
@@ -281,30 +312,6 @@ struct PierogiDropView: View {
         update(&pierogis[index])
     }
 
-    private var meshPoints: [SIMD2<Float>] {
-        [
-            [0.0, 0.0], [0.5, 0.0], [1.0, 0.0],
-            [0.0, 0.5], [0.5, 0.5], [1.0, 0.5],
-            [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
-        ]
-    }
-
-    private var meshColors: [Color] {
-        let palette = gradientPalette[min(droppedCount, gradientPalette.count - 1)]
-        let colors = palette.isEmpty ? [theme.palette.primary, theme.palette.secondary, theme.palette.tertiary] : palette
-        return Array((0..<9).map { colors[$0 % colors.count] })
-    }
-
-    private var gradientPalette: [[Color]] {
-        [
-            theme.gradients.sunrise,
-            theme.gradients.day,
-            theme.gradients.sunset,
-            theme.gradients.night,
-            theme.gradients.areasProgress
-        ]
-    }
-
     private var tierGlowColor: Color {
         tier == .golden ? theme.palette.warmAccent : theme.palette.tertiary
     }
@@ -324,7 +331,31 @@ private struct PierogiDropItem: Identifiable {
     }
 }
 
+private struct TierBadgeView: View {
+    let tier: BowlVerificationTier
+    @Environment(\.dsTheme) private var theme
+
+    private var title: String {
+        tier == .golden
+            ? String(localized: "pierogiDrop.tier.golden")
+            : String(localized: "pierogiDrop.tier.blue")
+    }
+
+    private var tint: Color {
+        tier == .golden ? theme.palette.warmAccent : theme.palette.tertiary
+    }
+
+    var body: some View {
+        Text(title)
+            .dsFont(.headline, weight: .bold)
+            .foregroundStyle(tint)
+            .padding(.horizontal, theme.grid.cardPadding)
+            .padding(.vertical, theme.grid.cardPaddingTight)
+            .background(.ultraThinMaterial, in: Capsule())
+    }
+}
+
 #Preview {
-    PierogiDropView(tier: .blue, onComplete: { _ in })
+    PierogiDropView(tier: .blue, autoReveal: false, onComplete: { _ in })
         .dsTheme(.default)
 }

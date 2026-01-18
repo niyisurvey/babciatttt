@@ -12,6 +12,20 @@
   "limits": {
     "microTidiesPerDay": 3
   },
+  "pierogi": {
+    "goldenChancePercent": 10
+  },
+  "spotCheck": {
+    "minAreasRequired": 3,
+    "checksPerDay": 3,
+    "tidyThreshold": 2,
+    "sameAreaCooldownHours": 24,
+    "points": {
+      "spotless": 15,
+      "tidy": 8,
+      "messy": 0
+    }
+  },
   "babciaResponses": {
     "microTidy": [
       "Looking good, kochanie!",
@@ -34,6 +48,18 @@
       "My eyes are happy.",
       "Very nice, very nice.",
       "You didn't disappoint today."
+    ],
+    "spotCheck": [
+      "Babcia is satisfied.",
+      "Hmm. Acceptable.",
+      "Not perfect, but good enough.",
+      "I can breathe in here.",
+      "You did not embarrass me.",
+      "This passes inspection.",
+      "Babcia nods.",
+      "Keep it like this.",
+      "I see effort.",
+      "Good. For now."
     ]
   }
 }

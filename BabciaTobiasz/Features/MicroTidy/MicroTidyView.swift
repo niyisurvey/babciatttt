@@ -238,5 +238,5 @@ struct MicroTidyView: View {
 #Preview {
     MicroTidyView(onOpenAreas: {})
         .environment(AppDependencies())
-        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self], inMemory: true)
+        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self, StreamingCameraConfig.self], inMemory: true)
 }

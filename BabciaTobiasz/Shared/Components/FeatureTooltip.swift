@@ -91,6 +91,7 @@ extension View {
 }
 
 /// Haptic feedback utility
+@MainActor
 func hapticFeedback(_ style: HapticStyle) {
     #if os(iOS)
     switch style {

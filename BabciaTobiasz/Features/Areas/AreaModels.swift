@@ -71,6 +71,16 @@ enum BabciaPersona: String, Codable, CaseIterable, Identifiable {
         }
     }
 
+    var localizedArchetype: String {
+        switch self {
+        case .classic: return String(localized: "persona.classic.archetype")
+        case .baroness: return String(localized: "persona.baroness.archetype")
+        case .warrior: return String(localized: "persona.warrior.archetype")
+        case .wellness: return String(localized: "persona.wellness.archetype")
+        case .coach: return String(localized: "persona.coach.archetype")
+        }
+    }
+
     var dreamVisionPrompt: String {
         DreamPromptOverrides.prompt(for: self) ?? ""
     }
@@ -101,6 +111,62 @@ enum BabciaPersona: String, Codable, CaseIterable, Identifiable {
         case .coach: return "R5_ToughLifecoach_Headshot_Neutral"
         }
     }
+
+    var fullBodyHeroImageName: String {
+        switch self {
+        case .classic: return "R1_Classic_FullBody_Happy"
+        case .baroness: return "R2_Baroness_FullBody_Happy"
+        case .warrior: return "R3_Warrior_FullBody_Happy"
+        case .wellness: return "R4_Wellness_FullBody_Happy"
+        case .coach: return "R5_ToughLifecoach_FullBody_Happy"
+        }
+    }
+
+    func fullBodyImageName(for pose: BabciaPose) -> String {
+        switch (self, pose) {
+        case (.classic, .happy): return "R1_Classic_FullBody_Happy"
+        case (.classic, .victory): return "R1_Classic_FullBody_Victory"
+        case (.classic, .sadDisappointed): return "R1_Classic_FullBody_SadDisappointed"
+        case (.baroness, .happy): return "R2_Baroness_FullBody_Happy"
+        case (.baroness, .victory): return "R2_Baroness_FullBody_Victory"
+        case (.baroness, .sadDisappointed): return "R2_Baroness_FullBody_SadDisappointed"
+        case (.warrior, .happy): return "R3_Warrior_FullBody_Happy"
+        case (.warrior, .victory): return "R3_Warrior_FullBody_Victory"
+        case (.warrior, .sadDisappointed): return "R3_Warrior_FullBody_SadDisappointed"
+        case (.wellness, .happy): return "R4_Wellness_FullBody_Happy"
+        case (.wellness, .victory): return "R4_Wellness_FullBody_Victory"
+        case (.wellness, .sadDisappointed): return "R4_Wellness_FullBody_SadDisappointed"
+        case (.coach, .happy): return "R5_ToughLifecoach_FullBody_Happy"
+        case (.coach, .victory): return "R5_ToughLifecoach_FullBody_Victory"
+        case (.coach, .sadDisappointed): return "R5_ToughLifecoach_FullBody_SadDisappointed"
+        }
+    }
+
+    var portraitThinkingImageName: String {
+        switch self {
+        case .classic: return "R1_Classic_Portrait_Thinking"
+        case .baroness: return "R2_Baroness_Portrait_Thinking"
+        case .warrior: return "R3_Warrior_Portrait_Thinking"
+        case .wellness: return "R4_Wellness_Portrait_Thinking"
+        case .coach: return "R5_ToughLifecoach_Portrait_Thinking"
+        }
+    }
+
+    var portraitSadImageName: String {
+        switch self {
+        case .classic: return "R1_Classic_Portrait_SadDisappointed"
+        case .baroness: return "R2_Baroness_Portrait_SadDisappointed"
+        case .warrior: return "R3_Warrior_Portrait_SadDisappointed"
+        case .wellness: return "R4_Wellness_Portrait_SadDisappointed"
+        case .coach: return "R5_ToughLifecoach_Portrait_SadDisappointed"
+        }
+    }
+}
+
+enum BabciaPose {
+    case happy
+    case victory
+    case sadDisappointed
 }
 
 @Model
@@ -145,8 +211,19 @@ final class Area {
         set { personaRaw = newValue.rawValue }
     }
 
+    var latestDreamBowl: AreaBowl? {
+        bowls?
+            .sorted { $0.createdAt > $1.createdAt }
+            .first { bowl in
+                if let heroData = bowl.dreamHeroImageData {
+                    return !heroData.isEmpty
+                }
+                return false
+            }
+    }
+
     var hasDreamVision: Bool {
-        if let heroData = latestBowl?.dreamHeroImageData, !heroData.isEmpty {
+        if let heroData = latestDreamBowl?.dreamHeroImageData, !heroData.isEmpty {
             return true
         }
         if let name = dreamImageName, !name.isEmpty {

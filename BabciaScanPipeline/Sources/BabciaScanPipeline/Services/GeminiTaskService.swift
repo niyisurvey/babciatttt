@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-public struct GeminiTaskService {
+public struct GeminiTaskService: Sendable {
     public init() {}
 
     func analyzeRoom(

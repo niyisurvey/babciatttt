@@ -96,6 +96,9 @@
 "onboarding.page.insights.description" = "Otrzymuj spersonalizowane sugestie oparte na pogodzie.";
 "onboarding.page.verdict.title" = "Werdykt Babci";
 "onboarding.page.verdict.description" = "Poproś o weryfikację i zdobywaj niebieskie lub złote premie.";
+"onboarding.persona.title" = "Wybierz Babcię";
+"onboarding.persona.subtitle" = "Wybierz przewodniczkę. Jej styl kształtuje twoje Sny.";
+"onboarding.persona.helper" = "Ustawia bohatera Obszarów i ton sprzątania.";
 
 // MARK: - App Init Error
 "app.initError.title" = "Nie można wczytać danych";
@@ -128,6 +131,7 @@
 "areas.filter.all" = "Wszystkie";
 "areas.filter.completed" = "Ukończone dziś";
 "areas.filter.incomplete" = "Nieukończone";
+"areas.hero.inactive" = "Babcia tęskniła.";
 "areas.menu.edit" = "Edytuj obszar";
 "areas.menu.delete" = "Usuń obszar";
 "areas.empty.title" = "Pusta miska";
@@ -143,6 +147,9 @@
 "areas.error.notEnoughPoints" = "Za mało punktów.";
 "areas.error.persistenceUnavailable" = "Brak dostępu do bazy danych.";
 "areas.scan.status.scanning" = "Skanowanie...";
+"areas.scan.status.thinking1" = "Babcia się zastanawia...";
+"areas.scan.status.thinking2" = "Układa plan...";
+"areas.scan.status.thinking3" = "Pisze twoje zadania...";
 "areas.scan.status.dreamUpdated" = "Sen zaktualizowany.";
 "areas.scan.status.dreamFailed" = "Sen nie wyszedł; używam grafiki referencyjnej Babci.";
 "areas.scan.status.tasksRefreshed" = "Zadania odświeżone.";
@@ -191,6 +198,16 @@
 "areaDetail.delete.message.default" = "Czy na pewno chcesz usunąć ten obszar?";
 "areaDetail.babcia.label" = "Twoja Babcia";
 "areaDetail.tasks.title" = "Dzisiejsze zadania";
+"areaDetail.tasks.hint.title" = "Dotknij, aby ukończyć";
+"areaDetail.tasks.hint.message" = "Dotknij zadania, by je oznaczyć.";
+"areaDetail.completion.title" = "Świetna robota!";
+"areaDetail.completion.subtitle" = "Twoja miska jest pełna.";
+"areaDetail.completion.message" = "Zrób zdjęcie po, aby dostać bonus i zapis przed/po w galerii.";
+"areaDetail.completion.primary" = "Zrób zdjęcie po";
+"areaDetail.completion.secondary" = "Gotowe";
+"areaDetail.tasks.empty" = "Brak zadań. Zrób skan, aby zacząć.";
+"cameraHero.title" = "Gotowy na skan";
+"cameraHero.primary" = "Rozpocznij skan";
 "areaDetail.verify.callout.title" = "Gotowy do weryfikacji?";
 "areaDetail.verify.callout.message" = "Zrób zdjęcie po, aby zablokować bonusowe punkty.";
 "areaDetail.verify.callout.primary" = "Rozpocznij weryfikację";
@@ -213,6 +230,10 @@
 "pierogiDrop.title" = "Wrzuć pierogi do garnka";
 "pierogiDrop.subtitle" = "Nakarm wszystkie pięć, by poznać poziom.";
 "pierogiDrop.progress" = "%d z %d wrzucone";
+"pierogiDrop.reveal.title" = "Odsłaniamy poziom";
+"pierogiDrop.reveal.subtitle" = "Babcia sprawdza twoje postępy.";
+"pierogiDrop.tier.blue" = "NIEBIESKI";
+"pierogiDrop.tier.golden" = "ZŁOTY";
 
 // MARK: - Reminder Prompt
 "reminderPrompt.title" = "Przypomnienie pokoju";
@@ -226,6 +247,8 @@
 "reminders.editor.enable" = "Włącz przypomnienia";
 "reminders.editor.footer" = "Powiadomimy cię o wybranych godzinach każdego dnia.";
 "reminders.editor.slot" = "Termin %d";
+"reminders.preview.label" = "Bezpieczne godziny:";
+"reminders.preview.off" = "Wyłączone";
 "reminders.notification.title" = "Czas na %@";
 "reminders.action.complete" = "Oznacz jako ukończone";
 "reminders.action.snooze" = "Przypomnij za 1 godzinę";
@@ -253,6 +276,42 @@
 "microTidy.camera.permission" = "Dostęp do aparatu jest wymagany, aby zrobić szybkie ogarnięcie.";
 "microTidy.camera.notSupported" = "Aparat jest dostępny tylko na urządzeniach iOS.";
 "microTidy.camera.captureFailed" = "Nie udało się odczytać zrobionego zdjęcia.";
+"spotCheck.title" = "Kontrola Babci";
+"spotCheck.subtitle" = "Babcia wybiera pokój. Ty udowadniasz, że jest schludnie.";
+"spotCheck.limit.title" = "Limit dzienny";
+"spotCheck.limit.status" = "Pozostało %d z %d na dziś";
+"spotCheck.points.title" = "Punkty bonusowe";
+"spotCheck.points.spotless" = "Czyściutko +%d";
+"spotCheck.points.tidy" = "Schludnie +%d";
+"spotCheck.points.messy" = "Bałagan +%d";
+"spotCheck.minimum.title" = "Za mało pokoi";
+"spotCheck.minimum.message" = "Utwórz co najmniej %d obszary, aby odblokować Kontrolę.";
+"spotCheck.minimum.action" = "Utwórz obszar";
+"spotCheck.reveal.title" = "Babcia wybiera";
+"spotCheck.reveal.prompt" = "Wylosuje dla ciebie pokój.";
+"spotCheck.reveal.action" = "Odsłoń pokój";
+"spotCheck.reveal.message" = "Babcia wybiera twój pokój...";
+"spotCheck.area.title" = "Wybrany obszar";
+"spotCheck.area.empty" = "Kliknij odsłonięcie, aby zobaczyć wybór Babci.";
+"spotCheck.action.camera" = "Zrób zdjęcie kontroli";
+"spotCheck.action.awaiting" = "Odsłoń pokój, aby zacząć kontrolę.";
+"spotCheck.limit.reached" = "Wyczerpano dzienny limit kontroli.";
+"spotCheck.cooldown.all" = "Wszystkie obszary odpoczywają. Spróbuj później.";
+"spotCheck.processing" = "Babcia ocenia...";
+"spotCheck.result.title" = "Wynik";
+"spotCheck.result.spotless" = "Czyściutko";
+"spotCheck.result.tidy" = "Schludnie";
+"spotCheck.result.messy" = "Bałagan";
+"spotCheck.result.area" = "Obszar: %@";
+"spotCheck.result.tasks" = "Wykryte zadania: %d";
+"spotCheck.result.points" = "Bonus: +%d punktów";
+"spotCheck.response.title" = "Babcia mówi";
+"spotCheck.camera.alert.title" = "Dostęp do aparatu";
+"spotCheck.camera.unavailable" = "Aparat nie jest dostępny na tym urządzeniu.";
+"spotCheck.camera.permission" = "Dostęp do aparatu jest wymagany do wykonania kontroli.";
+"spotCheck.camera.notSupported" = "Robienie zdjęć jest dostępne tylko na iOS.";
+"spotCheck.camera.captureFailed" = "Nie udało się odczytać zdjęcia.";
+"spotCheck.error.pipelineUnavailable" = "Pipeline skanowania jest niedostępny.";
 
 // MARK: - Loading
 "loading.default" = "Ładowanie...";
@@ -261,14 +320,19 @@
 // MARK: - Personas
 "persona.classic.name" = "Klasyczna Babcia";
 "persona.classic.tagline" = "Kochanie... chodź, sprzątamy.";
+"persona.classic.archetype" = "Klasyczna";
 "persona.baroness.name" = "Baronowa";
 "persona.baroness.tagline" = "To poniżej naszego poziomu.";
+"persona.baroness.archetype" = "Baronowa";
 "persona.warrior.name" = "Babcia Wojowniczka";
 "persona.warrior.tagline" = "POKONAJ BAŁAGAN.";
+"persona.warrior.archetype" = "Wojowniczka";
 "persona.wellness.name" = "Wellness-X";
 "persona.wellness.tagline" = "Przywróć harmonię.";
+"persona.wellness.archetype" = "Wellness";
 "persona.coach.name" = "Surowa trenerka";
 "persona.coach.tagline" = "Zrób to mimo wszystko.";
+"persona.coach.archetype" = "Trenerka";
 
 // MARK: - Home
 "home.toolbar.title" = "Start";
@@ -280,6 +344,8 @@
 "home.latestDream.empty" = "Brak snów";
 "home.stats.title" = "Statystyki i postęp";
 "home.stats.subtitle" = "%d pierogów zdobyto";
+"home.hero.title" = "Zrób szybko. Zamknij aplikację.";
+"home.hero.subtitle" = "Twój pokój, przywrócony w pięciu ruchach.";
 "home.shop.title" = "Sklep";
 "home.shop.subtitle" = "Odblokuj nowe filtry Snów";
 "home.dailyProgress.title" = "Dzisiejszy postęp";
@@ -305,6 +371,7 @@
 "gallery.empty.title" = "Brak snów";
 "gallery.empty.message" = "Zrób zdjęcie, aby wygenerować pierwszy obraz Snu.";
 "gallery.toolbar.title" = "Galeria";
+"gallery.card.persona" = "Babcia na dyżurze: %@";
 "gallery.detail.area.fallback" = "Obszar";
 "gallery.detail.verification.golden" = "Złota weryfikacja";
 "gallery.detail.verification.blue" = "Niebieska weryfikacja";
@@ -314,6 +381,7 @@
 "gallery.detail.outcome.failed" = "Nieudana";
 "gallery.detail.outcome.skipped" = "Pominięta";
 "gallery.detail.meta.created" = "Utworzono";
+"gallery.detail.meta.babcia" = "Babcia";
 "gallery.detail.meta.verification" = "Weryfikacja";
 "gallery.detail.meta.outcome" = "Wynik";
 "gallery.detail.meta.basePoints" = "Punkty podstawowe";
@@ -433,6 +501,92 @@
 "errorView.permission.title" = "Wymagane uprawnienie";
 "errorView.preview.unexpected" = "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.";
 "errorView.preview.sync" = "Nie można zsynchronizować danych";
+
+// MARK: - Camera Providers
+"cameraProvider.rtsp" = "RTSP";
+"cameraProvider.tapo" = "Tapo";
+"cameraProvider.homeAssistant" = "Home Assistant";
+
+// MARK: - Streaming Camera Errors
+"streamingCamera.error.invalidConfiguration" = "Konfiguracja kamery jest nieprawidłowa.";
+"streamingCamera.error.missingCredentials" = "Brakuje danych logowania kamery.";
+"streamingCamera.error.connectionFailed" = "Nie można połączyć się z kamerą.";
+"streamingCamera.error.frameUnavailable" = "Brak klatki z kamery.";
+"streamingCamera.error.unauthorized" = "Autoryzacja kamery nie powiodła się.";
+"streamingCamera.error.invalidResponse" = "Nieprawidłowa odpowiedź kamery.";
+"streamingCamera.error.unsupported" = "Dostawca kamery nie jest wspierany.";
+
+// MARK: - Camera Setup
+"settings.cameras.title" = "Kamery strumieniowe";
+"settings.cameras.action" = "Zarządzaj kamerami";
+"cameraSetup.title" = "Konfiguracja kamer";
+"cameraSetup.add.title" = "Dodaj kamerę";
+"cameraSetup.edit.title" = "Edytuj kamerę";
+"cameraSetup.empty.title" = "Brak kamer";
+"cameraSetup.empty.message" = "Dodaj kamerę strumieniową, aby włączyć monitoring.";
+"cameraSetup.empty.action" = "Dodaj kamerę";
+"cameraSetup.section.basics" = "Podstawy";
+"cameraSetup.section.provider" = "Dostawca";
+"cameraSetup.field.name" = "Nazwa kamery";
+"cameraSetup.field.type" = "Typ dostawcy";
+"cameraSetup.field.rtspUrl" = "Adres RTSP";
+"cameraSetup.field.host" = "Host";
+"cameraSetup.field.port" = "Port";
+"cameraSetup.field.username" = "Nazwa użytkownika";
+"cameraSetup.field.password" = "Hasło";
+"cameraSetup.field.haBaseUrl" = "Adres Home Assistant";
+"cameraSetup.field.haToken" = "Token Home Assistant";
+"cameraSetup.field.haEntityId" = "ID encji kamery";
+"cameraSetup.save" = "Zapisz";
+"cameraSetup.cancel" = "Anuluj";
+"cameraSetup.delete.title" = "Usuń kamerę";
+"cameraSetup.delete.message" = "To usunie kamerę i jej dane logowania.";
+"cameraSetup.delete.confirm" = "Usuń";
+"cameraSetup.delete.action" = "Usuń";
+"cameraSetup.discovery.title" = "Wykrywanie lokalne";
+"cameraSetup.discovery.action" = "Skanuj";
+"cameraSetup.discovery.stop" = "Zatrzymaj";
+"cameraSetup.discovery.none" = "Szukam kamer...";
+"cameraSetup.quickAdd.title" = "Znajdź kamery w Wi‑Fi";
+"cameraSetup.quickAdd.subtitle" = "Wykryjemy lokalne kamery i uzupełnimy dane.";
+"cameraSetup.quickAdd.scan" = "Skanuj";
+"cameraSetup.quickAdd.stop" = "Stop";
+"cameraSetup.quickAdd.none" = "Brak znalezionych kamer.";
+"cameraSetup.quickAdd.action" = "Połącz";
+"cameraSetup.quickAdd.manual" = "Dodaj ręcznie";
+"cameraSetup.quickAdd.rtsp" = "Kamera RTSP";
+"cameraSetup.quickAdd.tapo" = "Kamera Tapo";
+"cameraSetup.quickAdd.homeAssistant" = "Home Assistant";
+"cameraSetup.rtsp.title" = "Kamera RTSP";
+"cameraSetup.rtsp.helper" = "Wklej link RTSP z aplikacji kamery.";
+"cameraSetup.rtsp.paste" = "Wklej ze schowka";
+"cameraSetup.tapo.title" = "Kamera Tapo";
+"cameraSetup.tapo.helper" = "Podaj login do Tapo, połączymy lokalnie.";
+"cameraSetup.ha.title" = "Kamera Home Assistant";
+"cameraSetup.ha.helper" = "Użyj tokenu Long‑Lived Access Token, aby pobrać kamery.";
+"cameraSetup.ha.fetch" = "Pobierz kamery";
+"cameraSetup.ha.empty" = "Brak encji kamer.";
+"cameraSetup.ha.select" = "Wybierz kamerę";
+"cameraDiscovery.kind.rtsp" = "RTSP";
+"cameraDiscovery.kind.tapo" = "Tapo";
+"cameraDiscovery.kind.homeAssistant" = "Home Assistant";
+"cameraSetup.validation.name" = "Nazwa kamery jest wymagana.";
+"cameraSetup.validation.rtspUrl" = "Podaj poprawny adres RTSP.";
+"cameraSetup.validation.host" = "Host jest wymagany.";
+"cameraSetup.validation.username" = "Nazwa użytkownika jest wymagana.";
+"cameraSetup.validation.secret" = "Hasło lub token są wymagane.";
+"cameraSetup.validation.haBaseUrl" = "Adres Home Assistant jest wymagany.";
+"cameraSetup.validation.haEntityId" = "ID encji kamery jest wymagane.";
+
+// MARK: - Camera Source
+"cameraSource.title" = "Wybierz źródło";
+"cameraSource.message" = "Wybierz źródło kamery.";
+"cameraSource.device" = "Aparat iPhone";
+"cameraSource.streaming" = "Kamera strumieniowa";
+"cameraSource.pick.title" = "Wybierz kamerę";
+"cameraSource.empty" = "Brak skonfigurowanych kamer.";
+"cameraSource.loading" = "Pobieram klatkę z kamery...";
+"cameraFlow.error.streamingCaptureFailed" = "Nie udało się pobrać klatki z kamery.";
 
 // MARK: - Preview
 "preview.glassCard.title" = "Szklana karta";

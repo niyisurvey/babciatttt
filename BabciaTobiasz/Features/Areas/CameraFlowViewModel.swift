@@ -22,11 +22,14 @@ enum CameraFlowMode: Equatable {
 
 enum CameraFlowError: LocalizedError, Equatable {
     case missingAreaContext
+    case streamingCaptureFailed
 
     var errorDescription: String? {
         switch self {
         case .missingAreaContext:
             return "Camera flow is not configured."
+        case .streamingCaptureFailed:
+            return String(localized: "cameraFlow.error.streamingCaptureFailed")
         }
     }
 }
@@ -81,5 +84,18 @@ final class CameraFlowViewModel {
         }
 
         state = .success
+    }
+
+    func handleStreamingCapture(provider: StreamingCameraProvider, for area: Area) async {
+        do {
+            let image = try await provider.captureFrame()
+            guard let data = image.jpegData(compressionQuality: 0.85) else {
+                state = .error(.streamingCaptureFailed)
+                return
+            }
+            await handleCapture(image: data, for: area)
+        } catch {
+            state = .error(.streamingCaptureFailed)
+        }
     }
 }

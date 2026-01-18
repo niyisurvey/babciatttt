@@ -364,12 +364,12 @@ struct AreaFormView: View {
 
 #Preview("New Area") {
     AreaFormView(viewModel: AreaViewModel(), area: nil)
-        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self], inMemory: true)
+        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self, StreamingCameraConfig.self], inMemory: true)
         .environment(AppDependencies())
 }
 
 #Preview("Edit Area") {
     AreaFormView(viewModel: AreaViewModel(), area: Area.sampleAreas[0])
-        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self], inMemory: true)
+        .modelContainer(for: [Area.self, AreaBowl.self, CleaningTask.self, TaskCompletionEvent.self, Session.self, User.self, ReminderConfig.self, StreamingCameraConfig.self], inMemory: true)
         .environment(AppDependencies())
 }

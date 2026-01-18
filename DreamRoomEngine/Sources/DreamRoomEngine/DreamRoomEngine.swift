@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 /// DreamRoom engine behavior is intentional and protected. Do not refactor casually.
-public struct DreamRoomEngine {
+public struct DreamRoomEngine: Sendable {
     public init() {}
 
     public func generate(

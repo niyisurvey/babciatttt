@@ -69,13 +69,14 @@ struct ScalingHeaderScrollView<Header: View, Content: View>: View {
 
     @ViewBuilder
     private var scrollView: some View {
-        let base = ScrollView(showsIndicators: false) {
+        let scrollContent = ScrollView(showsIndicators: false) {
             VStack(spacing: 0) {
                 headerContainer
                 content()
             }
         }
-        .coordinateSpace(name: scalingHeaderScrollSpace)
+        .scrollClipDisabled()
+        .   coordinateSpace(name: scalingHeaderScrollSpace)
         .onPreferenceChange(ScalingHeaderScrollOffsetKey.self) { offset in
             scrollOffset = offset
             let range = max(maxHeight - minHeight, 1)
@@ -84,13 +85,32 @@ struct ScalingHeaderScrollView<Header: View, Content: View>: View {
                 progress = rawProgress
             }
         }
-
-        if let onRefresh {
-            base.refreshable { await onRefresh() }
+        
+        #if compiler(>=7.0)
+        if #available(iOS 26.0, *) {
+            let base = scrollContent.scrollEdgeEffectHidden(true, for: .top)
+            if let onRefresh {
+                base.refreshable { await onRefresh() }
+            } else {
+                base
+            }
         } else {
-            base
+            if let onRefresh {
+                scrollContent.refreshable { await onRefresh() }
+            } else {
+                scrollContent
+            }
         }
+        #else
+        if let onRefresh {
+            scrollContent.refreshable { await onRefresh() }
+        } else {
+            scrollContent
+        }
+        #endif
     }
+
+
 
     private var headerContainer: some View {
         GeometryReader { proxy in
@@ -99,19 +119,13 @@ struct ScalingHeaderScrollView<Header: View, Content: View>: View {
             let collapse = min(max(-minY / range, 0), 1)
             let stretch = max(minY, 0)
             let height = maxHeight + stretch
-            let offset: CGFloat = minY < 0 ? -minY : 0
+            let offset: CGFloat = minY > 0 ? -minY : 0
 
             ZStack(alignment: .top) {
-                let headerView = header(collapse)
+                header(collapse)
                     .frame(height: height)
                     .frame(maxWidth: .infinity)
                     .offset(y: offset)
-                
-                if minY < 0 {
-                    headerView.clipped()
-                } else {
-                    headerView
-                }
 
                 Color.clear
                     .frame(height: 1)

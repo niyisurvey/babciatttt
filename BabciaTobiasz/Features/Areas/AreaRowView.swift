@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 /// A row view displaying a single area with its icon, name, and bowl progress.
 struct AreaRowView: View {
@@ -15,9 +16,17 @@ struct AreaRowView: View {
     /// The area to display
     let area: Area
     let milestone: MilestoneDisplay?
+    @Query private var reminderConfigs: [ReminderConfig]
     @Environment(\.dsTheme) private var theme
 
     // MARK: - Body
+
+    init(area: Area, milestone: MilestoneDisplay?) {
+        self.area = area
+        self.milestone = milestone
+        let areaId = area.id
+        _reminderConfigs = Query(filter: #Predicate<ReminderConfig> { $0.areaId == areaId })
+    }
 
     var body: some View {
         GlassCardView {
@@ -86,6 +95,8 @@ struct AreaRowView: View {
                     .lineLimit(1)
             }
 
+            reminderPreviewRow
+
             HStack(spacing: 8) {
                 Text(ageLabel)
                     .dsFont(.caption2)
@@ -116,6 +127,34 @@ struct AreaRowView: View {
         .background(area.color.opacity(0.15), in: Capsule())
         .foregroundStyle(area.color)
     }
+
+    private var reminderPreviewRow: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "bell.badge")
+                .font(.system(size: theme.grid.iconTiny))
+                .foregroundStyle(.secondary)
+            Text(String(localized: "reminders.preview.label"))
+                .dsFont(.caption2)
+                .foregroundStyle(.secondary)
+            Text(reminderTimesText)
+                .dsFont(.caption2, weight: .bold)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+        }
+    }
+
+    private var reminderTimesText: String {
+        guard let config = reminderConfigs.first,
+              config.isEnabled,
+              !config.activeSlotTimes.isEmpty else {
+            return String(localized: "reminders.preview.off")
+        }
+
+        return config.activeSlotTimes
+            .sorted()
+            .map { $0.formatted(date: .omitted, time: .shortened) }
+            .joined(separator: " • ")
+    }
 }
 
 #Preview {
@@ -126,4 +165,14 @@ struct AreaRowView: View {
     }
     .padding()
     .background(Color.gray.opacity(0.1))
+    .modelContainer(for: [
+        Area.self,
+        AreaBowl.self,
+        CleaningTask.self,
+        TaskCompletionEvent.self,
+        Session.self,
+        User.self,
+        ReminderConfig.self,
+        StreamingCameraConfig.self
+    ], inMemory: true)
 }

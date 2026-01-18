@@ -10,7 +10,7 @@ import DreamRoomEngine
 import Foundation
 import UIKit
 
-struct BabciaScanPipelineOutput {
+struct BabciaScanPipelineOutput: Sendable {
     let tasks: [String]
     let advice: String
     let dreamHeroImageData: Data?
@@ -21,7 +21,7 @@ struct BabciaScanPipelineOutput {
     let metadata: DreamRoomMetadata?
 }
 
-struct BabciaScanPipelineService {
+struct BabciaScanPipelineService: Sendable {
     private let pipeline: ScanPipeline
 
     init(pipeline: ScanPipeline = ScanPipeline()) {

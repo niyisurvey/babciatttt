@@ -69,6 +69,7 @@ struct DSGrid {
     var iconError: CGFloat
     var iconXL: CGFloat
     var iconXXL: CGFloat
+    var iconXXXL: CGFloat
     var ringSize: CGFloat
     var detailCardHeightSmall: CGFloat
     var detailCardHeightLarge: CGFloat
@@ -308,6 +309,7 @@ extension DesignSystemTheme {
             iconError: 50,
             iconXL: 60,
             iconXXL: 80,
+            iconXXXL: 110,
             ringSize: 100,
             detailCardHeightSmall: 120,
             detailCardHeightLarge: 150,

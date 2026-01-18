@@ -8,6 +8,9 @@
 
 import SwiftUI
 import SwiftData
+#if os(iOS)
+import UIKit
+#endif
 
 /// Home dashboard with overview cards
 struct HomeView: View {
@@ -21,6 +24,10 @@ struct HomeView: View {
         NavigationStack {
             HomeScreenContent(
                 viewModel: viewModel,
+                onRefresh: {
+                    hapticFeedback(.medium)
+                    await viewModel.fetchDashboardData()
+                },
                 onShopTap: { showShop = true },
                 onGalleryTap: { showGallery = true },
                 onAnalyticsTap: { showAnalytics = true }
@@ -30,10 +37,6 @@ struct HomeView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbarBackground(.hidden, for: .navigationBar)
                 #endif
-                .refreshable {
-                    hapticFeedback(.medium)
-                    await viewModel.fetchDashboardData()
-                }
                 .toolbar {
                     ToolbarItem(placement: .principal) {
                         Text(String(localized: "home.toolbar.title"))
@@ -69,25 +72,57 @@ struct HomeView: View {
 
 private struct HomeScreenContent: View {
     @Bindable var viewModel: HomeViewModel
+    let onRefresh: () async -> Void
     let onShopTap: () -> Void
     let onGalleryTap: () -> Void
     let onAnalyticsTap: () -> Void
     @Environment(\.dsTheme) private var theme
+    @State private var headerProgress: CGFloat = 0
 
     var body: some View {
         ZStack {
             HomeBackgroundView()
 
-            ScrollView(showsIndicators: false) {
+            ScalingHeaderScrollView(
+                maxHeight: theme.grid.heroCardHeight,
+                minHeight: theme.grid.heroHeaderCollapsedHeight,
+                snapMode: .none,
+                progress: $headerProgress,
+                onRefresh: onRefresh
+            ) { progress in
+                homeHeroImage(progress: progress)
+            } content: {
                 HomeScrollContent(
                     viewModel: viewModel,
                     onShopTap: onShopTap,
                     onGalleryTap: onGalleryTap,
                     onAnalyticsTap: onAnalyticsTap
                 )
-                    .padding()
-                    .frame(maxWidth: .infinity)
+                .padding()
+                .frame(maxWidth: .infinity)
             }
+        }
+    }
+
+    private func homeHeroImage(progress: CGFloat) -> some View {
+        homeHeroImageView
+            .opacity(max(0.0, 1.0 - progress * 1.2))
+    }
+
+    @ViewBuilder
+    private var homeHeroImageView: some View {
+        if let data = viewModel.latestDreamImageData,
+           let uiImage = UIImage(data: data) {
+            Image(uiImage: uiImage)
+                .resizable()
+                .scaledToFill()
+        } else if let fallbackImage = UIImage(named: "DreamRoom_Test_1200x1600") {
+            Image(uiImage: fallbackImage)
+                .resizable()
+                .scaledToFill()
+        } else {
+            Rectangle()
+                .fill(.clear)
         }
     }
 }

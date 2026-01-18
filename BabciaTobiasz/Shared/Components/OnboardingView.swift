@@ -6,7 +6,12 @@ import SwiftUI
 /// First-launch onboarding with feature descriptions
 struct OnboardingView: View {
     @Binding var hasCompletedOnboarding: Bool
+    @AppStorage("primaryPersonaRaw") private var primaryPersonaRaw: String = BabciaPersona.classic.rawValue
+    @AppStorage("needsFirstArea") private var needsFirstArea = false
+    @AppStorage("needsFirstScan") private var needsFirstScan = false
+    @AppStorage(AppIntentRoute.storageKey) private var appIntentRoute: String = AppIntentRoute.none.rawValue
     @State private var currentPage = 0
+    @State private var selectedPersona = BabciaPersona.classic
     @Environment(\.dsTheme) private var theme
     
     private let pages: [OnboardingPage] = [
@@ -37,6 +42,7 @@ struct OnboardingView: View {
     ]
     
     var body: some View {
+        let steps = onboardingSteps
         ZStack {
             // Background
             backgroundGradient
@@ -56,8 +62,8 @@ struct OnboardingView: View {
                 
                 // Pages
                 TabView(selection: $currentPage) {
-                    ForEach(pages.indices, id: \.self) { index in
-                        OnboardingPageView(page: pages[index])
+                    ForEach(steps.indices, id: \.self) { index in
+                        steps[index].view
                             .tag(index)
                     }
                 }
@@ -69,9 +75,9 @@ struct OnboardingView: View {
                 VStack(spacing: 30) {
                     // Custom page indicator
                     HStack(spacing: 8) {
-                        ForEach(pages.indices, id: \.self) { index in
+                        ForEach(steps.indices, id: \.self) { index in
                             Capsule()
-                                .fill(index == currentPage ? pages[currentPage].accentColor : .secondary.opacity(0.3))
+                                .fill(index == currentPage ? steps[currentPage].accentColor : .secondary.opacity(0.3))
                                 .frame(width: index == currentPage ? 24 : 8, height: 8)
                                 .animation(theme.motion.pressSpring, value: currentPage)
                         }
@@ -79,7 +85,7 @@ struct OnboardingView: View {
                     
                     // Action button
                     Button {
-                        if currentPage < pages.count - 1 {
+                        if currentPage < steps.count - 1 {
                             withAnimation(theme.motion.listSpring) {
                                 currentPage += 1
                             }
@@ -87,7 +93,7 @@ struct OnboardingView: View {
                             completeOnboarding()
                         }
                     } label: {
-                        Text(currentPage < pages.count - 1
+                        Text(currentPage < steps.count - 1
                              ? String(localized: "onboarding.continue")
                              : String(localized: "onboarding.getStarted"))
                             .dsFont(.headline)
@@ -100,24 +106,31 @@ struct OnboardingView: View {
                 .padding(.bottom, 50)
             }
         }
+        .onAppear {
+            selectedPersona = BabciaPersona(rawValue: primaryPersonaRaw) ?? .classic
+        }
+        .onChange(of: selectedPersona) { _, newValue in
+            primaryPersonaRaw = newValue.rawValue
+        }
     }
     
     private var backgroundGradient: some View {
         TimelineView(.animation(minimumInterval: theme.motion.meshAnimationInterval)) { timeline in
+            let steps = onboardingSteps
             MeshGradient(
                 width: 3,
                 height: 3,
                 points: animatedMeshPoints(for: timeline.date),
                 colors: [
-                    pages[currentPage].accentColor.opacity(0.3),
+                    steps[currentPage].accentColor.opacity(0.3),
                     theme.palette.primary.opacity(0.2),
-                    pages[currentPage].accentColor.opacity(0.2),
+                    steps[currentPage].accentColor.opacity(0.2),
                     theme.palette.secondary.opacity(0.15),
-                    pages[currentPage].accentColor.opacity(0.15),
+                    steps[currentPage].accentColor.opacity(0.15),
                     theme.palette.tertiary.opacity(0.2),
                     theme.palette.primary.opacity(0.2),
                     theme.palette.secondary.opacity(0.15),
-                    pages[currentPage].accentColor.opacity(0.25)
+                    steps[currentPage].accentColor.opacity(0.25)
                 ]
             )
         }
@@ -140,13 +153,39 @@ struct OnboardingView: View {
     
     private func completeOnboarding() {
         withAnimation(theme.motion.listSpring) {
+            primaryPersonaRaw = selectedPersona.rawValue
+            needsFirstArea = true
+            needsFirstScan = true
             hasCompletedOnboarding = true
         }
+        appIntentRoute = AppIntentRoute.areas.rawValue
         // Haptic feedback
         #if os(iOS)
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         #endif
     }
+
+    private var onboardingSteps: [OnboardingStep] {
+        let pageSteps = pages.map { page in
+            OnboardingStep(
+                accentColor: page.accentColor,
+                view: AnyView(OnboardingPageView(page: page))
+            )
+        }
+        let personaStep = OnboardingStep(
+            accentColor: theme.palette.warmAccent,
+            view: AnyView(BabciaPersonaSelectionView(selectedPersona: $selectedPersona))
+        )
+        return pageSteps + [personaStep]
+    }
+}
+
+// MARK: - Step Model
+
+struct OnboardingStep: Identifiable {
+    let id = UUID()
+    let accentColor: Color
+    let view: AnyView
 }
 
 // MARK: - Data Model

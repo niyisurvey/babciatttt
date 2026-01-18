@@ -30,11 +30,11 @@ final class MicroTidyViewModel {
     }
 
     init(
-        configService: AppConfigService = .shared,
+        configService: AppConfigService? = nil,
         userDefaults: UserDefaults = .standard,
         calendar: Calendar = .current
     ) {
-        self.configService = configService
+        self.configService = configService ?? .shared
         self.userDefaults = userDefaults
         self.calendar = calendar
         refreshDailyState()

@@ -170,6 +170,9 @@
 "onboarding.page.insights.description" = "Get personalized suggestions based on weather to plan your day.";
 "onboarding.page.verdict.title" = "Babcia's Verdict";
 "onboarding.page.verdict.description" = "Request verification and earn Blue or Golden totals for completed bowls.";
+"onboarding.persona.title" = "Choose your Babcia";
+"onboarding.persona.subtitle" = "Pick your guide. Their personality shapes your Dreams.";
+"onboarding.persona.helper" = "Sets your Areas hero and the tone of your cleaning.";
 
 // MARK: - App Init Error
 "app.initError.title" = "Unable to Load Data";
@@ -202,6 +205,7 @@
 "areas.filter.all" = "All";
 "areas.filter.completed" = "Completed Today";
 "areas.filter.incomplete" = "Not Completed";
+"areas.hero.inactive" = "Babcia has missed you.";
 "areas.menu.edit" = "Edit Area";
 "areas.menu.delete" = "Delete Area";
 "areas.empty.title" = "Empty Pot";
@@ -217,6 +221,9 @@
 "areas.error.notEnoughPoints" = "Not enough points.";
 "areas.error.persistenceUnavailable" = "Persistence unavailable.";
 "areas.scan.status.scanning" = "Scanning...";
+"areas.scan.status.thinking1" = "Babcia is pondering...";
+"areas.scan.status.thinking2" = "Dreaming up a plan...";
+"areas.scan.status.thinking3" = "Writing your tasks...";
 "areas.scan.status.dreamUpdated" = "Dream updated.";
 "areas.scan.status.dreamFailed" = "Dream failed; using Babcia reference art.";
 "areas.scan.status.tasksRefreshed" = "Tasks refreshed.";
@@ -265,6 +272,16 @@
 "areaDetail.delete.message.default" = "Are you sure you want to delete this area?";
 "areaDetail.babcia.label" = "Your Babcia";
 "areaDetail.tasks.title" = "Today's Tasks";
+"areaDetail.tasks.hint.title" = "Tap to complete";
+"areaDetail.tasks.hint.message" = "Tap a task to mark it done.";
+"areaDetail.completion.title" = "Well done!";
+"areaDetail.completion.subtitle" = "Your bowl is full.";
+"areaDetail.completion.message" = "Take an after photo for a bonus and a before & after in the Gallery.";
+"areaDetail.completion.primary" = "Take After Photo";
+"areaDetail.completion.secondary" = "All Done";
+"areaDetail.tasks.empty" = "No tasks yet. Run a scan to begin.";
+"cameraHero.title" = "Ready to scan";
+"cameraHero.primary" = "Start scan";
 "areaDetail.verify.callout.title" = "Ready to verify?";
 "areaDetail.verify.callout.message" = "Take an after photo to lock in your bonus points.";
 "areaDetail.verify.callout.primary" = "Start verification";
@@ -287,6 +304,10 @@
 "pierogiDrop.title" = "Drop the pierogis into the pot";
 "pierogiDrop.subtitle" = "Feed all five to reveal your tier.";
 "pierogiDrop.progress" = "%d of %d dropped";
+"pierogiDrop.reveal.title" = "Revealing your tier";
+"pierogiDrop.reveal.subtitle" = "Babcia is checking your progress.";
+"pierogiDrop.tier.blue" = "BLUE";
+"pierogiDrop.tier.golden" = "GOLD";
 
 // MARK: - Reminder Prompt
 "reminderPrompt.title" = "Room reminder";
@@ -300,6 +321,8 @@
 "reminders.editor.enable" = "Enable reminders";
 "reminders.editor.footer" = "We'll notify you at the selected times every day.";
 "reminders.editor.slot" = "Slot %d";
+"reminders.preview.label" = "Safe times:";
+"reminders.preview.off" = "Off";
 "reminders.notification.title" = "Time for %@";
 "reminders.action.complete" = "Mark Complete";
 "reminders.action.snooze" = "Remind in 1 hour";
@@ -327,6 +350,42 @@
 "microTidy.camera.permission" = "Camera access is required to capture a micro tidy.";
 "microTidy.camera.notSupported" = "Camera capture is only available on iOS devices.";
 "microTidy.camera.captureFailed" = "Could not read the captured photo.";
+"spotCheck.title" = "Babcia's Spot Check";
+"spotCheck.subtitle" = "Babcia picks a room. You prove it's tidy.";
+"spotCheck.limit.title" = "Daily limit";
+"spotCheck.limit.status" = "Remaining %d of %d today";
+"spotCheck.points.title" = "Bonus points";
+"spotCheck.points.spotless" = "Spotless +%d";
+"spotCheck.points.tidy" = "Tidy +%d";
+"spotCheck.points.messy" = "Messy +%d";
+"spotCheck.minimum.title" = "Need More Rooms";
+"spotCheck.minimum.message" = "Create at least %d areas to unlock Spot Check.";
+"spotCheck.minimum.action" = "Create Area";
+"spotCheck.reveal.title" = "Babcia is picking";
+"spotCheck.reveal.prompt" = "She'll choose a random room for you.";
+"spotCheck.reveal.action" = "Reveal the room";
+"spotCheck.reveal.message" = "Babcia is choosing your room...";
+"spotCheck.area.title" = "Selected area";
+"spotCheck.area.empty" = "Tap reveal to see where Babcia sends you.";
+"spotCheck.action.camera" = "Take a spot check photo";
+"spotCheck.action.awaiting" = "Reveal a room to start your spot check.";
+"spotCheck.limit.reached" = "Daily spot check limit reached.";
+"spotCheck.cooldown.all" = "All areas are resting. Try again later.";
+"spotCheck.processing" = "Babcia is judging...";
+"spotCheck.result.title" = "Result";
+"spotCheck.result.spotless" = "Spotless";
+"spotCheck.result.tidy" = "Tidy";
+"spotCheck.result.messy" = "Messy";
+"spotCheck.result.area" = "Area: %@";
+"spotCheck.result.tasks" = "Tasks detected: %d";
+"spotCheck.result.points" = "Bonus: +%d points";
+"spotCheck.response.title" = "Babcia says";
+"spotCheck.camera.alert.title" = "Camera access";
+"spotCheck.camera.unavailable" = "Camera is not available on this device.";
+"spotCheck.camera.permission" = "Camera access is required to capture a spot check.";
+"spotCheck.camera.notSupported" = "Camera capture is only available on iOS devices.";
+"spotCheck.camera.captureFailed" = "Could not read the captured photo.";
+"spotCheck.error.pipelineUnavailable" = "Scan pipeline is not available.";
 
 // MARK: - Loading
 "loading.default" = "Loading...";
@@ -335,14 +394,19 @@
 // MARK: - Personas
 "persona.classic.name" = "Classic Babcia";
 "persona.classic.tagline" = "My dear… come, we tidy.";
+"persona.classic.archetype" = "Classic";
 "persona.baroness.name" = "The Baroness";
 "persona.baroness.tagline" = "This is beneath us.";
+"persona.baroness.archetype" = "Baroness";
 "persona.warrior.name" = "Warrior Babcia";
 "persona.warrior.tagline" = "DEFEAT THE CLUTTER.";
+"persona.warrior.archetype" = "Warrior";
 "persona.wellness.name" = "Wellness-X";
 "persona.wellness.tagline" = "Restore harmony.";
+"persona.wellness.archetype" = "Wellness";
 "persona.coach.name" = "Tough Life Coach";
 "persona.coach.tagline" = "Do it anyway.";
+"persona.coach.archetype" = "Coach";
 
 // MARK: - Home
 "home.toolbar.title" = "Home";
@@ -354,6 +418,8 @@
 "home.latestDream.empty" = "No Dreams yet";
 "home.stats.title" = "Stats & Progress";
 "home.stats.subtitle" = "%d pierogis earned";
+"home.hero.title" = "Finish fast. Close the app.";
+"home.hero.subtitle" = "Your room, restored in five moves.";
 "home.shop.title" = "Sklep";
 "home.shop.subtitle" = "Unlock new Dream filters";
 "home.dailyProgress.title" = "Today's Progress";
@@ -379,6 +445,7 @@
 "gallery.empty.title" = "No Dreams yet";
 "gallery.empty.message" = "Take a photo to generate your first Dream image.";
 "gallery.toolbar.title" = "Gallery";
+"gallery.card.persona" = "Babcia on duty: %@";
 "gallery.detail.area.fallback" = "Area";
 "gallery.detail.verification.golden" = "Golden Verification";
 "gallery.detail.verification.blue" = "Blue Verification";
@@ -388,6 +455,7 @@
 "gallery.detail.outcome.failed" = "Failed";
 "gallery.detail.outcome.skipped" = "Skipped";
 "gallery.detail.meta.created" = "Created";
+"gallery.detail.meta.babcia" = "Babcia";
 "gallery.detail.meta.verification" = "Verification";
 "gallery.detail.meta.outcome" = "Outcome";
 "gallery.detail.meta.basePoints" = "Base Points";
@@ -507,6 +575,92 @@
 "errorView.permission.title" = "Permission Required";
 "errorView.preview.unexpected" = "An unexpected error occurred. Please try again.";
 "errorView.preview.sync" = "Unable to sync your data";
+
+// MARK: - Camera Providers
+"cameraProvider.rtsp" = "RTSP";
+"cameraProvider.tapo" = "Tapo";
+"cameraProvider.homeAssistant" = "Home Assistant";
+
+// MARK: - Streaming Camera Errors
+"streamingCamera.error.invalidConfiguration" = "Camera configuration is invalid.";
+"streamingCamera.error.missingCredentials" = "Camera credentials are missing.";
+"streamingCamera.error.connectionFailed" = "Unable to connect to the camera.";
+"streamingCamera.error.frameUnavailable" = "No frame available from the camera.";
+"streamingCamera.error.unauthorized" = "Camera authorization failed.";
+"streamingCamera.error.invalidResponse" = "Camera response was invalid.";
+"streamingCamera.error.unsupported" = "Camera provider is not supported.";
+
+// MARK: - Camera Setup
+"settings.cameras.title" = "Streaming Cameras";
+"settings.cameras.action" = "Manage cameras";
+"cameraSetup.title" = "Camera Setup";
+"cameraSetup.add.title" = "Add Camera";
+"cameraSetup.edit.title" = "Edit Camera";
+"cameraSetup.empty.title" = "No Cameras Yet";
+"cameraSetup.empty.message" = "Add a streaming camera to enable ambient monitoring.";
+"cameraSetup.empty.action" = "Add Camera";
+"cameraSetup.section.basics" = "Basics";
+"cameraSetup.section.provider" = "Provider";
+"cameraSetup.field.name" = "Camera name";
+"cameraSetup.field.type" = "Provider type";
+"cameraSetup.field.rtspUrl" = "RTSP URL";
+"cameraSetup.field.host" = "Host";
+"cameraSetup.field.port" = "Port";
+"cameraSetup.field.username" = "Username";
+"cameraSetup.field.password" = "Password";
+"cameraSetup.field.haBaseUrl" = "Home Assistant URL";
+"cameraSetup.field.haToken" = "Home Assistant token";
+"cameraSetup.field.haEntityId" = "Camera entity ID";
+"cameraSetup.save" = "Save";
+"cameraSetup.cancel" = "Cancel";
+"cameraSetup.delete.title" = "Remove Camera";
+"cameraSetup.delete.message" = "This will remove the camera and its credentials.";
+"cameraSetup.delete.confirm" = "Remove";
+"cameraSetup.delete.action" = "Remove";
+"cameraSetup.discovery.title" = "Local Discovery";
+"cameraSetup.discovery.action" = "Scan";
+"cameraSetup.discovery.stop" = "Stop";
+"cameraSetup.discovery.none" = "Searching for cameras...";
+"cameraSetup.quickAdd.title" = "Find Cameras on Wi‑Fi";
+"cameraSetup.quickAdd.subtitle" = "We’ll detect local cameras and prefill the details.";
+"cameraSetup.quickAdd.scan" = "Scan";
+"cameraSetup.quickAdd.stop" = "Stop";
+"cameraSetup.quickAdd.none" = "No cameras found yet.";
+"cameraSetup.quickAdd.action" = "Connect";
+"cameraSetup.quickAdd.manual" = "Add manually";
+"cameraSetup.quickAdd.rtsp" = "RTSP camera";
+"cameraSetup.quickAdd.tapo" = "Tapo camera";
+"cameraSetup.quickAdd.homeAssistant" = "Home Assistant";
+"cameraSetup.rtsp.title" = "RTSP Camera";
+"cameraSetup.rtsp.helper" = "Paste the RTSP link from your camera app to connect.";
+"cameraSetup.rtsp.paste" = "Paste from Clipboard";
+"cameraSetup.tapo.title" = "Tapo Camera";
+"cameraSetup.tapo.helper" = "Enter your Tapo login to connect locally.";
+"cameraSetup.ha.title" = "Home Assistant Camera";
+"cameraSetup.ha.helper" = "Use a Long‑Lived Access Token to list cameras.";
+"cameraSetup.ha.fetch" = "Fetch Cameras";
+"cameraSetup.ha.empty" = "No camera entities found.";
+"cameraSetup.ha.select" = "Select a camera";
+"cameraDiscovery.kind.rtsp" = "RTSP";
+"cameraDiscovery.kind.tapo" = "Tapo";
+"cameraDiscovery.kind.homeAssistant" = "Home Assistant";
+"cameraSetup.validation.name" = "Camera name is required.";
+"cameraSetup.validation.rtspUrl" = "Enter a valid RTSP URL.";
+"cameraSetup.validation.host" = "Host is required.";
+"cameraSetup.validation.username" = "Username is required.";
+"cameraSetup.validation.secret" = "Password or token is required.";
+"cameraSetup.validation.haBaseUrl" = "Home Assistant URL is required.";
+"cameraSetup.validation.haEntityId" = "Camera entity ID is required.";
+
+// MARK: - Camera Source
+"cameraSource.title" = "Choose Camera Source";
+"cameraSource.message" = "Select a camera source.";
+"cameraSource.device" = "iPhone camera";
+"cameraSource.streaming" = "Streaming camera";
+"cameraSource.pick.title" = "Select Camera";
+"cameraSource.empty" = "No streaming cameras available.";
+"cameraSource.loading" = "Fetching camera frame...";
+"cameraFlow.error.streamingCaptureFailed" = "Streaming camera capture failed.";
 
 // MARK: - Preview
 "preview.glassCard.title" = "Glass Card";

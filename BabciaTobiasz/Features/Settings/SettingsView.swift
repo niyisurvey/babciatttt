@@ -38,8 +38,28 @@ struct SettingsView: View {
 
                         APIKeysSectionView()
 
+                        VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
+                            Text(String(localized: "settings.cameras.title"))
+                                .dsFont(.headline, weight: .bold)
+                                .padding(.horizontal, 4)
 
-                        
+                            GlassCardView {
+                                NavigationLink {
+                                    CameraSetupView()
+                                } label: {
+                                    HStack {
+                                        Text(String(localized: "settings.cameras.action"))
+                                            .dsFont(.headline)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .font(.system(size: theme.grid.iconTiny))
+                                            .foregroundStyle(.tertiary)
+                                    }
+                                    .padding(.vertical, 4)
+                                }
+                            }
+                        }
+
 
 
                         // Analytics Section
