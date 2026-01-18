@@ -17,29 +17,31 @@ struct MainTabView: View {
 
     var body: some View {
         TabView(selection: $viewModel.selectedTab) {
-            Tab("Home", systemImage: "house.fill", value: MainTabViewModel.Tab.home) {
+            Tab(String(localized: "mainTab.home.label"), systemImage: "house.fill", value: MainTabViewModel.Tab.home) {
                 if let homeViewModel {
                     HomeView(viewModel: homeViewModel, areaViewModel: areaViewModel)
                 } else {
-                    ProgressView("Loading...")
+                    ProgressView(String(localized: "mainTab.loading"))
                 }
             }
             
-            Tab("Areas", systemImage: "square.grid.2x2.fill", value: MainTabViewModel.Tab.areas) {
+            Tab(String(localized: "mainTab.areas.label"), systemImage: "square.grid.2x2.fill", value: MainTabViewModel.Tab.areas) {
                 AreaListView(viewModel: areaViewModel)
             }
 
-            Tab("Babcia", systemImage: "camera.fill", value: MainTabViewModel.Tab.babcia) {
-                BabciaStatusView(viewModel: areaViewModel)
+            Tab(String(localized: "mainTab.babcia.label"), systemImage: "camera.fill", value: MainTabViewModel.Tab.babcia) {
+                MicroTidyView {
+                    viewModel.selectedTab = .areas
+                }
             }
 
-            Tab("Gallery", systemImage: "photo.on.rectangle", value: MainTabViewModel.Tab.gallery) {
+            Tab(String(localized: "mainTab.gallery.label"), systemImage: "photo.on.rectangle", value: MainTabViewModel.Tab.gallery) {
                 NavigationStack {
                     GalleryView(areaViewModel: areaViewModel)
                 }
             }
             
-            Tab("Settings", systemImage: "gear", value: MainTabViewModel.Tab.settings) {
+            Tab(String(localized: "mainTab.settings.label"), systemImage: "gear", value: MainTabViewModel.Tab.settings) {
                 SettingsView()
             }
         }

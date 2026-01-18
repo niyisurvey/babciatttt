@@ -29,6 +29,7 @@ struct AreaDetailView: View {
     @State private var verificationPassed: Bool = false
     @State private var verificationBowl: AreaBowl?
     @State private var showDeleteConfirmation = false
+    @State private var expandedTaskId: UUID?
 
     var body: some View {
         ZStack {
@@ -94,8 +95,8 @@ struct AreaDetailView: View {
                 }
             )
         }
-        .alert("Camera access", isPresented: $showCameraAlert) {
-            Button("OK", role: .cancel) {}
+        .alert(String(localized: "areaDetail.camera.alert.title"), isPresented: $showCameraAlert) {
+            Button(String(localized: "common.ok"), role: .cancel) {}
         } message: {
             Text(cameraAlertMessage)
         }
@@ -106,28 +107,28 @@ struct AreaDetailView: View {
                 showVerificationReady = true
             }
         }
-        .alert("Ready to Verify?", isPresented: $showVerificationReady) {
-            Button("Start verification") { showVerificationCapture = true }
-            Button("Not now", role: .cancel) { markVerificationPending() }
+        .alert(String(localized: "areaDetail.verify.ready.title"), isPresented: $showVerificationReady) {
+            Button(String(localized: "areaDetail.verify.ready.primary")) { showVerificationCapture = true }
+            Button(String(localized: "areaDetail.verify.ready.secondary"), role: .cancel) { markVerificationPending() }
         } message: {
             Text(verificationReadyMessage)
         }
         .alert(verificationCelebrationTitle, isPresented: $showVerificationCelebration) {
-            Button("OK", role: .cancel) { }
+            Button(String(localized: "common.ok"), role: .cancel) { }
         } message: {
             Text(verificationCelebrationMessage)
         }
-        .alert("Delete area?", isPresented: $showDeleteConfirmation) {
-            Button("Delete", role: .destructive) { viewModel.deleteArea(area) }
-            Button("Cancel", role: .cancel) { }
+        .alert(String(localized: "areaDetail.delete.title"), isPresented: $showDeleteConfirmation) {
+            Button(String(localized: "common.delete"), role: .destructive) { viewModel.deleteArea(area) }
+            Button(String(localized: "common.cancel"), role: .cancel) { }
         } message: {
             Text(deleteWarningMessage)
         }
         // Added 2026-01-14 21:13 GMT
-        .alert("Error", isPresented: $viewModel.showError) {
-            Button("OK") { viewModel.dismissError() }
+        .alert(String(localized: "common.error.title"), isPresented: $viewModel.showError) {
+            Button(String(localized: "common.ok")) { viewModel.dismissError() }
         } message: {
-            Text(viewModel.errorMessage ?? "An error occurred")
+            Text(viewModel.errorMessage ?? String(localized: "common.error.fallback"))
         }
         // Added 2026-01-14 22:02 GMT
         .overlay(alignment: .bottomTrailing) {
@@ -184,28 +185,28 @@ struct AreaDetailView: View {
 #if os(iOS)
         // Added 2026-01-14 21:13 GMT
         if isVerificationDecisionPending {
-            viewModel.errorMessage = "Decide verification before starting a new scan."
+            viewModel.errorMessage = String(localized: "areaDetail.camera.error.verificationPending")
             viewModel.showError = true
             return
         }
         if viewModel.isGeneratingDream {
-            viewModel.errorMessage = "Dream generation is in progress. Please wait."
+            viewModel.errorMessage = String(localized: "areaDetail.camera.error.dreamInProgress")
             viewModel.showError = true
             return
         }
         if viewModel.isKitchenClosed {
-            viewModel.errorMessage = "Kitchen Closed. Daily target reached."
+            viewModel.errorMessage = String(localized: "areaDetail.camera.error.kitchenClosed")
             viewModel.showError = true
             return
         }
         let flowMode = cameraFlowViewModel.determineMode(for: area)
         if area.inProgressBowl != nil, flowMode != .appendTasks {
-            viewModel.errorMessage = "Finish the current session before starting a new scan."
+            viewModel.errorMessage = String(localized: "areaDetail.camera.error.finishCurrent")
             viewModel.showError = true
             return
         }
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-            presentCameraAlert("Camera is not available on this device.")
+            presentCameraAlert(String(localized: "areaDetail.camera.error.unavailable"))
             return
         }
 
@@ -219,24 +220,24 @@ struct AreaDetailView: View {
                     if granted {
                         showCameraCapture = true
                     } else {
-                        presentCameraAlert("Camera access is required to capture a room scan.")
+                        presentCameraAlert(String(localized: "areaDetail.camera.error.permission"))
                     }
                 }
             }
         case .denied, .restricted:
-            presentCameraAlert("Camera access is required to capture a room scan.")
+            presentCameraAlert(String(localized: "areaDetail.camera.error.permission"))
         @unknown default:
-            presentCameraAlert("Camera access is required to capture a room scan.")
+            presentCameraAlert(String(localized: "areaDetail.camera.error.permission"))
         }
 #else
-        presentCameraAlert("Camera capture is only available on iOS devices.")
+        presentCameraAlert(String(localized: "areaDetail.camera.error.notSupported"))
 #endif
     }
 
     // Updated 2026-01-14 22:02 GMT
     private func handleCapturedImage(_ image: UIImage) {
         guard let data = image.jpegData(compressionQuality: 0.85) else {
-            presentCameraAlert("Could not read the captured photo.")
+            presentCameraAlert(String(localized: "areaDetail.camera.error.captureFailed"))
             return
         }
         Task {
@@ -253,9 +254,9 @@ struct AreaDetailView: View {
 
     private var deleteWarningMessage: String {
         if let milestone = viewModel.milestone(for: area) {
-            return "Deleting now will remove your day \(milestone.day) milestone."
+            return String(format: String(localized: "areaDetail.delete.message.milestone"), milestone.day)
         }
-        return "Are you sure you want to delete this area?"
+        return String(localized: "areaDetail.delete.message.default")
     }
 
     // MARK: - Babcia Card
@@ -270,27 +271,42 @@ struct AreaDetailView: View {
                             .foregroundStyle(theme.palette.warmAccent)
                             .font(.system(size: theme.grid.iconTitle3))
                             .symbolEffect(.pulse, options: .repeating)
-                        Text("Your Babcia")
-                            .dsFont(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    Text(area.persona.displayName)
+                    Text(String(localized: "areaDetail.babcia.label"))
+                        .dsFont(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                    Text(area.persona.localizedDisplayName)
                         .dsFont(.headline, weight: .bold)
-                    Text(area.persona.tagline)
+                    Text(area.persona.localizedTagline)
                         .dsFont(.subheadline)
                         .foregroundStyle(.secondary)
                 }
 
                 Spacer()
 
-                Image(area.persona.headshotImageName)
-                    .resizable()
-                    .scaledToFill()
-                    // Updated 2026-01-14 22:29 GMT
-                    .frame(width: theme.grid.iconXL, height: theme.grid.iconXL)
-                    .clipShape(Circle())
+                personaHeadshotView
             }
             .padding(.vertical, 6)
+        }
+    }
+
+    @ViewBuilder
+    private var personaHeadshotView: some View {
+        if let uiImage = UIImage(named: area.persona.headshotImageName) {
+            Image(uiImage: uiImage)
+                .resizable()
+                .scaledToFill()
+                .frame(width: theme.grid.iconXL, height: theme.grid.iconXL)
+                .clipShape(Circle())
+        } else {
+            ZStack {
+                Circle()
+                    .fill(theme.glass.strength.fallbackMaterial)
+                Image(systemName: "person.fill")
+                    .font(.system(size: theme.grid.iconMedium))
+                    .foregroundStyle(theme.palette.secondary)
+            }
+            .frame(width: theme.grid.iconXL, height: theme.grid.iconXL)
         }
     }
 
@@ -299,7 +315,7 @@ struct AreaDetailView: View {
     // Added 2026-01-14 23:20 GMT
     private var taskListSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Today's Tasks")
+            Text(String(localized: "areaDetail.tasks.title"))
                 .dsFont(.headline, weight: .bold)
                 .padding(.horizontal, 4)
 
@@ -326,52 +342,76 @@ struct AreaDetailView: View {
         return visibleTasks + Array(repeating: nil, count: placeholders)
     }
 
+
+    @ViewBuilder
+    private func taskStatusSymbol(isPlaceholder: Bool) -> some View {
+        if isPlaceholder {
+            SafeSystemImage("circle.dotted", fallback: "circle")
+        } else {
+            Image(systemName: "sparkles")
+        }
+    }
+
     // Added 2026-01-14 23:20 GMT
     @ViewBuilder
     private func taskRow(_ task: CleaningTask?) -> some View {
-        let title = task?.title ?? "Awaiting scan task"
         let isPlaceholder = task == nil
+        if let task {
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                    Text(task.title)
+                        .dsFont(.body)
+                        .foregroundStyle(.primary)
+                        .lineLimit(1)
+                        .frame(maxWidth: .infinity, alignment: .leading)
 
-        Button {
-            guard let task else { return }
-            withAnimation(theme.motion.listSpring) {
-                viewModel.toggleTaskCompletion(task)
+                    taskStatusSymbol(isPlaceholder: false)
+                        .font(.system(size: theme.grid.iconTitle3))
+                        .foregroundStyle(theme.palette.warmAccent)
+                        .frame(width: 36)
+
+                    Button {
+                        withAnimation(theme.motion.listSpring) {
+                            viewModel.toggleTaskCompletion(task)
+                        }
+                        hapticFeedback(.success)
+                        checkForVerificationPrompt()
+                    } label: {
+                        Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "checkmark.circle")
+                            .dsFont(.headline)
+                            .foregroundStyle(theme.palette.warmAccent)
+                            .frame(width: 36, alignment: .trailing)
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(task.isCompleted)
+                }
+                .padding(.vertical, 4)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    withAnimation(theme.motion.listSpring) {
+                        expandedTaskId = (expandedTaskId == task.id) ? nil : task.id
+                    }
+                }
+
+                if expandedTaskId == task.id {
+                    Text(task.title)
+                        .dsFont(.caption)
+                        .foregroundStyle(.secondary)
+                        .padding(.top, 4)
+                }
             }
-            hapticFeedback(.success)
-            checkForVerificationPrompt()
-        } label: {
+            .transition(.opacity.combined(with: .move(edge: .trailing)))
+            .accessibilityLabel(task.title)
+        } else {
             HStack {
-                Text(title)
-                    .dsFont(.body)
-                    .foregroundStyle(isPlaceholder ? .secondary : .primary)
-                    .lineLimit(1)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                Image(systemName: isPlaceholder ? "circle.dotted" : "sparkles")
+                Spacer()
+                taskStatusSymbol(isPlaceholder: true)
                     .font(.system(size: theme.grid.iconTitle3))
-                    .foregroundStyle(
-                        isPlaceholder
-                            ? AnyShapeStyle(.tertiary)
-                            : AnyShapeStyle(theme.palette.warmAccent)
-                    )
+                    .foregroundStyle(.tertiary)
                     .frame(width: 36)
-
-                Image(systemName: isPlaceholder ? "circle" : "checkmark.circle")
-                    .dsFont(.headline)
-                    .foregroundStyle(
-                        isPlaceholder
-                            ? AnyShapeStyle(.tertiary)
-                            : AnyShapeStyle(theme.palette.warmAccent)
-                    )
-                    .frame(width: 36, alignment: .trailing)
             }
             .padding(.vertical, 4)
-            .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
-        .disabled(isPlaceholder)
-        .transition(.opacity.combined(with: .move(edge: .trailing)))
-        .accessibilityLabel(title)
     }
 
     // MARK: - Verification Callout
@@ -381,15 +421,15 @@ struct AreaDetailView: View {
         if let bowl = area.latestBowl, bowl.isCompleted, isVerificationDecisionPending {
             GlassCardView {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Ready to verify?")
+                    Text(String(localized: "areaDetail.verify.callout.title"))
                         .dsFont(.headline, weight: .bold)
-                    Text("Take an after photo to lock in your bonus points.")
+                    Text(String(localized: "areaDetail.verify.callout.message"))
                         .dsFont(.subheadline)
                         .foregroundStyle(.secondary)
                     Button {
                         beginVerificationFlow()
                     } label: {
-                        Label("Start verification", systemImage: "checkmark.seal.fill")
+                        Label(String(localized: "areaDetail.verify.callout.primary"), systemImage: "checkmark.seal.fill")
                             .dsFont(.headline)
                     }
                     .buttonStyle(.nativeGlassProminent)
@@ -397,7 +437,7 @@ struct AreaDetailView: View {
                     Button {
                         takeBasePointsOnly()
                     } label: {
-                        Label("Take base points", systemImage: "checkmark")
+                        Label(String(localized: "areaDetail.verify.callout.secondary"), systemImage: "checkmark")
                             .dsFont(.subheadline, weight: .bold)
                     }
                     .buttonStyle(.nativeGlass)
@@ -415,12 +455,12 @@ struct AreaDetailView: View {
             requestCameraCapture()
             hapticFeedback(.medium)
         } label: {
-            Label("Take photo", systemImage: "camera")
+            Label(String(localized: "areaDetail.camera.checkIn"), systemImage: "camera")
                 .dsFont(.headline)
         }
         .buttonStyle(.nativeGlassProminent)
         .disabled(viewModel.isGeneratingDream || viewModel.isLoading)
-        .accessibilityLabel("Take photo")
+        .accessibilityLabel(String(localized: "areaDetail.camera.checkIn"))
         .padding(.trailing, theme.grid.sectionSpacing)
         .padding(.bottom, theme.grid.sectionSpacing)
     }
@@ -458,7 +498,7 @@ struct AreaDetailView: View {
 
     private func handleVerificationCapturedImage(_ image: UIImage) {
         guard let data = image.jpegData(compressionQuality: 0.85) else {
-            presentCameraAlert("Could not read the captured photo.")
+            presentCameraAlert(String(localized: "areaDetail.camera.error.captureFailed"))
             return
         }
         guard let bowl = verificationBowl else { return }
@@ -481,24 +521,26 @@ struct AreaDetailView: View {
 
     private var verificationCelebrationTitle: String {
         if verificationPassed {
-            return verificationTier == .golden ? "Golden verification complete" : "Verification complete"
+            return verificationTier == .golden
+                ? String(localized: "areaDetail.verify.celebration.title.golden")
+                : String(localized: "areaDetail.verify.celebration.title.blue")
         }
-        return "Verification needs more work"
+        return String(localized: "areaDetail.verify.celebration.title.failed")
     }
 
     private var verificationCelebrationMessage: String {
         if verificationPassed {
             return verificationTier == .golden
-                ? "Golden bonus added to your pot."
-                : "Bonus points added to your pot."
+                ? String(localized: "areaDetail.verify.celebration.message.golden")
+                : String(localized: "areaDetail.verify.celebration.message.blue")
         }
-        return "No bonus added this time. Keep going and try again."
+        return String(localized: "areaDetail.verify.celebration.message.failed")
     }
 
     private var verificationReadyMessage: String {
         verificationTier == .golden
-            ? "Take a moment to tidy before your Golden after photo."
-            : "Take a moment to tidy before your after photo."
+            ? String(localized: "areaDetail.verify.ready.message.golden")
+            : String(localized: "areaDetail.verify.ready.message.blue")
     }
 
     // MARK: - Toolbar
@@ -515,7 +557,7 @@ struct AreaDetailView: View {
                 Button {
                     viewModel.editArea(area)
                 } label: {
-                    Label("Edit Area", systemImage: "pencil")
+                    Label(String(localized: "areaDetail.menu.edit"), systemImage: "pencil")
                 }
 
                 Divider()
@@ -523,7 +565,7 @@ struct AreaDetailView: View {
                 Button(role: .destructive) {
                     showDeleteConfirmation = true
                 } label: {
-                    Label("Delete Area", systemImage: "trash")
+                    Label(String(localized: "areaDetail.menu.delete"), systemImage: "trash")
                 }
             } label: {
                 Image(systemName: "ellipsis.circle")

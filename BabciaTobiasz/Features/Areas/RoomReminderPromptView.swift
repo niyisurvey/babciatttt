@@ -19,26 +19,26 @@ struct RoomReminderPromptView: View {
             VStack(spacing: theme.grid.sectionSpacing) {
                 GlassCardView {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Room reminder")
+                        Text(String(localized: "reminderPrompt.title"))
                             .dsFont(.caption)
                             .foregroundStyle(.secondary)
 
                         Text(area.name)
                             .dsFont(.title2, weight: .bold)
 
-                        Text("Ready to start a quick scan and refresh your tasks?")
+                        Text(String(localized: "reminderPrompt.message"))
                             .dsFont(.body)
                             .foregroundStyle(.secondary)
                     }
                 }
 
                 HStack(spacing: theme.grid.listSpacing) {
-                    Button("Not now") {
+                    Button(String(localized: "common.notNow")) {
                         onDismiss()
                     }
                     .buttonStyle(.bordered)
 
-                    Button("Start scan") {
+                    Button(String(localized: "reminderPrompt.start")) {
                         onStart()
                     }
                     .buttonStyle(.borderedProminent)

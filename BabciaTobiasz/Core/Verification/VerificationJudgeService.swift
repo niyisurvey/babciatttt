@@ -11,21 +11,6 @@ final class VerificationJudgeService: VerificationJudgeProtocol {
     // MARK: - Configuration
     private enum Constants {
         static let endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
-        static let prompt = """
-You are judging a cleaning verification. Compare these two photos of the same room.
-
-Photo 1 (BEFORE): The room before cleaning.
-Photo 2 (AFTER): The room after cleaning.
-
-Is the room VISIBLY CLEANER in the AFTER photo?
-
-Rules:
-- The room must show clear improvement (less clutter, cleaner surfaces, items put away)
-- Minor changes don't count (moving one item is not enough)
-- Be strict: if unsure, return false
-
-Respond with ONLY the word "true" or "false". No explanation.
-"""
         static let imageMimeType = "image/jpeg"
     }
     private let httpClient: VerificationJudgeHTTPClient
@@ -70,16 +55,16 @@ Respond with ONLY the word "true" or "false". No explanation.
 
     private func makeRequest(apiKey: String, beforeBase64: String, afterBase64: String) throws -> URLRequest {
         guard var components = URLComponents(string: Constants.endpoint) else {
-            throw VerificationJudgeError.invalidResponse(reason: "Invalid endpoint URL")
+            throw VerificationJudgeError.invalidResponse(reason: String(localized: "verification.error.reason.invalidEndpoint"))
         }
         components.queryItems = [URLQueryItem(name: "key", value: apiKey)]
         guard let url = components.url else {
-            throw VerificationJudgeError.invalidResponse(reason: "Invalid endpoint URL")
+            throw VerificationJudgeError.invalidResponse(reason: String(localized: "verification.error.reason.invalidEndpoint"))
         }
 
         let requestBody = GeminiRequest(contents: [
             GeminiRequestContent(role: "user", parts: [
-                .text(Constants.prompt),
+                .text(AppConfigService.shared.config.geminiPrompts.verification),
                 .image(base64: beforeBase64, mimeType: Constants.imageMimeType),
                 .image(base64: afterBase64, mimeType: Constants.imageMimeType)
             ])
@@ -90,7 +75,7 @@ Respond with ONLY the word "true" or "false". No explanation.
         do {
             bodyData = try encoder.encode(requestBody)
         } catch {
-            throw VerificationJudgeError.invalidResponse(reason: "Encoding failed")
+            throw VerificationJudgeError.invalidResponse(reason: String(localized: "verification.error.reason.encodingFailed"))
         }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -103,7 +88,7 @@ Respond with ONLY the word "true" or "false". No explanation.
         do {
             let (data, response) = try await httpClient.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse else {
-                throw VerificationJudgeError.invalidResponse(reason: "Non-HTTP response")
+                throw VerificationJudgeError.invalidResponse(reason: String(localized: "verification.error.reason.nonHttpResponse"))
             }
             return (data, httpResponse)
         } catch let error as VerificationJudgeError {
@@ -115,26 +100,30 @@ Respond with ONLY the word "true" or "false". No explanation.
 
     private func parseJudgement(data: Data, response: HTTPURLResponse) throws -> Bool {
         guard response.statusCode == 200 else {
-            throw VerificationJudgeError.invalidResponse(reason: "HTTP \(response.statusCode)")
+            throw VerificationJudgeError.invalidResponse(
+                reason: String(format: String(localized: "verification.error.reason.httpStatus"), response.statusCode)
+            )
         }
         guard !data.isEmpty else {
-            throw VerificationJudgeError.invalidResponse(reason: "Empty response body")
+            throw VerificationJudgeError.invalidResponse(reason: String(localized: "verification.error.reason.emptyResponse"))
         }
         let decoded = try decodeResponse(data: data)
         guard let text = extractResponseText(from: decoded) else {
-            throw VerificationJudgeError.invalidResponse(reason: "Missing response text")
+            throw VerificationJudgeError.invalidResponse(reason: String(localized: "verification.error.reason.missingResponseText"))
         }
         let normalized = text.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         if normalized == "true" { return true }
         if normalized == "false" { return false }
-        throw VerificationJudgeError.invalidResponse(reason: "Unexpected response: \(normalized)")
+        throw VerificationJudgeError.invalidResponse(
+            reason: String(format: String(localized: "verification.error.reason.unexpectedResponse"), normalized)
+        )
     }
 
     private func decodeResponse(data: Data) throws -> GeminiResponse {
         do {
             return try decoder.decode(GeminiResponse.self, from: data)
         } catch {
-            throw VerificationJudgeError.invalidResponse(reason: "Decoding failed")
+            throw VerificationJudgeError.invalidResponse(reason: String(localized: "verification.error.reason.decodingFailed"))
         }
     }
 

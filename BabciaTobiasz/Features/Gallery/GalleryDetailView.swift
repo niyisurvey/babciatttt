@@ -16,28 +16,28 @@ struct GalleryDetailView: View {
     }
 
     private var areaName: String {
-        bowl.area?.name ?? "Area"
+        bowl.area?.name ?? String(localized: "gallery.detail.area.fallback")
     }
 
     private var personaName: String {
         let raw = bowl.area?.personaRaw ?? BabciaPersona.classic.rawValue
-        return BabciaPersona(rawValue: raw)?.displayName ?? raw.capitalized
+        return BabciaPersona(rawValue: raw)?.localizedDisplayName ?? raw.capitalized
     }
 
     private var verificationLabel: String {
         switch bowl.verificationTier {
-        case .golden: return "Golden Verification"
-        case .blue: return "Blue Verification"
-        case .none: return "No Verification"
+        case .golden: return String(localized: "gallery.detail.verification.golden")
+        case .blue: return String(localized: "gallery.detail.verification.blue")
+        case .none: return String(localized: "gallery.detail.verification.none")
         }
     }
 
     private var outcomeLabel: String {
         switch bowl.verificationOutcome {
-        case .pending: return "Pending"
-        case .passed: return "Passed"
-        case .failed: return "Failed"
-        case .skipped: return "Skipped"
+        case .pending: return String(localized: "gallery.detail.outcome.pending")
+        case .passed: return String(localized: "gallery.detail.outcome.passed")
+        case .failed: return String(localized: "gallery.detail.outcome.failed")
+        case .skipped: return String(localized: "gallery.detail.outcome.skipped")
         }
     }
 
@@ -89,12 +89,12 @@ struct GalleryDetailView: View {
     private var metaCard: some View {
         GlassCardView {
             VStack(spacing: 12) {
-                metadataRow(label: "Created", value: bowl.createdAt.formatted(date: .abbreviated, time: .shortened))
-                metadataRow(label: "Verification", value: verificationLabel)
-                metadataRow(label: "Outcome", value: outcomeLabel)
-                metadataRow(label: "Base Points", value: "\(bowl.basePoints)")
-                metadataRow(label: "Bonus Points", value: "\(bonusPoints)")
-                metadataRow(label: "Total Points", value: "\(Int(bowl.totalPoints))")
+                metadataRow(label: String(localized: "gallery.detail.meta.created"), value: bowl.createdAt.formatted(date: .abbreviated, time: .shortened))
+                metadataRow(label: String(localized: "gallery.detail.meta.verification"), value: verificationLabel)
+                metadataRow(label: String(localized: "gallery.detail.meta.outcome"), value: outcomeLabel)
+                metadataRow(label: String(localized: "gallery.detail.meta.basePoints"), value: "\(bowl.basePoints)")
+                metadataRow(label: String(localized: "gallery.detail.meta.bonusPoints"), value: "\(bonusPoints)")
+                metadataRow(label: String(localized: "gallery.detail.meta.totalPoints"), value: "\(Int(bowl.totalPoints))")
             }
             .padding(.vertical, 6)
         }
@@ -102,13 +102,13 @@ struct GalleryDetailView: View {
 
     private var tasksCard: some View {
         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-            Text("Tasks")
+            Text(String(localized: "gallery.detail.tasks.title"))
                 .dsFont(.headline, weight: .bold)
                 .padding(.horizontal, 4)
 
             GlassCardView {
                 if tasks.isEmpty {
-                    Text("No tasks recorded for this bowl.")
+                    Text(String(localized: "gallery.detail.tasks.empty"))
                         .dsFont(.subheadline)
                         .foregroundStyle(.secondary)
                         .padding(.vertical, theme.grid.sectionSpacing)
@@ -141,7 +141,7 @@ struct GalleryDetailView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .principal) {
-            Text("Bowl Details")
+            Text(String(localized: "gallery.detail.toolbar.title"))
                 .dsFont(.headline, weight: .bold)
                 .lineLimit(1)
         }

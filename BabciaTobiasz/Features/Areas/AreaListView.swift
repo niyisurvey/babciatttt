@@ -3,6 +3,7 @@
 
 import SwiftUI
 import SwiftData
+import OSLog
 
 /// Main area list with management and statistics
 struct AreaListView: View {
@@ -10,6 +11,7 @@ struct AreaListView: View {
     @State private var showStatsTooltip = false
     @State private var headerProgress: CGFloat = 0
     @Environment(\.dsTheme) private var theme
+    private let logger = Logger(subsystem: "com.babcia.tobiasz", category: "navigation")
     
     private let heroImageName = "R2_Baroness_Headshot_Neutral"
     
@@ -40,19 +42,29 @@ struct AreaListView: View {
                 areasSearchBar
             }
             .onAppear { viewModel.loadAreas() }
-            .alert("Error", isPresented: $viewModel.showError) {
-                Button("OK") { viewModel.dismissError() }
+            .alert(String(localized: "common.error.title"), isPresented: $viewModel.showError) {
+                Button(String(localized: "common.ok")) { viewModel.dismissError() }
             } message: {
-                Text(viewModel.errorMessage ?? "An error occurred")
+                Text(viewModel.errorMessage ?? String(localized: "common.error.fallback"))
             }
-        }
-        .navigationDestination(for: AreaRoute.self) { route in
-            switch route {
-            case .detail(let areaId):
-                if let area = viewModel.area(for: areaId) {
-                    AreaDetailView(area: area, viewModel: viewModel)
-                } else {
-                    Text("Area not found")
+            // Keep destination on the same NavigationStack to avoid SwiftUI fallback screens.
+            .navigationDestination(for: AreaRoute.self) { route in
+                switch route {
+                case .detail(let areaId):
+                    if let area = viewModel.area(for: areaId) {
+                        AreaDetailView(area: area, viewModel: viewModel)
+                    } else {
+                        ErrorView(
+                            title: String(localized: "areas.detail.unavailable.title"),
+                            message: String(format: String(localized: "areas.detail.unavailable.message"), areaId.uuidString),
+                            iconName: "exclamationmark.triangle.fill",
+                            iconColor: theme.palette.warning,
+                            retryAction: { viewModel.loadAreas() }
+                        )
+                        .onAppear {
+                            logger.error("Area route missing area for id \(areaId, privacy: .public)")
+                        }
+                    }
                 }
             }
         }
@@ -101,7 +113,7 @@ struct AreaListView: View {
                 TextField(
                     "",
                     text: $viewModel.searchText,
-                    prompt: Text("Search areas")
+                    prompt: Text(String(localized: "areas.search.placeholder"))
                         .font(theme.typography.font(.body, weight: .regular, italic: false))
                         .foregroundStyle(.secondary)
                 )
@@ -140,27 +152,39 @@ struct AreaListView: View {
                         Text("\(viewModel.completedTodayCount)/\(viewModel.dailyBowlTarget)")
                             .dsFont(.title2, weight: .bold)
                             .contentTransition(.numericText())
-                        Text("Today")
+                        Text(String(localized: "areas.stats.today"))
                             .dsFont(.caption)
                             .foregroundStyle(.secondary)
                     }
                 }
                 
                 HStack(spacing: 30) {
-                    statisticItem(icon: "flame.fill", value: "\(viewModel.bestStreak)", label: "Streak", color: .orange)
+                    statisticItem(
+                        icon: "flame.fill",
+                        value: "\(viewModel.bestStreak)",
+                        label: String(localized: "areas.stats.streak"),
+                        color: .orange
+                    )
                     
                     Divider().frame(height: 40)
                     
-                    statisticItem(icon: "checkmark.circle.fill", value: "\(viewModel.totalCompletions)", label: "Total Done", color: .green)
+                    statisticItem(
+                        icon: "checkmark.circle.fill",
+                        value: "\(viewModel.totalCompletions)",
+                        label: String(localized: "areas.stats.totalDone"),
+                        color: .green
+                    )
                 }
 
                 Divider()
 
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Daily target")
+                        Text(String(localized: "areas.stats.dailyTarget"))
                             .dsFont(.headline, weight: .bold)
-                        Text(viewModel.isKitchenClosed ? "Kitchen Closed" : "Kitchen Open")
+                        Text(viewModel.isKitchenClosed
+                             ? String(localized: "areas.stats.kitchenClosed")
+                             : String(localized: "areas.stats.kitchenOpen"))
                             .dsFont(.caption)
                             .foregroundStyle(viewModel.isKitchenClosed ? .red : .secondary)
                     }
@@ -193,8 +217,8 @@ struct AreaListView: View {
         .overlay {
             if showStatsTooltip {
                 FeatureTooltip(
-                    title: "Area Statistics",
-                    description: "Track bowls completed, streaks, and your daily target. Keep the kitchen open by pacing bowls.",
+                    title: String(localized: "areas.stats.tooltip.title"),
+                    description: String(localized: "areas.stats.tooltip.message"),
                     icon: "chart.bar.fill",
                     isVisible: $showStatsTooltip
                 )
@@ -228,9 +252,9 @@ struct AreaListView: View {
     // MARK: - Filter
     
     private var filterPicker: some View {
-        Picker("Filter", selection: $viewModel.filterOption) {
+        Picker(String(localized: "areas.filter.title"), selection: $viewModel.filterOption) {
             ForEach(AreaViewModel.FilterOption.allCases) { option in
-                Text(option.rawValue).tag(option)
+                Text(option.localizedLabel).tag(option)
             }
         }
         .pickerStyle(.segmented)
@@ -275,7 +299,7 @@ struct AreaListView: View {
                 viewModel.editArea(area)
                 hapticFeedback(.light)
             } label: {
-                Label("Edit Area", systemImage: "pencil")
+                Label(String(localized: "areas.menu.edit"), systemImage: "pencil")
             }
             
             Divider()
@@ -284,7 +308,7 @@ struct AreaListView: View {
                 viewModel.deleteArea(area)
                 hapticFeedback(.warning)
             } label: {
-                Label("Delete Area", systemImage: "trash")
+                Label(String(localized: "areas.menu.delete"), systemImage: "trash")
             }
         }
     }
@@ -299,10 +323,10 @@ struct AreaListView: View {
                     .foregroundStyle(.secondary)
                 
                 VStack(spacing: 8) {
-                    Text("Empty Pot")
+                    Text(String(localized: "areas.empty.title"))
                         .dsFont(.title2, weight: .bold)
                     
-                    Text("Create your first area to get started.")
+                    Text(String(localized: "areas.empty.message"))
                         .dsFont(.body)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
@@ -312,7 +336,7 @@ struct AreaListView: View {
                     viewModel.addNewArea()
                     hapticFeedback(.medium)
                 } label: {
-                    Label("Add Your First Area", systemImage: "plus.circle.fill")
+                    Label(String(localized: "areas.empty.action"), systemImage: "plus.circle.fill")
                         .dsFont(.headline)
                 }
                 .buttonStyle(.nativeGlassProminent)
@@ -326,7 +350,7 @@ struct AreaListView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .principal) {
-            Text("Areas")
+            Text(String(localized: "areas.toolbar.title"))
                 .dsFont(.title2, weight: .bold)
                 .lineLimit(1)
         }
@@ -338,7 +362,7 @@ struct AreaListView: View {
                 Image(systemName: "plus.circle.fill")
                     .font(.system(size: theme.grid.iconSmall))
             }
-            .accessibilityLabel("Add new area")
+            .accessibilityLabel(String(localized: "areas.toolbar.add.accessibility"))
         }
     }
 }

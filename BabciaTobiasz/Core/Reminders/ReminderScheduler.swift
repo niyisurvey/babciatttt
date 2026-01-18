@@ -13,9 +13,9 @@ enum ReminderError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .permissionDenied:
-            return "Notification permission not granted."
+            return String(localized: "reminders.error.permissionDenied")
         case .schedulingFailed(let error):
-            return "Failed to schedule reminder: \(error.localizedDescription)"
+            return String(format: String(localized: "reminders.error.scheduleFailed"), error.localizedDescription)
         }
     }
 }
@@ -51,7 +51,7 @@ struct ReminderScheduler: ReminderSchedulerProtocol {
             content.body = body
             content.sound = .default
             content.badge = 1
-            content.categoryIdentifier = "AREA_REMINDER"
+            content.categoryIdentifier = Constants.Notifications.areaReminderCategory
             content.userInfo = ["areaId": areaId.uuidString]
 
             let identifier = "area-\(areaId.uuidString)-slot-\(index)"

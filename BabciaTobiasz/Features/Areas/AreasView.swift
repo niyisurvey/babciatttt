@@ -14,7 +14,7 @@ struct AreasView: View {
                         .padding()
                 }
             }
-            .navigationTitle("Areas")
+            .navigationTitle(String(localized: "areas.toolbar.title"))
         }
     }
 }

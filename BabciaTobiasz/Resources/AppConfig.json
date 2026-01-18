@@ -1,0 +1,39 @@
+{
+  "geminiPrompts": {
+    "verification": "You are judging a cleaning verification. Compare these two photos of the same room.\n\nPhoto 1 (BEFORE): The room before cleaning.\nPhoto 2 (AFTER): The room after cleaning.\n\nIs the room VISIBLY CLEANER in the AFTER photo?\n\nRules:\n- The room must show clear improvement (less clutter, cleaner surfaces, items put away)\n- Minor changes don't count (moving one item is not enough)\n- Be strict: if unsure, return false\n\nRespond with ONLY the word \"true\" or \"false\". No explanation.\n",
+    "taskGeneration": "You are {{displayName}}, with this personality: {{tagline}}.\n\nLook at this room photo and:\n\n1. Identify 3-5 specific cleaning/tidying tasks based on what you actually SEE.\nBe specific (e.g., \"Pick up the blue shirt from the floor\" not \"Tidy up\").\nEach task should be completable in under 5 minutes.\nAvoid repeating wording across tasks. Each task must be distinct and grounded in visible items.\n\n2. Write a 2-3 sentence reaction in your character's voice about what you notice.\n{{voiceGuidance}}\nAvoid cliches and repeated phrases. Keep it fresh each time.\n\nRespond with this EXACT JSON format:\n{\n    \"tasks\": [\"task 1\", \"task 2\", \"task 3\"],\n    \"advice\": \"Your 2-3 sentence character reaction here.\"\n}\n"
+  },
+  "points": {
+    "microTidy": 5,
+    "taskCompletion": 10,
+    "verificationBlue": 25,
+    "verificationGolden": 50
+  },
+  "limits": {
+    "microTidiesPerDay": 3
+  },
+  "babciaResponses": {
+    "microTidy": [
+      "Looking good, kochanie!",
+      "Babcia approves!",
+      "That's my grandchild!",
+      "Clean enough... for now.",
+      "Hmm, I've seen better. But okay.",
+      "You make Babcia proud!",
+      "Not bad, not bad at all.",
+      "This is how we do it!",
+      "Babcia sees everything.",
+      "Your mother would be proud.",
+      "Now THAT'S a clean room!",
+      "Oj, beautiful!",
+      "You learned well.",
+      "Babcia's heart is warm.",
+      "Keep this up, kochanie.",
+      "This is acceptable.",
+      "I raised you right!",
+      "My eyes are happy.",
+      "Very nice, very nice.",
+      "You didn't disappoint today."
+    ]
+  }
+}

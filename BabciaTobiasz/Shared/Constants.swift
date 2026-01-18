@@ -78,5 +78,6 @@ enum Constants {
         /// Action identifiers
         static let completeBowlAction = "COMPLETE_BOWL"
         static let snoozeAction = "SNOOZE_BOWL"
+        static let openAreaAction = "OPEN_AREA"
     }
 }

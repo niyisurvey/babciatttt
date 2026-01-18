@@ -13,7 +13,7 @@ struct GalleryItemCard: View {
     @Environment(\.dsTheme) private var theme
 
     private var title: String {
-        bowl.area?.name ?? "Area"
+        bowl.area?.name ?? String(localized: "gallery.detail.area.fallback")
     }
 
     private var subtitle: String {

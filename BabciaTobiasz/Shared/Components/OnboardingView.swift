@@ -12,26 +12,26 @@ struct OnboardingView: View {
     private let pages: [OnboardingPage] = [
         OnboardingPage(
             icon: "cloud.sun.fill",
-            title: "Weather at a Glance",
-            description: "Get real-time weather updates with beautiful visuals. Know what's coming so you can plan your day.",
+            title: String(localized: "onboarding.page.weather.title"),
+            description: String(localized: "onboarding.page.weather.description"),
             accentColor: .blue
         ),
         OnboardingPage(
             icon: "checklist",
-            title: "Areas & Bowls",
-            description: "Name your areas, start a bowl, and get up to five tasks to finish.",
+            title: String(localized: "onboarding.page.areas.title"),
+            description: String(localized: "onboarding.page.areas.description"),
             accentColor: .green
         ),
         OnboardingPage(
             icon: "sparkles",
-            title: "Smart Insights",
-            description: "Get personalized suggestions based on weather to plan your day.",
+            title: String(localized: "onboarding.page.insights.title"),
+            description: String(localized: "onboarding.page.insights.description"),
             accentColor: .purple
         ),
         OnboardingPage(
             icon: "checkmark.seal.fill",
-            title: "Babcia's Verdict",
-            description: "Request verification and earn Blue or Golden totals for completed bowls.",
+            title: String(localized: "onboarding.page.verdict.title"),
+            description: String(localized: "onboarding.page.verdict.description"),
             accentColor: .orange
         )
     ]
@@ -45,7 +45,7 @@ struct OnboardingView: View {
                 // Skip button
                 HStack {
                     Spacer()
-                    Button("Skip") {
+                    Button(String(localized: "onboarding.skip")) {
                         completeOnboarding()
                     }
                     .dsFont(.subheadline)
@@ -87,7 +87,9 @@ struct OnboardingView: View {
                             completeOnboarding()
                         }
                     } label: {
-                        Text(currentPage < pages.count - 1 ? "Continue" : "Get Started")
+                        Text(currentPage < pages.count - 1
+                             ? String(localized: "onboarding.continue")
+                             : String(localized: "onboarding.getStarted"))
                             .dsFont(.headline)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 16)

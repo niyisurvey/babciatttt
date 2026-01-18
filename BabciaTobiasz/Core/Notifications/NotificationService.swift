@@ -88,11 +88,11 @@ final class NotificationService {
         
         // Create notification content
         let content = UNMutableNotificationContent()
-        content.title = "Time for \(areaName)"
-        content.body = areaDescription ?? "Don't forget to complete your bowl!"
+        content.title = String(format: String(localized: "reminders.notification.title"), areaName)
+        content.body = areaDescription ?? String(localized: "reminder_default_body")
         content.sound = .default
         content.badge = 1
-        content.categoryIdentifier = "AREA_REMINDER"
+        content.categoryIdentifier = Constants.Notifications.areaReminderCategory
         content.userInfo = ["areaId": areaId.uuidString]
         
         // Create daily trigger based on reminder time
@@ -169,21 +169,21 @@ final class NotificationService {
     func registerNotificationCategories() {
         // Action to mark bowl as complete from notification
         let completeAction = UNNotificationAction(
-            identifier: "COMPLETE_BOWL",
-            title: "Mark Complete",
+            identifier: Constants.Notifications.completeBowlAction,
+            title: String(localized: "reminders.action.complete"),
             options: [.foreground]
         )
         
         // Action to snooze the reminder
         let snoozeAction = UNNotificationAction(
-            identifier: "SNOOZE_BOWL",
-            title: "Remind in 1 hour",
+            identifier: Constants.Notifications.snoozeAction,
+            title: String(localized: "reminders.action.snooze"),
             options: []
         )
         
         // Define the area reminder category
         let areaCategory = UNNotificationCategory(
-            identifier: "AREA_REMINDER",
+            identifier: Constants.Notifications.areaReminderCategory,
             actions: [completeAction, snoozeAction],
             intentIdentifiers: [],
             options: [.customDismissAction]
@@ -203,9 +203,9 @@ enum NotificationError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .notAuthorized:
-            return "Notification permission not granted. Please enable notifications in Settings."
+            return String(localized: "reminders.error.permissionDenied")
         case .schedulingFailed(let error):
-            return "Failed to schedule notification: \(error.localizedDescription)"
+            return String(format: String(localized: "reminders.error.scheduleFailed"), error.localizedDescription)
         }
     }
 }
@@ -224,9 +224,9 @@ extension NotificationService {
         areaId: String
     ) -> NotificationAction {
         switch actionIdentifier {
-        case "COMPLETE_BOWL":
+        case Constants.Notifications.completeBowlAction:
             return .complete(areaId: areaId)
-        case "SNOOZE_BOWL":
+        case Constants.Notifications.snoozeAction:
             return .snooze(areaId: areaId)
         case UNNotificationDismissActionIdentifier:
             return .dismiss

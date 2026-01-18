@@ -138,7 +138,7 @@ struct LoadingOverlay: View {
     // MARK: - Properties
     
     /// Message to display
-    var message: String = "Loading..."
+    var message: String = String(localized: "loading.default")
     
     /// Whether the overlay is visible
     @Binding var isLoading: Bool
@@ -223,10 +223,10 @@ extension View {
         }
         
         // With message
-        LoadingIndicatorView(message: "Fetching weather data...", size: .medium)
+        LoadingIndicatorView(message: String(localized: "loading.fetching"), size: .medium)
         
         // Without background
-        LoadingIndicatorView(message: "Loading...", size: .small, showBackground: false)
+        LoadingIndicatorView(message: String(localized: "loading.default"), size: .small, showBackground: false)
         
         // Shimmer placeholder
         VStack(alignment: .leading, spacing: 12) {

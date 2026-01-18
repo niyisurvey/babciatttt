@@ -21,7 +21,7 @@ struct PotCard: View {
                         .font(.system(size: theme.grid.iconTitle3))
                         .symbolEffect(.pulse, options: .repeating)
 
-                    Text("Your Pot")
+                    Text(String(localized: "home.pot.title"))
                         .dsFont(.headline)
 
                     Spacer()
@@ -32,7 +32,7 @@ struct PotCard: View {
                         .font(theme.typography.custom(size: 56, weight: .bold))
                         .contentTransition(.numericText())
 
-                    Text("pierogis")
+                    Text(String(localized: "home.pot.unit"))
                         .dsFont(.title3)
                         .foregroundStyle(.secondary)
                 }

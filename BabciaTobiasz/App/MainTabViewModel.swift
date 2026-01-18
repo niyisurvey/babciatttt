@@ -26,11 +26,11 @@ final class MainTabViewModel {
         
         var title: String {
             switch self {
-            case .home: return "Home"
-            case .areas: return "Areas"
-            case .babcia: return "Babcia"
-            case .gallery: return "Gallery"
-            case .settings: return "Settings"
+            case .home: return String(localized: "mainTab.home.label")
+            case .areas: return String(localized: "mainTab.areas.label")
+            case .babcia: return String(localized: "mainTab.babcia.label")
+            case .gallery: return String(localized: "mainTab.gallery.label")
+            case .settings: return String(localized: "mainTab.settings.label")
             }
         }
         

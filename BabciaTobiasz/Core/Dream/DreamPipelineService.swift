@@ -24,11 +24,11 @@ enum DreamPipelineError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .missingAPIKey:
-            return "Dream engine API key missing."
+            return String(localized: "dream.error.apiKeyMissing")
         case .missingPrompt:
-            return "Dream prompt missing."
+            return String(localized: "dream.error.missingPrompt")
         case .invalidImageData:
-            return "Invalid image data."
+            return String(localized: "dream.error.invalidImage")
         }
     }
 }

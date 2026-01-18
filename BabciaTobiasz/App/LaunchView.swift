@@ -60,10 +60,10 @@ struct LaunchView: View {
                 .scaleEffect(iconScale)
                 
                 VStack(spacing: 8) {
-                    Text("The Pierogi Protocol")
+                    Text(String(localized: "launch.title"))
                         .dsFont(.largeTitle, weight: .bold)
                     
-                    Text("Weather, areas, and bowls")
+                    Text(String(localized: "launch.subtitle"))
                         .dsFont(.subheadline)
                         .foregroundStyle(.secondary)
                 }

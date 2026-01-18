@@ -51,6 +51,26 @@ enum BabciaPersona: String, Codable, CaseIterable, Identifiable {
         }
     }
 
+    var localizedDisplayName: String {
+        switch self {
+        case .classic: return String(localized: "persona.classic.name")
+        case .baroness: return String(localized: "persona.baroness.name")
+        case .warrior: return String(localized: "persona.warrior.name")
+        case .wellness: return String(localized: "persona.wellness.name")
+        case .coach: return String(localized: "persona.coach.name")
+        }
+    }
+
+    var localizedTagline: String {
+        switch self {
+        case .classic: return String(localized: "persona.classic.tagline")
+        case .baroness: return String(localized: "persona.baroness.tagline")
+        case .warrior: return String(localized: "persona.warrior.tagline")
+        case .wellness: return String(localized: "persona.wellness.tagline")
+        case .coach: return String(localized: "persona.coach.tagline")
+        }
+    }
+
     var dreamVisionPrompt: String {
         DreamPromptOverrides.prompt(for: self) ?? ""
     }

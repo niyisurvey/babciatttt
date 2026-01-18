@@ -26,10 +26,10 @@ struct StatsCard: View {
                         .symbolEffect(.pulse, options: .repeating)
 
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Stats & Progress")
+                        Text(String(localized: "home.stats.title"))
                             .dsFont(.headline)
 
-                        Text("\(lifetimePierogis) pierogis earned")
+                        Text(String(format: String(localized: "home.stats.subtitle"), lifetimePierogis))
                             .dsFont(.subheadline)
                             .foregroundStyle(.secondary)
                     }

@@ -25,10 +25,10 @@ struct ShopCard: View {
                         .symbolEffect(.pulse, options: .repeating)
 
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Sklep")
+                        Text(String(localized: "home.shop.title"))
                             .dsFont(.headline)
 
-                        Text("Unlock new Dream filters")
+                        Text(String(localized: "home.shop.subtitle"))
                             .dsFont(.subheadline)
                             .foregroundStyle(.secondary)
                     }

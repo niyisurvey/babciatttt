@@ -15,7 +15,7 @@ struct ErrorView: View {
     // MARK: - Properties
     
     /// The error title
-    var title: String = "Something went wrong"
+    var title: String = String(localized: "errorView.default.title")
     
     /// The error message/description
     var message: String
@@ -74,7 +74,7 @@ struct ErrorView: View {
                 Button {
                     dismissAction()
                 } label: {
-                    Text("Dismiss")
+                    Text(String(localized: "common.dismiss"))
                         .dsFont(.headline)
                         .frame(maxWidth: .infinity)
                 }
@@ -86,7 +86,7 @@ struct ErrorView: View {
                 Button {
                     retryAction()
                 } label: {
-                    Label("Retry", systemImage: "arrow.clockwise")
+                    Label(String(localized: "common.retry"), systemImage: "arrow.clockwise")
                         .dsFont(.headline)
                         .frame(maxWidth: .infinity)
                 }
@@ -103,11 +103,11 @@ struct ErrorView: View {
 extension ErrorView {
     /// Creates an error view for network errors
     static func networkError(
-        message: String = "Please check your internet connection and try again.",
+        message: String = String(localized: "errorView.network.message"),
         retryAction: @escaping () -> Void
     ) -> ErrorView {
         ErrorView(
-            title: "Connection Error",
+            title: String(localized: "errorView.network.title"),
             message: message,
             iconName: "wifi.exclamationmark",
             iconColor: .red,
@@ -117,11 +117,11 @@ extension ErrorView {
     
     /// Creates an error view for location errors
     static func locationError(
-        message: String = "Unable to access your location. Please check your settings.",
+        message: String = String(localized: "errorView.location.message"),
         retryAction: (() -> Void)? = nil
     ) -> ErrorView {
         ErrorView(
-            title: "Location Error",
+            title: String(localized: "errorView.location.title"),
             message: message,
             iconName: "location.slash.fill",
             iconColor: .orange,
@@ -131,11 +131,11 @@ extension ErrorView {
     
     /// Creates an error view for data loading errors
     static func dataError(
-        message: String = "Unable to load data. Please try again later.",
+        message: String = String(localized: "errorView.data.message"),
         retryAction: @escaping () -> Void
     ) -> ErrorView {
         ErrorView(
-            title: "Loading Error",
+            title: String(localized: "errorView.data.title"),
             message: message,
             iconName: "exclamationmark.icloud.fill",
             iconColor: .gray,
@@ -145,7 +145,7 @@ extension ErrorView {
     
     /// Creates an error view for permission errors
     static func permissionError(
-        title: String = "Permission Required",
+        title: String = String(localized: "errorView.permission.title"),
         message: String,
         settingsAction: @escaping () -> Void
     ) -> some View {
@@ -180,7 +180,7 @@ private struct PermissionErrorCard: View {
                 Button {
                     settingsAction()
                 } label: {
-                    Label("Open Settings", systemImage: "gear")
+                    Label(String(localized: "common.openSettings"), systemImage: "gear")
                         .dsFont(.headline)
                 }
                 .buttonStyle(.glass(color: .blue, prominent: true))
@@ -282,7 +282,7 @@ struct ErrorOverlayModifier: ViewModifier {
         VStack(spacing: 24) {
             // Default error
             ErrorView(
-                message: "An unexpected error occurred. Please try again.",
+                message: String(localized: "errorView.preview.unexpected"),
                 retryAction: {}
             )
             
@@ -294,7 +294,7 @@ struct ErrorOverlayModifier: ViewModifier {
             ErrorView.locationError()
             
             // Error banner
-            ErrorBanner(message: "Unable to sync your data") {
+            ErrorBanner(message: String(localized: "errorView.preview.sync")) {
             }
         }
         .padding()

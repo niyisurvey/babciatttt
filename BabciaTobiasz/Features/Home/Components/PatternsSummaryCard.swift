@@ -25,7 +25,7 @@ struct PatternsSummaryCard: View {
                         .font(.system(size: theme.grid.iconTitle3))
                         .symbolEffect(.pulse, options: .repeating)
 
-                    Text("Patterns")
+                    Text(String(localized: "home.patterns.title"))
                         .dsFont(.headline)
 
                     Spacer()
@@ -36,8 +36,16 @@ struct PatternsSummaryCard: View {
                 }
 
                 VStack(spacing: 8) {
-                    PatternRow(label: "Top day", value: topDayLabel, count: topDayCount)
-                    PatternRow(label: "Top hour", value: topHourLabel, count: topHourCount)
+                    PatternRow(
+                        label: String(localized: "home.patterns.topDay"),
+                        value: topDayLabel,
+                        count: topDayCount
+                    )
+                    PatternRow(
+                        label: String(localized: "home.patterns.topHour"),
+                        value: topHourLabel,
+                        count: topHourCount
+                    )
                 }
             }
             .padding()
@@ -67,7 +75,7 @@ private struct PatternRow: View {
             Text(value)
                 .dsFont(.subheadline, weight: .bold)
 
-            Text("(\(count))")
+            Text(String(format: String(localized: "home.patterns.count"), count))
                 .dsFont(.caption)
                 .foregroundStyle(.secondary)
         }

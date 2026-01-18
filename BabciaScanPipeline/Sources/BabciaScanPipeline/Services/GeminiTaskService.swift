@@ -23,26 +23,11 @@ public struct GeminiTaskService {
 
         let base64Image = imageData.base64EncodedString()
 
-        let prompt = """
-        You are \(profile.displayName), with this personality: \(profile.tagline).
-
-        Look at this room photo and:
-
-        1. Identify 3-5 specific cleaning/tidying tasks based on what you actually SEE.
-        Be specific (e.g., \"Pick up the blue shirt from the floor\" not \"Tidy up\").
-        Each task should be completable in under 5 minutes.
-        Avoid repeating wording across tasks. Each task must be distinct and grounded in visible items.
-
-        2. Write a 2-3 sentence reaction in your character's voice about what you notice.
-        \(profile.voiceGuidance)
-        Avoid cliches and repeated phrases. Keep it fresh each time.
-
-        Respond with this EXACT JSON format:
-        {
-            \"tasks\": [\"task 1\", \"task 2\", \"task 3\"],
-            \"advice\": \"Your 2-3 sentence character reaction here.\"
+        let promptTemplate = config.taskPromptTemplate?.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let promptTemplate, !promptTemplate.isEmpty else {
+            throw GeminiTaskServiceError.missingPrompt
         }
-        """
+        let prompt = renderPrompt(template: promptTemplate, profile: profile)
 
         let requestBody: [String: Any] = [
             "contents": [
@@ -188,10 +173,18 @@ public struct GeminiTaskService {
         }
         return nil
     }
+
+    private func renderPrompt(template: String, profile: ScanCharacterProfile) -> String {
+        template
+            .replacingOccurrences(of: "{{displayName}}", with: profile.displayName)
+            .replacingOccurrences(of: "{{tagline}}", with: profile.tagline)
+            .replacingOccurrences(of: "{{voiceGuidance}}", with: profile.voiceGuidance)
+    }
 }
 
 enum GeminiTaskServiceError: Error, LocalizedError {
     case imageProcessingFailed
+    case missingPrompt
     case invalidURL
     case invalidResponse
     case apiError(statusCode: Int, message: String)
@@ -201,6 +194,8 @@ enum GeminiTaskServiceError: Error, LocalizedError {
         switch self {
         case .imageProcessingFailed:
             return "Failed to process the image"
+        case .missingPrompt:
+            return "Task prompt missing."
         case .invalidURL:
             return "Invalid request URL"
         case .invalidResponse:

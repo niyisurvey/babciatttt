@@ -118,19 +118,19 @@ enum HapticStyle {
 
 #Preview {
     VStack(spacing: 40) {
-        Text("Weather Card")
+        Text(String(localized: "preview.tooltip.cardTitle"))
             .padding()
             .background(.ultraThinMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .featureTooltip(
-                title: "Weather Updates",
-                description: "Real-time weather data updates every 30 minutes automatically.",
+                title: String(localized: "preview.tooltip.title"),
+                description: String(localized: "preview.tooltip.description"),
                 icon: "cloud.sun.fill"
             )
         
         FeatureTooltip(
-            title: "Smart Insights",
-            description: "Get personalized suggestions based on weather conditions to plan your daily areas.",
+            title: String(localized: "preview.tooltip.secondTitle"),
+            description: String(localized: "preview.tooltip.secondDescription"),
             icon: "sparkles",
             isVisible: .constant(true)
         )

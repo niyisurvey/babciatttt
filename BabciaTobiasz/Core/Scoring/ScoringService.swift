@@ -24,13 +24,13 @@ final class ScoringService {
     ) -> Int {
         switch (tier, passed) {
         case (.blue, true):
-            return basePoints * 3
+            return AppConfigService.shared.verificationBluePoints
         case (.blue, false):
-            return Int(Double(basePoints) * 1.5)
+            return 0
         case (.golden, true):
-            return basePoints * 9
+            return AppConfigService.shared.verificationGoldenPoints
         case (.golden, false):
-            return Int(Double(basePoints) * 4.5)
+            return 0
         }
     }
 

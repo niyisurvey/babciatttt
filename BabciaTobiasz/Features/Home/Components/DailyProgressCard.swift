@@ -31,7 +31,7 @@ struct DailyProgressCard: View {
                         .font(.system(size: theme.grid.iconTitle3))
                         .symbolEffect(.pulse, options: .repeating)
 
-                    Text("Today's Progress")
+                    Text(String(localized: "home.dailyProgress.title"))
                         .dsFont(.headline)
 
                     Spacer()
@@ -50,7 +50,7 @@ struct DailyProgressCard: View {
                         .dsFont(.title2, weight: .bold)
                         .foregroundStyle(.secondary)
 
-                    Text("scans")
+                    Text(String(localized: "home.dailyProgress.unit"))
                         .dsFont(.title3)
                         .foregroundStyle(.secondary)
                         .padding(.leading, 4)
@@ -63,7 +63,7 @@ struct DailyProgressCard: View {
                     HStack {
                         Image(systemName: "moon.zzz.fill")
                             .foregroundStyle(.yellow)
-                        Text("Kitchen Closed — Rest well!")
+                        Text(String(localized: "home.dailyProgress.kitchenClosed"))
                             .dsFont(.caption)
                             .foregroundStyle(.secondary)
                     }

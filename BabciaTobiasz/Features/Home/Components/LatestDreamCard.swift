@@ -26,7 +26,7 @@ struct LatestDreamCard: View {
                             .font(.system(size: theme.grid.iconTitle3))
                             .symbolEffect(.pulse, options: .repeating)
 
-                        Text("Latest Dream")
+                        Text(String(localized: "home.latestDream.title"))
                             .dsFont(.headline)
 
                         Spacer()
@@ -69,7 +69,7 @@ struct LatestDreamCard: View {
                         .font(.system(size: theme.grid.iconLarge))
                         .foregroundStyle(.secondary)
 
-                    Text("No Dreams yet")
+                    Text(String(localized: "home.latestDream.empty"))
                         .dsFont(.caption)
                         .foregroundStyle(.secondary)
                 }

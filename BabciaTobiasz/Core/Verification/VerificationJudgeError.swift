@@ -18,15 +18,24 @@ enum VerificationJudgeError: Error, LocalizedError, @unchecked Sendable {
     var errorDescription: String? {
         switch self {
         case .apiKeyMissing:
-            return "Gemini API key not configured"
+            return String(localized: "verification.error.apiKeyMissing")
         case .invalidPhotoData:
-            return "Photo data is invalid or empty"
+            return String(localized: "verification.error.invalidPhotoData")
         case .networkFailure(let error):
-            return "Network error: \(error.localizedDescription)"
+            return String(
+                format: String(localized: "verification.error.networkFailure"),
+                error.localizedDescription
+            )
         case .invalidResponse(let reason):
-            return "Invalid API response: \(reason)"
+            return String(
+                format: String(localized: "verification.error.invalidResponse"),
+                reason
+            )
         case .judgingFailed(let reason):
-            return "Judging failed: \(reason)"
+            return String(
+                format: String(localized: "verification.error.judgingFailed"),
+                reason
+            )
         }
     }
 }

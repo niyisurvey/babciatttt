@@ -26,9 +26,6 @@ let package = Package(
                 .product(name: "BabciaScanPipeline", package: "BabciaScanPipeline") // Added 2026-01-14 22:55 GMT
             ],
             path: "BabciaTobiasz",
-            exclude: [
-                "Info.plist"
-            ],
             resources: [
                 .process("Resources")
             ]

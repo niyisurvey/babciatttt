@@ -10,24 +10,24 @@ struct FilterShopView: View {
     private let filters: [FilterItem] = [
         FilterItem(
             id: "dream-honey",
-            name: "Dream Honey",
-            description: "Warm glow with soft highlights.",
+            name: String(localized: "filters.dreamHoney.name"),
+            description: String(localized: "filters.dreamHoney.description"),
             cost: 4000,
-            ingredientNote: "Onions x4 + Tomatoes x7"
+            ingredientNote: String(localized: "filters.dreamHoney.ingredients")
         ),
         FilterItem(
             id: "glass-moss",
-            name: "Glass Moss",
-            description: "Cool mist and gentle contrast.",
+            name: String(localized: "filters.glassMoss.name"),
+            description: String(localized: "filters.glassMoss.description"),
             cost: 5200,
-            ingredientNote: "Leeks x3 + Mint x5"
+            ingredientNote: String(localized: "filters.glassMoss.ingredients")
         ),
         FilterItem(
             id: "pierogi-gold",
-            name: "Pierogi Gold",
-            description: "Bright, celebratory sheen.",
+            name: String(localized: "filters.pierogiGold.name"),
+            description: String(localized: "filters.pierogiGold.description"),
             cost: 7000,
-            ingredientNote: "Butter x6 + Garlic x4"
+            ingredientNote: String(localized: "filters.pierogiGold.ingredients")
         )
     ]
 
@@ -51,18 +51,18 @@ struct FilterShopView: View {
         #endif
         .toolbar { toolbarContent }
         .onAppear { viewModel.loadAreas() }
-        .alert("Error", isPresented: $viewModel.showError) {
-            Button("OK") { viewModel.dismissError() }
+        .alert(String(localized: "common.error.title"), isPresented: $viewModel.showError) {
+            Button(String(localized: "common.ok")) { viewModel.dismissError() }
         } message: {
-            Text(viewModel.errorMessage ?? "An error occurred")
+            Text(viewModel.errorMessage ?? String(localized: "common.error.fallback"))
         }
     }
 
     private var headerSection: some View {
         VStack(spacing: 8) {
-            Text("Dream Vision Filters")
+            Text(String(localized: "filters.title"))
                 .dsFont(.title2, weight: .bold)
-            Text("Spend points to unlock filters for your Dream images.")
+            Text(String(localized: "filters.subtitle"))
                 .dsFont(.body)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -74,7 +74,7 @@ struct FilterShopView: View {
         GlassCardView {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Available")
+                    Text(String(localized: "filters.points.available"))
                         .dsFont(.caption)
                         .foregroundStyle(.secondary)
                     Text("\(viewModel.availablePotPoints)")
@@ -84,7 +84,7 @@ struct FilterShopView: View {
                 Spacer()
 
                 VStack(alignment: .trailing, spacing: 4) {
-                    Text("All Time")
+                    Text(String(localized: "filters.points.allTime"))
                         .dsFont(.caption)
                         .foregroundStyle(.secondary)
                     Text("\(viewModel.totalPotPoints)")
@@ -132,17 +132,17 @@ struct FilterShopView: View {
                 HStack {
                     if unlocked {
                         if isActive {
-                            Text("Applied")
+                            Text(String(localized: "filters.action.applied"))
                                 .dsFont(.caption, weight: .bold)
                                 .foregroundStyle(.secondary)
                         } else {
-                            Button("Apply") {
+                            Button(String(localized: "filters.action.apply")) {
                                 viewModel.applyFilter(filter.id)
                             }
                             .buttonStyle(.nativeGlass)
                         }
                     } else {
-                        Button("Unlock") {
+                        Button(String(localized: "filters.action.unlock")) {
                             viewModel.unlockFilter(filter.id, cost: filter.cost)
                         }
                         .buttonStyle(.nativeGlassProminent)
@@ -159,7 +159,7 @@ struct FilterShopView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .principal) {
-            Text("Filter Shop")
+            Text(String(localized: "filters.toolbar.title"))
                 .dsFont(.headline, weight: .bold)
                 .lineLimit(1)
         }

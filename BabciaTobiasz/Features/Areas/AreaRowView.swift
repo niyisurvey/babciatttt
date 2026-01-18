@@ -99,8 +99,7 @@ struct AreaRowView: View {
     }
 
     private var ageLabel: String {
-        let format = NSLocalizedString("area_age_days", comment: "Area age in days")
-        return String.localizedStringWithFormat(format, area.ageInDays)
+        String(format: String(localized: "areaRow.age.days"), area.ageInDays)
     }
 
     private func milestoneBadge(_ milestone: MilestoneDisplay) -> some View {
@@ -109,7 +108,7 @@ struct AreaRowView: View {
                 Image(systemName: badge)
                     .font(.system(size: theme.grid.iconTiny))
             }
-            Text("Day \(milestone.day)")
+            Text(String(format: String(localized: "areaRow.milestone.day"), milestone.day))
                 .dsFont(.caption2, weight: .bold)
         }
         .padding(.horizontal, 8)

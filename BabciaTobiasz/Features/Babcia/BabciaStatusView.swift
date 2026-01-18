@@ -21,12 +21,12 @@ struct BabciaStatusView: View {
                 GlassCardView {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Points Pot")
+                            Text(String(localized: "babciaStatus.pot.title"))
                                 .dsFont(.caption)
                                 .foregroundStyle(.secondary)
                             Text("\(viewModel.availablePotPoints)")
                                 .dsFont(.title2, weight: .bold)
-                            Text("Available")
+                            Text(String(localized: "babciaStatus.pot.available"))
                                 .dsFont(.caption)
                                 .foregroundStyle(.secondary)
                         }
@@ -34,7 +34,7 @@ struct BabciaStatusView: View {
                         Spacer()
 
                         VStack(alignment: .trailing, spacing: 4) {
-                            Text("All Time")
+                            Text(String(localized: "babciaStatus.pot.allTime"))
                                 .dsFont(.caption)
                                 .foregroundStyle(.secondary)
                             Text("\(viewModel.totalPotPoints)")
@@ -89,22 +89,22 @@ private enum BabciaStatus {
     var title: String {
         switch self {
         case .happy:
-            return "Babcia is proud"
+            return String(localized: "babciaStatus.state.happy.title")
         case .expecting:
-            return "Babcia is waiting"
+            return String(localized: "babciaStatus.state.expecting.title")
         case .sad:
-            return "Babcia is disappointed"
+            return String(localized: "babciaStatus.state.sad.title")
         }
     }
 
     var subtitle: String {
         switch self {
         case .happy:
-            return "Verified bowls today. Keep the streak warm."
+            return String(localized: "babciaStatus.state.happy.subtitle")
         case .expecting:
-            return "Complete a verification to lift her spirits."
+            return String(localized: "babciaStatus.state.expecting.subtitle")
         case .sad:
-            return "No completed bowls yet today."
+            return String(localized: "babciaStatus.state.sad.subtitle")
         }
     }
 }

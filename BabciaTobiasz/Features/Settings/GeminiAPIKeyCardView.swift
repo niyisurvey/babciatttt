@@ -16,31 +16,31 @@ struct GeminiAPIKeyCardView: View {
     var body: some View {
         GlassCardView {
             VStack(alignment: .leading, spacing: 12) {
-                Text("Verification Gemini")
+                Text(String(localized: "settings.apiKeys.gemini.title"))
                     .dsFont(.caption, weight: .bold)
                     .foregroundStyle(.secondary)
 
-                Text("API Key")
+                Text(String(localized: "settings.apiKeys.apiKey.label"))
                     .dsFont(.caption)
                     .foregroundStyle(.secondary)
 
-                SecureField("Enter GEMINI_API_KEY", text: $apiKey)
+                SecureField(String(localized: "settings.apiKeys.gemini.placeholder"), text: $apiKey)
                     .dsFont(.body)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
 
                 HStack(spacing: 12) {
-                    Button("Save") {
+                    Button(String(localized: "common.save")) {
                         _ = saveKey()
                     }
                     .buttonStyle(.nativeGlassProminent)
 
-                    Button("Clear") {
+                    Button(String(localized: "common.clear")) {
                         clearKey()
                     }
                     .buttonStyle(.nativeGlass)
 
-                    Button("Test") {
+                    Button(String(localized: "common.test")) {
                         Task { await runTest() }
                     }
                     .buttonStyle(.nativeGlass)
@@ -54,7 +54,7 @@ struct GeminiAPIKeyCardView: View {
                     Spacer()
                 }
 
-                Text("Stored securely on this device. Overrides Secrets.plist if set.")
+                Text(String(localized: "settings.apiKeys.stored"))
                     .dsFont(.caption2)
                     .foregroundStyle(.secondary)
 
@@ -78,29 +78,33 @@ struct GeminiAPIKeyCardView: View {
     private func saveKey() -> Bool {
         let trimmed = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
-            statusMessage = "Enter a key before saving."
+            statusMessage = String(localized: "settings.apiKeys.status.enterBeforeSaving")
             return false
         }
         apiKey = trimmed
         let saved = GeminiKeychain.save(trimmed)
-        statusMessage = saved ? "Saved to Keychain." : "Save failed."
+        statusMessage = saved
+            ? String(localized: "settings.apiKeys.status.saved")
+            : String(localized: "settings.apiKeys.status.saveFailed")
         return saved
     }
 
     private func clearKey() {
         let removed = GeminiKeychain.delete()
         apiKey = ""
-        statusMessage = removed ? "Removed from Keychain." : "Remove failed."
+        statusMessage = removed
+            ? String(localized: "settings.apiKeys.status.removed")
+            : String(localized: "settings.apiKeys.status.removeFailed")
         testMessage = nil
     }
 
     private func runTest() async {
         guard saveKey() else {
-            testMessage = "Enter a key before testing."
+            testMessage = String(localized: "settings.apiKeys.status.enterBeforeTesting")
             return
         }
         guard let imageData = SettingsTestImageProvider.loadJPEGData() else {
-            testMessage = "Test image unavailable."
+            testMessage = String(localized: "settings.apiKeys.status.testImageUnavailable")
             return
         }
         isTesting = true
@@ -108,11 +112,17 @@ struct GeminiAPIKeyCardView: View {
         do {
             let service = VerificationJudgeService()
             _ = try await service.judge(beforePhoto: imageData, afterPhoto: imageData)
-            testMessage = "Test succeeded."
+            testMessage = String(localized: "settings.apiKeys.status.testSucceeded")
         } catch let error as VerificationJudgeError {
-            testMessage = "Test failed: \(error.errorDescription ?? error.localizedDescription)"
+            testMessage = String(
+                format: String(localized: "settings.apiKeys.status.testFailed"),
+                error.errorDescription ?? error.localizedDescription
+            )
         } catch {
-            testMessage = "Test failed: \(error.localizedDescription)"
+            testMessage = String(
+                format: String(localized: "settings.apiKeys.status.testFailed"),
+                error.localizedDescription
+            )
         }
         isTesting = false
     }

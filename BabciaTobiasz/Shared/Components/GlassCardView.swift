@@ -159,15 +159,15 @@ extension ButtonStyle where Self == GlassButtonStyle {
                     Image(systemName: "sun.max.fill")
                         .font(.system(size: 40))
                         .foregroundStyle(.yellow)
-                    Text("Glass Card")
+                    Text(String(localized: "preview.glassCard.title"))
                         .dsFont(.headline)
                 }
             }
             
-            Button("Glass Button") {}
+            Button(String(localized: "preview.glassCard.button")) {}
                 .buttonStyle(.nativeGlass)
             
-            Button("Prominent Button") {}
+            Button(String(localized: "preview.glassCard.prominent")) {}
                 .buttonStyle(.nativeGlassProminent)
         }
         .padding()

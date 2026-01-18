@@ -21,7 +21,7 @@ struct StreakCard: View {
                         .font(.system(size: theme.grid.iconTitle3))
                         .symbolEffect(.pulse, options: .repeating)
 
-                    Text("Streak")
+                    Text(String(localized: "home.streak.title"))
                         .dsFont(.headline)
 
                     Spacer()
@@ -32,12 +32,14 @@ struct StreakCard: View {
                         .font(theme.typography.custom(size: 48, weight: .bold))
                         .contentTransition(.numericText())
 
-                    Text(currentStreak == 1 ? "day" : "days")
+                    Text(currentStreak == 1
+                         ? String(localized: "home.streak.unit.singular")
+                         : String(localized: "home.streak.unit.plural"))
                         .dsFont(.title3)
                         .foregroundStyle(.secondary)
                 }
 
-                Text("Keep going! Scan once per day to maintain your streak.")
+                Text(String(localized: "home.streak.message"))
                     .dsFont(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)

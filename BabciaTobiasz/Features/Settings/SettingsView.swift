@@ -18,14 +18,14 @@ struct SettingsView: View {
                     VStack(spacing: theme.grid.sectionSpacing) {
                         // Appearance Section
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-                            Text("Appearance")
+                            Text(String(localized: "settings.appearance.title"))
                                 .dsFont(.headline, weight: .bold)
                                 .padding(.horizontal, 4)
                             
                             GlassCardView {
-                                Picker("Theme", selection: $appTheme) {
+                                Picker(String(localized: "settings.appearance.theme.label"), selection: $appTheme) {
                                     ForEach(AppTheme.allCases) { theme in
-                                        Text(theme.rawValue.capitalized).tag(theme)
+                                        Text(theme.localizedName).tag(theme)
                                             .dsFont(.body)
                                     }
                                 }
@@ -44,7 +44,7 @@ struct SettingsView: View {
 
                         // Analytics Section
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-                            Text("Analytics")
+                            Text(String(localized: "settings.analytics.title"))
                                 .dsFont(.headline, weight: .bold)
                                 .padding(.horizontal, 4)
 
@@ -53,7 +53,7 @@ struct SettingsView: View {
                                     AnalyticsView()
                                 } label: {
                                     HStack {
-                                        Text("View task analytics")
+                                        Text(String(localized: "settings.analytics.action"))
                                             .dsFont(.headline)
                                         Spacer()
                                         Image(systemName: "chevron.right")
@@ -67,14 +67,14 @@ struct SettingsView: View {
 
                         // About Section
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-                            Text("About")
+                            Text(String(localized: "settings.about.title"))
                                 .dsFont(.headline, weight: .bold)
                                 .padding(.horizontal, 4)
                             
                             GlassCardView {
                                 VStack(spacing: 16) {
                                     HStack {
-                                        Text("Version").dsFont(.body)
+                                        Text(String(localized: "settings.about.version")).dsFont(.body)
                                         Spacer()
                                         Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
                                             .dsFont(.body)
@@ -84,7 +84,7 @@ struct SettingsView: View {
                                     Divider()
                                     
                                     HStack {
-                                        Text("Build").dsFont(.body)
+                                        Text(String(localized: "settings.about.build")).dsFont(.body)
                                         Spacer()
                                         Text(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1")
                                             .dsFont(.body)
@@ -103,7 +103,7 @@ struct SettingsView: View {
             #endif
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("Settings")
+                    Text(String(localized: "settings.toolbar.title"))
                         .dsFont(.title2, weight: .bold)
                         .lineLimit(1)
                 }
@@ -150,6 +150,17 @@ struct SettingsView: View {
 enum AppTheme: String, CaseIterable, Identifiable {
     case system, light, dark
     var id: Self { self }
+
+    var localizedName: String {
+        switch self {
+        case .system:
+            return String(localized: "settings.theme.system")
+        case .light:
+            return String(localized: "settings.theme.light")
+        case .dark:
+            return String(localized: "settings.theme.dark")
+        }
+    }
 }
 
 

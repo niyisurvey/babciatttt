@@ -48,6 +48,8 @@ public struct BabciaTobiaszAppView: View {
                 configurations: [modelConfiguration]
             )
             initError = nil
+
+            AppConfigService.shared.load()
             
             // Note: iOS 26+ automatically applies Liquid Glass to standard components.
             // No custom appearance configuration needed - system handles it.
@@ -81,10 +83,10 @@ private struct DatabaseErrorView: View {
                 .font(.system(size: 60))
                 .foregroundStyle(.red)
             
-            Text("Unable to Load Data")
+            Text(String(localized: "app.initError.title"))
                 .font(.title.bold())
             
-            Text("The app couldn't initialize its database. Try restarting the app or reinstalling if the problem persists.")
+            Text(String(localized: "app.initError.message"))
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
                 .padding(.horizontal)

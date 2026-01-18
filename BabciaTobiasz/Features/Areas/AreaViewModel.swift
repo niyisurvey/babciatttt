@@ -53,6 +53,17 @@ final class AreaViewModel {
         case incomplete = "Not Completed"
         
         var id: String { rawValue }
+
+        var localizedLabel: String {
+            switch self {
+            case .all:
+                return String(localized: "areas.filter.all")
+            case .completed:
+                return String(localized: "areas.filter.completed")
+            case .incomplete:
+                return String(localized: "areas.filter.incomplete")
+            }
+        }
     }
     
     // MARK: - Dependencies
@@ -311,20 +322,20 @@ final class AreaViewModel {
         guard let persistenceService = persistenceService else { return }
 
         guard canStartBowlToday else {
-            errorMessage = "Kitchen Closed. Daily target reached."
+            errorMessage = String(localized: "areas.error.kitchenClosed")
             showError = true
             return
         }
 
         // Added 2026-01-14 21:13 GMT
         guard area.inProgressBowl == nil else {
-            errorMessage = "Finish the current session before starting a new scan."
+            errorMessage = String(localized: "areas.error.finishCurrent")
             showError = true
             return
         }
         // Added 2026-01-14 21:13 GMT
         guard let beforePhotoData else {
-            errorMessage = "Scan photo required to start a session."
+            errorMessage = String(localized: "areas.error.scanPhotoRequired")
             showError = true
             return
         }
@@ -333,7 +344,7 @@ final class AreaViewModel {
             isLoading = true
             // Added 2026-01-14 22:55 GMT
             isGeneratingDream = true
-            dreamStatusMessage = "Scanning..."
+            dreamStatusMessage = String(localized: "areas.scan.status.scanning")
             defer {
                 isLoading = false
                 isGeneratingDream = false
@@ -341,7 +352,9 @@ final class AreaViewModel {
 
             let scanResult = await runScan(beforePhotoData: beforePhotoData, persona: area.persona)
 
-            let tasks = scanResult.tasks.prefix(5).map { CleaningTask(title: $0) }
+            let tasks = scanResult.tasks.prefix(5).map {
+                CleaningTask(title: $0, points: AppConfigService.shared.taskCompletionPoints)
+            }
             let bowl = try persistenceService.createBowl(
                 for: area,
                 tasks: Array(tasks),
@@ -359,10 +372,10 @@ final class AreaViewModel {
                 bowl.dreamFilterId = scanResult.dreamFilterId
                 bowl.dreamGeneratedAt = Date()
                 area.dreamImageName = nil
-                dreamStatusMessage = "Dream updated."
+                dreamStatusMessage = String(localized: "areas.scan.status.dreamUpdated")
             } else {
                 area.dreamImageName = fallbackDreamAssetName(for: area.persona)
-                dreamStatusMessage = "Dream failed; using Babcia reference art."
+                dreamStatusMessage = String(localized: "areas.scan.status.dreamFailed")
             }
 
             try persistenceService.save()
@@ -383,32 +396,34 @@ final class AreaViewModel {
         guard let persistenceService = persistenceService else { return }
 
         guard canStartBowlToday else {
-            errorMessage = "Kitchen Closed. Daily target reached."
+            errorMessage = String(localized: "areas.error.kitchenClosed")
             showError = true
             return
         }
 
         guard area.inProgressBowl == nil else {
-            errorMessage = "Finish the current session before starting a new scan."
+            errorMessage = String(localized: "areas.error.finishCurrent")
             showError = true
             return
         }
 
         guard let beforePhotoData else {
-            errorMessage = "Scan photo required to start a session."
+            errorMessage = String(localized: "areas.error.scanPhotoRequired")
             showError = true
             return
         }
 
         do {
             isLoading = true
-            dreamStatusMessage = "Scanning..."
+            dreamStatusMessage = String(localized: "areas.scan.status.scanning")
             defer {
                 isLoading = false
             }
 
             let scanResult = await runScan(beforePhotoData: beforePhotoData, persona: area.persona)
-            let tasks = scanResult.tasks.prefix(5).map { CleaningTask(title: $0) }
+            let tasks = scanResult.tasks.prefix(5).map {
+                CleaningTask(title: $0, points: AppConfigService.shared.taskCompletionPoints)
+            }
             let bowl = try persistenceService.createBowl(
                 for: area,
                 tasks: Array(tasks),
@@ -420,7 +435,7 @@ final class AreaViewModel {
             bowl.dreamRawImageData = nil
             bowl.dreamFilterId = nil
             bowl.dreamGeneratedAt = nil
-            dreamStatusMessage = "Tasks refreshed."
+            dreamStatusMessage = String(localized: "areas.scan.status.tasksRefreshed")
 
             updateStreakForNewBowl()
             try persistenceService.save()
@@ -438,26 +453,28 @@ final class AreaViewModel {
         guard let persistenceService = persistenceService else { return }
 
         guard let beforePhotoData else {
-            errorMessage = "Scan photo required to append tasks."
+            errorMessage = String(localized: "areas.error.scanPhotoRequiredAppend")
             showError = true
             return
         }
 
         guard let bowl = area.inProgressBowl else {
-            errorMessage = "No active session to append tasks."
+            errorMessage = String(localized: "areas.error.noActiveSession")
             showError = true
             return
         }
 
         do {
             isLoading = true
-            dreamStatusMessage = "Scanning..."
+            dreamStatusMessage = String(localized: "areas.scan.status.scanning")
             defer {
                 isLoading = false
             }
 
             let scanResult = await runScan(beforePhotoData: beforePhotoData, persona: area.persona)
-            let tasks = scanResult.tasks.prefix(5).map { CleaningTask(title: $0) }
+            let tasks = scanResult.tasks.prefix(5).map {
+                CleaningTask(title: $0, points: AppConfigService.shared.taskCompletionPoints)
+            }
             if bowl.tasks == nil {
                 bowl.tasks = []
             }
@@ -466,7 +483,7 @@ final class AreaViewModel {
                 bowl.tasks?.append(task)
                 persistenceService.insert(task)
             }
-            dreamStatusMessage = "Tasks appended."
+            dreamStatusMessage = String(localized: "areas.scan.status.tasksAppended")
             try persistenceService.save()
 
             if let taskError = scanResult.taskErrorMessage, !taskError.isEmpty {
@@ -487,12 +504,12 @@ final class AreaViewModel {
             fallbackTasks: fallbackTasks
         ) ?? BabciaScanPipelineOutput(
             tasks: fallbackTasks,
-            advice: "Start small. You have got this.",
+            advice: String(localized: "areas.scan.fallback.advice"),
             dreamHeroImageData: nil,
             dreamRawImageData: nil,
             dreamFilterId: activeFilterId,
-            taskErrorMessage: "Scan pipeline unavailable.",
-            dreamErrorMessage: "Scan pipeline unavailable.",
+            taskErrorMessage: String(localized: "areas.scan.pipelineUnavailable"),
+            dreamErrorMessage: String(localized: "areas.scan.pipelineUnavailable"),
             metadata: nil
         )
     }
@@ -556,7 +573,7 @@ final class AreaViewModel {
     ) async throws -> Bool {
         do {
             guard let persistenceService = persistenceService else {
-                throw VerificationJudgeError.judgingFailed(reason: "Persistence unavailable")
+                throw VerificationJudgeError.judgingFailed(reason: String(localized: "areas.error.persistenceUnavailable"))
             }
             guard let beforePhotoData = bowl.beforePhotoData else {
                 throw VerificationJudgeError.invalidPhotoData
@@ -689,7 +706,7 @@ final class AreaViewModel {
 
     func unlockFilter(_ id: String, cost: Int) {
         guard availablePotPoints >= cost else {
-            errorMessage = "Not enough points."
+            errorMessage = String(localized: "areas.error.notEnoughPoints")
             showError = true
             return
         }
@@ -907,11 +924,11 @@ extension AreaViewModel {
 
     private func genericTaskTemplates() -> [String] {
         [
-            "Clear visible surfaces",
-            "Put loose items away",
-            "Wipe one surface",
-            "Collect trash",
-            "Reset the area"
+            String(localized: "areas.scan.fallback.task.clearSurface"),
+            String(localized: "areas.scan.fallback.task.putAway"),
+            String(localized: "areas.scan.fallback.task.wipeSurface"),
+            String(localized: "areas.scan.fallback.task.collectTrash"),
+            String(localized: "areas.scan.fallback.task.resetArea")
         ]
     }
 
@@ -929,4 +946,5 @@ extension AreaViewModel {
             return "R5_ToughLifecoach_Reference_NormalizedFull"
         }
     }
+
 }

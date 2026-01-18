@@ -38,8 +38,8 @@ struct ReminderConfigView: View {
                 emptyState
             }
         }
-        .alert("Reminders", isPresented: $showError) {
-            Button("OK", role: .cancel) {}
+        .alert(String(localized: "reminders.alert.title"), isPresented: $showError) {
+            Button(String(localized: "common.ok"), role: .cancel) {}
         } message: {
             Text(errorMessage)
         }
@@ -47,11 +47,11 @@ struct ReminderConfigView: View {
 
     private var emptyState: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Set up to three daily reminders for this area.")
+            Text(String(localized: "reminders.empty.message"))
                 .dsFont(.subheadline)
                 .foregroundStyle(.secondary)
 
-            Button("Enable Reminders") {
+            Button(String(localized: "reminders.empty.action")) {
                 createConfig()
             }
             .buttonStyle(.borderedProminent)
@@ -89,7 +89,7 @@ private struct ReminderConfigEditor: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-            Toggle("Enable reminders", isOn: bindingForEnabled())
+            Toggle(String(localized: "reminders.editor.enable"), isOn: bindingForEnabled())
                 .dsFont(.headline)
 
             Divider()
@@ -101,7 +101,7 @@ private struct ReminderConfigEditor: View {
                 }
             }
 
-            Text("We\'ll notify you at the selected times every day.")
+            Text(String(localized: "reminders.editor.footer"))
                 .dsFont(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -112,7 +112,7 @@ private struct ReminderConfigEditor: View {
         let timeBinding = bindingForSlotTime(index)
 
         return HStack {
-            Toggle("Slot \(index + 1)", isOn: enabledBinding)
+            Toggle(String(format: String(localized: "reminders.editor.slot"), index + 1), isOn: enabledBinding)
                 .dsFont(.subheadline, weight: .bold)
 
             Spacer()

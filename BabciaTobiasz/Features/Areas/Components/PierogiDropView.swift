@@ -33,14 +33,14 @@ struct PierogiDropView: View {
 
                 VStack(spacing: theme.grid.sectionSpacing) {
                     VStack(spacing: theme.grid.cardPaddingTight) {
-                        Text("pierogi_drop_title")
+                        Text(String(localized: "pierogiDrop.title"))
                             .dsFont(.title2, weight: .bold)
-                        Text("pierogi_drop_subtitle")
+                        Text(String(localized: "pierogiDrop.subtitle"))
                             .dsFont(.subheadline)
                             .foregroundStyle(.secondary)
                         Text(
                             String(
-                                format: NSLocalizedString("pierogi_drop_progress", comment: ""),
+                                format: String(localized: "pierogiDrop.progress"),
                                 droppedCount,
                                 pierogiCount
                             )

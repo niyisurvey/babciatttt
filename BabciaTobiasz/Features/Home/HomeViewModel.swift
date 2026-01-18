@@ -61,7 +61,12 @@ final class HomeViewModel {
             topHourLabel = data.patternSummary.topHourLabel
             topHourCount = data.patternSummary.topHourCount
         } catch {
-            showError(message: "Failed to load dashboard: \(error.localizedDescription)")
+            showError(
+                message: String(
+                    format: String(localized: "home.error.message"),
+                    error.localizedDescription
+                )
+            )
         }
     }
 

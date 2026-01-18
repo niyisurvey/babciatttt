@@ -15,6 +15,7 @@ public struct ScanPipelineConfig: Sendable {
     public let dreamTimeout: TimeInterval
     public let fallbackTasks: [String]
     public let fallbackAdvice: String
+    public let taskPromptTemplate: String?
 
     public init(
         apiKey: String,
@@ -27,7 +28,8 @@ public struct ScanPipelineConfig: Sendable {
             "Put away any loose items",
             "Wipe down a visible spot"
         ],
-        fallbackAdvice: String = "Start small. You have got this."
+        fallbackAdvice: String = "Start small. You have got this.",
+        taskPromptTemplate: String? = nil
     ) {
         self.apiKey = apiKey
         self.taskModelEndpoint = taskModelEndpoint
@@ -36,5 +38,6 @@ public struct ScanPipelineConfig: Sendable {
         self.dreamTimeout = dreamTimeout
         self.fallbackTasks = fallbackTasks
         self.fallbackAdvice = fallbackAdvice
+        self.taskPromptTemplate = taskPromptTemplate
     }
 }

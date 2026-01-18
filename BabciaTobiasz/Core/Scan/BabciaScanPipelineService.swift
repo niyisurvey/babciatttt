@@ -37,21 +37,23 @@ struct BabciaScanPipelineService {
         guard let image = UIImage(data: beforePhotoData) else {
             return BabciaScanPipelineOutput(
                 tasks: fallbackTasks,
-                advice: "Start small. You have got this.",
+                advice: String(localized: "areas.scan.fallback.advice"),
                 dreamHeroImageData: nil,
                 dreamRawImageData: nil,
                 dreamFilterId: filterId,
-                taskErrorMessage: "Failed to process the image.",
-                dreamErrorMessage: "Failed to process the image.",
+                taskErrorMessage: String(localized: "scan.error.imageProcessingFailed"),
+                dreamErrorMessage: String(localized: "scan.error.imageProcessingFailed"),
                 metadata: nil
             )
         }
 
         let apiKey = DreamRoomSecrets.apiKey() ?? ""
+        let taskPrompt = await AppConfigService.shared.config.geminiPrompts.taskGeneration
         let config = ScanPipelineConfig(
             apiKey: apiKey,
             fallbackTasks: fallbackTasks,
-            fallbackAdvice: persona.tagline
+            fallbackAdvice: persona.localizedTagline,
+            taskPromptTemplate: taskPrompt
         )
 
         let profile = ScanCharacterProfile(
@@ -80,9 +82,48 @@ struct BabciaScanPipelineService {
             dreamHeroImageData: filteredHero,
             dreamRawImageData: result.dreamResult?.rawImageData,
             dreamFilterId: filterId,
-            taskErrorMessage: result.taskErrorMessage,
-            dreamErrorMessage: result.dreamErrorMessage,
+            taskErrorMessage: localizedScanError(result.taskErrorMessage),
+            dreamErrorMessage: localizedScanError(result.dreamErrorMessage),
             metadata: result.dreamResult?.metadata
         )
+    }
+
+    private func localizedScanError(_ message: String?) -> String? {
+        guard let message else { return nil }
+        let trimmed = message.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return nil }
+
+        switch trimmed {
+        case "API key missing.":
+            return String(localized: "scan.error.apiKeyMissing")
+        case "Task prompt missing.":
+            return String(localized: "scan.error.missingPrompt")
+        case "Dream prompt missing.":
+            return String(localized: "dream.error.missingPrompt")
+        case "Failed to process the image.", "Failed to process the image":
+            return String(localized: "scan.error.imageProcessingFailed")
+        case "Request timed out.":
+            return String(localized: "scan.error.requestTimedOut")
+        case "Invalid request URL":
+            return String(localized: "scan.error.invalidRequest")
+        case "Invalid response from API":
+            return String(localized: "scan.error.invalidResponse")
+        case "Failed to parse API response":
+            return String(localized: "scan.error.parsingFailed")
+        default:
+            break
+        }
+
+        if trimmed.hasPrefix("API error ("), let range = trimmed.range(of: "): ") {
+            let codeStart = trimmed.index(trimmed.startIndex, offsetBy: "API error (".count)
+            let statusCode = String(trimmed[codeStart..<range.lowerBound])
+            var detail = String(trimmed[range.upperBound...])
+            if detail == "Unknown error" {
+                detail = String(localized: "scan.error.unknown")
+            }
+            return String(format: String(localized: "scan.error.api"), statusCode, detail)
+        }
+
+        return trimmed
     }
 }

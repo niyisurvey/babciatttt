@@ -47,38 +47,38 @@ struct AreaFormView: View {
                 ScrollView {
                     VStack(spacing: theme.grid.sectionSpacing) {
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-                            Text("Basic Info")
+                            Text(String(localized: "areaForm.basicInfo.title"))
                                 .dsFont(.headline, weight: .bold)
                                 .padding(.horizontal, 4)
 
                             GlassCardView {
                                 VStack(spacing: 16) {
-                                    TextField("Area name", text: $name)
+                                    TextField(String(localized: "areaForm.basicInfo.name.placeholder"), text: $name)
                                         .dsFont(.headline)
 
                                     Divider()
 
-                                    TextField("Description (optional)", text: $description, axis: .vertical)
+                                    TextField(String(localized: "areaForm.basicInfo.description.placeholder"), text: $description, axis: .vertical)
                                         .dsFont(.body)
                                         .lineLimit(3...6)
                                 }
                             }
 
-                            Text("Give your area a memorable name")
+                            Text(String(localized: "areaForm.basicInfo.helper"))
                                 .dsFont(.caption)
                                 .foregroundStyle(.secondary)
                                 .padding(.horizontal, 4)
                         }
 
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-                            Text("Appearance")
+                            Text(String(localized: "areaForm.appearance.title"))
                                 .dsFont(.headline, weight: .bold)
                                 .padding(.horizontal, 4)
 
                             GlassCardView {
                                 VStack(alignment: .leading, spacing: 20) {
                                     VStack(alignment: .leading, spacing: 12) {
-                                        Text("Icon")
+                                        Text(String(localized: "areaForm.appearance.icon"))
                                             .dsFont(.subheadline, weight: .bold)
                                             .foregroundStyle(.secondary)
 
@@ -88,7 +88,7 @@ struct AreaFormView: View {
                                     Divider()
 
                                     VStack(alignment: .leading, spacing: 12) {
-                                        Text("Color")
+                                        Text(String(localized: "areaForm.appearance.color"))
                                             .dsFont(.subheadline, weight: .bold)
                                             .foregroundStyle(.secondary)
 
@@ -99,16 +99,28 @@ struct AreaFormView: View {
                         }
 
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-                            Text("Persona")
+                            Text(String(localized: "areaForm.persona.title"))
                                 .dsFont(.headline, weight: .bold)
                                 .padding(.horizontal, 4)
 
-                            GlassCardView {
-                                VStack(spacing: 12) {
-                                    ForEach(BabciaPersona.allCases) { persona in
-                                        personaRow(persona)
-                                        if persona != BabciaPersona.allCases.last {
-                                            Divider()
+                            if isEditing, let area {
+                                GlassCardView {
+                                    VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
+                                        Text(String(localized: "areaForm.persona.readonly.label"))
+                                            .dsFont(.caption)
+                                            .foregroundStyle(.secondary)
+                                        Text(area.persona.localizedDisplayName)
+                                            .dsFont(.headline, weight: .bold)
+                                    }
+                                }
+                            } else {
+                                GlassCardView {
+                                    VStack(spacing: 12) {
+                                        ForEach(BabciaPersona.allCases) { persona in
+                                            personaRow(persona)
+                                            if persona != BabciaPersona.allCases.last {
+                                                Divider()
+                                            }
                                         }
                                     }
                                 }
@@ -116,7 +128,7 @@ struct AreaFormView: View {
                         }
 
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-                            Text("Reminders")
+                            Text(String(localized: "areaForm.reminders.title"))
                                 .dsFont(.headline, weight: .bold)
                                 .padding(.horizontal, 4)
 
@@ -124,7 +136,7 @@ struct AreaFormView: View {
                                 ReminderConfigView(area: area)
                             } else {
                                 GlassCardView {
-                                    Text("Create the area first to enable reminders.")
+                                    Text(String(localized: "areaForm.reminders.empty"))
                                         .dsFont(.subheadline)
                                         .foregroundStyle(.secondary)
                                 }
@@ -132,7 +144,7 @@ struct AreaFormView: View {
                         }
 
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-                            Text("Preview")
+                            Text(String(localized: "areaForm.preview.title"))
                                 .dsFont(.headline, weight: .bold)
                                 .padding(.horizontal, 4)
 
@@ -150,19 +162,19 @@ struct AreaFormView: View {
             #endif
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text(isEditing ? "Edit Area" : "New Area")
+                    Text(isEditing ? String(localized: "areaForm.toolbar.editTitle") : String(localized: "areaForm.toolbar.newTitle"))
                         .dsFont(.headline, weight: .bold)
                         .lineLimit(1)
                 }
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button(String(localized: "common.cancel")) {
                         dismiss()
                     }
                     .dsFont(.headline)
                 }
 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(isEditing ? "Save" : "Add") {
+                    Button(isEditing ? String(localized: "common.save") : String(localized: "common.add")) {
                         saveArea()
                     }
                     .dsFont(.headline, weight: .bold)
@@ -193,7 +205,7 @@ struct AreaFormView: View {
                         )
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel("Icon: \(icon)")
+                .accessibilityLabel(String(format: String(localized: "areaForm.appearance.icon.accessibility"), icon))
             }
         }
     }
@@ -238,7 +250,7 @@ struct AreaFormView: View {
             }
 
             VStack(alignment: .leading, spacing: 4) {
-                Text(name.isEmpty ? "Area name" : name)
+                Text(name.isEmpty ? String(localized: "areaForm.preview.placeholder") : name)
                     .dsFont(.headline)
                     .foregroundStyle(name.isEmpty ? .secondary : .primary)
 
@@ -331,9 +343,9 @@ struct AreaFormView: View {
         } label: {
             HStack(spacing: 12) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(persona.displayName)
+                    Text(persona.localizedDisplayName)
                         .dsFont(.headline, weight: .bold)
-                    Text(persona.tagline)
+                    Text(persona.localizedTagline)
                         .dsFont(.caption)
                         .foregroundStyle(.secondary)
                 }

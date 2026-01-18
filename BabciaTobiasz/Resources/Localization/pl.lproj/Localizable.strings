@@ -56,3 +56,390 @@
 "milestone.coach.day1" = "Dobra. Zrobiłeś coś. Nie zadzieraj nosa.";
 "milestone.coach.day7" = "Cały tydzień? Kim ty jesteś?";
 "milestone.coach.day30" = "Teraz jesteś jednym z tych dobrych.";
+
+// MARK: - Common
+"common.ok" = "OK";
+"common.cancel" = "Anuluj";
+"common.add" = "Dodaj";
+"common.save" = "Zapisz";
+"common.delete" = "Usuń";
+"common.retry" = "Spróbuj ponownie";
+"common.dismiss" = "Zamknij";
+"common.clear" = "Wyczyść";
+"common.test" = "Test";
+"common.notNow" = "Nie teraz";
+"common.openSettings" = "Otwórz ustawienia";
+"common.error.title" = "Błąd";
+"common.error.fallback" = "Wystąpił błąd";
+
+// MARK: - Main Tabs
+"mainTab.home.label" = "Start";
+"mainTab.areas.label" = "Obszary";
+"mainTab.babcia.label" = "Babcia";
+"mainTab.gallery.label" = "Galeria";
+"mainTab.settings.label" = "Ustawienia";
+"mainTab.loading" = "Ładowanie...";
+
+// MARK: - Launch
+"launch.title" = "Protokół Pierogów";
+"launch.subtitle" = "Obszary i miski";
+
+// MARK: - Onboarding
+"onboarding.skip" = "Pomiń";
+"onboarding.continue" = "Dalej";
+"onboarding.getStarted" = "Zaczynajmy";
+"onboarding.page.weather.title" = "Pogoda w skrócie";
+"onboarding.page.weather.description" = "Otrzymuj aktualizacje pogody w czasie rzeczywistym i planuj dzień z wyprzedzeniem.";
+"onboarding.page.areas.title" = "Obszary i miski";
+"onboarding.page.areas.description" = "Nazwij obszary, rozpocznij miskę i dostaniesz do pięciu zadań.";
+"onboarding.page.insights.title" = "Sprytne wskazówki";
+"onboarding.page.insights.description" = "Otrzymuj spersonalizowane sugestie oparte na pogodzie.";
+"onboarding.page.verdict.title" = "Werdykt Babci";
+"onboarding.page.verdict.description" = "Poproś o weryfikację i zdobywaj niebieskie lub złote premie.";
+
+// MARK: - App Init Error
+"app.initError.title" = "Nie można wczytać danych";
+"app.initError.message" = "Aplikacja nie mogła zainicjalizować bazy danych. Spróbuj ponownie uruchomić lub przeinstalować, jeśli problem nie ustąpi.";
+
+// MARK: - Babcia Status
+"babciaStatus.pot.title" = "Miska punktów";
+"babciaStatus.pot.available" = "Dostępne";
+"babciaStatus.pot.allTime" = "Łącznie";
+"babciaStatus.state.happy.title" = "Babcia jest dumna";
+"babciaStatus.state.happy.subtitle" = "Zweryfikowane miski dzisiaj. Podtrzymaj passę.";
+"babciaStatus.state.expecting.title" = "Babcia czeka";
+"babciaStatus.state.expecting.subtitle" = "Zrób weryfikację, żeby poprawić jej nastrój.";
+"babciaStatus.state.sad.title" = "Babcia jest zawiedziona";
+"babciaStatus.state.sad.subtitle" = "Dzisiaj jeszcze nie ukończyłeś miski.";
+
+// MARK: - Areas
+"areas.detail.unavailable.title" = "Obszar niedostępny";
+"areas.detail.unavailable.message" = "Nie można wczytać tego obszaru. Być może został usunięty. (id: %@)";
+"areas.search.placeholder" = "Szukaj obszarów";
+"areas.stats.today" = "Dziś";
+"areas.stats.streak" = "Passa";
+"areas.stats.totalDone" = "Łącznie zrobione";
+"areas.stats.dailyTarget" = "Dzienny cel";
+"areas.stats.kitchenClosed" = "Kuchnia zamknięta";
+"areas.stats.kitchenOpen" = "Kuchnia otwarta";
+"areas.stats.tooltip.title" = "Statystyki obszaru";
+"areas.stats.tooltip.message" = "Śledź ukończone miski, passę i dzienny cel. Utrzymuj kuchnię otwartą, rozkładając miski w czasie.";
+"areas.filter.title" = "Filtr";
+"areas.filter.all" = "Wszystkie";
+"areas.filter.completed" = "Ukończone dziś";
+"areas.filter.incomplete" = "Nieukończone";
+"areas.menu.edit" = "Edytuj obszar";
+"areas.menu.delete" = "Usuń obszar";
+"areas.empty.title" = "Pusta miska";
+"areas.empty.message" = "Utwórz pierwszy obszar, aby zacząć.";
+"areas.empty.action" = "Dodaj pierwszy obszar";
+"areas.toolbar.title" = "Obszary";
+"areas.toolbar.add.accessibility" = "Dodaj nowy obszar";
+"areas.error.kitchenClosed" = "Kuchnia zamknięta. Dzienny cel osiągnięty.";
+"areas.error.finishCurrent" = "Dokończ obecną sesję przed rozpoczęciem nowego skanu.";
+"areas.error.scanPhotoRequired" = "Do rozpoczęcia sesji potrzebne jest zdjęcie skanu.";
+"areas.error.scanPhotoRequiredAppend" = "Do dodania zadań potrzebne jest zdjęcie skanu.";
+"areas.error.noActiveSession" = "Brak aktywnej sesji do dodania zadań.";
+"areas.error.notEnoughPoints" = "Za mało punktów.";
+"areas.error.persistenceUnavailable" = "Brak dostępu do bazy danych.";
+"areas.scan.status.scanning" = "Skanowanie...";
+"areas.scan.status.dreamUpdated" = "Sen zaktualizowany.";
+"areas.scan.status.dreamFailed" = "Sen nie wyszedł; używam grafiki referencyjnej Babci.";
+"areas.scan.status.tasksRefreshed" = "Zadania odświeżone.";
+"areas.scan.status.tasksAppended" = "Zadania dodane.";
+"areas.scan.fallback.advice" = "Zacznij od małych rzeczy. Dasz radę.";
+"areas.scan.pipelineUnavailable" = "Pipeline skanu niedostępny.";
+"areas.scan.fallback.task.clearSurface" = "Usuń rzeczy z widocznych powierzchni";
+"areas.scan.fallback.task.putAway" = "Odłóż luźne rzeczy na miejsce";
+"areas.scan.fallback.task.wipeSurface" = "Przetrzyj jedną powierzchnię";
+"areas.scan.fallback.task.collectTrash" = "Zbierz śmieci";
+"areas.scan.fallback.task.resetArea" = "Uporządkuj obszar";
+"areaRow.age.days" = "%d dni";
+"areaRow.milestone.day" = "Dzień %d";
+
+// MARK: - Area Form
+"areaForm.basicInfo.title" = "Podstawowe info";
+"areaForm.basicInfo.name.placeholder" = "Nazwa obszaru";
+"areaForm.basicInfo.description.placeholder" = "Opis (opcjonalnie)";
+"areaForm.basicInfo.helper" = "Nadaj obszarowi łatwą do zapamiętania nazwę";
+"areaForm.appearance.title" = "Wygląd";
+"areaForm.appearance.icon" = "Ikona";
+"areaForm.appearance.color" = "Kolor";
+"areaForm.persona.title" = "Persona";
+"areaForm.persona.readonly.label" = "Twoja Babcia";
+"areaForm.reminders.title" = "Przypomnienia";
+"areaForm.reminders.empty" = "Najpierw utwórz obszar, aby włączyć przypomnienia.";
+"areaForm.preview.title" = "Podgląd";
+"areaForm.toolbar.editTitle" = "Edytuj obszar";
+"areaForm.toolbar.newTitle" = "Nowy obszar";
+"areaForm.appearance.icon.accessibility" = "Ikona: %@";
+"areaForm.preview.placeholder" = "Nazwa obszaru";
+
+// MARK: - Area Detail
+"areaDetail.camera.alert.title" = "Dostęp do aparatu";
+"areaDetail.camera.checkIn" = "Melduj się u Babci";
+"areaDetail.camera.error.verificationPending" = "Zdecyduj o weryfikacji przed rozpoczęciem nowego skanu.";
+"areaDetail.camera.error.dreamInProgress" = "Generowanie snu trwa. Proszę poczekać.";
+"areaDetail.camera.error.kitchenClosed" = "Kuchnia zamknięta. Dzienny cel osiągnięty.";
+"areaDetail.camera.error.finishCurrent" = "Dokończ obecną sesję przed rozpoczęciem nowego skanu.";
+"areaDetail.camera.error.unavailable" = "Aparat nie jest dostępny na tym urządzeniu.";
+"areaDetail.camera.error.permission" = "Dostęp do aparatu jest wymagany, aby wykonać skan pokoju.";
+"areaDetail.camera.error.notSupported" = "Aparat jest dostępny tylko na urządzeniach iOS.";
+"areaDetail.camera.error.captureFailed" = "Nie udało się odczytać zrobionego zdjęcia.";
+"areaDetail.delete.title" = "Usunąć obszar?";
+"areaDetail.delete.message.milestone" = "Usunięcie spowoduje utratę kamienia milowego z dnia %d.";
+"areaDetail.delete.message.default" = "Czy na pewno chcesz usunąć ten obszar?";
+"areaDetail.babcia.label" = "Twoja Babcia";
+"areaDetail.tasks.title" = "Dzisiejsze zadania";
+"areaDetail.verify.callout.title" = "Gotowy do weryfikacji?";
+"areaDetail.verify.callout.message" = "Zrób zdjęcie po, aby zablokować bonusowe punkty.";
+"areaDetail.verify.callout.primary" = "Rozpocznij weryfikację";
+"areaDetail.verify.callout.secondary" = "Weź punkty podstawowe";
+"areaDetail.verify.ready.title" = "Gotowy do weryfikacji?";
+"areaDetail.verify.ready.primary" = "Rozpocznij weryfikację";
+"areaDetail.verify.ready.secondary" = "Nie teraz";
+"areaDetail.verify.ready.message.golden" = "Poświęć chwilę na porządek przed złotym zdjęciem po.";
+"areaDetail.verify.ready.message.blue" = "Poświęć chwilę na porządek przed zdjęciem po.";
+"areaDetail.verify.celebration.title.golden" = "Złota weryfikacja zakończona";
+"areaDetail.verify.celebration.title.blue" = "Weryfikacja zakończona";
+"areaDetail.verify.celebration.title.failed" = "Weryfikacja wymaga poprawy";
+"areaDetail.verify.celebration.message.golden" = "Złoty bonus dodany do miski.";
+"areaDetail.verify.celebration.message.blue" = "Bonusowe punkty dodane do miski.";
+"areaDetail.verify.celebration.message.failed" = "Tym razem bez bonusu. Działaj dalej i spróbuj ponownie.";
+"areaDetail.menu.edit" = "Edytuj obszar";
+"areaDetail.menu.delete" = "Usuń obszar";
+
+// MARK: - Pierogi Drop
+"pierogiDrop.title" = "Wrzuć pierogi do garnka";
+"pierogiDrop.subtitle" = "Nakarm wszystkie pięć, by poznać poziom.";
+"pierogiDrop.progress" = "%d z %d wrzucone";
+
+// MARK: - Reminder Prompt
+"reminderPrompt.title" = "Przypomnienie pokoju";
+"reminderPrompt.message" = "Gotowy na szybki skan i odświeżenie zadań?";
+"reminderPrompt.start" = "Rozpocznij skan";
+
+// MARK: - Reminders
+"reminders.alert.title" = "Przypomnienia";
+"reminders.empty.message" = "Ustaw do trzech dziennych przypomnień dla tego obszaru.";
+"reminders.empty.action" = "Włącz przypomnienia";
+"reminders.editor.enable" = "Włącz przypomnienia";
+"reminders.editor.footer" = "Powiadomimy cię o wybranych godzinach każdego dnia.";
+"reminders.editor.slot" = "Termin %d";
+"reminders.notification.title" = "Czas na %@";
+"reminders.action.complete" = "Oznacz jako ukończone";
+"reminders.action.snooze" = "Przypomnij za 1 godzinę";
+"reminders.action.open" = "Otwórz";
+"reminders.error.permissionDenied" = "Brak zgody na powiadomienia. Włącz je w Ustawieniach.";
+"reminders.error.scheduleFailed" = "Nie udało się zaplanować przypomnienia: %@";
+
+// MARK: - Micro Tidy
+"microTidy.title" = "Szybkie ogarnięcie";
+"microTidy.subtitle" = "Jedna szybka wygrana. Jeden mały krok.";
+"microTidy.limit.title" = "Dzienny limit";
+"microTidy.limit.status" = "Pozostało %d z %d na dziś";
+"microTidy.points.reward" = "+%d punktów";
+"microTidy.empty.title" = "Utwórz pierwszy pokój";
+"microTidy.empty.message" = "Dodaj pokój, aby zacząć szybkie ogarnięcia.";
+"microTidy.empty.action" = "Otwórz obszary";
+"microTidy.area.title" = "Wybrany obszar";
+"microTidy.area.randomPrompt" = "Babcia wybrała to za ciebie.";
+"microTidy.area.singlePrompt" = "Dziś dostępny jest tylko jeden obszar.";
+"microTidy.action.camera" = "Zrób zdjęcie szybkiego ogarnięcia";
+"microTidy.limit.reached" = "Dzienny limit szybkich ogarnięć osiągnięty.";
+"microTidy.response.title" = "Babcia mówi";
+"microTidy.camera.alert.title" = "Dostęp do aparatu";
+"microTidy.camera.unavailable" = "Aparat nie jest dostępny na tym urządzeniu.";
+"microTidy.camera.permission" = "Dostęp do aparatu jest wymagany, aby zrobić szybkie ogarnięcie.";
+"microTidy.camera.notSupported" = "Aparat jest dostępny tylko na urządzeniach iOS.";
+"microTidy.camera.captureFailed" = "Nie udało się odczytać zrobionego zdjęcia.";
+
+// MARK: - Loading
+"loading.default" = "Ładowanie...";
+"loading.fetching" = "Ładowanie danych...";
+
+// MARK: - Personas
+"persona.classic.name" = "Klasyczna Babcia";
+"persona.classic.tagline" = "Kochanie... chodź, sprzątamy.";
+"persona.baroness.name" = "Baronowa";
+"persona.baroness.tagline" = "To poniżej naszego poziomu.";
+"persona.warrior.name" = "Babcia Wojowniczka";
+"persona.warrior.tagline" = "POKONAJ BAŁAGAN.";
+"persona.wellness.name" = "Wellness-X";
+"persona.wellness.tagline" = "Przywróć harmonię.";
+"persona.coach.name" = "Surowa trenerka";
+"persona.coach.tagline" = "Zrób to mimo wszystko.";
+
+// MARK: - Home
+"home.toolbar.title" = "Start";
+"home.error.title" = "Błąd pulpitu";
+"home.error.message" = "Nie udało się wczytać pulpitu: %@";
+"home.pot.title" = "Twoja miska";
+"home.pot.unit" = "pierogi";
+"home.latestDream.title" = "Najnowszy sen";
+"home.latestDream.empty" = "Brak snów";
+"home.stats.title" = "Statystyki i postęp";
+"home.stats.subtitle" = "%d pierogów zdobyto";
+"home.shop.title" = "Sklep";
+"home.shop.subtitle" = "Odblokuj nowe filtry Snów";
+"home.dailyProgress.title" = "Dzisiejszy postęp";
+"home.dailyProgress.unit" = "skany";
+"home.dailyProgress.kitchenClosed" = "Kuchnia zamknięta — odpocznij!";
+"home.patterns.title" = "Wzorce";
+"home.patterns.topDay" = "Najlepszy dzień";
+"home.patterns.topHour" = "Najlepsza godzina";
+"home.patterns.count" = "(%d)";
+"home.streak.title" = "Passa";
+"home.streak.unit.singular" = "dzień";
+"home.streak.unit.plural" = "dni";
+"home.streak.message" = "Działaj dalej! Jeden skan dziennie utrzyma passę.";
+"home.insight.title" = "Jak to działa";
+"home.insight.scan" = "Skan tworzy nagłówek Snu i zadania";
+"home.insight.points" = "Punkty odblokowują filtry";
+"home.insight.filters" = "Filtry zmieniają nagłówek Snu obszaru";
+"home.insight.gallery" = "Galeria to miejsce na twoje obrazy Snów";
+
+// MARK: - Gallery
+"gallery.title" = "Galeria";
+"gallery.subtitle" = "Wszystkie stworzone Sny w jednym miejscu.";
+"gallery.empty.title" = "Brak snów";
+"gallery.empty.message" = "Zrób zdjęcie, aby wygenerować pierwszy obraz Snu.";
+"gallery.toolbar.title" = "Galeria";
+"gallery.detail.area.fallback" = "Obszar";
+"gallery.detail.verification.golden" = "Złota weryfikacja";
+"gallery.detail.verification.blue" = "Niebieska weryfikacja";
+"gallery.detail.verification.none" = "Bez weryfikacji";
+"gallery.detail.outcome.pending" = "W toku";
+"gallery.detail.outcome.passed" = "Zaliczona";
+"gallery.detail.outcome.failed" = "Nieudana";
+"gallery.detail.outcome.skipped" = "Pominięta";
+"gallery.detail.meta.created" = "Utworzono";
+"gallery.detail.meta.verification" = "Weryfikacja";
+"gallery.detail.meta.outcome" = "Wynik";
+"gallery.detail.meta.basePoints" = "Punkty podstawowe";
+"gallery.detail.meta.bonusPoints" = "Punkty bonusowe";
+"gallery.detail.meta.totalPoints" = "Punkty łącznie";
+"gallery.detail.tasks.title" = "Zadania";
+"gallery.detail.tasks.empty" = "Brak zadań dla tej miski.";
+"gallery.detail.toolbar.title" = "Szczegóły miski";
+
+// MARK: - Settings
+"settings.appearance.title" = "Wygląd";
+"settings.appearance.theme.label" = "Motyw";
+"settings.analytics.title" = "Analityka";
+"settings.analytics.action" = "Zobacz analitykę zadań";
+"settings.about.title" = "O aplikacji";
+"settings.about.version" = "Wersja";
+"settings.about.build" = "Build";
+"settings.toolbar.title" = "Ustawienia";
+"settings.theme.system" = "System";
+"settings.theme.light" = "Jasny";
+"settings.theme.dark" = "Ciemny";
+"settings.apiKeys.title" = "Klucze API";
+"settings.apiKeys.dream.title" = "Silnik Snów";
+"settings.apiKeys.gemini.title" = "Weryfikacja Gemini";
+"settings.apiKeys.apiKey.label" = "Klucz API";
+"settings.apiKeys.dream.placeholder" = "Wpisz DREAMROOM_API_KEY";
+"settings.apiKeys.gemini.placeholder" = "Wpisz GEMINI_API_KEY";
+"settings.apiKeys.stored" = "Bezpiecznie zapisane na tym urządzeniu. Nadpisuje Secrets.plist, jeśli ustawione.";
+"settings.apiKeys.status.enterBeforeSaving" = "Wpisz klucz przed zapisaniem.";
+"settings.apiKeys.status.saved" = "Zapisano w pęku kluczy.";
+"settings.apiKeys.status.saveFailed" = "Zapis nieudany.";
+"settings.apiKeys.status.removed" = "Usunięto z pęku kluczy.";
+"settings.apiKeys.status.removeFailed" = "Usuwanie nieudane.";
+"settings.apiKeys.status.enterBeforeTesting" = "Wpisz klucz przed testem.";
+"settings.apiKeys.status.testImageUnavailable" = "Brak obrazu testowego.";
+"settings.apiKeys.status.testSucceeded" = "Test udany.";
+"settings.apiKeys.status.testFailed" = "Test nieudany: %@";
+
+// MARK: - Filters
+"filters.title" = "Filtry Snu";
+"filters.subtitle" = "Wydawaj punkty, by odblokować filtry Snu.";
+"filters.points.available" = "Dostępne";
+"filters.points.allTime" = "Łącznie";
+"filters.action.applied" = "Zastosowano";
+"filters.action.apply" = "Zastosuj";
+"filters.action.unlock" = "Odblokuj";
+"filters.toolbar.title" = "Sklep filtrów";
+"filters.dreamHoney.name" = "Miód Snu";
+"filters.dreamHoney.description" = "Ciepła poświata z miękkimi refleksami.";
+"filters.dreamHoney.ingredients" = "Cebula x4 + Pomidory x7";
+"filters.glassMoss.name" = "Szklany Mech";
+"filters.glassMoss.description" = "Chłodna mgiełka i delikatny kontrast.";
+"filters.glassMoss.ingredients" = "Pory x3 + Mięta x5";
+"filters.pierogiGold.name" = "Złote Pierogi";
+"filters.pierogiGold.description" = "Jasny, świąteczny połysk.";
+"filters.pierogiGold.ingredients" = "Masło x6 + Czosnek x4";
+
+// MARK: - Analytics
+"analytics.title" = "Analityka";
+"analytics.subtitle" = "Wszystkie ukończone zadania do tej pory.";
+"analytics.summary.totalCompletions" = "Łącznie ukończone";
+"analytics.summary.uniqueAreas" = "Unikalne obszary";
+"analytics.summary.mostRecent" = "Najnowsze";
+"analytics.patterns.title" = "Wzorce";
+"analytics.patterns.dayOfWeek" = "Według dnia tygodnia";
+"analytics.patterns.hour" = "Według godziny";
+"analytics.patterns.topAreas" = "Najlepsze obszary";
+"analytics.patterns.topPersonas" = "Najlepsze persony";
+"analytics.events.title" = "Zdarzenia";
+"analytics.events.empty.title" = "Brak analityki";
+"analytics.events.empty.message" = "Ukończ zadanie, aby rozpocząć śledzenie.";
+"analytics.toolbar.title" = "Analityka";
+"analytics.countList.empty" = "Brak danych";
+"analytics.event.area.fallback" = "Obszar";
+"analytics.event.points" = "%d pkt";
+"analytics.topAreas.unknown" = "Nieznany obszar";
+
+// MARK: - Scan Errors
+"scan.error.apiKeyMissing" = "Brak klucza API.";
+"scan.error.missingPrompt" = "Brak promptu zadań.";
+"scan.error.imageProcessingFailed" = "Nie udało się przetworzyć obrazu.";
+"scan.error.requestTimedOut" = "Upłynął limit czasu żądania.";
+"scan.error.invalidRequest" = "Nieprawidłowy adres żądania.";
+"scan.error.invalidResponse" = "Nieprawidłowa odpowiedź API.";
+"scan.error.parsingFailed" = "Nie udało się odczytać odpowiedzi API.";
+"scan.error.api" = "Błąd API (%@): %@";
+"scan.error.unknown" = "Nieznany błąd";
+
+// MARK: - Verification Errors
+"verification.error.apiKeyMissing" = "Klucz Gemini nie jest skonfigurowany";
+"verification.error.invalidPhotoData" = "Dane zdjęcia są nieprawidłowe lub puste";
+"verification.error.networkFailure" = "Błąd sieci: %@";
+"verification.error.invalidResponse" = "Nieprawidłowa odpowiedź API: %@";
+"verification.error.judgingFailed" = "Weryfikacja nie powiodła się: %@";
+"verification.error.reason.invalidEndpoint" = "Nieprawidłowy adres endpointu.";
+"verification.error.reason.encodingFailed" = "Nie udało się zakodować danych.";
+"verification.error.reason.nonHttpResponse" = "Otrzymano odpowiedź nie-HTTP.";
+"verification.error.reason.httpStatus" = "HTTP %d";
+"verification.error.reason.emptyResponse" = "Puste body odpowiedzi.";
+"verification.error.reason.missingResponseText" = "Brak tekstu odpowiedzi.";
+"verification.error.reason.unexpectedResponse" = "Nieoczekiwana odpowiedź: %@";
+"verification.error.reason.decodingFailed" = "Nie udało się zdekodować odpowiedzi.";
+
+// MARK: - Dream Errors
+"dream.error.apiKeyMissing" = "Brak klucza API silnika snu.";
+"dream.error.missingPrompt" = "Brak promptu snu.";
+"dream.error.invalidImage" = "Nieprawidłowe dane obrazu.";
+
+// MARK: - Error View
+"errorView.default.title" = "Coś poszło nie tak";
+"errorView.network.title" = "Błąd połączenia";
+"errorView.network.message" = "Sprawdź połączenie z internetem i spróbuj ponownie.";
+"errorView.location.title" = "Błąd lokalizacji";
+"errorView.location.message" = "Nie można uzyskać dostępu do lokalizacji. Sprawdź ustawienia.";
+"errorView.data.title" = "Błąd wczytywania";
+"errorView.data.message" = "Nie można wczytać danych. Spróbuj ponownie później.";
+"errorView.permission.title" = "Wymagane uprawnienie";
+"errorView.preview.unexpected" = "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.";
+"errorView.preview.sync" = "Nie można zsynchronizować danych";
+
+// MARK: - Preview
+"preview.glassCard.title" = "Szklana karta";
+"preview.glassCard.button" = "Szklany przycisk";
+"preview.glassCard.prominent" = "Wyróżniony przycisk";
+"preview.tooltip.cardTitle" = "Karta pogody";
+"preview.tooltip.title" = "Aktualizacje pogody";
+"preview.tooltip.description" = "Dane pogody są aktualizowane automatycznie co 30 minut.";
+"preview.tooltip.secondTitle" = "Sprytne wskazówki";
+"preview.tooltip.secondDescription" = "Otrzymuj spersonalizowane sugestie oparte na pogodzie.";

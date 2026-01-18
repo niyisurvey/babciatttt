@@ -13,13 +13,13 @@ extension Notification.Name {
 final class ReminderNotificationRouter: NSObject, UNUserNotificationCenterDelegate {
     func registerNotificationCategories() {
         let openAction = UNNotificationAction(
-            identifier: "OPEN_AREA",
-            title: "Open",
+            identifier: Constants.Notifications.openAreaAction,
+            title: String(localized: "reminders.action.open"),
             options: [.foreground]
         )
 
         let category = UNNotificationCategory(
-            identifier: "AREA_REMINDER",
+            identifier: Constants.Notifications.areaReminderCategory,
             actions: [openAction],
             intentIdentifiers: [],
             options: [.customDismissAction]

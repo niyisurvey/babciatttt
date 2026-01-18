@@ -52,9 +52,9 @@ struct GalleryView: View {
 
     private var headerSection: some View {
         VStack(spacing: 8) {
-            Text("Gallery")
+            Text(String(localized: "gallery.title"))
                 .dsFont(.title2, weight: .bold)
-            Text("Every Dream you create, all in one place.")
+            Text(String(localized: "gallery.subtitle"))
                 .dsFont(.body)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -86,10 +86,10 @@ struct GalleryView: View {
                     .foregroundStyle(theme.palette.primary)
                     .font(.system(size: theme.grid.iconXL))
 
-                Text("No Dreams yet")
+                Text(String(localized: "gallery.empty.title"))
                     .dsFont(.headline, weight: .bold)
 
-                Text("Take a photo to generate your first Dream image.")
+                Text(String(localized: "gallery.empty.message"))
                     .dsFont(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -102,7 +102,7 @@ struct GalleryView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .principal) {
-            Text("Gallery")
+            Text(String(localized: "gallery.toolbar.title"))
                 .dsFont(.headline, weight: .bold)
                 .lineLimit(1)
         }

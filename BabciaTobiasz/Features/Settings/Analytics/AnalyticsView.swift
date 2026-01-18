@@ -42,7 +42,7 @@ struct AnalyticsView: View {
     }
 
     private var topAreas: [(String, Int)] {
-        let grouped = Dictionary(grouping: events, by: { $0.areaName.isEmpty ? "Unknown Area" : $0.areaName })
+        let grouped = Dictionary(grouping: events, by: { $0.areaName.isEmpty ? String(localized: "analytics.topAreas.unknown") : $0.areaName })
         return grouped
             .map { ($0.key, $0.value.count) }
             .sorted { $0.1 > $1.1 }
@@ -83,9 +83,9 @@ struct AnalyticsView: View {
 
     private var headerSection: some View {
         VStack(spacing: 8) {
-            Text("Analytics")
+            Text(String(localized: "analytics.title"))
                 .dsFont(.title2, weight: .bold)
-            Text("All task completions captured so far.")
+            Text(String(localized: "analytics.subtitle"))
                 .dsFont(.body)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -98,7 +98,7 @@ struct AnalyticsView: View {
             GlassCardView {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Total Completions")
+                        Text(String(localized: "analytics.summary.totalCompletions"))
                             .dsFont(.caption)
                             .foregroundStyle(.secondary)
                         Text("\(events.count)")
@@ -106,7 +106,7 @@ struct AnalyticsView: View {
                     }
                     Spacer()
                     VStack(alignment: .trailing, spacing: 4) {
-                        Text("Unique Areas")
+                        Text(String(localized: "analytics.summary.uniqueAreas"))
                             .dsFont(.caption)
                             .foregroundStyle(.secondary)
                         Text("\(uniqueAreasCount)")
@@ -118,7 +118,7 @@ struct AnalyticsView: View {
 
             GlassCardView {
                 HStack {
-                    Text("Most Recent")
+                    Text(String(localized: "analytics.summary.mostRecent"))
                         .dsFont(.caption)
                         .foregroundStyle(.secondary)
                     Spacer()
@@ -132,13 +132,13 @@ struct AnalyticsView: View {
 
     private var patternsSection: some View {
         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-            Text("Patterns")
+            Text(String(localized: "analytics.patterns.title"))
                 .dsFont(.headline, weight: .bold)
                 .padding(.horizontal, 4)
 
             GlassCardView {
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("By day of week")
+                    Text(String(localized: "analytics.patterns.dayOfWeek"))
                         .dsFont(.caption)
                         .foregroundStyle(.secondary)
                     AnalyticsCountList(items: dayOfWeekCounts)
@@ -148,7 +148,7 @@ struct AnalyticsView: View {
 
             GlassCardView {
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("By hour")
+                    Text(String(localized: "analytics.patterns.hour"))
                         .dsFont(.caption)
                         .foregroundStyle(.secondary)
                     AnalyticsCountList(items: hourOfDayCounts)
@@ -158,7 +158,7 @@ struct AnalyticsView: View {
 
             GlassCardView {
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Top areas")
+                    Text(String(localized: "analytics.patterns.topAreas"))
                         .dsFont(.caption)
                         .foregroundStyle(.secondary)
                     AnalyticsCountList(items: topAreas)
@@ -168,7 +168,7 @@ struct AnalyticsView: View {
 
             GlassCardView {
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Top personas")
+                    Text(String(localized: "analytics.patterns.topPersonas"))
                         .dsFont(.caption)
                         .foregroundStyle(.secondary)
                     AnalyticsCountList(items: topPersonas)
@@ -180,7 +180,7 @@ struct AnalyticsView: View {
 
     private var eventList: some View {
         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-            Text("Events")
+            Text(String(localized: "analytics.events.title"))
                 .dsFont(.headline, weight: .bold)
                 .padding(.horizontal, 4)
 
@@ -190,9 +190,9 @@ struct AnalyticsView: View {
                         Image(systemName: "chart.bar")
                             .foregroundStyle(theme.palette.primary)
                             .font(.system(size: theme.grid.iconLarge))
-                        Text("No analytics yet")
+                        Text(String(localized: "analytics.events.empty.title"))
                             .dsFont(.headline, weight: .bold)
-                        Text("Complete a task to start tracking.")
+                        Text(String(localized: "analytics.events.empty.message"))
                             .dsFont(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -217,7 +217,7 @@ struct AnalyticsView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .principal) {
-            Text("Analytics")
+            Text(String(localized: "analytics.toolbar.title"))
                 .dsFont(.headline, weight: .bold)
                 .lineLimit(1)
         }
@@ -230,7 +230,7 @@ private struct AnalyticsCountList: View {
     var body: some View {
         VStack(spacing: 8) {
             if items.isEmpty {
-                Text("No data yet")
+                Text(String(localized: "analytics.countList.empty"))
                     .dsFont(.subheadline)
                     .foregroundStyle(.secondary)
             } else {
@@ -265,7 +265,7 @@ private struct AnalyticsEventRow: View {
                     .dsFont(.headline)
                     .lineLimit(1)
 
-                Text(event.areaName.isEmpty ? "Area" : event.areaName)
+                Text(event.areaName.isEmpty ? String(localized: "analytics.event.area.fallback") : event.areaName)
                     .dsFont(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -276,7 +276,7 @@ private struct AnalyticsEventRow: View {
                 Text(event.completedAt.formatted(date: .abbreviated, time: .shortened))
                     .dsFont(.caption)
                     .foregroundStyle(.secondary)
-                Text("\(event.taskPoints) pt")
+                Text(String(format: String(localized: "analytics.event.points"), event.taskPoints))
                     .dsFont(.caption, weight: .bold)
             }
         }
@@ -285,7 +285,7 @@ private struct AnalyticsEventRow: View {
 }
 
 private func personaDisplayName(_ raw: String) -> String {
-    BabciaPersona(rawValue: raw)?.displayName ?? raw.capitalized
+    BabciaPersona(rawValue: raw)?.localizedDisplayName ?? raw.capitalized
 }
 
 #Preview {

@@ -16,31 +16,31 @@ struct DreamAPIKeyCardView: View {
     var body: some View {
         GlassCardView {
             VStack(alignment: .leading, spacing: 12) {
-                Text("Dream Engine")
+                Text(String(localized: "settings.apiKeys.dream.title"))
                     .dsFont(.caption, weight: .bold)
                     .foregroundStyle(.secondary)
 
-                Text("API Key")
+                Text(String(localized: "settings.apiKeys.apiKey.label"))
                     .dsFont(.caption)
                     .foregroundStyle(.secondary)
 
-                SecureField("Enter DREAMROOM_API_KEY", text: $apiKey)
+                SecureField(String(localized: "settings.apiKeys.dream.placeholder"), text: $apiKey)
                     .dsFont(.body)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
 
                 HStack(spacing: 12) {
-                    Button("Save") {
+                    Button(String(localized: "common.save")) {
                         _ = saveKey()
                     }
                     .buttonStyle(.nativeGlassProminent)
 
-                    Button("Clear") {
+                    Button(String(localized: "common.clear")) {
                         clearKey()
                     }
                     .buttonStyle(.nativeGlass)
 
-                    Button("Test") {
+                    Button(String(localized: "common.test")) {
                         Task { await runTest() }
                     }
                     .buttonStyle(.nativeGlass)
@@ -54,7 +54,7 @@ struct DreamAPIKeyCardView: View {
                     Spacer()
                 }
 
-                Text("Stored securely on this device. Overrides Secrets.plist if set.")
+                Text(String(localized: "settings.apiKeys.stored"))
                     .dsFont(.caption2)
                     .foregroundStyle(.secondary)
 
@@ -78,29 +78,33 @@ struct DreamAPIKeyCardView: View {
     private func saveKey() -> Bool {
         let trimmed = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
-            statusMessage = "Enter a key before saving."
+            statusMessage = String(localized: "settings.apiKeys.status.enterBeforeSaving")
             return false
         }
         apiKey = trimmed
         let saved = DreamRoomKeychain.save(trimmed)
-        statusMessage = saved ? "Saved to Keychain." : "Save failed."
+        statusMessage = saved
+            ? String(localized: "settings.apiKeys.status.saved")
+            : String(localized: "settings.apiKeys.status.saveFailed")
         return saved
     }
 
     private func clearKey() {
         let removed = DreamRoomKeychain.delete()
         apiKey = ""
-        statusMessage = removed ? "Removed from Keychain." : "Remove failed."
+        statusMessage = removed
+            ? String(localized: "settings.apiKeys.status.removed")
+            : String(localized: "settings.apiKeys.status.removeFailed")
         testMessage = nil
     }
 
     private func runTest() async {
         guard saveKey() else {
-            testMessage = "Enter a key before testing."
+            testMessage = String(localized: "settings.apiKeys.status.enterBeforeTesting")
             return
         }
         guard let imageData = SettingsTestImageProvider.loadJPEGData() else {
-            testMessage = "Test image unavailable."
+            testMessage = String(localized: "settings.apiKeys.status.testImageUnavailable")
             return
         }
         isTesting = true
@@ -112,9 +116,12 @@ struct DreamAPIKeyCardView: View {
                 characterPrompt: "A tidy, cozy room.",
                 filterId: nil
             )
-            testMessage = "Test succeeded."
+            testMessage = String(localized: "settings.apiKeys.status.testSucceeded")
         } catch {
-            testMessage = "Test failed: \(error.localizedDescription)"
+            testMessage = String(
+                format: String(localized: "settings.apiKeys.status.testFailed"),
+                error.localizedDescription
+            )
         }
         isTesting = false
     }

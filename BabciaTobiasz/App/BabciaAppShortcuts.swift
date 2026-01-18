@@ -54,8 +54,8 @@ struct BabciaAppShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: StartScanIntent(),
             phrases: [
-                "Start a scan in \(.applicationName)",
-                "Open a scan in \(.applicationName)"
+                AppShortcutPhrase(String(localized: "shortcut_start_scan_phrase_1")),
+                AppShortcutPhrase(String(localized: "shortcut_start_scan_phrase_2"))
             ],
             shortTitle: LocalizedStringResource("shortcut_start_scan_title"),
             systemImageName: "camera.fill"
@@ -63,8 +63,8 @@ struct BabciaAppShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: OpenAreasIntent(),
             phrases: [
-                "Open areas in \(.applicationName)",
-                "Show areas in \(.applicationName)"
+                AppShortcutPhrase(String(localized: "shortcut_open_areas_phrase_1")),
+                AppShortcutPhrase(String(localized: "shortcut_open_areas_phrase_2"))
             ],
             shortTitle: LocalizedStringResource("shortcut_open_areas_title"),
             systemImageName: "square.grid.2x2.fill"

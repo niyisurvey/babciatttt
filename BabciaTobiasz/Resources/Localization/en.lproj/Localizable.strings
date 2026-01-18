@@ -20,35 +20,6 @@
 "error" = "Error";
 "success" = "Success";
 
-// MARK: - Tabs
-"tab_weather" = "Weather";
-"tab_areas" = "Areas";
-
-// MARK: - Weather
-"weather_title" = "Weather";
-"weather_current" = "Current Weather";
-"weather_forecast" = "7-Day Forecast";
-"weather_humidity" = "Humidity";
-"weather_wind" = "Wind";
-"weather_uv_index" = "UV Index";
-"weather_visibility" = "Visibility";
-"weather_pressure" = "Pressure";
-"weather_sunrise" = "Sunrise";
-"weather_sunset" = "Sunset";
-"weather_feels_like" = "Feels like %@";
-"weather_high_low" = "H:%@° L:%@°";
-"weather_loading" = "Loading weather...";
-"weather_unavailable" = "Weather Unavailable";
-"weather_unavailable_message" = "Pull to refresh or check your internet connection";
-"weather_updated" = "Updated %@";
-
-// MARK: - UV Index Descriptions
-"uv_low" = "Low";
-"uv_moderate" = "Moderate";
-"uv_high" = "High";
-"uv_very_high" = "Very High";
-"uv_extreme" = "Extreme";
-
 // MARK: - Areas
 "areas_title" = "Areas";
 "areas_empty_title" = "No Areas Yet";
@@ -159,3 +130,390 @@
 "milestone.coach.day1" = "Fine. You did a thing. Don't get cocky.";
 "milestone.coach.day7" = "A full week? Who are you?";
 "milestone.coach.day30" = "You're one of the good ones now.";
+
+// MARK: - Common
+"common.ok" = "OK";
+"common.cancel" = "Cancel";
+"common.add" = "Add";
+"common.save" = "Save";
+"common.delete" = "Delete";
+"common.retry" = "Retry";
+"common.dismiss" = "Dismiss";
+"common.clear" = "Clear";
+"common.test" = "Test";
+"common.notNow" = "Not now";
+"common.openSettings" = "Open Settings";
+"common.error.title" = "Error";
+"common.error.fallback" = "An error occurred";
+
+// MARK: - Main Tabs
+"mainTab.home.label" = "Home";
+"mainTab.areas.label" = "Areas";
+"mainTab.babcia.label" = "Babcia";
+"mainTab.gallery.label" = "Gallery";
+"mainTab.settings.label" = "Settings";
+"mainTab.loading" = "Loading...";
+
+// MARK: - Launch
+"launch.title" = "The Pierogi Protocol";
+"launch.subtitle" = "Areas and bowls";
+
+// MARK: - Onboarding
+"onboarding.skip" = "Skip";
+"onboarding.continue" = "Continue";
+"onboarding.getStarted" = "Get Started";
+"onboarding.page.weather.title" = "Weather at a Glance";
+"onboarding.page.weather.description" = "Get real-time weather updates with beautiful visuals. Know what's coming so you can plan your day.";
+"onboarding.page.areas.title" = "Areas & Bowls";
+"onboarding.page.areas.description" = "Name your areas, start a bowl, and get up to five tasks to finish.";
+"onboarding.page.insights.title" = "Smart Insights";
+"onboarding.page.insights.description" = "Get personalized suggestions based on weather to plan your day.";
+"onboarding.page.verdict.title" = "Babcia's Verdict";
+"onboarding.page.verdict.description" = "Request verification and earn Blue or Golden totals for completed bowls.";
+
+// MARK: - App Init Error
+"app.initError.title" = "Unable to Load Data";
+"app.initError.message" = "The app couldn't initialize its database. Try restarting the app or reinstalling if the problem persists.";
+
+// MARK: - Babcia Status
+"babciaStatus.pot.title" = "Points Pot";
+"babciaStatus.pot.available" = "Available";
+"babciaStatus.pot.allTime" = "All Time";
+"babciaStatus.state.happy.title" = "Babcia is proud";
+"babciaStatus.state.happy.subtitle" = "Verified bowls today. Keep the streak warm.";
+"babciaStatus.state.expecting.title" = "Babcia is waiting";
+"babciaStatus.state.expecting.subtitle" = "Complete a verification to lift her spirits.";
+"babciaStatus.state.sad.title" = "Babcia is disappointed";
+"babciaStatus.state.sad.subtitle" = "No completed bowls yet today.";
+
+// MARK: - Areas
+"areas.detail.unavailable.title" = "Area unavailable";
+"areas.detail.unavailable.message" = "This area could not be loaded. It may have been deleted. (id: %@)";
+"areas.search.placeholder" = "Search areas";
+"areas.stats.today" = "Today";
+"areas.stats.streak" = "Streak";
+"areas.stats.totalDone" = "Total Done";
+"areas.stats.dailyTarget" = "Daily target";
+"areas.stats.kitchenClosed" = "Kitchen Closed";
+"areas.stats.kitchenOpen" = "Kitchen Open";
+"areas.stats.tooltip.title" = "Area Statistics";
+"areas.stats.tooltip.message" = "Track bowls completed, streaks, and your daily target. Keep the kitchen open by pacing bowls.";
+"areas.filter.title" = "Filter";
+"areas.filter.all" = "All";
+"areas.filter.completed" = "Completed Today";
+"areas.filter.incomplete" = "Not Completed";
+"areas.menu.edit" = "Edit Area";
+"areas.menu.delete" = "Delete Area";
+"areas.empty.title" = "Empty Pot";
+"areas.empty.message" = "Create your first area to get started.";
+"areas.empty.action" = "Add Your First Area";
+"areas.toolbar.title" = "Areas";
+"areas.toolbar.add.accessibility" = "Add new area";
+"areas.error.kitchenClosed" = "Kitchen Closed. Daily target reached.";
+"areas.error.finishCurrent" = "Finish the current session before starting a new scan.";
+"areas.error.scanPhotoRequired" = "Scan photo required to start a session.";
+"areas.error.scanPhotoRequiredAppend" = "Scan photo required to append tasks.";
+"areas.error.noActiveSession" = "No active session to append tasks.";
+"areas.error.notEnoughPoints" = "Not enough points.";
+"areas.error.persistenceUnavailable" = "Persistence unavailable.";
+"areas.scan.status.scanning" = "Scanning...";
+"areas.scan.status.dreamUpdated" = "Dream updated.";
+"areas.scan.status.dreamFailed" = "Dream failed; using Babcia reference art.";
+"areas.scan.status.tasksRefreshed" = "Tasks refreshed.";
+"areas.scan.status.tasksAppended" = "Tasks appended.";
+"areas.scan.fallback.advice" = "Start small. You have got this.";
+"areas.scan.pipelineUnavailable" = "Scan pipeline unavailable.";
+"areas.scan.fallback.task.clearSurface" = "Clear visible surfaces";
+"areas.scan.fallback.task.putAway" = "Put loose items away";
+"areas.scan.fallback.task.wipeSurface" = "Wipe one surface";
+"areas.scan.fallback.task.collectTrash" = "Collect trash";
+"areas.scan.fallback.task.resetArea" = "Reset the area";
+"areaRow.age.days" = "%d days";
+"areaRow.milestone.day" = "Day %d";
+
+// MARK: - Area Form
+"areaForm.basicInfo.title" = "Basic Info";
+"areaForm.basicInfo.name.placeholder" = "Area name";
+"areaForm.basicInfo.description.placeholder" = "Description (optional)";
+"areaForm.basicInfo.helper" = "Give your area a memorable name";
+"areaForm.appearance.title" = "Appearance";
+"areaForm.appearance.icon" = "Icon";
+"areaForm.appearance.color" = "Color";
+"areaForm.persona.title" = "Persona";
+"areaForm.persona.readonly.label" = "Your Babcia";
+"areaForm.reminders.title" = "Reminders";
+"areaForm.reminders.empty" = "Create the area first to enable reminders.";
+"areaForm.preview.title" = "Preview";
+"areaForm.toolbar.editTitle" = "Edit Area";
+"areaForm.toolbar.newTitle" = "New Area";
+"areaForm.appearance.icon.accessibility" = "Icon: %@";
+"areaForm.preview.placeholder" = "Area name";
+
+// MARK: - Area Detail
+"areaDetail.camera.alert.title" = "Camera access";
+"areaDetail.camera.checkIn" = "Check in with Babcia";
+"areaDetail.camera.error.verificationPending" = "Decide verification before starting a new scan.";
+"areaDetail.camera.error.dreamInProgress" = "Dream generation is in progress. Please wait.";
+"areaDetail.camera.error.kitchenClosed" = "Kitchen Closed. Daily target reached.";
+"areaDetail.camera.error.finishCurrent" = "Finish the current session before starting a new scan.";
+"areaDetail.camera.error.unavailable" = "Camera is not available on this device.";
+"areaDetail.camera.error.permission" = "Camera access is required to capture a room scan.";
+"areaDetail.camera.error.notSupported" = "Camera capture is only available on iOS devices.";
+"areaDetail.camera.error.captureFailed" = "Could not read the captured photo.";
+"areaDetail.delete.title" = "Delete area?";
+"areaDetail.delete.message.milestone" = "Deleting now will remove your day %d milestone.";
+"areaDetail.delete.message.default" = "Are you sure you want to delete this area?";
+"areaDetail.babcia.label" = "Your Babcia";
+"areaDetail.tasks.title" = "Today's Tasks";
+"areaDetail.verify.callout.title" = "Ready to verify?";
+"areaDetail.verify.callout.message" = "Take an after photo to lock in your bonus points.";
+"areaDetail.verify.callout.primary" = "Start verification";
+"areaDetail.verify.callout.secondary" = "Take base points";
+"areaDetail.verify.ready.title" = "Ready to Verify?";
+"areaDetail.verify.ready.primary" = "Start verification";
+"areaDetail.verify.ready.secondary" = "Not now";
+"areaDetail.verify.ready.message.golden" = "Take a moment to tidy before your Golden after photo.";
+"areaDetail.verify.ready.message.blue" = "Take a moment to tidy before your after photo.";
+"areaDetail.verify.celebration.title.golden" = "Golden verification complete";
+"areaDetail.verify.celebration.title.blue" = "Verification complete";
+"areaDetail.verify.celebration.title.failed" = "Verification needs more work";
+"areaDetail.verify.celebration.message.golden" = "Golden bonus added to your pot.";
+"areaDetail.verify.celebration.message.blue" = "Bonus points added to your pot.";
+"areaDetail.verify.celebration.message.failed" = "No bonus added this time. Keep going and try again.";
+"areaDetail.menu.edit" = "Edit Area";
+"areaDetail.menu.delete" = "Delete Area";
+
+// MARK: - Pierogi Drop
+"pierogiDrop.title" = "Drop the pierogis into the pot";
+"pierogiDrop.subtitle" = "Feed all five to reveal your tier.";
+"pierogiDrop.progress" = "%d of %d dropped";
+
+// MARK: - Reminder Prompt
+"reminderPrompt.title" = "Room reminder";
+"reminderPrompt.message" = "Ready to start a quick scan and refresh your tasks?";
+"reminderPrompt.start" = "Start scan";
+
+// MARK: - Reminders
+"reminders.alert.title" = "Reminders";
+"reminders.empty.message" = "Set up to three daily reminders for this area.";
+"reminders.empty.action" = "Enable Reminders";
+"reminders.editor.enable" = "Enable reminders";
+"reminders.editor.footer" = "We'll notify you at the selected times every day.";
+"reminders.editor.slot" = "Slot %d";
+"reminders.notification.title" = "Time for %@";
+"reminders.action.complete" = "Mark Complete";
+"reminders.action.snooze" = "Remind in 1 hour";
+"reminders.action.open" = "Open";
+"reminders.error.permissionDenied" = "Notification permission not granted. Please enable notifications in Settings.";
+"reminders.error.scheduleFailed" = "Failed to schedule reminder: %@";
+
+// MARK: - Micro Tidy
+"microTidy.title" = "Micro Tidy";
+"microTidy.subtitle" = "One quick win. One small step.";
+"microTidy.limit.title" = "Daily limit";
+"microTidy.limit.status" = "Remaining %d of %d today";
+"microTidy.points.reward" = "+%d points";
+"microTidy.empty.title" = "Create Your First Room";
+"microTidy.empty.message" = "Add a room to start micro tidies.";
+"microTidy.empty.action" = "Open Areas";
+"microTidy.area.title" = "Selected area";
+"microTidy.area.randomPrompt" = "Babcia picked this one for you.";
+"microTidy.area.singlePrompt" = "Only one area available today.";
+"microTidy.action.camera" = "Take a micro tidy photo";
+"microTidy.limit.reached" = "Daily micro tidy limit reached.";
+"microTidy.response.title" = "Babcia says";
+"microTidy.camera.alert.title" = "Camera access";
+"microTidy.camera.unavailable" = "Camera is not available on this device.";
+"microTidy.camera.permission" = "Camera access is required to capture a micro tidy.";
+"microTidy.camera.notSupported" = "Camera capture is only available on iOS devices.";
+"microTidy.camera.captureFailed" = "Could not read the captured photo.";
+
+// MARK: - Loading
+"loading.default" = "Loading...";
+"loading.fetching" = "Loading data...";
+
+// MARK: - Personas
+"persona.classic.name" = "Classic Babcia";
+"persona.classic.tagline" = "My dear… come, we tidy.";
+"persona.baroness.name" = "The Baroness";
+"persona.baroness.tagline" = "This is beneath us.";
+"persona.warrior.name" = "Warrior Babcia";
+"persona.warrior.tagline" = "DEFEAT THE CLUTTER.";
+"persona.wellness.name" = "Wellness-X";
+"persona.wellness.tagline" = "Restore harmony.";
+"persona.coach.name" = "Tough Life Coach";
+"persona.coach.tagline" = "Do it anyway.";
+
+// MARK: - Home
+"home.toolbar.title" = "Home";
+"home.error.title" = "Dashboard Error";
+"home.error.message" = "Failed to load dashboard: %@";
+"home.pot.title" = "Your Pot";
+"home.pot.unit" = "pierogis";
+"home.latestDream.title" = "Latest Dream";
+"home.latestDream.empty" = "No Dreams yet";
+"home.stats.title" = "Stats & Progress";
+"home.stats.subtitle" = "%d pierogis earned";
+"home.shop.title" = "Sklep";
+"home.shop.subtitle" = "Unlock new Dream filters";
+"home.dailyProgress.title" = "Today's Progress";
+"home.dailyProgress.unit" = "scans";
+"home.dailyProgress.kitchenClosed" = "Kitchen Closed — Rest well!";
+"home.patterns.title" = "Patterns";
+"home.patterns.topDay" = "Top day";
+"home.patterns.topHour" = "Top hour";
+"home.patterns.count" = "(%d)";
+"home.streak.title" = "Streak";
+"home.streak.unit.singular" = "day";
+"home.streak.unit.plural" = "days";
+"home.streak.message" = "Keep going! Scan once per day to maintain your streak.";
+"home.insight.title" = "How it works";
+"home.insight.scan" = "Scan creates Dream header + tasks";
+"home.insight.points" = "Points unlock filters";
+"home.insight.filters" = "Filters change your Area's Dream header";
+"home.insight.gallery" = "Gallery is where your Dream images live";
+
+// MARK: - Gallery
+"gallery.title" = "Gallery";
+"gallery.subtitle" = "Every Dream you create, all in one place.";
+"gallery.empty.title" = "No Dreams yet";
+"gallery.empty.message" = "Take a photo to generate your first Dream image.";
+"gallery.toolbar.title" = "Gallery";
+"gallery.detail.area.fallback" = "Area";
+"gallery.detail.verification.golden" = "Golden Verification";
+"gallery.detail.verification.blue" = "Blue Verification";
+"gallery.detail.verification.none" = "No Verification";
+"gallery.detail.outcome.pending" = "Pending";
+"gallery.detail.outcome.passed" = "Passed";
+"gallery.detail.outcome.failed" = "Failed";
+"gallery.detail.outcome.skipped" = "Skipped";
+"gallery.detail.meta.created" = "Created";
+"gallery.detail.meta.verification" = "Verification";
+"gallery.detail.meta.outcome" = "Outcome";
+"gallery.detail.meta.basePoints" = "Base Points";
+"gallery.detail.meta.bonusPoints" = "Bonus Points";
+"gallery.detail.meta.totalPoints" = "Total Points";
+"gallery.detail.tasks.title" = "Tasks";
+"gallery.detail.tasks.empty" = "No tasks recorded for this bowl.";
+"gallery.detail.toolbar.title" = "Bowl Details";
+
+// MARK: - Settings
+"settings.appearance.title" = "Appearance";
+"settings.appearance.theme.label" = "Theme";
+"settings.analytics.title" = "Analytics";
+"settings.analytics.action" = "View task analytics";
+"settings.about.title" = "About";
+"settings.about.version" = "Version";
+"settings.about.build" = "Build";
+"settings.toolbar.title" = "Settings";
+"settings.theme.system" = "System";
+"settings.theme.light" = "Light";
+"settings.theme.dark" = "Dark";
+"settings.apiKeys.title" = "API Keys";
+"settings.apiKeys.dream.title" = "Dream Engine";
+"settings.apiKeys.gemini.title" = "Verification Gemini";
+"settings.apiKeys.apiKey.label" = "API Key";
+"settings.apiKeys.dream.placeholder" = "Enter DREAMROOM_API_KEY";
+"settings.apiKeys.gemini.placeholder" = "Enter GEMINI_API_KEY";
+"settings.apiKeys.stored" = "Stored securely on this device. Overrides Secrets.plist if set.";
+"settings.apiKeys.status.enterBeforeSaving" = "Enter a key before saving.";
+"settings.apiKeys.status.saved" = "Saved to Keychain.";
+"settings.apiKeys.status.saveFailed" = "Save failed.";
+"settings.apiKeys.status.removed" = "Removed from Keychain.";
+"settings.apiKeys.status.removeFailed" = "Remove failed.";
+"settings.apiKeys.status.enterBeforeTesting" = "Enter a key before testing.";
+"settings.apiKeys.status.testImageUnavailable" = "Test image unavailable.";
+"settings.apiKeys.status.testSucceeded" = "Test succeeded.";
+"settings.apiKeys.status.testFailed" = "Test failed: %@";
+
+// MARK: - Filters
+"filters.title" = "Dream Vision Filters";
+"filters.subtitle" = "Spend points to unlock filters for your Dream images.";
+"filters.points.available" = "Available";
+"filters.points.allTime" = "All Time";
+"filters.action.applied" = "Applied";
+"filters.action.apply" = "Apply";
+"filters.action.unlock" = "Unlock";
+"filters.toolbar.title" = "Filter Shop";
+"filters.dreamHoney.name" = "Dream Honey";
+"filters.dreamHoney.description" = "Warm glow with soft highlights.";
+"filters.dreamHoney.ingredients" = "Onions x4 + Tomatoes x7";
+"filters.glassMoss.name" = "Glass Moss";
+"filters.glassMoss.description" = "Cool mist and gentle contrast.";
+"filters.glassMoss.ingredients" = "Leeks x3 + Mint x5";
+"filters.pierogiGold.name" = "Pierogi Gold";
+"filters.pierogiGold.description" = "Bright, celebratory sheen.";
+"filters.pierogiGold.ingredients" = "Butter x6 + Garlic x4";
+
+// MARK: - Analytics
+"analytics.title" = "Analytics";
+"analytics.subtitle" = "All task completions captured so far.";
+"analytics.summary.totalCompletions" = "Total Completions";
+"analytics.summary.uniqueAreas" = "Unique Areas";
+"analytics.summary.mostRecent" = "Most Recent";
+"analytics.patterns.title" = "Patterns";
+"analytics.patterns.dayOfWeek" = "By day of week";
+"analytics.patterns.hour" = "By hour";
+"analytics.patterns.topAreas" = "Top areas";
+"analytics.patterns.topPersonas" = "Top personas";
+"analytics.events.title" = "Events";
+"analytics.events.empty.title" = "No analytics yet";
+"analytics.events.empty.message" = "Complete a task to start tracking.";
+"analytics.toolbar.title" = "Analytics";
+"analytics.countList.empty" = "No data yet";
+"analytics.event.area.fallback" = "Area";
+"analytics.event.points" = "%d pt";
+"analytics.topAreas.unknown" = "Unknown Area";
+
+// MARK: - Scan Errors
+"scan.error.apiKeyMissing" = "API key missing.";
+"scan.error.missingPrompt" = "Task prompt missing.";
+"scan.error.imageProcessingFailed" = "Failed to process the image.";
+"scan.error.requestTimedOut" = "Request timed out.";
+"scan.error.invalidRequest" = "Invalid request URL.";
+"scan.error.invalidResponse" = "Invalid response from API.";
+"scan.error.parsingFailed" = "Failed to parse API response.";
+"scan.error.api" = "API error (%@): %@";
+"scan.error.unknown" = "Unknown error";
+
+// MARK: - Verification Errors
+"verification.error.apiKeyMissing" = "Gemini API key not configured";
+"verification.error.invalidPhotoData" = "Photo data is invalid or empty";
+"verification.error.networkFailure" = "Network error: %@";
+"verification.error.invalidResponse" = "Invalid API response: %@";
+"verification.error.judgingFailed" = "Judging failed: %@";
+"verification.error.reason.invalidEndpoint" = "Invalid endpoint URL.";
+"verification.error.reason.encodingFailed" = "Encoding failed.";
+"verification.error.reason.nonHttpResponse" = "Non-HTTP response.";
+"verification.error.reason.httpStatus" = "HTTP %d";
+"verification.error.reason.emptyResponse" = "Empty response body.";
+"verification.error.reason.missingResponseText" = "Missing response text.";
+"verification.error.reason.unexpectedResponse" = "Unexpected response: %@";
+"verification.error.reason.decodingFailed" = "Decoding failed.";
+
+// MARK: - Dream Errors
+"dream.error.apiKeyMissing" = "Dream engine API key missing.";
+"dream.error.missingPrompt" = "Dream prompt missing.";
+"dream.error.invalidImage" = "Invalid image data.";
+
+// MARK: - Error View
+"errorView.default.title" = "Something went wrong";
+"errorView.network.title" = "Connection Error";
+"errorView.network.message" = "Please check your internet connection and try again.";
+"errorView.location.title" = "Location Error";
+"errorView.location.message" = "Unable to access your location. Please check your settings.";
+"errorView.data.title" = "Loading Error";
+"errorView.data.message" = "Unable to load data. Please try again later.";
+"errorView.permission.title" = "Permission Required";
+"errorView.preview.unexpected" = "An unexpected error occurred. Please try again.";
+"errorView.preview.sync" = "Unable to sync your data";
+
+// MARK: - Preview
+"preview.glassCard.title" = "Glass Card";
+"preview.glassCard.button" = "Glass Button";
+"preview.glassCard.prominent" = "Prominent Button";
+"preview.tooltip.cardTitle" = "Weather Card";
+"preview.tooltip.title" = "Weather Updates";
+"preview.tooltip.description" = "Real-time weather data updates every 30 minutes automatically.";
+"preview.tooltip.secondTitle" = "Smart Insights";
+"preview.tooltip.secondDescription" = "Get personalized suggestions based on weather conditions to plan your daily areas.";

@@ -36,7 +36,7 @@ struct HomeView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .principal) {
-                        Text("Home")
+                        Text(String(localized: "home.toolbar.title"))
                             .dsFont(.title2, weight: .bold)
                             .lineLimit(1)
                     }
@@ -44,13 +44,13 @@ struct HomeView: View {
                 .task {
                     await viewModel.fetchDashboardData()
                 }
-                .alert("Dashboard Error", isPresented: $viewModel.showError) {
-                    Button("OK") { viewModel.dismissError() }
-                    Button("Retry") {
+                .alert(String(localized: "home.error.title"), isPresented: $viewModel.showError) {
+                    Button(String(localized: "common.ok")) { viewModel.dismissError() }
+                    Button(String(localized: "common.retry")) {
                         Task { await viewModel.fetchDashboardData() }
                     }
                 } message: {
-                    Text(viewModel.errorMessage ?? "An error occurred")
+                    Text(viewModel.errorMessage ?? String(localized: "common.error.fallback"))
                 }
                 .navigationDestination(isPresented: $showShop) {
                     FilterShopView(viewModel: areaViewModel)
@@ -204,7 +204,7 @@ private struct HomeInsightCard: View {
                         .font(.system(size: theme.grid.iconTitle3))
                         .symbolEffect(.pulse, options: .repeating)
 
-                    Text("How it works")
+                    Text(String(localized: "home.insight.title"))
                         .dsFont(.headline)
 
                     Spacer()
@@ -213,19 +213,19 @@ private struct HomeInsightCard: View {
                 VStack(alignment: .leading, spacing: 8) {
                     InsightRow(
                         icon: "camera.fill",
-                        text: "Scan creates Dream header + tasks"
+                        text: String(localized: "home.insight.scan")
                     )
                     InsightRow(
                         icon: "paintpalette.fill",
-                        text: "Points unlock filters"
+                        text: String(localized: "home.insight.points")
                     )
                     InsightRow(
                         icon: "sparkles",
-                        text: "Filters change your Area's Dream header"
+                        text: String(localized: "home.insight.filters")
                     )
                     InsightRow(
                         icon: "photo.fill",
-                        text: "Gallery is where your Dream images live"
+                        text: String(localized: "home.insight.gallery")
                     )
                 }
             }

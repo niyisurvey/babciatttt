@@ -12,7 +12,7 @@ struct APIKeysSectionView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-            Text("API Keys")
+            Text(String(localized: "settings.apiKeys.title"))
                 .dsFont(.headline, weight: .bold)
                 .padding(.horizontal, 4)
 
