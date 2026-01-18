@@ -15,6 +15,7 @@ struct ReminderConfigView: View {
 
     @State private var showError = false
     @State private var errorMessage = ""
+    @State private var showSaveToast = false
 
     init(area: Area) {
         self.area = area
@@ -24,24 +25,42 @@ struct ReminderConfigView: View {
 
     var body: some View {
         GlassCardView {
-            if let config = configs.first {
-                ReminderConfigEditor(
-                    area: area,
-                    config: config,
-                    scheduler: dependencies.services.reminders,
-                    onError: { message in
-                        errorMessage = message
-                        showError = true
-                    }
-                )
-            } else {
-                emptyState
+            VStack(alignment: .leading, spacing: 12) {
+                Text(String(localized: "reminders.helper"))
+                    .dsFont(.caption)
+                    .foregroundStyle(.secondary)
+
+                if let config = configs.first {
+                    ReminderConfigEditor(
+                        area: area,
+                        config: config,
+                        scheduler: dependencies.services.reminders,
+                        onSave: showSavedToast,
+                        onError: { message in
+                            errorMessage = message
+                            showError = true
+                        }
+                    )
+                } else {
+                    emptyState
+                }
             }
         }
         .alert(String(localized: "reminders.alert.title"), isPresented: $showError) {
             Button(String(localized: "common.ok"), role: .cancel) {}
         } message: {
             Text(errorMessage)
+        }
+        .overlay(alignment: .bottom) {
+            if showSaveToast {
+                ToastBannerView(
+                    message: String(localized: "reminders.toast.saved"),
+                    actionTitle: nil,
+                    onAction: nil,
+                    onDismiss: { showSaveToast = false }
+                )
+                .padding(.vertical, 6)
+            }
         }
     }
 
@@ -53,11 +72,24 @@ struct ReminderConfigView: View {
 
             Button(String(localized: "reminders.empty.action")) {
                 createConfig()
+                hapticFeedback(.selection)
             }
             .buttonStyle(.borderedProminent)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 4)
+    }
+
+    private func showSavedToast() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            showSaveToast = true
+        }
+        Task { @MainActor in
+            try? await Task.sleep(for: .seconds(2.5))
+            withAnimation(.easeInOut(duration: 0.2)) {
+                showSaveToast = false
+            }
+        }
     }
 
     private func createConfig() {
@@ -76,6 +108,7 @@ private struct ReminderConfigEditor: View {
     let area: Area
     @Bindable var config: ReminderConfig
     let scheduler: ReminderSchedulerProtocol
+    let onSave: () -> Void
     let onError: (String) -> Void
 
     @Environment(\.modelContext) private var modelContext
@@ -170,6 +203,7 @@ private struct ReminderConfigEditor: View {
         Task {
             do {
                 try await scheduler.schedule(for: areaId, config: snapshot)
+                onSave()
             } catch let error as ReminderError {
                 onError(error.localizedDescription)
             } catch {

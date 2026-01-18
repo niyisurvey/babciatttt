@@ -1,14 +1,11 @@
 //
-//  ShopCard.swift
+//  MicroTidyCard.swift
 //  BabciaTobiasz
-//
-//  Created 2026-01-15 (Claude Code - Phase 1.1)
-//  Navigate to Sklep (Filter Shop)
 //
 
 import SwiftUI
 
-struct ShopCard: View {
+struct MicroTidyCard: View {
     let onTap: () -> Void
     @Environment(\.dsTheme) private var theme
 
@@ -19,24 +16,17 @@ struct ShopCard: View {
         }) {
             GlassCardView {
                 HStack(spacing: 16) {
-                    Image(systemName: "paintpalette.fill")
-                        .foregroundStyle(theme.palette.secondary)
+                    Image(systemName: "wand.and.stars")
+                        .foregroundStyle(theme.palette.warmAccent)
                         .font(.system(size: theme.grid.iconLarge))
                         .symbolEffect(.pulse, options: .repeating)
 
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(String(localized: "home.shop.title"))
+                        Text(String(localized: "home.microTidy.title"))
                             .dsFont(.headline)
-
-                        Text(String(localized: "home.shop.subtitle"))
+                        Text(String(localized: "home.microTidy.subtitle"))
                             .dsFont(.subheadline)
                             .foregroundStyle(.secondary)
-
-                        HStack(spacing: 6) {
-                            ShopPreviewChip(text: String(localized: "filters.dreamHoney.name"))
-                            ShopPreviewChip(text: String(localized: "filters.glassMoss.name"))
-                            ShopPreviewChip(text: String(localized: "filters.pierogiGold.name"))
-                        }
                     }
 
                     Spacer()
@@ -58,23 +48,9 @@ struct ShopCard: View {
     }
 }
 
-private struct ShopPreviewChip: View {
-    let text: String
-    @Environment(\.dsTheme) private var theme
-
-    var body: some View {
-        Text(text)
-            .dsFont(.caption2, weight: .bold)
-            .foregroundStyle(.secondary)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .background(theme.palette.glassTint.opacity(0.1), in: Capsule())
-    }
-}
-
 #Preview {
     ScrollView {
-        ShopCard(onTap: {})
+        MicroTidyCard(onTap: {})
             .padding()
     }
     .dsTheme(.default)

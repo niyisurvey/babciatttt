@@ -81,6 +81,26 @@ enum BabciaPersona: String, Codable, CaseIterable, Identifiable {
         }
     }
 
+    var localizedDescription: String {
+        switch self {
+        case .classic: return String(localized: "persona.classic.description")
+        case .baroness: return String(localized: "persona.baroness.description")
+        case .warrior: return String(localized: "persona.warrior.description")
+        case .wellness: return String(localized: "persona.wellness.description")
+        case .coach: return String(localized: "persona.coach.description")
+        }
+    }
+
+    var localizedQuote: String {
+        switch self {
+        case .classic: return String(localized: "persona.classic.quote")
+        case .baroness: return String(localized: "persona.baroness.quote")
+        case .warrior: return String(localized: "persona.warrior.quote")
+        case .wellness: return String(localized: "persona.wellness.quote")
+        case .coach: return String(localized: "persona.coach.quote")
+        }
+    }
+
     var dreamVisionPrompt: String {
         DreamPromptOverrides.prompt(for: self) ?? ""
     }
@@ -179,6 +199,7 @@ final class Area {
     var createdAt: Date
     var dreamImageName: String?
     var personaRaw: String
+    var streamingCameraId: UUID?
 
     @Relationship(deleteRule: .cascade)
     var bowls: [AreaBowl]?
@@ -189,7 +210,8 @@ final class Area {
         iconName: String = "square.grid.2x2.fill",
         colorHex: String = "#2DD4BF",
         dreamImageName: String? = nil,
-        persona: BabciaPersona = .classic
+        persona: BabciaPersona = .classic,
+        streamingCameraId: UUID? = nil
     ) {
         self.id = UUID()
         self.name = name
@@ -199,6 +221,7 @@ final class Area {
         self.createdAt = Date()
         self.dreamImageName = dreamImageName
         self.personaRaw = persona.rawValue
+        self.streamingCameraId = streamingCameraId
         self.bowls = []
     }
 

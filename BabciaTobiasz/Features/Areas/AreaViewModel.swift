@@ -16,6 +16,7 @@ final class AreaViewModel {
     var isLoading: Bool = false
     var errorMessage: String?
     var showError: Bool = false
+    var errorAction: FriendlyErrorAction?
     var showAreaForm: Bool = false
     var editingArea: Area?
     var searchText: String = ""
@@ -29,6 +30,11 @@ final class AreaViewModel {
         didSet {
             if dailyBowlTarget < 1 {
                 dailyBowlTarget = 1
+                return
+            }
+            let maxTarget = max(1, configService.kitchenMaxTarget)
+            if dailyBowlTarget > maxTarget {
+                dailyBowlTarget = maxTarget
                 return
             }
             userDefaults.set(dailyBowlTarget, forKey: StorageKeys.dailyBowlTarget)
@@ -77,6 +83,7 @@ final class AreaViewModel {
     private var progressionService: ProgressionServiceProtocol?
     private let verificationJudge: VerificationJudgeProtocol
     private let scoringService: ScoringService
+    private let configService: AppConfigService
     @ObservationIgnored private let userDefaults = UserDefaults.standard
     @ObservationIgnored private var pendingReminderAreaId: UUID?
 
@@ -120,6 +127,7 @@ final class AreaViewModel {
     var bowlsStartedTodayCount: Int { bowlsStartedToday.count }
     var bowlsCompletedTodayCount: Int { bowlsCompletedToday.count }
     var isKitchenClosed: Bool { !canStartBowlToday }
+    var kitchenMaxTarget: Int { max(1, configService.kitchenMaxTarget) }
     
     var todayCompletionPercentage: Double {
         guard dailyBowlTarget > 0 else { return 0 }
@@ -168,7 +176,8 @@ final class AreaViewModel {
         currentUser: User? = nil,
         progressionService: ProgressionServiceProtocol? = nil,
         verificationJudge: VerificationJudgeProtocol? = nil,
-        scoringService: ScoringService? = nil
+        scoringService: ScoringService? = nil,
+        configService: AppConfigService? = nil
     ) {
         self.persistenceService = persistenceService
         self.reminderScheduler = reminderScheduler
@@ -178,6 +187,7 @@ final class AreaViewModel {
         self.progressionService = progressionService
         self.verificationJudge = verificationJudge ?? VerificationJudgeService()
         self.scoringService = scoringService ?? ScoringService()
+        self.configService = configService ?? .shared
         loadPersistentState()
     }
     
@@ -209,10 +219,12 @@ final class AreaViewModel {
     }
 
     private func loadPersistentState() {
+        let defaultTarget = max(1, configService.kitchenDefaultTarget)
+        let maxTarget = max(1, configService.kitchenMaxTarget)
         if let storedTarget = userDefaults.object(forKey: StorageKeys.dailyBowlTarget) as? NSNumber {
-            dailyBowlTarget = max(1, storedTarget.intValue)
+            dailyBowlTarget = min(max(1, storedTarget.intValue), maxTarget)
         } else {
-            dailyBowlTarget = 1
+            dailyBowlTarget = min(defaultTarget, maxTarget)
         }
 
         if let storedStreak = userDefaults.object(forKey: StorageKeys.streakCount) as? NSNumber {
@@ -266,7 +278,8 @@ final class AreaViewModel {
         iconName: String,
         colorHex: String,
         dreamImageName: String? = nil,
-        persona: BabciaPersona = .classic
+        persona: BabciaPersona = .classic,
+        streamingCameraId: UUID? = nil
     ) async {
         guard let persistenceService = persistenceService else { return }
 
@@ -276,7 +289,8 @@ final class AreaViewModel {
             iconName: iconName,
             colorHex: colorHex,
             dreamImageName: dreamImageName,
-            persona: persona
+            persona: persona,
+            streamingCameraId: streamingCameraId
         )
 
         do {
@@ -284,8 +298,8 @@ final class AreaViewModel {
             areas.insert(area, at: 0)
             if userDefaults.bool(forKey: "needsFirstArea") {
                 userDefaults.set(false, forKey: "needsFirstArea")
-                openArea(area.id)
             }
+            openArea(area.id)
         } catch {
             handleError(error)
         }
@@ -518,7 +532,15 @@ final class AreaViewModel {
         )
     }
     
-    func toggleTaskCompletion(_ task: CleaningTask) {
+    struct TaskUndoSnapshot {
+        let task: CleaningTask
+        let bowl: AreaBowl
+        let completionEvent: TaskCompletionEvent?
+        let points: Int
+    }
+
+    @discardableResult
+    func toggleTaskCompletion(_ task: CleaningTask) -> TaskUndoSnapshot? {
         guard let persistenceService = persistenceService else { return }
         do {
             guard let bowl = task.bowl else { return }
@@ -526,7 +548,7 @@ final class AreaViewModel {
             let completionDate = Date()
             task.completedAt = completionDate
             bowl.basePoints += task.points
-            recordTaskCompletion(task, bowl: bowl, completionDate: completionDate)
+            let completionEvent = recordTaskCompletion(task, bowl: bowl, completionDate: completionDate)
             if let potService, let currentUser {
                 do {
                     try potService.addPoints(task.points, to: currentUser)
@@ -537,13 +559,47 @@ final class AreaViewModel {
             updateBowlCompletionState(bowl)
             updateBowlTotals(bowl)
             try persistenceService.save()
+            return TaskUndoSnapshot(
+                task: task,
+                bowl: bowl,
+                completionEvent: completionEvent,
+                points: task.points
+            )
+        } catch {
+            handleError(error)
+        }
+        return nil
+    }
+
+    func undoTaskCompletion(_ snapshot: TaskUndoSnapshot) {
+        guard let persistenceService = persistenceService else { return }
+        let task = snapshot.task
+        let bowl = snapshot.bowl
+        guard task.isCompleted else { return }
+        task.completedAt = nil
+        bowl.basePoints = max(0, bowl.basePoints - snapshot.points)
+        updateBowlCompletionState(bowl)
+        updateBowlTotals(bowl)
+        if let completionEvent = snapshot.completionEvent {
+            persistenceService.delete(completionEvent)
+        }
+        if let potService, let currentUser {
+            do {
+                try potService.revokePoints(snapshot.points, from: currentUser)
+            } catch {
+                handleError(error)
+            }
+        }
+        do {
+            try persistenceService.save()
         } catch {
             handleError(error)
         }
     }
 
-    private func recordTaskCompletion(_ task: CleaningTask, bowl: AreaBowl, completionDate: Date) {
-        guard let persistenceService = persistenceService else { return }
+    @discardableResult
+    private func recordTaskCompletion(_ task: CleaningTask, bowl: AreaBowl, completionDate: Date) -> TaskCompletionEvent? {
+        guard let persistenceService = persistenceService else { return nil }
         let calendar = Calendar.current
         let dayOfWeek = calendar.component(.weekday, from: completionDate)
         let hourOfDay = calendar.component(.hour, from: completionDate)
@@ -561,6 +617,7 @@ final class AreaViewModel {
             bowlId: bowl.id
         )
         persistenceService.insert(event)
+        return event
     }
 
     /// Judges and applies verification results for a completed bowl.
@@ -693,13 +750,16 @@ final class AreaViewModel {
     // MARK: - Error Handling
     
     private func handleError(_ error: Error) {
-        errorMessage = error.localizedDescription
+        let friendly = FriendlyErrorMapper.map(error)
+        errorMessage = friendly.message
+        errorAction = friendly.action
         showError = true
     }
     
     func dismissError() {
         showError = false
         errorMessage = nil
+        errorAction = nil
     }
 
     // MARK: - Filters / Economy
@@ -711,6 +771,7 @@ final class AreaViewModel {
     func unlockFilter(_ id: String, cost: Int) {
         guard availablePotPoints >= cost else {
             errorMessage = String(localized: "areas.error.notEnoughPoints")
+            errorAction = nil
             showError = true
             return
         }

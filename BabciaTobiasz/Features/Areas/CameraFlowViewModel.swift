@@ -27,7 +27,7 @@ enum CameraFlowError: LocalizedError, Equatable {
     var errorDescription: String? {
         switch self {
         case .missingAreaContext:
-            return "Camera flow is not configured."
+            return String(localized: "cameraFlow.error.missingArea")
         case .streamingCaptureFailed:
             return String(localized: "cameraFlow.error.streamingCaptureFailed")
         }

@@ -20,6 +20,14 @@ struct DreamAPIKeyCardView: View {
                     .dsFont(.caption, weight: .bold)
                     .foregroundStyle(.secondary)
 
+                Text(String(localized: "settings.apiKeys.dream.helper"))
+                    .dsFont(.caption)
+                    .foregroundStyle(.secondary)
+
+                Text(String(localized: "settings.apiKeys.dream.where"))
+                    .dsFont(.caption2)
+                    .foregroundStyle(.secondary)
+
                 Text(String(localized: "settings.apiKeys.apiKey.label"))
                     .dsFont(.caption)
                     .foregroundStyle(.secondary)

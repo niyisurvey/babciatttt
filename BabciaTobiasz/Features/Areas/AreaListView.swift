@@ -13,6 +13,8 @@ struct AreaListView: View {
     @State private var showStatsTooltip = false
     @State private var headerProgress: CGFloat = 0
     @State private var showVictoryHero = false
+    @State private var pendingDeleteArea: Area?
+    @State private var showDeleteConfirmation = false
     @Environment(\.dsTheme) private var theme
     private let logger = Logger(subsystem: "com.babcia.tobiasz", category: "navigation")
 
@@ -73,9 +75,27 @@ struct AreaListView: View {
                 }
             }
             .alert(String(localized: "common.error.title"), isPresented: $viewModel.showError) {
+                if let action = viewModel.errorAction {
+                    Button(action.localizedTitle) {
+                        handleErrorAction(action)
+                    }
+                }
                 Button(String(localized: "common.ok")) { viewModel.dismissError() }
             } message: {
                 Text(viewModel.errorMessage ?? String(localized: "common.error.fallback"))
+            }
+            .alert(String(localized: "areas.delete.confirm.title"), isPresented: $showDeleteConfirmation) {
+                Button(String(localized: "common.delete"), role: .destructive) {
+                    if let pendingDeleteArea {
+                        viewModel.deleteArea(pendingDeleteArea)
+                        pendingDeleteArea = nil
+                    }
+                }
+                Button(String(localized: "common.cancel"), role: .cancel) {
+                    pendingDeleteArea = nil
+                }
+            } message: {
+                Text(String(localized: "areas.delete.confirm.message"))
             }
             // Keep destination on the same NavigationStack to avoid SwiftUI fallback screens.
             .navigationDestination(for: AreaRoute.self) { route in
@@ -229,16 +249,33 @@ struct AreaListView: View {
                              : String(localized: "areas.stats.kitchenOpen"))
                             .dsFont(.caption)
                             .foregroundStyle(viewModel.isKitchenClosed ? .red : .secondary)
+                        Text(String(format: String(localized: "areas.stats.dailyTarget.helper"), AppConfigService.shared.kitchenDefaultTarget))
+                            .dsFont(.caption2)
+                            .foregroundStyle(.secondary)
                     }
 
                     Spacer()
 
-                    Stepper(value: $viewModel.dailyBowlTarget, in: 1...10) {
+                    Stepper(value: $viewModel.dailyBowlTarget, in: 1...viewModel.kitchenMaxTarget) {
                         Text("\(viewModel.dailyBowlTarget)")
                             .dsFont(.headline, weight: .bold)
                             .frame(minWidth: 28, alignment: .trailing)
                     }
                     .labelsHidden()
+                }
+
+                Button {
+                    withAnimation(theme.motion.pressSpring) {
+                        showStatsTooltip.toggle()
+                    }
+                    hapticFeedback(.light)
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "info.circle")
+                        Text(String(localized: "areas.stats.tooltip.cta"))
+                    }
+                    .dsFont(.caption, weight: .bold)
+                    .foregroundStyle(.secondary)
                 }
             }
             .padding(.vertical, 12)
@@ -347,11 +384,23 @@ struct AreaListView: View {
             Divider()
             
             Button(role: .destructive) {
-                viewModel.deleteArea(area)
+                pendingDeleteArea = area
+                showDeleteConfirmation = true
                 hapticFeedback(.warning)
             } label: {
                 Label(String(localized: "areas.menu.delete"), systemImage: "trash")
             }
+        }
+    }
+
+    private func handleErrorAction(_ action: FriendlyErrorAction) {
+        switch action {
+        case .retry:
+            viewModel.loadAreas()
+            viewModel.dismissError()
+        case .openSettings, .manageCameras:
+            AppIntentRoute.store(.settings)
+            viewModel.dismissError()
         }
     }
 

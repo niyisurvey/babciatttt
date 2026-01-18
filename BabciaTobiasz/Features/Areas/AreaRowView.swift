@@ -95,6 +95,10 @@ struct AreaRowView: View {
                     .lineLimit(1)
             }
 
+            if let status = statusBadge {
+                status
+            }
+
             reminderPreviewRow
 
             HStack(spacing: 8) {
@@ -154,6 +158,75 @@ struct AreaRowView: View {
             .sorted()
             .map { $0.formatted(date: .omitted, time: .shortened) }
             .joined(separator: " • ")
+    }
+
+    private var statusBadge: some View? {
+        guard let status = statusState else { return nil }
+        return HStack(spacing: 6) {
+            Circle()
+                .fill(status.color)
+                .frame(width: theme.grid.iconTiny / 2, height: theme.grid.iconTiny / 2)
+            Text(status.label)
+                .dsFont(.caption2, weight: .bold)
+                .foregroundStyle(status.color)
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(status.color.opacity(0.12), in: Capsule())
+    }
+
+    private var statusState: AreaRowStatus? {
+        if let bowl = area.latestBowl, bowl.isVerificationPending {
+            return .verificationPending
+        }
+        if isCompletedToday {
+            return .doneToday
+        }
+        if area.inProgressBowl != nil {
+            return .inProgress
+        }
+        if area.latestBowl == nil {
+            return .needsScan
+        }
+        return nil
+    }
+
+    private var isCompletedToday: Bool {
+        guard let completedAt = area.latestBowl?.completedAt else { return false }
+        return Calendar.current.isDateInToday(completedAt)
+    }
+}
+
+private enum AreaRowStatus {
+    case needsScan
+    case inProgress
+    case doneToday
+    case verificationPending
+
+    var label: String {
+        switch self {
+        case .needsScan:
+            return String(localized: "areaRow.status.needsScan")
+        case .inProgress:
+            return String(localized: "areaRow.status.inProgress")
+        case .doneToday:
+            return String(localized: "areaRow.status.doneToday")
+        case .verificationPending:
+            return String(localized: "areaRow.status.verification")
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .needsScan:
+            return .orange
+        case .inProgress:
+            return .blue
+        case .doneToday:
+            return .green
+        case .verificationPending:
+            return .purple
+        }
     }
 }
 

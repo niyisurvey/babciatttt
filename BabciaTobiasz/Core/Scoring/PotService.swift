@@ -57,4 +57,19 @@ final class PotService {
             throw PotError.persistenceFailure
         }
     }
+
+    /// Removes points from the user's pot and lifetime total (used for undo flows).
+    /// - Parameters:
+    ///   - points: Points to remove.
+    ///   - user: User to update.
+    func revokePoints(_ points: Int, from user: User) throws {
+        guard points >= 0 else { throw PotError.invalidAmount }
+        user.potBalance = max(0, user.potBalance - points)
+        user.lifetimePierogis = max(0, user.lifetimePierogis - points)
+        do {
+            try modelContext.save()
+        } catch {
+            throw PotError.persistenceFailure
+        }
+    }
 }

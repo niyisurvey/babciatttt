@@ -8,6 +8,8 @@ import SwiftUI
 struct CompletionSummaryView: View {
     let persona: BabciaPersona
     let tier: BowlVerificationTier
+    let bluePoints: Int
+    let goldenPoints: Int
     let onVerify: () -> Void
     let onDone: () -> Void
 
@@ -37,6 +39,9 @@ struct CompletionSummaryView: View {
                         .dsFont(.subheadline)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
+                    Text(String(format: String(localized: "areaDetail.completion.points"), pointsReward))
+                        .dsFont(.caption)
+                        .foregroundStyle(.secondary)
                 }
                 .padding(.horizontal, theme.grid.cardPadding)
 
@@ -98,12 +103,18 @@ struct CompletionSummaryView: View {
                 .offset(y: -theme.grid.iconSmall)
         }
     }
+
+    private var pointsReward: Int {
+        tier == .golden ? goldenPoints : bluePoints
+    }
 }
 
 #Preview {
     CompletionSummaryView(
         persona: .classic,
         tier: .golden,
+        bluePoints: 25,
+        goldenPoints: 50,
         onVerify: {},
         onDone: {}
     )

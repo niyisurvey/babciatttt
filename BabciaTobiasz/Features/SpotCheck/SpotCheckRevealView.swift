@@ -10,9 +10,14 @@ struct SpotCheckRevealView: View {
 
     var body: some View {
         GlassCardView {
-            LoadingIndicatorView(message: message, size: .medium, showBackground: false)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 12)
+            VStack(spacing: 8) {
+                LoadingIndicatorView(message: message, size: .medium, showBackground: false)
+                Text(String(localized: "spotCheck.reveal.spinning"))
+                    .dsFont(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 12)
         }
     }
 }

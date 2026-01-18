@@ -14,6 +14,7 @@ final class MicroTidyViewModel {
     var isLoading: Bool = false
     var errorMessage: String?
     var showError: Bool = false
+    var errorAction: FriendlyErrorAction?
     var lastResponse: String?
     var dailyCount: Int = 0
 
@@ -136,7 +137,9 @@ final class MicroTidyViewModel {
     }
 
     private func handleError(_ error: Error) {
-        errorMessage = error.localizedDescription
+        let friendly = FriendlyErrorMapper.map(error)
+        errorMessage = friendly.message
+        errorAction = friendly.action
         showError = true
     }
 }

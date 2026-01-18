@@ -22,6 +22,7 @@ final class SpotCheckViewModel {
     var isProcessing: Bool = false
     var errorMessage: String?
     var showError: Bool = false
+    var errorAction: FriendlyErrorAction?
     var lastResult: Result?
     var lastTaskCount: Int?
     var lastAreaName: String?
@@ -159,6 +160,25 @@ final class SpotCheckViewModel {
     var spotCheckCooldownHours: Int { configService.spotCheckCooldownHours }
     var spotCheckPoints: AppConfig.SpotCheck.Points { configService.spotCheckPoints }
     var eligibleAreaCount: Int { eligibleAreas().count }
+    var totalAreaCount: Int { areas.count }
+
+    var cooldownRemaining: TimeInterval? {
+        let now = Date().timeIntervalSince1970
+        let cooldownSeconds = TimeInterval(spotCheckCooldownHours) * 3600
+        let remaining = areaCooldowns.values
+            .map { max(0, cooldownSeconds - (now - $0)) }
+            .filter { $0 > 0 }
+        return remaining.min()
+    }
+
+    var cooldownRemainingText: String? {
+        guard let remaining = cooldownRemaining else { return nil }
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .abbreviated
+        formatter.allowedUnits = remaining >= 3600 ? [.hour, .minute] : [.minute, .second]
+        formatter.zeroFormattingBehavior = .dropAll
+        return formatter.string(from: remaining)
+    }
 
     private func eligibleAreas() -> [Area] {
         areas.filter { isAreaEligible($0) }
@@ -251,7 +271,9 @@ final class SpotCheckViewModel {
     }
 
     private func handleError(_ error: Error) {
-        errorMessage = error.localizedDescription
+        let friendly = FriendlyErrorMapper.map(error)
+        errorMessage = friendly.message
+        errorAction = friendly.action
         showError = true
     }
 }

@@ -19,11 +19,13 @@ struct SpotCheckView: View {
 
     @State private var viewModel = SpotCheckViewModel()
     @State private var showCameraCapture = false
+    @State private var showCameraPermissionPrimer = false
     @State private var showCameraAlert = false
     @State private var cameraAlertMessage = ""
     @State private var didConfigure = false
     @State private var isRevealing = false
     @State private var revealTask: Task<Void, Never>?
+    @State private var autoStartCameraAfterReveal = false
 
     var body: some View {
         ZStack {
@@ -40,6 +42,7 @@ struct SpotCheckView: View {
 
                     if !viewModel.meetsMinimumAreas {
                         SpotCheckMinimumAreasCard(
+                            currentAreas: viewModel.totalAreaCount,
                             minAreas: viewModel.spotCheckMinAreasRequired,
                             onCreateArea: onCreateArea
                         )
@@ -76,6 +79,11 @@ struct SpotCheckView: View {
             Text(cameraAlertMessage)
         }
         .alert(String(localized: "common.error.title"), isPresented: $viewModel.showError) {
+            if let action = viewModel.errorAction {
+                Button(action.localizedTitle) {
+                    handleErrorAction(action)
+                }
+            }
             Button(String(localized: "common.ok")) { viewModel.showError = false }
         } message: {
             Text(viewModel.errorMessage ?? String(localized: "common.error.fallback"))
@@ -89,6 +97,20 @@ struct SpotCheckView: View {
                 onCancel: {
                     showCameraCapture = false
                 }
+            )
+        }
+        .fullScreenCover(isPresented: $showCameraPermissionPrimer) {
+            CameraPermissionPrimerView(
+                title: String(localized: "cameraPermission.title"),
+                message: String(localized: "cameraPermission.message"),
+                bullets: [
+                    String(localized: "cameraPermission.bullet.capture"),
+                    String(localized: "cameraPermission.bullet.verify")
+                ],
+                primaryActionTitle: String(localized: "cameraPermission.action.continue"),
+                secondaryActionTitle: String(localized: "cameraPermission.action.notNow"),
+                onContinue: { requestCameraPermissionAndCapture() },
+                onNotNow: { showCameraPermissionPrimer = false }
             )
         }
         .onAppear {
@@ -111,11 +133,11 @@ struct SpotCheckView: View {
             if viewModel.dailyCount >= viewModel.spotCheckLimit {
                 SpotCheckLimitReachedCard()
             } else if viewModel.eligibleAreaCount == 0 {
-                SpotCheckCooldownCard()
+                SpotCheckCooldownCard(remainingText: viewModel.cooldownRemainingText)
             } else if isRevealing {
                 SpotCheckRevealView(message: String(localized: "spotCheck.reveal.message"))
             } else {
-                SpotCheckRevealCard(onReveal: revealArea)
+                SpotCheckRevealCard(onReveal: revealArea, onSurpriseMe: surpriseMe)
             }
         }
     }
@@ -153,7 +175,18 @@ struct SpotCheckView: View {
                 isRevealing = false
             }
             hapticFeedback(.medium)
+            if autoStartCameraAfterReveal {
+                autoStartCameraAfterReveal = false
+                requestCameraCapture()
+            }
         }
+    }
+
+    private func surpriseMe() {
+        guard viewModel.canRevealArea() else { return }
+        autoStartCameraAfterReveal = true
+        revealArea()
+        hapticFeedback(.medium)
     }
 
     private func requestCameraCapture() {
@@ -168,15 +201,7 @@ struct SpotCheckView: View {
         case .authorized:
             showCameraCapture = true
         case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video) { granted in
-                DispatchQueue.main.async {
-                    if granted {
-                        showCameraCapture = true
-                    } else {
-                        presentCameraAlert(String(localized: "spotCheck.camera.permission"))
-                    }
-                }
-            }
+            showCameraPermissionPrimer = true
         case .denied, .restricted:
             presentCameraAlert(String(localized: "spotCheck.camera.permission"))
         @unknown default:
@@ -184,6 +209,21 @@ struct SpotCheckView: View {
         }
         #else
         presentCameraAlert(String(localized: "spotCheck.camera.notSupported"))
+        #endif
+    }
+
+    private func requestCameraPermissionAndCapture() {
+        #if os(iOS)
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            DispatchQueue.main.async {
+                showCameraPermissionPrimer = false
+                if granted {
+                    showCameraCapture = true
+                } else {
+                    presentCameraAlert(String(localized: "spotCheck.camera.permission"))
+                }
+            }
+        }
         #endif
     }
 
@@ -203,6 +243,17 @@ struct SpotCheckView: View {
     private func presentCameraAlert(_ message: String) {
         cameraAlertMessage = message
         showCameraAlert = true
+    }
+
+    private func handleErrorAction(_ action: FriendlyErrorAction) {
+        switch action {
+        case .retry:
+            viewModel.refresh()
+            viewModel.showError = false
+        case .openSettings, .manageCameras:
+            AppIntentRoute.store(.settings)
+            viewModel.showError = false
+        }
     }
 
 }

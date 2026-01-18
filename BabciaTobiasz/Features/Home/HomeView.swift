@@ -19,6 +19,8 @@ struct HomeView: View {
     @State private var showShop = false
     @State private var showGallery = false
     @State private var showAnalytics = false
+    @State private var showMicroTidy = false
+    let onQuickCheckIn: () -> Void
 
     var body: some View {
         NavigationStack {
@@ -30,7 +32,8 @@ struct HomeView: View {
                 },
                 onShopTap: { showShop = true },
                 onGalleryTap: { showGallery = true },
-                onAnalyticsTap: { showAnalytics = true }
+                onAnalyticsTap: { showAnalytics = true },
+                onMicroTidyTap: { showMicroTidy = true }
             )
                 .navigationTitle("")
                 #if os(iOS)
@@ -43,6 +46,11 @@ struct HomeView: View {
                             .dsFont(.title2, weight: .bold)
                             .lineLimit(1)
                     }
+                }
+                .overlay(alignment: .bottomTrailing) {
+                    QuickCheckInFloatingButton(action: onQuickCheckIn)
+                        .padding(.trailing, 20)
+                        .padding(.bottom, 24)
                 }
                 .task {
                     await viewModel.fetchDashboardData()
@@ -64,6 +72,11 @@ struct HomeView: View {
                 .navigationDestination(isPresented: $showAnalytics) {
                     AnalyticsView()
                 }
+                .navigationDestination(isPresented: $showMicroTidy) {
+                    MicroTidyView(onOpenAreas: {
+                        AppIntentRoute.store(.areas)
+                    })
+                }
         }
     }
 }
@@ -76,6 +89,7 @@ private struct HomeScreenContent: View {
     let onShopTap: () -> Void
     let onGalleryTap: () -> Void
     let onAnalyticsTap: () -> Void
+    let onMicroTidyTap: () -> Void
     @Environment(\.dsTheme) private var theme
     @State private var headerProgress: CGFloat = 0
 
@@ -96,7 +110,8 @@ private struct HomeScreenContent: View {
                     viewModel: viewModel,
                     onShopTap: onShopTap,
                     onGalleryTap: onGalleryTap,
-                    onAnalyticsTap: onAnalyticsTap
+                    onAnalyticsTap: onAnalyticsTap,
+                    onMicroTidyTap: onMicroTidyTap
                 )
                 .padding()
                 .frame(maxWidth: .infinity)
@@ -116,13 +131,12 @@ private struct HomeScreenContent: View {
             Image(uiImage: uiImage)
                 .resizable()
                 .scaledToFill()
-        } else if let fallbackImage = UIImage(named: "DreamRoom_Test_1200x1600") {
-            Image(uiImage: fallbackImage)
-                .resizable()
-                .scaledToFill()
         } else {
-            Rectangle()
-                .fill(.clear)
+            DreamHeaderPlaceholderView(
+                title: String(localized: "home.hero.placeholder.title"),
+                message: String(localized: "home.hero.placeholder.message"),
+                icon: "sparkles"
+            )
         }
     }
 }
@@ -134,6 +148,7 @@ private struct HomeScrollContent: View {
     let onShopTap: () -> Void
     let onGalleryTap: () -> Void
     let onAnalyticsTap: () -> Void
+    let onMicroTidyTap: () -> Void
     @Environment(\.dsTheme) private var theme
 
     var body: some View {
@@ -146,7 +161,8 @@ private struct HomeScrollContent: View {
                     viewModel: viewModel,
                     onShopTap: onShopTap,
                     onGalleryTap: onGalleryTap,
-                    onAnalyticsTap: onAnalyticsTap
+                    onAnalyticsTap: onAnalyticsTap,
+                    onMicroTidyTap: onMicroTidyTap
                 )
                     .transition(.opacity.combined(with: .move(edge: .bottom)))
             }
@@ -162,11 +178,16 @@ private struct HomeDashboardContent: View {
     let onShopTap: () -> Void
     let onGalleryTap: () -> Void
     let onAnalyticsTap: () -> Void
+    let onMicroTidyTap: () -> Void
 
     var body: some View {
         VStack(spacing: 20) {
             // Pot (points balance)
             PotCard(balance: viewModel.potBalance)
+
+            PointsExplainerCard()
+
+            MicroTidyCard(onTap: onMicroTidyTap)
 
             // Streak
             StreakCard(currentStreak: viewModel.currentStreak)
@@ -328,7 +349,8 @@ private struct InsightRow: View {
 
     return HomeView(
         viewModel: viewModel,
-        areaViewModel: AreaViewModel()
+        areaViewModel: AreaViewModel(),
+        onQuickCheckIn: {}
     )
         .modelContainer(container)
         .dsTheme(.default)

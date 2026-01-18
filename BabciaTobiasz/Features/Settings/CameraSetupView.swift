@@ -102,9 +102,14 @@ struct CameraSetupView: View {
                 Text(String(localized: "cameraSetup.empty.message"))
                     .dsFont(.body)
                     .foregroundStyle(.secondary)
+                Text(String(localized: "cameraSetup.empty.supportedTitle"))
+                    .dsFont(.caption, weight: .bold)
+                    .foregroundStyle(.secondary)
+                StreamingCameraSupportedListView()
                 Button {
                     editingCamera = nil
                     showEditor = true
+                    hapticFeedback(.selection)
                 } label: {
                     Label(String(localized: "cameraSetup.empty.action"), systemImage: "plus.circle.fill")
                         .dsFont(.headline)
@@ -133,6 +138,7 @@ struct CameraSetupView: View {
                         } else {
                             discoveryHub.start()
                         }
+                        hapticFeedback(.selection)
                     } label: {
                         Text(discoveryHub.isScanning
                              ? String(localized: "cameraSetup.quickAdd.stop")
@@ -145,10 +151,22 @@ struct CameraSetupView: View {
                     Text(String(localized: "cameraSetup.quickAdd.none"))
                         .dsFont(.body)
                         .foregroundStyle(.secondary)
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(String(localized: "cameraSetup.quickAdd.tip.network"))
+                            .dsFont(.caption)
+                            .foregroundStyle(.secondary)
+                        Text(String(localized: "cameraSetup.quickAdd.tip.power"))
+                            .dsFont(.caption)
+                            .foregroundStyle(.secondary)
+                        Text(String(localized: "cameraSetup.quickAdd.tip.manual"))
+                            .dsFont(.caption)
+                            .foregroundStyle(.secondary)
+                    }
                 } else {
                     ForEach(discoveryHub.results) { result in
                         Button {
                             selectedDiscovery = result
+                            hapticFeedback(.selection)
                         } label: {
                             HStack(alignment: .top, spacing: theme.grid.listSpacing) {
                                 VStack(alignment: .leading, spacing: 2) {
@@ -175,6 +193,7 @@ struct CameraSetupView: View {
                 Button(String(localized: "cameraSetup.quickAdd.manual")) {
                     editingCamera = nil
                     showEditor = true
+                    hapticFeedback(.selection)
                 }
                 .buttonStyle(.nativeGlassProminent)
             }

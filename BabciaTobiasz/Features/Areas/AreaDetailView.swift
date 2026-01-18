@@ -20,6 +20,7 @@ struct AreaDetailView: View {
     // Added 2026-01-14 20:55 GMT
     @State private var showCameraCapture = false
     @State private var showCameraHeroPrompt = false
+    @State private var showCameraPermissionPrimer = false
     @State private var showCameraAlert = false
     @State private var cameraAlertMessage = ""
     @State private var showReminderPrompt = false
@@ -39,8 +40,15 @@ struct AreaDetailView: View {
     @State private var showCameraSourcePicker = false
     @State private var showStreamingCameraPickerForScan = false
     @AppStorage("areaDetail.taskTapHintShown") private var taskTapHintShown = false
+    @AppStorage("areaDetail.taskExplanationShown") private var taskExplanationShown = false
     @State private var showTaskTapHint = false
+    @State private var showTaskExplanation = false
     @State private var showCompletionSummary = false
+    @State private var showCameraSetup = false
+    @State private var pendingCameraPermissionTarget: CameraPermissionTarget?
+    @State private var taskUndoSnapshot: AreaViewModel.TaskUndoSnapshot?
+    @State private var showTaskUndoToast = false
+    @State private var taskUndoTask: Task<Void, Never>?
     @AppStorage("needsFirstScan") private var needsFirstScan = false
 
     init(area: Area, viewModel: AreaViewModel) {
@@ -64,6 +72,7 @@ struct AreaDetailView: View {
             } content: {
                 VStack(spacing: theme.grid.sectionSpacing) {
                     babciaSparkleCard
+                    kitchenClosedCard
                     taskListSection
                     verificationCallout
                 }
@@ -96,7 +105,7 @@ struct AreaDetailView: View {
                 area: area,
                 onStart: {
                     showCameraHeroPrompt = false
-                    startCameraCapture()
+                    startCameraCapture(for: .scan)
                 },
                 onDismiss: {
                     showCameraHeroPrompt = false
@@ -126,6 +135,23 @@ struct AreaDetailView: View {
                 }
             )
         }
+        .fullScreenCover(isPresented: $showCameraPermissionPrimer) {
+            CameraPermissionPrimerView(
+                title: String(localized: "cameraPermission.title"),
+                message: String(localized: "cameraPermission.message"),
+                bullets: [
+                    String(localized: "cameraPermission.bullet.capture"),
+                    String(localized: "cameraPermission.bullet.verify")
+                ],
+                primaryActionTitle: String(localized: "cameraPermission.action.continue"),
+                secondaryActionTitle: String(localized: "cameraPermission.action.notNow"),
+                onContinue: { requestCameraPermissionAndCapture() },
+                onNotNow: {
+                    showCameraPermissionPrimer = false
+                    pendingCameraPermissionTarget = nil
+                }
+            )
+        }
         .alert(String(localized: "areaDetail.camera.alert.title"), isPresented: $showCameraAlert) {
             Button(String(localized: "common.ok"), role: .cancel) {}
         } message: {
@@ -142,6 +168,8 @@ struct AreaDetailView: View {
             CompletionSummaryView(
                 persona: area.persona,
                 tier: verificationTier,
+                bluePoints: AppConfigService.shared.verificationBluePoints,
+                goldenPoints: AppConfigService.shared.verificationGoldenPoints,
                 onVerify: {
                     showCompletionSummary = false
                     showVerificationSourcePicker = true
@@ -174,8 +202,15 @@ struct AreaDetailView: View {
             isPresented: $showVerificationSourcePicker,
             titleVisibility: .visible
         ) {
-            Button(String(localized: "cameraSource.device")) { showVerificationCapture = true }
-            if !streamingManager.configs.isEmpty {
+            Button(String(localized: "cameraSource.device")) { startCameraCapture(for: .verification) }
+            if let linkedCamera = linkedStreamingCamera {
+                Button(String(format: String(localized: "cameraSource.linked"), linkedCamera.name)) {
+                    handleStreamingVerificationCapture(linkedCamera)
+                }
+            }
+            if streamingManager.configs.isEmpty {
+                Button(String(localized: "cameraSource.addStreaming")) { showCameraSetup = true }
+            } else {
                 Button(String(localized: "cameraSource.streaming")) { showStreamingCameraPicker = true }
             }
             Button(String(localized: "common.cancel"), role: .cancel) { }
@@ -188,7 +223,16 @@ struct AreaDetailView: View {
             titleVisibility: .visible
         ) {
             Button(String(localized: "cameraSource.device")) { requestDeviceCameraCapture() }
-            Button(String(localized: "cameraSource.streaming")) { showStreamingCameraPickerForScan = true }
+            if let linkedCamera = linkedStreamingCamera {
+                Button(String(format: String(localized: "cameraSource.linked"), linkedCamera.name)) {
+                    handleStreamingScanCapture(linkedCamera)
+                }
+            }
+            if streamingManager.configs.isEmpty {
+                Button(String(localized: "cameraSource.addStreaming")) { showCameraSetup = true }
+            } else {
+                Button(String(localized: "cameraSource.streaming")) { showStreamingCameraPickerForScan = true }
+            }
             Button(String(localized: "common.cancel"), role: .cancel) { }
         } message: {
             Text(String(localized: "cameraSource.message"))
@@ -213,8 +257,18 @@ struct AreaDetailView: View {
                 onCancel: { showStreamingCameraPickerForScan = false }
             )
         }
+        .sheet(isPresented: $showCameraSetup) {
+            NavigationStack {
+                CameraSetupView()
+            }
+        }
         // Added 2026-01-14 21:13 GMT
         .alert(String(localized: "common.error.title"), isPresented: $viewModel.showError) {
+            if let action = viewModel.errorAction {
+                Button(action.localizedTitle) {
+                    handleErrorAction(action)
+                }
+            }
             Button(String(localized: "common.ok")) { viewModel.dismissError() }
         } message: {
             Text(viewModel.errorMessage ?? String(localized: "common.error.fallback"))
@@ -222,6 +276,23 @@ struct AreaDetailView: View {
         // Added 2026-01-14 22:02 GMT
         .overlay(alignment: .bottomTrailing) {
             floatingCameraButton
+        }
+        .overlay(alignment: .bottom) {
+            if showTaskUndoToast, let snapshot = taskUndoSnapshot {
+                ToastBannerView(
+                    message: String(localized: "areaDetail.tasks.undo.message"),
+                    actionTitle: String(localized: "areaDetail.tasks.undo.action"),
+                    onAction: {
+                        viewModel.undoTaskCompletion(snapshot)
+                        hapticFeedback(.light)
+                        hideTaskUndoToast()
+                    },
+                    onDismiss: { hideTaskUndoToast() }
+                )
+                .padding(.horizontal, theme.grid.cardPadding)
+                .padding(.bottom, theme.grid.sectionSpacing * 2)
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
         }
         .overlay {
             LoadingOverlay(
@@ -276,13 +347,12 @@ struct AreaDetailView: View {
             Image(uiImage: uiImage)
                 .resizable()
                 .scaledToFill()
-        } else if let fallbackImage = UIImage(named: "DreamRoom_Test_1200x1600") {
-            Image(uiImage: fallbackImage)
-                .resizable()
-                .scaledToFill()
         } else {
-            Rectangle()
-                .fill(.clear)
+            DreamHeaderPlaceholderView(
+                title: String(localized: "areaDetail.hero.placeholder.title"),
+                message: String(localized: "areaDetail.hero.placeholder.message"),
+                icon: "camera.fill"
+            )
         }
     }
 
@@ -293,8 +363,6 @@ struct AreaDetailView: View {
 #if os(iOS)
         // Added 2026-01-14 21:13 GMT
         if isVerificationDecisionPending {
-            viewModel.errorMessage = String(localized: "areaDetail.camera.error.verificationPending")
-            viewModel.showError = true
             return
         }
         if viewModel.isGeneratingDream {
@@ -303,8 +371,6 @@ struct AreaDetailView: View {
             return
         }
         if viewModel.isKitchenClosed {
-            viewModel.errorMessage = String(localized: "areaDetail.camera.error.kitchenClosed")
-            viewModel.showError = true
             return
         }
         let flowMode = cameraFlowViewModel.determineMode(for: area)
@@ -313,11 +379,7 @@ struct AreaDetailView: View {
             viewModel.showError = true
             return
         }
-        if !streamingManager.configs.isEmpty {
-            showCameraSourcePicker = true
-        } else {
-            requestDeviceCameraCapture()
-        }
+        showCameraSourcePicker = true
 #else
         presentCameraAlert(String(localized: "areaDetail.camera.error.notSupported"))
 #endif
@@ -335,22 +397,15 @@ struct AreaDetailView: View {
 #endif
     }
 
-    private func startCameraCapture() {
+    private func startCameraCapture(for target: CameraPermissionTarget) {
 #if os(iOS)
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         switch status {
         case .authorized:
-            showCameraCapture = true
+            openCameraCapture(for: target)
         case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video) { granted in
-                DispatchQueue.main.async {
-                    if granted {
-                        showCameraCapture = true
-                    } else {
-                        presentCameraAlert(String(localized: "areaDetail.camera.error.permission"))
-                    }
-                }
-            }
+            pendingCameraPermissionTarget = target
+            showCameraPermissionPrimer = true
         case .denied, .restricted:
             presentCameraAlert(String(localized: "areaDetail.camera.error.permission"))
         @unknown default:
@@ -359,6 +414,32 @@ struct AreaDetailView: View {
 #else
         presentCameraAlert(String(localized: "areaDetail.camera.error.notSupported"))
 #endif
+    }
+
+    private func requestCameraPermissionAndCapture() {
+#if os(iOS)
+        let target = pendingCameraPermissionTarget
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            DispatchQueue.main.async {
+                showCameraPermissionPrimer = false
+                pendingCameraPermissionTarget = nil
+                if granted, let target {
+                    openCameraCapture(for: target)
+                } else if !granted {
+                    presentCameraAlert(String(localized: "areaDetail.camera.error.permission"))
+                }
+            }
+        }
+#endif
+    }
+
+    private func openCameraCapture(for target: CameraPermissionTarget) {
+        switch target {
+        case .scan:
+            showCameraCapture = true
+        case .verification:
+            showVerificationCapture = true
+        }
     }
 
     // Updated 2026-01-14 22:02 GMT
@@ -373,10 +454,44 @@ struct AreaDetailView: View {
         }
     }
 
+    private func completeTask(_ task: CleaningTask, haptic: HapticStyle) {
+        if let snapshot = viewModel.toggleTaskCompletion(task) {
+            showTaskUndoToast(snapshot)
+        }
+        hapticFeedback(haptic)
+        checkForVerificationPrompt()
+    }
+
+    private func showTaskUndoToast(_ snapshot: AreaViewModel.TaskUndoSnapshot) {
+        taskUndoSnapshot = snapshot
+        showTaskUndoToast = true
+        taskUndoTask?.cancel()
+        taskUndoTask = Task { @MainActor in
+            try? await Task.sleep(for: .seconds(4))
+            hideTaskUndoToast()
+        }
+    }
+
+    private func hideTaskUndoToast() {
+        taskUndoTask?.cancel()
+        taskUndoTask = nil
+        showTaskUndoToast = false
+    }
+
     // Added 2026-01-14 20:55 GMT
     private func presentCameraAlert(_ message: String) {
         cameraAlertMessage = message
         showCameraAlert = true
+    }
+
+    private func handleErrorAction(_ action: FriendlyErrorAction) {
+        switch action {
+        case .retry:
+            viewModel.dismissError()
+        case .openSettings, .manageCameras:
+            AppIntentRoute.store(.settings)
+            viewModel.dismissError()
+        }
     }
 
     private var deleteWarningMessage: String {
@@ -466,6 +581,30 @@ struct AreaDetailView: View {
             .joined(separator: " • ")
     }
 
+    private var linkedStreamingCamera: StreamingCameraConfig? {
+        guard let linkedId = area.streamingCameraId else { return nil }
+        return streamingManager.configs.first { $0.id == linkedId }
+    }
+
+    @ViewBuilder
+    private var kitchenClosedCard: some View {
+        if viewModel.isKitchenClosed {
+            GlassCardView {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(String(localized: "areaDetail.kitchenClosed.title"))
+                        .dsFont(.headline, weight: .bold)
+                    Text(String(format: String(localized: "areaDetail.kitchenClosed.message"), viewModel.completedTodayCount, viewModel.dailyBowlTarget))
+                        .dsFont(.subheadline)
+                        .foregroundStyle(.secondary)
+                    Text(String(localized: "areaDetail.kitchenClosed.helper"))
+                        .dsFont(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .padding(theme.grid.cardPadding)
+            }
+        }
+    }
+
     // MARK: - Task List
 
     // Added 2026-01-14 23:20 GMT
@@ -475,21 +614,35 @@ struct AreaDetailView: View {
                 .dsFont(.headline, weight: .bold)
                 .padding(.horizontal, 4)
 
+            if showTaskExplanation {
+                GlassCardView {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(String(localized: "areaDetail.tasks.explainer.title"))
+                            .dsFont(.headline, weight: .bold)
+                        Text(String(localized: "areaDetail.tasks.explainer.message"))
+                            .dsFont(.subheadline)
+                            .foregroundStyle(.secondary)
+                        Button(String(localized: "areaDetail.tasks.explainer.action")) {
+                            showTaskExplanation = false
+                            taskExplanationShown = true
+                        }
+                        .buttonStyle(.nativeGlass)
+                    }
+                    .padding(theme.grid.cardPadding)
+                }
+            }
+
             TaskPierogiDropCard(
                 tasks: taskDropTasks,
-                goldenChancePercent: AppConfigService.shared.pierogiGoldenChancePercent
+                goldenChancePercent: AppConfigService.shared.verificationGoldenChancePercent
             ) { task in
                 withAnimation(theme.motion.listSpring) {
-                    viewModel.toggleTaskCompletion(task)
+                    completeTask(task, haptic: .success)
                 }
-                hapticFeedback(.success)
-                checkForVerificationPrompt()
             } onToggleTask: { task in
                 withAnimation(theme.motion.listSpring) {
-                    viewModel.toggleTaskCompletion(task)
+                    completeTask(task, haptic: .selection)
                 }
-                hapticFeedback(.selection)
-                checkForVerificationPrompt()
             }
         }
         .overlay(alignment: .topLeading) {
@@ -507,10 +660,18 @@ struct AreaDetailView: View {
             if taskTapHintShown == false, taskDropTasks.isEmpty == false {
                 showTaskTapHint = true
             }
+            if taskExplanationShown == false, taskDropTasks.isEmpty == false {
+                showTaskExplanation = true
+            }
         }
         .onChange(of: showTaskTapHint) { _, isVisible in
             if isVisible == false {
                 taskTapHintShown = true
+            }
+        }
+        .onChange(of: showTaskExplanation) { _, isVisible in
+            if isVisible == false {
+                taskExplanationShown = true
             }
         }
     }
@@ -525,12 +686,16 @@ struct AreaDetailView: View {
     @ViewBuilder
     private var verificationCallout: some View {
         if let bowl = area.latestBowl, bowl.isCompleted, isVerificationDecisionPending {
+            let pointsLabel = verificationPointsLabel(for: bowl)
             GlassCardView {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(String(localized: "areaDetail.verify.callout.title"))
                         .dsFont(.headline, weight: .bold)
                     Text(String(localized: "areaDetail.verify.callout.message"))
                         .dsFont(.subheadline)
+                        .foregroundStyle(.secondary)
+                    Text(pointsLabel)
+                        .dsFont(.caption)
                         .foregroundStyle(.secondary)
                     Button {
                         beginVerificationFlow()
@@ -557,18 +722,54 @@ struct AreaDetailView: View {
 
     // Added 2026-01-14 22:02 GMT
     private var floatingCameraButton: some View {
-        Button {
-            requestCameraCapture()
-            hapticFeedback(.medium)
-        } label: {
-            Label(String(localized: "areaDetail.camera.checkIn"), systemImage: "camera")
-                .dsFont(.headline)
+        VStack(alignment: .trailing, spacing: 6) {
+            Button {
+                requestCameraCapture()
+                hapticFeedback(.medium)
+            } label: {
+                Label(String(localized: "areaDetail.camera.checkIn"), systemImage: "camera")
+                    .dsFont(.headline)
+            }
+            .buttonStyle(.nativeGlassProminent)
+            .disabled(isCameraDisabled)
+            .accessibilityLabel(String(localized: "areaDetail.camera.checkIn"))
+            .accessibilityHint(cameraDisabledReason ?? "")
+
+            if let reason = cameraDisabledReason {
+                Text(reason)
+                    .dsFont(.caption2)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(.ultraThinMaterial, in: Capsule())
+            }
         }
-        .buttonStyle(.nativeGlassProminent)
-        .disabled(viewModel.isGeneratingDream || viewModel.isLoading)
-        .accessibilityLabel(String(localized: "areaDetail.camera.checkIn"))
         .padding(.trailing, theme.grid.sectionSpacing)
         .padding(.bottom, theme.grid.sectionSpacing)
+    }
+
+    private var isCameraDisabled: Bool {
+        cameraDisabledReason != nil
+    }
+
+    private var cameraDisabledReason: String? {
+        if viewModel.isGeneratingDream {
+            return String(localized: "areaDetail.camera.disabled.generating")
+        }
+        if viewModel.isLoading {
+            return String(localized: "areaDetail.camera.disabled.loading")
+        }
+        if isVerificationDecisionPending {
+            return String(localized: "areaDetail.camera.disabled.verification")
+        }
+        if viewModel.isKitchenClosed {
+            return String(localized: "areaDetail.camera.disabled.kitchenClosed")
+        }
+        let flowMode = cameraFlowViewModel.determineMode(for: area)
+        if area.inProgressBowl != nil, flowMode != .appendTasks {
+            return String(localized: "areaDetail.camera.disabled.finishCurrent")
+        }
+        return nil
     }
 
     // MARK: - Verification Flow
@@ -600,6 +801,21 @@ struct AreaDetailView: View {
     private func beginVerificationFlow() {
         verificationTier = viewModel.isGoldenEligible() ? .golden : .blue
         showVerificationReady = true
+    }
+
+    private func verificationPointsLabel(for bowl: AreaBowl) -> String {
+        let tier = bowl.verificationTier == .none ? (viewModel.isGoldenEligible() ? .golden : .blue) : bowl.verificationTier
+        let points = points(for: tier)
+        return String(format: String(localized: "areaDetail.verify.callout.points"), points)
+    }
+
+    private func points(for tier: BowlVerificationTier) -> Int {
+        switch tier {
+        case .golden:
+            return AppConfigService.shared.verificationGoldenPoints
+        case .blue, .none:
+            return AppConfigService.shared.verificationBluePoints
+        }
     }
 
     private func handleVerificationCapturedImage(_ image: UIImage) {
@@ -708,6 +924,11 @@ struct AreaDetailView: View {
         }
     }
 
+}
+
+private enum CameraPermissionTarget {
+    case scan
+    case verification
 }
 
 #Preview {

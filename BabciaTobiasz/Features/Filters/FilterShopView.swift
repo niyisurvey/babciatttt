@@ -52,6 +52,11 @@ struct FilterShopView: View {
         .toolbar { toolbarContent }
         .onAppear { viewModel.loadAreas() }
         .alert(String(localized: "common.error.title"), isPresented: $viewModel.showError) {
+            if let action = viewModel.errorAction {
+                Button(action.localizedTitle) {
+                    handleErrorAction(action)
+                }
+            }
             Button(String(localized: "common.ok")) { viewModel.dismissError() }
         } message: {
             Text(viewModel.errorMessage ?? String(localized: "common.error.fallback"))
@@ -162,6 +167,17 @@ struct FilterShopView: View {
             Text(String(localized: "filters.toolbar.title"))
                 .dsFont(.headline, weight: .bold)
                 .lineLimit(1)
+        }
+    }
+
+    private func handleErrorAction(_ action: FriendlyErrorAction) {
+        switch action {
+        case .retry:
+            viewModel.loadAreas()
+            viewModel.dismissError()
+        case .openSettings, .manageCameras:
+            AppIntentRoute.store(.settings)
+            viewModel.dismissError()
         }
     }
 }

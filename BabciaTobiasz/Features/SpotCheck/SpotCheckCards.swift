@@ -54,11 +54,14 @@ struct SpotCheckLimitCard: View {
 }
 
 struct SpotCheckMinimumAreasCard: View {
+    let currentAreas: Int
     let minAreas: Int
     let onCreateArea: () -> Void
     @Environment(\.dsTheme) private var theme
 
     var body: some View {
+        let clampedCurrent = min(currentAreas, minAreas)
+        let progress = minAreas == 0 ? 0 : Double(clampedCurrent) / Double(minAreas)
         GlassCardView {
             VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                 Text(String(localized: "spotCheck.minimum.title"))
@@ -66,6 +69,11 @@ struct SpotCheckMinimumAreasCard: View {
                 Text(String(format: String(localized: "spotCheck.minimum.message"), minAreas))
                     .dsFont(.body)
                     .foregroundStyle(.secondary)
+                Text(String(format: String(localized: "spotCheck.minimum.progress"), clampedCurrent, minAreas))
+                    .dsFont(.caption)
+                    .foregroundStyle(.secondary)
+                ProgressView(value: progress)
+                    .tint(theme.palette.primary)
                 Button {
                     onCreateArea()
                     hapticFeedback(.selection)
@@ -82,6 +90,7 @@ struct SpotCheckMinimumAreasCard: View {
 
 struct SpotCheckRevealCard: View {
     let onReveal: () -> Void
+    let onSurpriseMe: () -> Void
     @Environment(\.dsTheme) private var theme
 
     var body: some View {
@@ -92,13 +101,23 @@ struct SpotCheckRevealCard: View {
                 Text(String(localized: "spotCheck.reveal.prompt"))
                     .dsFont(.body)
                     .foregroundStyle(.secondary)
-                Button {
-                    onReveal()
-                } label: {
-                    Label(String(localized: "spotCheck.reveal.action"), systemImage: "sparkles")
-                        .dsFont(.headline)
+                HStack(spacing: theme.grid.listSpacing) {
+                    Button {
+                        onReveal()
+                    } label: {
+                        Label(String(localized: "spotCheck.reveal.action"), systemImage: "sparkles")
+                            .dsFont(.headline)
+                    }
+                    .buttonStyle(.nativeGlass)
+
+                    Button {
+                        onSurpriseMe()
+                    } label: {
+                        Label(String(localized: "spotCheck.reveal.surprise"), systemImage: "camera.fill")
+                            .dsFont(.headline)
+                    }
+                    .buttonStyle(.nativeGlassProminent)
                 }
-                .buttonStyle(.nativeGlassProminent)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -156,12 +175,21 @@ struct SpotCheckLimitReachedCard: View {
 }
 
 struct SpotCheckCooldownCard: View {
+    let remainingText: String?
+
     var body: some View {
         GlassCardView {
-            Text(String(localized: "spotCheck.cooldown.all"))
-                .dsFont(.body)
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            VStack(alignment: .leading, spacing: 6) {
+                Text(String(localized: "spotCheck.cooldown.all"))
+                    .dsFont(.body)
+                    .foregroundStyle(.secondary)
+                if let remainingText {
+                    Text(String(format: String(localized: "spotCheck.cooldown.remaining"), remainingText))
+                        .dsFont(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }

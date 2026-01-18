@@ -18,6 +18,7 @@ struct MicroTidyView: View {
 
     @State private var viewModel = MicroTidyViewModel()
     @State private var showCameraCapture = false
+    @State private var showCameraPermissionPrimer = false
     @State private var showCameraAlert = false
     @State private var cameraAlertMessage = ""
     @State private var didConfigure = false
@@ -51,6 +52,11 @@ struct MicroTidyView: View {
             Text(cameraAlertMessage)
         }
         .alert(String(localized: "common.error.title"), isPresented: $viewModel.showError) {
+            if let action = viewModel.errorAction {
+                Button(action.localizedTitle) {
+                    handleErrorAction(action)
+                }
+            }
             Button(String(localized: "common.ok")) { viewModel.showError = false }
         } message: {
             Text(viewModel.errorMessage ?? String(localized: "common.error.fallback"))
@@ -64,6 +70,20 @@ struct MicroTidyView: View {
                 onCancel: {
                     showCameraCapture = false
                 }
+            )
+        }
+        .fullScreenCover(isPresented: $showCameraPermissionPrimer) {
+            CameraPermissionPrimerView(
+                title: String(localized: "cameraPermission.title"),
+                message: String(localized: "cameraPermission.message"),
+                bullets: [
+                    String(localized: "cameraPermission.bullet.capture"),
+                    String(localized: "cameraPermission.bullet.verify")
+                ],
+                primaryActionTitle: String(localized: "cameraPermission.action.continue"),
+                secondaryActionTitle: String(localized: "cameraPermission.action.notNow"),
+                onContinue: { requestCameraPermissionAndCapture() },
+                onNotNow: { showCameraPermissionPrimer = false }
             )
         }
         .onAppear {
@@ -201,15 +221,7 @@ struct MicroTidyView: View {
         case .authorized:
             showCameraCapture = true
         case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video) { granted in
-                DispatchQueue.main.async {
-                    if granted {
-                        showCameraCapture = true
-                    } else {
-                        presentCameraAlert(String(localized: "microTidy.camera.permission"))
-                    }
-                }
-            }
+            showCameraPermissionPrimer = true
         case .denied, .restricted:
             presentCameraAlert(String(localized: "microTidy.camera.permission"))
         @unknown default:
@@ -217,6 +229,21 @@ struct MicroTidyView: View {
         }
         #else
         presentCameraAlert(String(localized: "microTidy.camera.notSupported"))
+        #endif
+    }
+
+    private func requestCameraPermissionAndCapture() {
+        #if os(iOS)
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            DispatchQueue.main.async {
+                showCameraPermissionPrimer = false
+                if granted {
+                    showCameraCapture = true
+                } else {
+                    presentCameraAlert(String(localized: "microTidy.camera.permission"))
+                }
+            }
+        }
         #endif
     }
 
@@ -232,6 +259,17 @@ struct MicroTidyView: View {
     private func presentCameraAlert(_ message: String) {
         cameraAlertMessage = message
         showCameraAlert = true
+    }
+
+    private func handleErrorAction(_ action: FriendlyErrorAction) {
+        switch action {
+        case .retry:
+            viewModel.refresh()
+            viewModel.showError = false
+        case .openSettings, .manageCameras:
+            AppIntentRoute.store(.settings)
+            viewModel.showError = false
+        }
     }
 }
 

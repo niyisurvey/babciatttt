@@ -19,9 +19,13 @@ struct MainTabView: View {
         TabView(selection: $viewModel.selectedTab) {
             Tab(String(localized: "mainTab.home.label"), systemImage: "house.fill", value: MainTabViewModel.Tab.home) {
                 if let homeViewModel {
-                    HomeView(viewModel: homeViewModel, areaViewModel: areaViewModel)
+                    HomeView(
+                        viewModel: homeViewModel,
+                        areaViewModel: areaViewModel,
+                        onQuickCheckIn: handleQuickCheckIn
+                    )
                 } else {
-                    ProgressView(String(localized: "mainTab.loading"))
+                    SkeletonLoadingView()
                 }
             }
             
@@ -113,6 +117,19 @@ struct MainTabView: View {
             break
         }
         appIntentRoute = AppIntentRoute.none.rawValue
+    }
+
+    private func handleQuickCheckIn() {
+        areaViewModel.loadAreas()
+        let minAreas = AppConfigService.shared.spotCheckMinAreasRequired
+        if areaViewModel.areas.count >= minAreas {
+            viewModel.selectedTab = .babcia
+        } else {
+            viewModel.selectedTab = .areas
+            DispatchQueue.main.async {
+                areaViewModel.addNewArea()
+            }
+        }
     }
 }
 

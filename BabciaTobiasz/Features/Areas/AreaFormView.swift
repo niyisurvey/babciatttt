@@ -9,6 +9,7 @@ import SwiftUI
 struct AreaFormView: View {
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
 
     @Bindable var viewModel: AreaViewModel
     let area: Area?
@@ -19,11 +20,16 @@ struct AreaFormView: View {
     @State private var selectedIcon: String = "square.grid.2x2.fill"
     @State private var selectedColor: Color = .teal
     @State private var selectedPersona: BabciaPersona = .classic
+    @State private var selectedCameraId: UUID?
+    @State private var showCameraSetup = false
+    @State private var streamingManager = StreamingCameraManager()
 
     private let iconOptions = [
         "square.grid.2x2.fill", "bed.double.fill", "cup.and.saucer.fill", "fork.knife",
         "sofa.fill", "lamp.desk.fill", "sink.fill", "washer.fill",
-        "leaf.fill", "star.fill", "heart.fill", "sparkles"
+        "leaf.fill", "star.fill", "heart.fill", "sparkles",
+        "books.vertical.fill", "tv.fill", "gamecontroller.fill", "pencil.and.ruler.fill",
+        "door.left.hand.open", "figure.walk", "music.note.house.fill", "car.fill"
     ]
 
     private let colorOptions: [Color] = [
@@ -61,6 +67,10 @@ struct AreaFormView: View {
                                     TextField(String(localized: "areaForm.basicInfo.description.placeholder"), text: $description, axis: .vertical)
                                         .dsFont(.body)
                                         .lineLimit(3...6)
+
+                                    Text(String(localized: "areaForm.basicInfo.description.hint"))
+                                        .dsFont(.caption2)
+                                        .foregroundStyle(.secondary)
                                 }
                             }
 
@@ -128,8 +138,56 @@ struct AreaFormView: View {
                         }
 
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
+                            Text(String(localized: "areaForm.camera.title"))
+                                .dsFont(.headline, weight: .bold)
+                                .padding(.horizontal, 4)
+
+                            GlassCardView {
+                                VStack(alignment: .leading, spacing: 12) {
+                                    Text(String(localized: "areaForm.camera.helper"))
+                                        .dsFont(.caption)
+                                        .foregroundStyle(.secondary)
+
+                                    if streamingManager.configs.isEmpty {
+                                        Button {
+                                            showCameraSetup = true
+                                            hapticFeedback(.selection)
+                                        } label: {
+                                            Label(String(localized: "areaForm.camera.emptyAction"), systemImage: "plus.circle.fill")
+                                                .dsFont(.headline)
+                                        }
+                                        .buttonStyle(.nativeGlassProminent)
+                                    } else {
+                                        Picker(String(localized: "areaForm.camera.picker.title"), selection: $selectedCameraId) {
+                                            Text(String(localized: "areaForm.camera.none"))
+                                                .tag(UUID?.none)
+                                            ForEach(streamingManager.configs) { config in
+                                                Text(config.name)
+                                                    .tag(UUID?.some(config.id))
+                                            }
+                                        }
+                                        .pickerStyle(.menu)
+
+                                        Button {
+                                            showCameraSetup = true
+                                            hapticFeedback(.selection)
+                                        } label: {
+                                            Label(String(localized: "areaForm.camera.manage"), systemImage: "camera.fill")
+                                                .dsFont(.subheadline, weight: .bold)
+                                        }
+                                        .buttonStyle(.nativeGlass)
+                                    }
+                                }
+                            }
+                        }
+
+                        VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                             Text(String(localized: "areaForm.reminders.title"))
                                 .dsFont(.headline, weight: .bold)
+                                .padding(.horizontal, 4)
+                            Text(String(localized: "areaForm.reminders.helper"))
+                                .dsFont(.caption)
+                                .foregroundStyle(.secondary)
                                 .padding(.horizontal, 4)
 
                             if let area {
@@ -149,8 +207,18 @@ struct AreaFormView: View {
                                 .padding(.horizontal, 4)
 
                             GlassCardView {
-                                previewCard
+                                VStack(alignment: .leading, spacing: 12) {
+                                    Text(String(localized: "areaForm.preview.helper"))
+                                        .dsFont(.caption)
+                                        .foregroundStyle(.secondary)
+                                    previewCard
+                                }
+                                .padding(.vertical, 6)
                             }
+                            .overlay(
+                                RoundedRectangle(cornerRadius: theme.shape.cardCornerRadius)
+                                    .stroke(selectedColor.opacity(0.5), lineWidth: 2)
+                            )
                         }
                     }
                     .padding()
@@ -182,6 +250,11 @@ struct AreaFormView: View {
                 }
             }
             .onAppear { loadExistingData() }
+            .sheet(isPresented: $showCameraSetup) {
+                NavigationStack {
+                    CameraSetupView()
+                }
+            }
         }
     }
 
@@ -221,8 +294,13 @@ struct AreaFormView: View {
                         .frame(width: 36, height: 36)
                         .overlay(
                             Circle()
-                                .stroke(Color.primary, lineWidth: selectedColor == color ? 3 : 0)
-                                .padding(2)
+                                .stroke(theme.palette.primary.opacity(selectedColor == color ? 0.9 : 0), lineWidth: 3)
+                                .padding(1)
+                        )
+                        .overlay(
+                            Circle()
+                                .stroke(Color.white.opacity(selectedColor == color ? 0.8 : 0), lineWidth: 1)
+                                .padding(4)
                         )
                         .overlay {
                             if selectedColor == color {
@@ -268,6 +346,8 @@ struct AreaFormView: View {
     }
 
     private func loadExistingData() {
+        streamingManager.configure(modelContext: modelContext)
+        streamingManager.loadConfigs()
         guard let area = area else { return }
 
         name = area.name
@@ -275,6 +355,7 @@ struct AreaFormView: View {
         selectedIcon = area.iconName
         selectedColor = area.color
         selectedPersona = area.persona
+        selectedCameraId = area.streamingCameraId
     }
 
     private func saveArea() {
@@ -285,6 +366,7 @@ struct AreaFormView: View {
                 area.iconName = selectedIcon
                 area.colorHex = selectedColor.hexString
                 area.persona = selectedPersona
+                area.streamingCameraId = selectedCameraId
 
                 await viewModel.updateArea(area)
             } else {
@@ -294,7 +376,8 @@ struct AreaFormView: View {
                     iconName: selectedIcon,
                     colorHex: selectedColor.hexString,
                     dreamImageName: nil,
-                    persona: selectedPersona
+                    persona: selectedPersona,
+                    streamingCameraId: selectedCameraId
                 )
             }
 

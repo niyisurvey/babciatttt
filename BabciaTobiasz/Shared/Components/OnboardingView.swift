@@ -176,7 +176,36 @@ struct OnboardingView: View {
             accentColor: theme.palette.warmAccent,
             view: AnyView(BabciaPersonaSelectionView(selectedPersona: $selectedPersona))
         )
-        return pageSteps + [personaStep]
+        var steps = pageSteps + [personaStep]
+
+        if AppConfigService.shared.tutorialShowCameraSetup {
+            steps.append(
+                OnboardingStep(
+                    accentColor: theme.palette.primary,
+                    view: AnyView(OnboardingCameraSetupStepView())
+                )
+            )
+        }
+
+        if AppConfigService.shared.tutorialShowWalkthrough {
+            steps.append(
+                OnboardingStep(
+                    accentColor: theme.palette.coolAccent,
+                    view: AnyView(OnboardingWalkthroughStepView())
+                )
+            )
+        }
+
+        if AppConfigService.shared.tutorialShowThemeSelection {
+            steps.append(
+                OnboardingStep(
+                    accentColor: theme.palette.tertiary,
+                    view: AnyView(OnboardingThemeSelectionStepView())
+                )
+            )
+        }
+
+        return steps
     }
 }
 

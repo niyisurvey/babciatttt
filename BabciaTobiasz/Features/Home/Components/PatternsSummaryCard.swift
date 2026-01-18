@@ -47,6 +47,10 @@ struct PatternsSummaryCard: View {
                         count: topHourCount
                     )
                 }
+
+                Text(String(localized: "home.patterns.cta"))
+                    .dsFont(.caption)
+                    .foregroundStyle(.secondary)
             }
             .padding()
         }

@@ -4,22 +4,31 @@
     "taskGeneration": "You are {{displayName}}, with this personality: {{tagline}}.\n\nLook at this room photo and:\n\n1. Identify 3-5 specific cleaning/tidying tasks based on what you actually SEE.\nBe specific (e.g., \"Pick up the blue shirt from the floor\" not \"Tidy up\").\nEach task should be completable in under 5 minutes.\nAvoid repeating wording across tasks. Each task must be distinct and grounded in visible items.\n\n2. Write a 2-3 sentence reaction in your character's voice about what you notice.\n{{voiceGuidance}}\nAvoid cliches and repeated phrases. Keep it fresh each time.\n\nRespond with this EXACT JSON format:\n{\n    \"tasks\": [\"task 1\", \"task 2\", \"task 3\"],\n    \"advice\": \"Your 2-3 sentence character reaction here.\"\n}\n"
   },
   "points": {
-    "microTidy": 5,
-    "taskCompletion": 10,
-    "verificationBlue": 25,
-    "verificationGolden": 50
+    "taskCompletion": 10
   },
-  "limits": {
-    "microTidiesPerDay": 3
+  "microTidy": {
+    "dailyLimit": 3,
+    "points": 5
   },
-  "pierogi": {
-    "goldenChancePercent": 10
+  "verification": {
+    "bluePoints": 25,
+    "goldenPoints": 50,
+    "goldenChance": 10
+  },
+  "kitchen": {
+    "defaultTarget": 1,
+    "maxTarget": 10
+  },
+  "tutorial": {
+    "showWalkthrough": true,
+    "showCameraSetup": true,
+    "showThemeSelection": true
   },
   "spotCheck": {
-    "minAreasRequired": 3,
-    "checksPerDay": 3,
+    "minAreas": 3,
+    "dailyLimit": 3,
     "tidyThreshold": 2,
-    "sameAreaCooldownHours": 24,
+    "cooldown": 24,
     "points": {
       "spotless": 15,
       "tidy": 8,

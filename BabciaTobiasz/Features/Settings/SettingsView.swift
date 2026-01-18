@@ -5,6 +5,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @AppStorage("appTheme") private var appTheme: AppTheme = .system
+    @State private var showChangelog = false
     
     @Environment(\.dsTheme) private var theme
     
@@ -42,6 +43,10 @@ struct SettingsView: View {
                             Text(String(localized: "settings.cameras.title"))
                                 .dsFont(.headline, weight: .bold)
                                 .padding(.horizontal, 4)
+                            Text(String(localized: "settings.cameras.subtitle"))
+                                .dsFont(.caption)
+                                .foregroundStyle(.secondary)
+                                .padding(.horizontal, 4)
 
                             GlassCardView {
                                 NavigationLink {
@@ -49,6 +54,34 @@ struct SettingsView: View {
                                 } label: {
                                     HStack {
                                         Text(String(localized: "settings.cameras.action"))
+                                            .dsFont(.headline)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .font(.system(size: theme.grid.iconTiny))
+                                            .foregroundStyle(.tertiary)
+                                    }
+                                    .padding(.vertical, 4)
+                                }
+                            }
+                        }
+
+                        VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
+                            Text(String(localized: "settings.microTidy.title"))
+                                .dsFont(.headline, weight: .bold)
+                                .padding(.horizontal, 4)
+                            Text(String(localized: "settings.microTidy.subtitle"))
+                                .dsFont(.caption)
+                                .foregroundStyle(.secondary)
+                                .padding(.horizontal, 4)
+
+                            GlassCardView {
+                                NavigationLink {
+                                    MicroTidyView(onOpenAreas: {
+                                        AppIntentRoute.store(.areas)
+                                    })
+                                } label: {
+                                    HStack {
+                                        Text(String(localized: "settings.microTidy.action"))
                                             .dsFont(.headline)
                                         Spacer()
                                         Image(systemName: "chevron.right")
@@ -93,13 +126,22 @@ struct SettingsView: View {
                             
                             GlassCardView {
                                 VStack(spacing: 16) {
-                                    HStack {
-                                        Text(String(localized: "settings.about.version")).dsFont(.body)
-                                        Spacer()
-                                        Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
-                                            .dsFont(.body)
-                                            .foregroundStyle(.secondary)
+                                    Button {
+                                        showChangelog = true
+                                    } label: {
+                                        HStack {
+                                            Text(String(localized: "settings.about.version"))
+                                                .dsFont(.body)
+                                            Spacer()
+                                            Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
+                                                .dsFont(.body)
+                                                .foregroundStyle(.secondary)
+                                            Image(systemName: "chevron.right")
+                                                .font(.system(size: theme.grid.iconTiny))
+                                                .foregroundStyle(.tertiary)
+                                        }
                                     }
+                                    .buttonStyle(.plain)
                                     
                                     Divider()
                                     
@@ -126,6 +168,11 @@ struct SettingsView: View {
                     Text(String(localized: "settings.toolbar.title"))
                         .dsFont(.title2, weight: .bold)
                         .lineLimit(1)
+                }
+            }
+            .sheet(isPresented: $showChangelog) {
+                NavigationStack {
+                    ChangelogView()
                 }
             }
         }

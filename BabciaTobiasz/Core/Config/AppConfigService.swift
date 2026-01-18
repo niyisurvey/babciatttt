@@ -14,18 +14,29 @@ struct AppConfig: Decodable, Sendable {
     }
 
     struct Points: Decodable, Sendable {
-        let microTidy: Int
         let taskCompletion: Int
-        let verificationBlue: Int
-        let verificationGolden: Int
     }
 
-    struct Limits: Decodable, Sendable {
-        let microTidiesPerDay: Int
+    struct MicroTidy: Decodable, Sendable {
+        let dailyLimit: Int
+        let points: Int
     }
 
-    struct Pierogi: Decodable, Sendable {
-        let goldenChancePercent: Int
+    struct Verification: Decodable, Sendable {
+        let bluePoints: Int
+        let goldenPoints: Int
+        let goldenChance: Int
+    }
+
+    struct Kitchen: Decodable, Sendable {
+        let defaultTarget: Int
+        let maxTarget: Int
+    }
+
+    struct Tutorial: Decodable, Sendable {
+        let showWalkthrough: Bool
+        let showCameraSetup: Bool
+        let showThemeSelection: Bool
     }
 
     struct SpotCheck: Decodable, Sendable {
@@ -35,11 +46,19 @@ struct AppConfig: Decodable, Sendable {
             let messy: Int
         }
 
-        let minAreasRequired: Int
-        let checksPerDay: Int
+        let minAreas: Int
+        let dailyLimit: Int
         let tidyThreshold: Int
-        let sameAreaCooldownHours: Int
+        let cooldownHours: Int
         let points: Points
+
+        private enum CodingKeys: String, CodingKey {
+            case minAreas
+            case dailyLimit
+            case tidyThreshold
+            case cooldownHours = "cooldown"
+            case points
+        }
     }
 
     struct BabciaResponses: Decodable, Sendable {
@@ -49,8 +68,10 @@ struct AppConfig: Decodable, Sendable {
 
     let geminiPrompts: GeminiPrompts
     let points: Points
-    let limits: Limits
-    let pierogi: Pierogi
+    let microTidy: MicroTidy
+    let verification: Verification
+    let kitchen: Kitchen
+    let tutorial: Tutorial
     let spotCheck: SpotCheck
     let babciaResponses: BabciaResponses
 }
@@ -129,16 +150,21 @@ final class AppConfigService {
         return next
     }
 
-    var microTidyLimit: Int { config.limits.microTidiesPerDay }
-    var microTidyPoints: Int { config.points.microTidy }
+    var microTidyLimit: Int { config.microTidy.dailyLimit }
+    var microTidyPoints: Int { config.microTidy.points }
     var taskCompletionPoints: Int { config.points.taskCompletion }
-    var verificationBluePoints: Int { config.points.verificationBlue }
-    var verificationGoldenPoints: Int { config.points.verificationGolden }
-    var pierogiGoldenChancePercent: Int { config.pierogi.goldenChancePercent }
-    var spotCheckMinAreasRequired: Int { config.spotCheck.minAreasRequired }
-    var spotCheckLimit: Int { config.spotCheck.checksPerDay }
+    var verificationBluePoints: Int { config.verification.bluePoints }
+    var verificationGoldenPoints: Int { config.verification.goldenPoints }
+    var verificationGoldenChancePercent: Int { config.verification.goldenChance }
+    var kitchenDefaultTarget: Int { config.kitchen.defaultTarget }
+    var kitchenMaxTarget: Int { config.kitchen.maxTarget }
+    var tutorialShowWalkthrough: Bool { config.tutorial.showWalkthrough }
+    var tutorialShowCameraSetup: Bool { config.tutorial.showCameraSetup }
+    var tutorialShowThemeSelection: Bool { config.tutorial.showThemeSelection }
+    var spotCheckMinAreasRequired: Int { config.spotCheck.minAreas }
+    var spotCheckLimit: Int { config.spotCheck.dailyLimit }
     var spotCheckTidyThreshold: Int { config.spotCheck.tidyThreshold }
-    var spotCheckCooldownHours: Int { config.spotCheck.sameAreaCooldownHours }
+    var spotCheckCooldownHours: Int { config.spotCheck.cooldownHours }
     var spotCheckPoints: AppConfig.SpotCheck.Points { config.spotCheck.points }
 
     private func resolveConfigURL() -> URL? {
@@ -154,19 +180,16 @@ final class AppConfigService {
                 verification: "",
                 taskGeneration: ""
             ),
-            points: .init(
-                microTidy: 5,
-                taskCompletion: 10,
-                verificationBlue: 25,
-                verificationGolden: 50
-            ),
-            limits: .init(microTidiesPerDay: 3),
-            pierogi: .init(goldenChancePercent: 10),
+            points: .init(taskCompletion: 10),
+            microTidy: .init(dailyLimit: 3, points: 5),
+            verification: .init(bluePoints: 25, goldenPoints: 50, goldenChance: 10),
+            kitchen: .init(defaultTarget: 1, maxTarget: 10),
+            tutorial: .init(showWalkthrough: true, showCameraSetup: true, showThemeSelection: true),
             spotCheck: .init(
-                minAreasRequired: 3,
-                checksPerDay: 3,
+                minAreas: 3,
+                dailyLimit: 3,
                 tidyThreshold: 2,
-                sameAreaCooldownHours: 24,
+                cooldownHours: 24,
                 points: .init(
                     spotless: 15,
                     tidy: 8,

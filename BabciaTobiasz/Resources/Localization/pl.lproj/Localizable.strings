@@ -128,9 +128,9 @@
 "areas.stats.tooltip.title" = "Statystyki obszaru";
 "areas.stats.tooltip.message" = "Śledź ukończone miski, passę i dzienny cel. Utrzymuj kuchnię otwartą, rozkładając miski w czasie.";
 "areas.filter.title" = "Filtr";
-"areas.filter.all" = "Wszystkie";
-"areas.filter.completed" = "Ukończone dziś";
-"areas.filter.incomplete" = "Nieukończone";
+"areas.filter.all" = "Wszystkie pokoje";
+"areas.filter.completed" = "Zrobione dziś";
+"areas.filter.incomplete" = "Wymaga uwagi";
 "areas.hero.inactive" = "Babcia tęskniła.";
 "areas.menu.edit" = "Edytuj obszar";
 "areas.menu.delete" = "Usuń obszar";
@@ -285,7 +285,7 @@
 "spotCheck.points.tidy" = "Schludnie +%d";
 "spotCheck.points.messy" = "Bałagan +%d";
 "spotCheck.minimum.title" = "Za mało pokoi";
-"spotCheck.minimum.message" = "Utwórz co najmniej %d obszary, aby odblokować Kontrolę.";
+"spotCheck.minimum.message" = "Babcia potrzebuje co najmniej %d obszarów, aby wybór był uczciwy i różnorodny.";
 "spotCheck.minimum.action" = "Utwórz obszar";
 "spotCheck.reveal.title" = "Babcia wybiera";
 "spotCheck.reveal.prompt" = "Wylosuje dla ciebie pokój.";
@@ -597,3 +597,166 @@
 "preview.tooltip.description" = "Dane pogody są aktualizowane automatycznie co 30 minut.";
 "preview.tooltip.secondTitle" = "Sprytne wskazówki";
 "preview.tooltip.secondDescription" = "Otrzymuj spersonalizowane sugestie oparte na pogodzie.";
+
+// MARK: - UX Fixes
+// Area Detail
+"areaDetail.camera.disabled.finishCurrent" = "Najpierw zakończ obecną miskę.";
+"areaDetail.camera.disabled.generating" = "Trwa generowanie Snu...";
+"areaDetail.camera.disabled.kitchenClosed" = "Kuchnia dziś zamknięta.";
+"areaDetail.camera.disabled.loading" = "Ładowanie obszaru...";
+"areaDetail.camera.disabled.verification" = "Najpierw zdecyduj o weryfikacji.";
+"areaDetail.completion.points" = "Punkty bazowe: +%d";
+"areaDetail.hero.placeholder.title" = "Zacznij pierwszy skan";
+"areaDetail.hero.placeholder.message" = "Zrób zdjęcie, aby dostać zadania i Sen.";
+"areaDetail.kitchenClosed.title" = "Kuchnia zamknięta";
+"areaDetail.kitchenClosed.message" = "Dzisiejszy cel osiągnięty (%d z %d misek).";
+"areaDetail.kitchenClosed.helper" = "Wróć jutro albo zwiększ dzienny cel.";
+"areaDetail.tasks.explainer.title" = "Skąd te zadania?";
+"areaDetail.tasks.explainer.message" = "Babcia tworzy zadania na podstawie zdjęcia pokoju, żebyś zawsze znał kolejny krok.";
+"areaDetail.tasks.explainer.action" = "Rozumiem";
+"areaDetail.tasks.undo.message" = "Zadanie ukończone.";
+"areaDetail.tasks.undo.action" = "Cofnij";
+"areaDetail.verify.callout.points" = "Bonus: +%d punktów";
+
+// Area Form
+"areaForm.basicInfo.description.hint" = "Np. co tu zwykle zalega albo co chcesz szybko ogarnąć.";
+"areaForm.camera.title" = "Kamera strumieniowa";
+"areaForm.camera.helper" = "Podepnij kamerę do szybkich skanów i weryfikacji.";
+"areaForm.camera.emptyAction" = "Dodaj kamerę";
+"areaForm.camera.picker.title" = "Wybierz kamerę";
+"areaForm.camera.none" = "Brak";
+"areaForm.camera.manage" = "Zarządzaj kamerami";
+"areaForm.reminders.helper" = "Przypomnienia pomagają utrzymać tempo bez zrywania passy.";
+"areaForm.preview.helper" = "Tak będzie wyglądać karta obszaru.";
+
+// Area List
+"areaRow.status.needsScan" = "Wymaga skanu";
+"areaRow.status.inProgress" = "W toku";
+"areaRow.status.doneToday" = "Zrobione dziś";
+"areaRow.status.verification" = "Weryfikacja oczekuje";
+"areas.delete.confirm.title" = "Usunąć obszar?";
+"areas.delete.confirm.message" = "Usunie to obszar i wszystkie miski.";
+"areas.scan.progress.title" = "Tworzymy plan";
+"areas.scan.progress.analyzing" = "Analiza pokoju";
+"areas.scan.progress.tasks" = "Tworzenie zadań";
+"areas.scan.progress.dream" = "Tworzenie Snu";
+"areas.stats.dailyTarget.helper" = "Sugerowane: %d dziennie, by kuchnia była otwarta.";
+"areas.stats.tooltip.cta" = "Jak to działa";
+
+// Camera Permissions
+"cameraPermission.title" = "Dostęp do aparatu";
+"cameraPermission.message" = "Babcia używa aparatu, aby zobaczyć pokój i tworzyć zadania.";
+"cameraPermission.bullet.capture" = "Zdjęcia robimy tylko, gdy naciśniesz aparat.";
+"cameraPermission.bullet.verify" = "Zdjęcia do weryfikacji dają bonusowe punkty.";
+"cameraPermission.action.continue" = "Kontynuuj";
+"cameraPermission.action.notNow" = "Nie teraz";
+
+// Camera Support
+"camera.supported.rtsp.title" = "RTSP";
+"camera.supported.rtsp.detail" = "Działa z większością kamer IP.";
+"camera.supported.tapo.title" = "Tapo";
+"camera.supported.tapo.detail" = "Połączenie lokalne z kontem Tapo.";
+"camera.supported.ha.title" = "Home Assistant";
+"camera.supported.ha.detail" = "Użyj encji kamer z HA.";
+
+// Camera Setup
+"cameraSetup.empty.supportedTitle" = "Obsługiwane kamery";
+"cameraSetup.error.generic" = "Nie udało się skonfigurować kamery.";
+"cameraSetup.quickAdd.tip.network" = "Telefon i kamera muszą być w tej samej sieci Wi-Fi.";
+"cameraSetup.quickAdd.tip.power" = "Sprawdź, czy kamera jest włączona i ma dostęp lokalny.";
+"cameraSetup.quickAdd.tip.manual" = "Nadal nic? Dodaj kamerę ręcznie.";
+
+// Camera Source
+"cameraSource.addStreaming" = "Dodaj kamerę strumieniową";
+"cameraSource.linked" = "Użyj podłączonej (%@)";
+
+// Camera Flow
+"cameraFlow.error.generic" = "Nie udało się zrobić zdjęcia.";
+"cameraFlow.error.missingArea" = "Brak obszaru. Otwórz go ponownie.";
+
+// Errors
+"error.action.retry" = "Spróbuj ponownie";
+"error.action.settings" = "Otwórz ustawienia";
+"error.action.cameras" = "Zarządzaj kamerami";
+"error.points.generic" = "Punkty są teraz niedostępne.";
+"error.points.insufficient" = "Za mało punktów.";
+
+// Onboarding
+"onboarding.camera.title" = "Połącz kamery";
+"onboarding.camera.subtitle" = "Opcjonalnie: kamery strumieniowe do szybkich skanów i weryfikacji.";
+"onboarding.camera.supportedTitle" = "Obsługiwane kamery";
+"onboarding.camera.empty" = "Brak podłączonych kamer.";
+"onboarding.camera.configured" = "Połączono: %d";
+"onboarding.camera.scan" = "Skanuj kamery";
+"onboarding.camera.manual" = "Dodaj ręcznie";
+"onboarding.camera.helper" = "Możesz pominąć i dodać kamery później w Ustawieniach.";
+"onboarding.tutorial.title" = "Jak działa check-in";
+"onboarding.tutorial.subtitle" = "Poznaj pętlę, zanim zaczniesz.";
+"onboarding.tutorial.toggle" = "Pokazuj tutorial w aplikacji";
+"onboarding.tutorial.step.scan.title" = "Skan";
+"onboarding.tutorial.step.scan.detail" = "Zrób zdjęcie, aby rozpocząć miskę.";
+"onboarding.tutorial.step.tasks.title" = "Zadania";
+"onboarding.tutorial.step.tasks.detail" = "Dostajesz 3-5 szybkich zadań na podstawie pokoju.";
+"onboarding.tutorial.step.complete.title" = "Ukończ";
+"onboarding.tutorial.step.complete.detail" = "Odhaczaj zadania, gdy je zrobisz.";
+"onboarding.tutorial.step.verify.title" = "Weryfikacja";
+"onboarding.tutorial.step.verify.detail" = "Zrób zdjęcie po, by zgarnąć bonus.";
+"onboarding.theme.title" = "Wybierz motyw";
+"onboarding.theme.subtitle" = "Zdecyduj, jak Babcia ma wyglądać.";
+"onboarding.theme.helper" = "Możesz to zmienić w Ustawieniach.";
+
+// Personas
+"persona.detail.title" = "Osobowość";
+"persona.detail.quoteTitle" = "Hasło";
+"persona.classic.description" = "Ciepła, ale konkretna. Wspiera i pilnuje standardu.";
+"persona.classic.quote" = "Jedz, sprzątaj, powtarzaj.";
+"persona.baroness.description" = "Elegancja i wysokie wymagania. Ma być idealnie.";
+"persona.baroness.quote" = "To nie może przynieść wstydu domowi.";
+"persona.warrior.description" = "Bojowy rytm i rozkazy. Sprzątanie to misja.";
+"persona.warrior.quote" = "Żaden bałagan nie przetrwa.";
+"persona.wellness.description" = "Spokojna i uważna. Małe kroki, trwały efekt.";
+"persona.wellness.quote" = "Oddychaj, porządkuj, zacznij.";
+"persona.coach.description" = "Twarda miłość i motywacja. Popycha do działania.";
+"persona.coach.quote" = "Rób robotę.";
+
+// Reminders
+"reminders.helper" = "Ustaw godziny, a Babcia delikatnie przypomni.";
+"reminders.toast.saved" = "Przypomnienia zapisane.";
+
+// Home
+"home.quickCheckIn" = "Szybki check-in";
+"home.hero.placeholder.title" = "Zrób pierwszy check-in";
+"home.hero.placeholder.message" = "Zrób zdjęcie, aby dostać zadania i wizje Snu.";
+"home.microTidy.title" = "Micro Tidy";
+"home.microTidy.subtitle" = "Mały reset, gdy potrzebujesz szybkiej wygranej.";
+"home.pointsExplainer.title" = "Jak działają punkty";
+"home.pointsExplainer.message" = "Wykonuj zadania, by napełniać miskę. W sklepie wydajesz punkty na filtry Snów.";
+"home.pointsExplainer.action" = "Rozumiem";
+"home.patterns.cta" = "Zobacz analitykę";
+
+// Gallery
+"gallery.empty.action" = "Zrób pierwszy check-in";
+
+// Settings
+"settings.cameras.subtitle" = "Połącz kamery RTSP, Tapo lub Home Assistant.";
+"settings.microTidy.title" = "Micro Tidy";
+"settings.microTidy.subtitle" = "Jedno szybkie zdjęcie na małą wygraną.";
+"settings.microTidy.action" = "Otwórz Micro Tidy";
+"settings.apiKeys.dream.helper" = "Potrzebny do zadań i obrazów Snu.";
+"settings.apiKeys.dream.where" = "Klucz znajdziesz na swoim koncie DreamRoom.";
+"settings.apiKeys.gemini.helper" = "Potrzebny do weryfikacji zdjęć.";
+"settings.apiKeys.gemini.where" = "Klucz znajdziesz w Google AI Studio.";
+
+// Changelog
+"changelog.title" = "Zmiany";
+"changelog.subtitle" = "Co nowego w najnowszej wersji.";
+"changelog.section.latest" = "Ostatnie aktualizacje";
+"changelog.item.1" = "Onboarding zawiera opcjonalną konfigurację kamer i krótki tutorial.";
+"changelog.item.2" = "Spot Check ma przycisk Niespodzianka i licznik cooldownu.";
+"changelog.item.3" = "Tworzenie obszaru wspiera kamery strumieniowe i jaśniejsze przypomnienia.";
+
+// Spot Check
+"spotCheck.minimum.progress" = "%d z %d obszarów";
+"spotCheck.reveal.surprise" = "Niespodzianka";
+"spotCheck.reveal.spinning" = "Kręci się...";
+"spotCheck.cooldown.remaining" = "Spróbuj ponownie za %@.";

@@ -41,26 +41,33 @@ struct GalleryItemCard: View {
         }) {
             GlassCardView {
                 VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-                    ZStack(alignment: .bottomTrailing) {
+                    ZStack(alignment: .bottom) {
                         GalleryImageView(imageData: bowl.galleryImageData)
                             .frame(height: theme.grid.detailCardHeightLarge)
-                        personaBadge
-                            .padding(theme.grid.cardPaddingTight)
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(title)
+                                    .dsFont(.caption2, weight: .bold)
+                                Text(subtitle)
+                                    .dsFont(.caption2)
+                            }
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 6)
+                            .background(.black.opacity(0.35), in: Capsule())
+
+                            Spacer()
+
+                            personaBadge
+                        }
+                        .padding(theme.grid.cardPaddingTight)
                     }
 
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(title)
-                            .dsFont(.headline, weight: .bold)
-                            .lineLimit(1)
-
                         Text(personaLabel)
                             .dsFont(.caption)
                             .foregroundStyle(.secondary)
                             .lineLimit(1)
-
-                        Text(subtitle)
-                            .dsFont(.caption)
-                            .foregroundStyle(.secondary)
                     }
                 }
                 .padding(theme.grid.cardPadding)

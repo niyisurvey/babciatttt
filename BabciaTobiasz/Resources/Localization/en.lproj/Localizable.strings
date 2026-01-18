@@ -202,9 +202,9 @@
 "areas.stats.tooltip.title" = "Area Statistics";
 "areas.stats.tooltip.message" = "Track bowls completed, streaks, and your daily target. Keep the kitchen open by pacing bowls.";
 "areas.filter.title" = "Filter";
-"areas.filter.all" = "All";
-"areas.filter.completed" = "Completed Today";
-"areas.filter.incomplete" = "Not Completed";
+"areas.filter.all" = "All Rooms";
+"areas.filter.completed" = "Done Today";
+"areas.filter.incomplete" = "Needs Attention";
 "areas.hero.inactive" = "Babcia has missed you.";
 "areas.menu.edit" = "Edit Area";
 "areas.menu.delete" = "Delete Area";
@@ -359,7 +359,7 @@
 "spotCheck.points.tidy" = "Tidy +%d";
 "spotCheck.points.messy" = "Messy +%d";
 "spotCheck.minimum.title" = "Need More Rooms";
-"spotCheck.minimum.message" = "Create at least %d areas to unlock Spot Check.";
+"spotCheck.minimum.message" = "Babcia needs at least %d areas so the pick stays fair and varied.";
 "spotCheck.minimum.action" = "Create Area";
 "spotCheck.reveal.title" = "Babcia is picking";
 "spotCheck.reveal.prompt" = "She'll choose a random room for you.";
@@ -671,3 +671,166 @@
 "preview.tooltip.description" = "Real-time weather data updates every 30 minutes automatically.";
 "preview.tooltip.secondTitle" = "Smart Insights";
 "preview.tooltip.secondDescription" = "Get personalized suggestions based on weather conditions to plan your daily areas.";
+
+// MARK: - UX Fixes
+// Area Detail
+"areaDetail.camera.disabled.finishCurrent" = "Finish the current bowl first.";
+"areaDetail.camera.disabled.generating" = "Generating dream...";
+"areaDetail.camera.disabled.kitchenClosed" = "Kitchen is closed for today.";
+"areaDetail.camera.disabled.loading" = "Loading area...";
+"areaDetail.camera.disabled.verification" = "Resolve verification first.";
+"areaDetail.completion.points" = "Base points: +%d";
+"areaDetail.hero.placeholder.title" = "Start your first scan";
+"areaDetail.hero.placeholder.message" = "Capture a photo to generate tasks and a Dream.";
+"areaDetail.kitchenClosed.title" = "Kitchen closed";
+"areaDetail.kitchenClosed.message" = "You've hit today's target (%d of %d bowls).";
+"areaDetail.kitchenClosed.helper" = "Come back tomorrow or raise your daily target.";
+"areaDetail.tasks.explainer.title" = "Where these tasks come from";
+"areaDetail.tasks.explainer.message" = "Babcia generates tasks from your room photo so you always know the next best move.";
+"areaDetail.tasks.explainer.action" = "Got it";
+"areaDetail.tasks.undo.message" = "Task completed.";
+"areaDetail.tasks.undo.action" = "Undo";
+"areaDetail.verify.callout.points" = "Bonus: +%d points";
+
+// Area Form
+"areaForm.basicInfo.description.hint" = "Try: what's messy, what's important, or when you want it reset.";
+"areaForm.camera.title" = "Streaming Camera";
+"areaForm.camera.helper" = "Link a camera to reuse it for scans or verification.";
+"areaForm.camera.emptyAction" = "Add streaming camera";
+"areaForm.camera.picker.title" = "Select a camera";
+"areaForm.camera.none" = "None";
+"areaForm.camera.manage" = "Manage cameras";
+"areaForm.reminders.helper" = "Reminders help you keep pace without breaking streaks.";
+"areaForm.preview.helper" = "Preview how your area card will look.";
+
+// Area List
+"areaRow.status.needsScan" = "Needs scan";
+"areaRow.status.inProgress" = "In progress";
+"areaRow.status.doneToday" = "Done today";
+"areaRow.status.verification" = "Verification pending";
+"areas.delete.confirm.title" = "Delete area?";
+"areas.delete.confirm.message" = "This will remove the area and its bowls.";
+"areas.scan.progress.title" = "Creating your plan";
+"areas.scan.progress.analyzing" = "Analyzing your room";
+"areas.scan.progress.tasks" = "Building your tasks";
+"areas.scan.progress.dream" = "Dreaming your vision";
+"areas.stats.dailyTarget.helper" = "Suggested: %d per day to keep the kitchen open.";
+"areas.stats.tooltip.cta" = "How this works";
+
+// Camera Permissions
+"cameraPermission.title" = "Camera access";
+"cameraPermission.message" = "Babcia uses your camera to see your room and create tasks.";
+"cameraPermission.bullet.capture" = "Photos are captured only when you tap the camera.";
+"cameraPermission.bullet.verify" = "Verification photos can earn bonus points.";
+"cameraPermission.action.continue" = "Continue";
+"cameraPermission.action.notNow" = "Not now";
+
+// Camera Support
+"camera.supported.rtsp.title" = "RTSP streams";
+"camera.supported.rtsp.detail" = "Works with most IP cameras.";
+"camera.supported.tapo.title" = "Tapo cameras";
+"camera.supported.tapo.detail" = "Local connect with your Tapo login.";
+"camera.supported.ha.title" = "Home Assistant";
+"camera.supported.ha.detail" = "Use your HA camera entities.";
+
+// Camera Setup
+"cameraSetup.empty.supportedTitle" = "Supported camera types";
+"cameraSetup.error.generic" = "Camera setup failed.";
+"cameraSetup.quickAdd.tip.network" = "Make sure your phone and camera are on the same Wi-Fi.";
+"cameraSetup.quickAdd.tip.power" = "Check that the camera is powered on and local access is enabled.";
+"cameraSetup.quickAdd.tip.manual" = "Still not seeing it? Add the camera manually.";
+
+// Camera Source
+"cameraSource.addStreaming" = "Add streaming camera";
+"cameraSource.linked" = "Use linked camera (%@)";
+
+// Camera Flow
+"cameraFlow.error.generic" = "Camera capture failed.";
+"cameraFlow.error.missingArea" = "Area missing. Try reopening the area.";
+
+// Errors
+"error.action.retry" = "Try again";
+"error.action.settings" = "Open Settings";
+"error.action.cameras" = "Manage Cameras";
+"error.points.generic" = "Points are unavailable right now.";
+"error.points.insufficient" = "Not enough points.";
+
+// Onboarding
+"onboarding.camera.title" = "Connect your cameras";
+"onboarding.camera.subtitle" = "Optional: link streaming cameras for quick check-ins and verification.";
+"onboarding.camera.supportedTitle" = "Supported cameras";
+"onboarding.camera.empty" = "No cameras connected yet.";
+"onboarding.camera.configured" = "%d camera(s) connected.";
+"onboarding.camera.scan" = "Scan for cameras";
+"onboarding.camera.manual" = "Add manually";
+"onboarding.camera.helper" = "You can skip this step and add cameras later in Settings.";
+"onboarding.tutorial.title" = "How a check-in works";
+"onboarding.tutorial.subtitle" = "See the loop before you start.";
+"onboarding.tutorial.toggle" = "Show this tutorial in the app";
+"onboarding.tutorial.step.scan.title" = "Scan";
+"onboarding.tutorial.step.scan.detail" = "Take a photo to start the bowl.";
+"onboarding.tutorial.step.tasks.title" = "Tasks";
+"onboarding.tutorial.step.tasks.detail" = "Get 3-5 quick tasks based on the room.";
+"onboarding.tutorial.step.complete.title" = "Complete";
+"onboarding.tutorial.step.complete.detail" = "Tap tasks as you finish them.";
+"onboarding.tutorial.step.verify.title" = "Verify";
+"onboarding.tutorial.step.verify.detail" = "Take an after photo to earn bonus points.";
+"onboarding.theme.title" = "Pick your theme";
+"onboarding.theme.subtitle" = "Choose what Babcia looks like on your device.";
+"onboarding.theme.helper" = "You can change this anytime in Settings.";
+
+// Personas
+"persona.detail.title" = "Personality";
+"persona.detail.quoteTitle" = "Signature line";
+"persona.classic.description" = "Warm, no-nonsense guidance with a soft edge.";
+"persona.classic.quote" = "Eat, clean, repeat.";
+"persona.baroness.description" = "Elegant, exacting standards with a cold stare.";
+"persona.baroness.quote" = "This will not embarrass the household.";
+"persona.warrior.description" = "High energy, battle-ready commands for fast wins.";
+"persona.warrior.quote" = "No clutter survives.";
+"persona.wellness.description" = "Calm, mindful coaching for steady progress.";
+"persona.wellness.quote" = "Breathe, reset, begin.";
+"persona.coach.description" = "Tough love and blunt motivation that keeps you moving.";
+"persona.coach.quote" = "Do the work.";
+
+// Reminders
+"reminders.helper" = "Pick times for gentle nudges to keep your area on track.";
+"reminders.toast.saved" = "Reminders saved.";
+
+// Home
+"home.quickCheckIn" = "Quick Check-In";
+"home.hero.placeholder.title" = "Start your first check-in";
+"home.hero.placeholder.message" = "Snap a photo to generate tasks and Dream visions.";
+"home.microTidy.title" = "Micro Tidy";
+"home.microTidy.subtitle" = "One small reset when you need a quick win.";
+"home.pointsExplainer.title" = "How pierogi points work";
+"home.pointsExplainer.message" = "Complete tasks to fill the pot. Spend points in the shop to unlock Dream filters.";
+"home.pointsExplainer.action" = "Got it";
+"home.patterns.cta" = "View analytics";
+
+// Gallery
+"gallery.empty.action" = "Start your first check-in";
+
+// Settings
+"settings.cameras.subtitle" = "Connect RTSP, Tapo, or Home Assistant cameras.";
+"settings.microTidy.title" = "Micro Tidy";
+"settings.microTidy.subtitle" = "One quick photo for a small win.";
+"settings.microTidy.action" = "Open Micro Tidy";
+"settings.apiKeys.dream.helper" = "Used to generate tasks and Dream images.";
+"settings.apiKeys.dream.where" = "Get a key from your DreamRoom account.";
+"settings.apiKeys.gemini.helper" = "Used to judge verification photos.";
+"settings.apiKeys.gemini.where" = "Get a key from Google AI Studio.";
+
+// Changelog
+"changelog.title" = "Changelog";
+"changelog.subtitle" = "What changed in the latest build.";
+"changelog.section.latest" = "Latest updates";
+"changelog.item.1" = "Onboarding now includes optional camera setup and a quick tutorial.";
+"changelog.item.2" = "Spot Check reveals have a Surprise Me shortcut and cooldown timer.";
+"changelog.item.3" = "Area creation supports linked streaming cameras and clearer reminders.";
+
+// Spot Check
+"spotCheck.minimum.progress" = "%d of %d areas added";
+"spotCheck.reveal.surprise" = "Surprise Me";
+"spotCheck.reveal.spinning" = "Spinning...";
+"spotCheck.cooldown.remaining" = "Try again in %@.";

@@ -93,6 +93,12 @@ struct GalleryView: View {
                     .dsFont(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
+
+                Button(String(localized: "gallery.empty.action")) {
+                    AppIntentRoute.store(.startScan)
+                    hapticFeedback(.medium)
+                }
+                .buttonStyle(.nativeGlassProminent)
             }
             .padding(.vertical, theme.grid.sectionSpacing)
             .padding(.horizontal, theme.grid.cardPadding)
