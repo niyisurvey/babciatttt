@@ -541,10 +541,10 @@ final class AreaViewModel {
 
     @discardableResult
     func toggleTaskCompletion(_ task: CleaningTask) -> TaskUndoSnapshot? {
-        guard let persistenceService = persistenceService else { return }
+        guard let persistenceService = persistenceService else { return nil }
         do {
-            guard let bowl = task.bowl else { return }
-            guard !task.isCompleted else { return }
+            guard let bowl = task.bowl else { return nil }
+            guard !task.isCompleted else { return nil }
             let completionDate = Date()
             task.completedAt = completionDate
             bowl.basePoints += task.points

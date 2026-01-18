@@ -86,8 +86,8 @@ struct AreaListView: View {
             }
             .alert(String(localized: "areas.delete.confirm.title"), isPresented: $showDeleteConfirmation) {
                 Button(String(localized: "common.delete"), role: .destructive) {
-                    if let pendingDeleteArea {
-                        viewModel.deleteArea(pendingDeleteArea)
+                    if let areaToDelete = pendingDeleteArea {
+                        viewModel.deleteArea(areaToDelete)
                         pendingDeleteArea = nil
                     }
                 }

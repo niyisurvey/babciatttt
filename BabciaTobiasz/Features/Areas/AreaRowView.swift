@@ -95,9 +95,7 @@ struct AreaRowView: View {
                     .lineLimit(1)
             }
 
-            if let status = statusBadge {
-                status
-            }
+            statusBadge
 
             reminderPreviewRow
 
@@ -160,19 +158,21 @@ struct AreaRowView: View {
             .joined(separator: " • ")
     }
 
-    private var statusBadge: some View? {
-        guard let status = statusState else { return nil }
-        return HStack(spacing: 6) {
-            Circle()
-                .fill(status.color)
-                .frame(width: theme.grid.iconTiny / 2, height: theme.grid.iconTiny / 2)
-            Text(status.label)
-                .dsFont(.caption2, weight: .bold)
-                .foregroundStyle(status.color)
+    @ViewBuilder
+    private var statusBadge: some View {
+        if let status = statusState {
+            HStack(spacing: 6) {
+                Circle()
+                    .fill(status.color)
+                    .frame(width: theme.grid.iconTiny / 2, height: theme.grid.iconTiny / 2)
+                Text(status.label)
+                    .dsFont(.caption2, weight: .bold)
+                    .foregroundStyle(status.color)
+            }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(status.color.opacity(0.12), in: Capsule())
         }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 4)
-        .background(status.color.opacity(0.12), in: Capsule())
     }
 
     private var statusState: AreaRowStatus? {

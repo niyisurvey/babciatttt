@@ -51,9 +51,9 @@ struct OnboardingWalkthroughStepView: View {
                 .frame(width: 26)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(String(localized: title))
+                Text(LocalizedStringKey(title))
                     .dsFont(.subheadline, weight: .bold)
-                Text(String(localized: detail))
+                Text(LocalizedStringKey(detail))
                     .dsFont(.caption)
                     .foregroundStyle(.secondary)
             }
