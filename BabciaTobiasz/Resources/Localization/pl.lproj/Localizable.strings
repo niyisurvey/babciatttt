@@ -75,7 +75,7 @@
 // MARK: - Main Tabs
 "mainTab.home.label" = "Start";
 "mainTab.areas.label" = "Obszary";
-"mainTab.babcia.label" = "Babcia";
+"mainTab.babcia.label" = "Szybki skan";
 "mainTab.gallery.label" = "Galeria";
 "mainTab.settings.label" = "Ustawienia";
 "mainTab.loading" = "Ładowanie...";
@@ -208,21 +208,25 @@
 "areaDetail.tasks.empty" = "Brak zadań. Zrób skan, aby zacząć.";
 "cameraHero.title" = "Gotowy na skan";
 "cameraHero.primary" = "Rozpocznij skan";
-"areaDetail.verify.callout.title" = "Gotowy do weryfikacji?";
-"areaDetail.verify.callout.message" = "Zrób zdjęcie po, aby zablokować bonusowe punkty.";
-"areaDetail.verify.callout.primary" = "Rozpocznij weryfikację";
-"areaDetail.verify.callout.secondary" = "Weź punkty podstawowe";
+"areaDetail.verify.callout.title" = "Zweryfikować dla bonusu?";
+"areaDetail.verify.callout.message" = "Zrób szybkie zdjęcie po, aby potwierdzić efekt.";
+"areaDetail.verify.callout.primary" = "Tak, weryfikuj";
+"areaDetail.verify.callout.secondary" = "Nie, weź punkty";
 "areaDetail.verify.ready.title" = "Gotowy do weryfikacji?";
 "areaDetail.verify.ready.primary" = "Rozpocznij weryfikację";
 "areaDetail.verify.ready.secondary" = "Nie teraz";
-"areaDetail.verify.ready.message.golden" = "Poświęć chwilę na porządek przed złotym zdjęciem po.";
+"areaDetail.verify.ready.message.golden" = "Poświęć chwilę na porządek przed zdjęciem po.";
 "areaDetail.verify.ready.message.blue" = "Poświęć chwilę na porządek przed zdjęciem po.";
-"areaDetail.verify.celebration.title.golden" = "Złota weryfikacja zakończona";
+"areaDetail.verify.celebration.title.golden" = "Weryfikacja zakończona";
 "areaDetail.verify.celebration.title.blue" = "Weryfikacja zakończona";
 "areaDetail.verify.celebration.title.failed" = "Weryfikacja wymaga poprawy";
-"areaDetail.verify.celebration.message.golden" = "Złoty bonus dodany do miski.";
+"areaDetail.verify.celebration.message.golden" = "Bonusowe punkty dodane do miski.";
 "areaDetail.verify.celebration.message.blue" = "Bonusowe punkty dodane do miski.";
 "areaDetail.verify.celebration.message.failed" = "Tym razem bez bonusu. Działaj dalej i spróbuj ponownie.";
+"areaDetail.exitPrompt.title" = "Gotowe?";
+"areaDetail.exitPrompt.message" = "Możesz zamknąć aplikację albo sprzątać dalej.";
+"areaDetail.exitPrompt.primary" = "Wyjdź";
+"areaDetail.exitPrompt.secondary" = "Sprzątaj dalej";
 "areaDetail.menu.edit" = "Edytuj obszar";
 "areaDetail.menu.delete" = "Usuń obszar";
 
@@ -276,26 +280,29 @@
 "microTidy.camera.permission" = "Dostęp do aparatu jest wymagany, aby zrobić szybkie ogarnięcie.";
 "microTidy.camera.notSupported" = "Aparat jest dostępny tylko na urządzeniach iOS.";
 "microTidy.camera.captureFailed" = "Nie udało się odczytać zrobionego zdjęcia.";
-"spotCheck.title" = "Kontrola Babci";
-"spotCheck.subtitle" = "Babcia wybiera pokój. Ty udowadniasz, że jest schludnie.";
+"spotCheck.title" = "Szybki skan";
+"spotCheck.subtitle" = "Losowy pokój, aparat od razu.";
 "spotCheck.limit.title" = "Limit dzienny";
 "spotCheck.limit.status" = "Pozostało %d z %d na dziś";
 "spotCheck.points.title" = "Punkty bonusowe";
 "spotCheck.points.spotless" = "Czyściutko +%d";
 "spotCheck.points.tidy" = "Schludnie +%d";
 "spotCheck.points.messy" = "Bałagan +%d";
-"spotCheck.minimum.title" = "Za mało pokoi";
-"spotCheck.minimum.message" = "Babcia potrzebuje co najmniej %d obszarów, aby wybór był uczciwy i różnorodny.";
-"spotCheck.minimum.action" = "Utwórz obszar";
-"spotCheck.reveal.title" = "Babcia wybiera";
-"spotCheck.reveal.prompt" = "Wylosuje dla ciebie pokój.";
-"spotCheck.reveal.action" = "Odsłoń pokój";
-"spotCheck.reveal.message" = "Babcia wybiera twój pokój...";
+"spotCheck.minimum.title" = "Dodaj pokój, aby zacząć";
+"spotCheck.minimum.message" = "Dodaj %d pokój, aby uruchomić Szybki skan.";
+"spotCheck.minimum.action" = "Utwórz pokój";
+"spotCheck.reveal.title" = "Losowanie pokoju";
+"spotCheck.reveal.prompt" = "Wylosujemy pokój dla ciebie.";
+"spotCheck.reveal.action" = "Wylosuj pokój";
+"spotCheck.reveal.message" = "Losujemy twój pokój...";
+"spotCheck.quickScan.title" = "Szybki skan";
+"spotCheck.quickScan.message" = "Wylosujemy pokój i od razu otworzymy aparat.";
+"spotCheck.quickScan.action" = "Losowy skan";
 "spotCheck.area.title" = "Wybrany obszar";
-"spotCheck.area.empty" = "Kliknij odsłonięcie, aby zobaczyć wybór Babci.";
-"spotCheck.action.camera" = "Zrób zdjęcie kontroli";
-"spotCheck.action.awaiting" = "Odsłoń pokój, aby zacząć kontrolę.";
-"spotCheck.limit.reached" = "Wyczerpano dzienny limit kontroli.";
+"spotCheck.area.empty" = "Kliknij Szybki skan, aby wylosować pokój.";
+"spotCheck.action.camera" = "Losowy skan";
+"spotCheck.action.awaiting" = "Kliknij Szybki skan, aby zacząć.";
+"spotCheck.limit.reached" = "Wyczerpano dzienny limit Szybkiego skanu.";
 "spotCheck.cooldown.all" = "Wszystkie obszary odpoczywają. Spróbuj później.";
 "spotCheck.processing" = "Babcia ocenia...";
 "spotCheck.result.title" = "Wynik";
@@ -308,7 +315,7 @@
 "spotCheck.response.title" = "Babcia mówi";
 "spotCheck.camera.alert.title" = "Dostęp do aparatu";
 "spotCheck.camera.unavailable" = "Aparat nie jest dostępny na tym urządzeniu.";
-"spotCheck.camera.permission" = "Dostęp do aparatu jest wymagany do wykonania kontroli.";
+"spotCheck.camera.permission" = "Dostęp do aparatu jest wymagany do Szybkiego skanu.";
 "spotCheck.camera.notSupported" = "Robienie zdjęć jest dostępne tylko na iOS.";
 "spotCheck.camera.captureFailed" = "Nie udało się odczytać zdjęcia.";
 "spotCheck.error.pipelineUnavailable" = "Pipeline skanowania jest niedostępny.";
@@ -581,6 +588,7 @@
 // MARK: - Camera Source
 "cameraSource.title" = "Wybierz źródło";
 "cameraSource.message" = "Wybierz źródło kamery.";
+"cameraSource.choose" = "Wybierz źródło";
 "cameraSource.device" = "Aparat iPhone";
 "cameraSource.streaming" = "Kamera strumieniowa";
 "cameraSource.pick.title" = "Wybierz kamerę";
@@ -752,11 +760,11 @@
 "changelog.subtitle" = "Co nowego w najnowszej wersji.";
 "changelog.section.latest" = "Ostatnie aktualizacje";
 "changelog.item.1" = "Onboarding zawiera opcjonalną konfigurację kamer i krótki tutorial.";
-"changelog.item.2" = "Spot Check ma przycisk Niespodzianka i licznik cooldownu.";
+"changelog.item.2" = "Szybki skan od razu otwiera aparat.";
 "changelog.item.3" = "Tworzenie obszaru wspiera kamery strumieniowe i jaśniejsze przypomnienia.";
 
 // Spot Check
-"spotCheck.minimum.progress" = "%d z %d obszarów";
-"spotCheck.reveal.surprise" = "Niespodzianka";
-"spotCheck.reveal.spinning" = "Kręci się...";
+"spotCheck.minimum.progress" = "Dodane pokoje: %d z %d";
+"spotCheck.reveal.surprise" = "Szybki skan teraz";
+"spotCheck.reveal.spinning" = "Losowanie...";
 "spotCheck.cooldown.remaining" = "Spróbuj ponownie za %@.";

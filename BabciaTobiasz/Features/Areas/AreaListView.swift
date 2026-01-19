@@ -30,7 +30,7 @@ struct AreaListView: View {
         if viewModel.isInactiveForHero {
             return .sadDisappointed
         }
-        if showVictoryHero {
+        if showVictoryHero || viewModel.completedTodayCount > 0 {
             return .victory
         }
         return .happy

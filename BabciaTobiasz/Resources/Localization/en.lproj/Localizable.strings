@@ -149,7 +149,7 @@
 // MARK: - Main Tabs
 "mainTab.home.label" = "Home";
 "mainTab.areas.label" = "Areas";
-"mainTab.babcia.label" = "Babcia";
+"mainTab.babcia.label" = "Quick Scan";
 "mainTab.gallery.label" = "Gallery";
 "mainTab.settings.label" = "Settings";
 "mainTab.loading" = "Loading...";
@@ -282,21 +282,25 @@
 "areaDetail.tasks.empty" = "No tasks yet. Run a scan to begin.";
 "cameraHero.title" = "Ready to scan";
 "cameraHero.primary" = "Start scan";
-"areaDetail.verify.callout.title" = "Ready to verify?";
-"areaDetail.verify.callout.message" = "Take an after photo to lock in your bonus points.";
-"areaDetail.verify.callout.primary" = "Start verification";
-"areaDetail.verify.callout.secondary" = "Take base points";
+"areaDetail.verify.callout.title" = "Verify for bonus points?";
+"areaDetail.verify.callout.message" = "Take a quick after photo to confirm the win.";
+"areaDetail.verify.callout.primary" = "Yes, verify";
+"areaDetail.verify.callout.secondary" = "No, take points";
 "areaDetail.verify.ready.title" = "Ready to Verify?";
 "areaDetail.verify.ready.primary" = "Start verification";
 "areaDetail.verify.ready.secondary" = "Not now";
-"areaDetail.verify.ready.message.golden" = "Take a moment to tidy before your Golden after photo.";
+"areaDetail.verify.ready.message.golden" = "Take a moment to tidy before your after photo.";
 "areaDetail.verify.ready.message.blue" = "Take a moment to tidy before your after photo.";
-"areaDetail.verify.celebration.title.golden" = "Golden verification complete";
+"areaDetail.verify.celebration.title.golden" = "Verification complete";
 "areaDetail.verify.celebration.title.blue" = "Verification complete";
 "areaDetail.verify.celebration.title.failed" = "Verification needs more work";
-"areaDetail.verify.celebration.message.golden" = "Golden bonus added to your pot.";
+"areaDetail.verify.celebration.message.golden" = "Bonus points added to your pot.";
 "areaDetail.verify.celebration.message.blue" = "Bonus points added to your pot.";
 "areaDetail.verify.celebration.message.failed" = "No bonus added this time. Keep going and try again.";
+"areaDetail.exitPrompt.title" = "All set?";
+"areaDetail.exitPrompt.message" = "You can close the app or keep cleaning.";
+"areaDetail.exitPrompt.primary" = "Exit";
+"areaDetail.exitPrompt.secondary" = "Keep cleaning";
 "areaDetail.menu.edit" = "Edit Area";
 "areaDetail.menu.delete" = "Delete Area";
 
@@ -350,26 +354,29 @@
 "microTidy.camera.permission" = "Camera access is required to capture a micro tidy.";
 "microTidy.camera.notSupported" = "Camera capture is only available on iOS devices.";
 "microTidy.camera.captureFailed" = "Could not read the captured photo.";
-"spotCheck.title" = "Babcia's Spot Check";
-"spotCheck.subtitle" = "Babcia picks a room. You prove it's tidy.";
+"spotCheck.title" = "Quick Scan";
+"spotCheck.subtitle" = "Random room, instant camera.";
 "spotCheck.limit.title" = "Daily limit";
 "spotCheck.limit.status" = "Remaining %d of %d today";
 "spotCheck.points.title" = "Bonus points";
 "spotCheck.points.spotless" = "Spotless +%d";
 "spotCheck.points.tidy" = "Tidy +%d";
 "spotCheck.points.messy" = "Messy +%d";
-"spotCheck.minimum.title" = "Need More Rooms";
-"spotCheck.minimum.message" = "Babcia needs at least %d areas so the pick stays fair and varied.";
-"spotCheck.minimum.action" = "Create Area";
-"spotCheck.reveal.title" = "Babcia is picking";
-"spotCheck.reveal.prompt" = "She'll choose a random room for you.";
-"spotCheck.reveal.action" = "Reveal the room";
-"spotCheck.reveal.message" = "Babcia is choosing your room...";
+"spotCheck.minimum.title" = "Add a room to start";
+"spotCheck.minimum.message" = "Add %d room to start Quick Scan.";
+"spotCheck.minimum.action" = "Create Room";
+"spotCheck.reveal.title" = "Picking a room";
+"spotCheck.reveal.prompt" = "We'll choose a random room for you.";
+"spotCheck.reveal.action" = "Pick a room";
+"spotCheck.reveal.message" = "Picking your room...";
+"spotCheck.quickScan.title" = "Quick Scan";
+"spotCheck.quickScan.message" = "We'll pick a random room and open the camera.";
+"spotCheck.quickScan.action" = "Random Room Scan";
 "spotCheck.area.title" = "Selected area";
-"spotCheck.area.empty" = "Tap reveal to see where Babcia sends you.";
-"spotCheck.action.camera" = "Take a spot check photo";
-"spotCheck.action.awaiting" = "Reveal a room to start your spot check.";
-"spotCheck.limit.reached" = "Daily spot check limit reached.";
+"spotCheck.area.empty" = "Tap Quick Scan to pick a room.";
+"spotCheck.action.camera" = "Random Room Scan";
+"spotCheck.action.awaiting" = "Tap Quick Scan to start.";
+"spotCheck.limit.reached" = "Daily Quick Scan limit reached.";
 "spotCheck.cooldown.all" = "All areas are resting. Try again later.";
 "spotCheck.processing" = "Babcia is judging...";
 "spotCheck.result.title" = "Result";
@@ -382,7 +389,7 @@
 "spotCheck.response.title" = "Babcia says";
 "spotCheck.camera.alert.title" = "Camera access";
 "spotCheck.camera.unavailable" = "Camera is not available on this device.";
-"spotCheck.camera.permission" = "Camera access is required to capture a spot check.";
+"spotCheck.camera.permission" = "Camera access is required to run a Quick Scan.";
 "spotCheck.camera.notSupported" = "Camera capture is only available on iOS devices.";
 "spotCheck.camera.captureFailed" = "Could not read the captured photo.";
 "spotCheck.error.pipelineUnavailable" = "Scan pipeline is not available.";
@@ -655,6 +662,7 @@
 // MARK: - Camera Source
 "cameraSource.title" = "Choose Camera Source";
 "cameraSource.message" = "Select a camera source.";
+"cameraSource.choose" = "Choose camera source";
 "cameraSource.device" = "iPhone camera";
 "cameraSource.streaming" = "Streaming camera";
 "cameraSource.pick.title" = "Select Camera";
@@ -826,11 +834,11 @@
 "changelog.subtitle" = "What changed in the latest build.";
 "changelog.section.latest" = "Latest updates";
 "changelog.item.1" = "Onboarding now includes optional camera setup and a quick tutorial.";
-"changelog.item.2" = "Spot Check reveals have a Surprise Me shortcut and cooldown timer.";
+"changelog.item.2" = "Quick Scan now jumps straight into the camera.";
 "changelog.item.3" = "Area creation supports linked streaming cameras and clearer reminders.";
 
 // Spot Check
-"spotCheck.minimum.progress" = "%d of %d areas added";
-"spotCheck.reveal.surprise" = "Surprise Me";
-"spotCheck.reveal.spinning" = "Spinning...";
+"spotCheck.minimum.progress" = "Rooms added: %d of %d";
+"spotCheck.reveal.surprise" = "Quick Scan now";
+"spotCheck.reveal.spinning" = "Picking...";
 "spotCheck.cooldown.remaining" = "Try again in %@.";

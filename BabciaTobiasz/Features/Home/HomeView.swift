@@ -90,6 +90,7 @@ private struct HomeScreenContent: View {
     let onGalleryTap: () -> Void
     let onAnalyticsTap: () -> Void
     let onMicroTidyTap: () -> Void
+    @AppStorage("primaryPersonaRaw") private var primaryPersonaRaw: String = BabciaPersona.classic.rawValue
     @Environment(\.dsTheme) private var theme
     @State private var headerProgress: CGFloat = 0
 
@@ -126,8 +127,9 @@ private struct HomeScreenContent: View {
 
     @ViewBuilder
     private var homeHeroImageView: some View {
-        if let data = viewModel.latestDreamImageData,
-           let uiImage = UIImage(data: data) {
+        let persona = BabciaPersona(rawValue: primaryPersonaRaw) ?? .classic
+        let dailyPose = BabciaPose.dailyRotation(for: Date())
+        if let uiImage = UIImage(named: persona.fullBodyImageName(for: dailyPose)) {
             Image(uiImage: uiImage)
                 .resizable()
                 .scaledToFill()

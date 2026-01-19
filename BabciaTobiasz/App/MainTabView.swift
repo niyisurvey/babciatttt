@@ -33,11 +33,22 @@ struct MainTabView: View {
                 AreaListView(viewModel: areaViewModel)
             }
 
-            Tab(String(localized: "mainTab.babcia.label"), systemImage: "camera.fill", value: MainTabViewModel.Tab.babcia) {
+            Tab(value: MainTabViewModel.Tab.babcia) {
                 SpotCheckView {
                     viewModel.selectedTab = .areas
                     DispatchQueue.main.async {
                         areaViewModel.addNewArea()
+                    }
+                }
+            } label: {
+                Label {
+                    Text(String(localized: "mainTab.babcia.label"))
+                } icon: {
+                    ZStack {
+                        Image(systemName: "camera.fill")
+                        Image(systemName: "sparkles")
+                            .font(.system(size: 10))
+                            .offset(x: 8, y: -8)
                     }
                 }
             }
@@ -121,8 +132,7 @@ struct MainTabView: View {
 
     private func handleQuickCheckIn() {
         areaViewModel.loadAreas()
-        let minAreas = AppConfigService.shared.spotCheckMinAreasRequired
-        if areaViewModel.areas.count >= minAreas {
+        if areaViewModel.areas.isEmpty == false {
             viewModel.selectedTab = .babcia
         } else {
             viewModel.selectedTab = .areas

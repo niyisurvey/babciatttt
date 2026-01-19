@@ -189,6 +189,14 @@ enum BabciaPose {
     case sadDisappointed
 }
 
+extension BabciaPose {
+    static func dailyRotation(for date: Date, calendar: Calendar = .current) -> BabciaPose {
+        let dayOfYear = calendar.ordinality(of: .day, in: .year, for: date) ?? 1
+        let poses: [BabciaPose] = [.happy, .victory, .sadDisappointed]
+        return poses[(dayOfYear - 1) % poses.count]
+    }
+}
+
 @Model
 final class Area {
     var id: UUID

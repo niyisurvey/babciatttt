@@ -88,36 +88,25 @@ struct SpotCheckMinimumAreasCard: View {
     }
 }
 
-struct SpotCheckRevealCard: View {
-    let onReveal: () -> Void
-    let onSurpriseMe: () -> Void
+struct SpotCheckQuickScanCard: View {
+    let onScan: () -> Void
     @Environment(\.dsTheme) private var theme
 
     var body: some View {
         GlassCardView {
             VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-                Text(String(localized: "spotCheck.reveal.title"))
+                Text(String(localized: "spotCheck.quickScan.title"))
                     .dsFont(.headline, weight: .bold)
-                Text(String(localized: "spotCheck.reveal.prompt"))
+                Text(String(localized: "spotCheck.quickScan.message"))
                     .dsFont(.body)
                     .foregroundStyle(.secondary)
-                HStack(spacing: theme.grid.listSpacing) {
-                    Button {
-                        onReveal()
-                    } label: {
-                        Label(String(localized: "spotCheck.reveal.action"), systemImage: "sparkles")
-                            .dsFont(.headline)
-                    }
-                    .buttonStyle(.nativeGlass)
-
-                    Button {
-                        onSurpriseMe()
-                    } label: {
-                        Label(String(localized: "spotCheck.reveal.surprise"), systemImage: "camera.fill")
-                            .dsFont(.headline)
-                    }
-                    .buttonStyle(.nativeGlassProminent)
+                Button {
+                    onScan()
+                } label: {
+                    Label(String(localized: "spotCheck.quickScan.action"), systemImage: "sparkles")
+                        .dsFont(.headline)
                 }
+                .buttonStyle(.nativeGlassProminent)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }

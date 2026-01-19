@@ -67,12 +67,20 @@ final class HomeDataService {
     }
 
     private func fetchLatestDreamImage() throws -> Data? {
-        var descriptor = FetchDescriptor<Session>(
+        var descriptor = FetchDescriptor<AreaBowl>(
+            predicate: #Predicate { bowl in
+                bowl.dreamHeroImageData != nil
+            },
             sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
         )
-        descriptor.fetchLimit = 1
-        let latest = try modelContext.fetch(descriptor).first
-        return latest?.dreamImageData
+        descriptor.fetchLimit = 12
+        let bowls = try modelContext.fetch(descriptor)
+        for bowl in bowls {
+            if let data = bowl.dreamHeroImageData, !data.isEmpty {
+                return data
+            }
+        }
+        return nil
     }
 
     private func fetchCompletionPatternSummary() throws -> CompletionPatternSummary {

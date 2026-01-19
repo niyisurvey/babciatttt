@@ -23,9 +23,6 @@ struct SpotCheckView: View {
     @State private var showCameraAlert = false
     @State private var cameraAlertMessage = ""
     @State private var didConfigure = false
-    @State private var isRevealing = false
-    @State private var revealTask: Task<Void, Never>?
-    @State private var autoStartCameraAfterReveal = false
 
     var body: some View {
         ZStack {
@@ -40,16 +37,14 @@ struct SpotCheckView: View {
                         points: viewModel.spotCheckPoints
                     )
 
-                    if !viewModel.meetsMinimumAreas {
+                    if viewModel.totalAreaCount == 0 {
                         SpotCheckMinimumAreasCard(
                             currentAreas: viewModel.totalAreaCount,
                             minAreas: viewModel.spotCheckMinAreasRequired,
                             onCreateArea: onCreateArea
                         )
                     } else {
-                        revealSection
-                        SpotCheckAreaCard(area: viewModel.selectedArea)
-                        actionSection
+                        quickScanSection
                     }
 
                     if let result = viewModel.lastResult {
@@ -123,69 +118,25 @@ struct SpotCheckView: View {
             }
             viewModel.refresh()
         }
-        .onDisappear {
-            revealTask?.cancel()
-        }
     }
 
-    private var revealSection: some View {
+    private var quickScanSection: some View {
         VStack(spacing: theme.grid.listSpacing) {
             if viewModel.dailyCount >= viewModel.spotCheckLimit {
                 SpotCheckLimitReachedCard()
             } else if viewModel.eligibleAreaCount == 0 {
                 SpotCheckCooldownCard(remainingText: viewModel.cooldownRemainingText)
-            } else if isRevealing {
-                SpotCheckRevealView(message: String(localized: "spotCheck.reveal.message"))
             } else {
-                SpotCheckRevealCard(onReveal: revealArea, onSurpriseMe: surpriseMe)
+                SpotCheckQuickScanCard(onScan: startQuickScan)
             }
         }
     }
 
-    private var actionSection: some View {
-        VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-            if viewModel.canDoSpotCheck(), viewModel.selectedArea != nil, !isRevealing {
-                Button {
-                    requestCameraCapture()
-                    hapticFeedback(.medium)
-                } label: {
-                    Label(String(localized: "spotCheck.action.camera"), systemImage: "camera")
-                        .dsFont(.headline)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .buttonStyle(.nativeGlassProminent)
-            } else if viewModel.meetsMinimumAreas, viewModel.dailyCount < viewModel.spotCheckLimit {
-                SpotCheckAwaitingCard()
-            }
-        }
-    }
-
-    private func revealArea() {
-        guard viewModel.canRevealArea() else { return }
-        revealTask?.cancel()
-        isRevealing = true
-        viewModel.clearSelection()
-        let delaySeconds = theme.motion.shimmerDuration
-        revealTask = Task { @MainActor in
-            let delay = UInt64(delaySeconds * 1_000_000_000)
-            try? await Task.sleep(nanoseconds: delay)
-            guard !Task.isCancelled else { return }
-            viewModel.pickRandomArea()
-            withAnimation(theme.motion.listSpring) {
-                isRevealing = false
-            }
-            hapticFeedback(.medium)
-            if autoStartCameraAfterReveal {
-                autoStartCameraAfterReveal = false
-                requestCameraCapture()
-            }
-        }
-    }
-
-    private func surpriseMe() {
-        guard viewModel.canRevealArea() else { return }
-        autoStartCameraAfterReveal = true
-        revealArea()
+    private func startQuickScan() {
+        guard viewModel.canDoSpotCheck() else { return }
+        viewModel.pickRandomArea()
+        guard viewModel.selectedArea != nil else { return }
+        requestCameraCapture()
         hapticFeedback(.medium)
     }
 

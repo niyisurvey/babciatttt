@@ -30,6 +30,7 @@ struct LaunchView: View {
         }
         .animation(theme.motion.fadeStandard, value: isAnimationComplete)
         .task { await performLaunchAnimation() }
+        .dismissKeyboardOnTap()
     }
     
     private var splashContent: some View {

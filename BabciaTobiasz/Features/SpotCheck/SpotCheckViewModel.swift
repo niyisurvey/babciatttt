@@ -36,6 +36,7 @@ final class SpotCheckViewModel {
     @ObservationIgnored private let userDefaults: UserDefaults
     @ObservationIgnored private let calendar: Calendar
     private var areaCooldowns: [String: TimeInterval] = [:]
+    private let quickScanMinAreas: Int = 1
 
     private enum StorageKeys {
         static let spotCheckCount = "spotCheck.dailyCount"
@@ -97,11 +98,6 @@ final class SpotCheckViewModel {
         return dailyCount < spotCheckLimit && !eligibleAreas().isEmpty
     }
 
-    func canRevealArea() -> Bool {
-        refreshDailyState()
-        return meetsMinimumAreas && dailyCount < spotCheckLimit && !eligibleAreas().isEmpty
-    }
-
     func clearSelection() {
         selectedArea = nil
     }
@@ -151,11 +147,11 @@ final class SpotCheckViewModel {
     }
 
     var meetsMinimumAreas: Bool {
-        areas.count >= spotCheckMinAreasRequired
+        areas.count >= quickScanMinAreas
     }
 
     var spotCheckLimit: Int { configService.spotCheckLimit }
-    var spotCheckMinAreasRequired: Int { configService.spotCheckMinAreasRequired }
+    var spotCheckMinAreasRequired: Int { quickScanMinAreas }
     var spotCheckTidyThreshold: Int { configService.spotCheckTidyThreshold }
     var spotCheckCooldownHours: Int { configService.spotCheckCooldownHours }
     var spotCheckPoints: AppConfig.SpotCheck.Points { configService.spotCheckPoints }

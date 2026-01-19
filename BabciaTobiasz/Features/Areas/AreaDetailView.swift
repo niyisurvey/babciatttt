@@ -25,25 +25,24 @@ struct AreaDetailView: View {
     @State private var cameraAlertMessage = ""
     @State private var showReminderPrompt = false
     @State private var cameraFlowViewModel = CameraFlowViewModel()
-    @State private var showPierogiDrop = false
-    @State private var showVerificationReady = false
     @State private var showVerificationCapture = false
     @State private var showVerificationCelebration = false
+    @State private var showExitPrompt = false
     @State private var verificationTier: BowlVerificationTier = .blue
     @State private var verificationPassed: Bool = false
     @State private var verificationBowl: AreaBowl?
     @State private var showDeleteConfirmation = false
     @State private var streamingManager = StreamingCameraManager()
-    @State private var showVerificationSourcePicker = false
     @State private var showStreamingCameraPicker = false
     @State private var isStreamingCaptureLoading = false
     @State private var showCameraSourcePicker = false
     @State private var showStreamingCameraPickerForScan = false
+    @State private var showVerificationSourcePicker = false
+    @State private var prefersLinkedCamera = false
     @AppStorage("areaDetail.taskTapHintShown") private var taskTapHintShown = false
     @AppStorage("areaDetail.taskExplanationShown") private var taskExplanationShown = false
     @State private var showTaskTapHint = false
     @State private var showTaskExplanation = false
-    @State private var showCompletionSummary = false
     @State private var showCameraSetup = false
     @State private var pendingCameraPermissionTarget: CameraPermissionTarget?
     @State private var taskUndoSnapshot: AreaViewModel.TaskUndoSnapshot?
@@ -157,39 +156,16 @@ struct AreaDetailView: View {
         } message: {
             Text(cameraAlertMessage)
         }
-        .fullScreenCover(isPresented: $showPierogiDrop) {
-            PierogiDropView(tier: verificationTier, autoReveal: true) { tier in
-                verificationTier = tier
-                showPierogiDrop = false
-                showCompletionSummary = true
-            }
-        }
-        .fullScreenCover(isPresented: $showCompletionSummary) {
-            CompletionSummaryView(
-                persona: area.persona,
-                tier: verificationTier,
-                bluePoints: AppConfigService.shared.verificationBluePoints,
-                goldenPoints: AppConfigService.shared.verificationGoldenPoints,
-                onVerify: {
-                    showCompletionSummary = false
-                    showVerificationSourcePicker = true
-                },
-                onDone: {
-                    showCompletionSummary = false
-                    AppExitHelper.requestExit()
-                }
-            )
-        }
-        .alert(String(localized: "areaDetail.verify.ready.title"), isPresented: $showVerificationReady) {
-            Button(String(localized: "areaDetail.verify.ready.primary")) { showVerificationSourcePicker = true }
-            Button(String(localized: "areaDetail.verify.ready.secondary"), role: .cancel) { markVerificationPending() }
-        } message: {
-            Text(verificationReadyMessage)
-        }
         .alert(verificationCelebrationTitle, isPresented: $showVerificationCelebration) {
             Button(String(localized: "common.ok"), role: .cancel) { }
         } message: {
             Text(verificationCelebrationMessage)
+        }
+        .alert(String(localized: "areaDetail.exitPrompt.title"), isPresented: $showExitPrompt) {
+            Button(String(localized: "areaDetail.exitPrompt.primary")) { AppExitHelper.requestExit() }
+            Button(String(localized: "areaDetail.exitPrompt.secondary"), role: .cancel) { }
+        } message: {
+            Text(String(localized: "areaDetail.exitPrompt.message"))
         }
         .alert(String(localized: "areaDetail.delete.title"), isPresented: $showDeleteConfirmation) {
             Button(String(localized: "common.delete"), role: .destructive) { viewModel.deleteArea(area) }
@@ -337,13 +313,7 @@ struct AreaDetailView: View {
 
     @ViewBuilder
     private var dreamHeaderImageView: some View {
-        if let data = area.latestDreamBowl?.dreamHeroImageData,
-           let uiImage = UIImage(data: data) {
-            Image(uiImage: uiImage)
-                .resizable()
-                .scaledToFill()
-        } else if let name = area.dreamImageName,
-                  let uiImage = UIImage(named: name) {
+        if let uiImage = UIImage(named: areaHeroImageName) {
             Image(uiImage: uiImage)
                 .resizable()
                 .scaledToFill()
@@ -354,6 +324,20 @@ struct AreaDetailView: View {
                 icon: "camera.fill"
             )
         }
+    }
+
+    private var areaHeroImageName: String {
+        let persona = area.persona
+        if area.latestBowl == nil {
+            return persona.portraitThinkingImageName
+        }
+        if area.inProgressBowl != nil {
+            return persona.fullBodyImageName(for: .happy)
+        }
+        if area.latestBowl?.isCompleted == true {
+            return persona.fullBodyImageName(for: .victory)
+        }
+        return persona.fullBodyImageName(for: .happy)
     }
 
     // MARK: - Camera Capture
@@ -379,7 +363,7 @@ struct AreaDetailView: View {
             viewModel.showError = true
             return
         }
-        showCameraSourcePicker = true
+        startDefaultScanCapture()
 #else
         presentCameraAlert(String(localized: "areaDetail.camera.error.notSupported"))
 #endif
@@ -395,6 +379,22 @@ struct AreaDetailView: View {
 #else
         presentCameraAlert(String(localized: "areaDetail.camera.error.notSupported"))
 #endif
+    }
+
+    private func startDefaultScanCapture() {
+        if prefersLinkedCamera, let linkedCamera = linkedStreamingCamera {
+            handleStreamingScanCapture(linkedCamera)
+        } else {
+            requestDeviceCameraCapture()
+        }
+    }
+
+    private func startDefaultVerificationCapture() {
+        if prefersLinkedCamera, let linkedCamera = linkedStreamingCamera {
+            handleStreamingVerificationCapture(linkedCamera)
+        } else {
+            startCameraCapture(for: .verification)
+        }
     }
 
     private func startCameraCapture(for target: CameraPermissionTarget) {
@@ -587,6 +587,29 @@ struct AreaDetailView: View {
     }
 
     @ViewBuilder
+    private func cameraSourceControls(showPicker: Binding<Bool>) -> some View {
+        let hasLinkedCamera = linkedStreamingCamera != nil
+        if hasLinkedCamera || streamingManager.configs.isEmpty == false {
+            VStack(alignment: .leading, spacing: 6) {
+                if let linkedCamera = linkedStreamingCamera {
+                    Toggle(isOn: $prefersLinkedCamera) {
+                        Text(String(format: String(localized: "cameraSource.linked"), linkedCamera.name))
+                            .dsFont(.caption)
+                    }
+                    .toggleStyle(SwitchToggleStyle(tint: theme.palette.primary))
+                }
+                Button(String(localized: "cameraSource.choose")) {
+                    showPicker.wrappedValue = true
+                }
+                .dsFont(.caption2, weight: .semibold)
+                .foregroundStyle(.secondary)
+                .buttonStyle(.plain)
+            }
+            .padding(.top, 4)
+        }
+    }
+
+    @ViewBuilder
     private var kitchenClosedCard: some View {
         if viewModel.isKitchenClosed {
             GlassCardView {
@@ -686,7 +709,6 @@ struct AreaDetailView: View {
     @ViewBuilder
     private var verificationCallout: some View {
         if let bowl = area.latestBowl, bowl.isCompleted, isVerificationDecisionPending {
-            let pointsLabel = verificationPointsLabel(for: bowl)
             GlassCardView {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(String(localized: "areaDetail.verify.callout.title"))
@@ -694,11 +716,9 @@ struct AreaDetailView: View {
                     Text(String(localized: "areaDetail.verify.callout.message"))
                         .dsFont(.subheadline)
                         .foregroundStyle(.secondary)
-                    Text(pointsLabel)
-                        .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                    cameraSourceControls(showPicker: $showVerificationSourcePicker)
                     Button {
-                        beginVerificationFlow()
+                        beginVerificationFlow(for: bowl)
                     } label: {
                         Label(String(localized: "areaDetail.verify.callout.primary"), systemImage: "checkmark.seal.fill")
                             .dsFont(.headline)
@@ -706,7 +726,7 @@ struct AreaDetailView: View {
                     .buttonStyle(.nativeGlassProminent)
                     .padding(.top, 4)
                     Button {
-                        takeBasePointsOnly()
+                        takeBasePointsOnly(for: bowl)
                     } label: {
                         Label(String(localized: "areaDetail.verify.callout.secondary"), systemImage: "checkmark")
                             .dsFont(.subheadline, weight: .bold)
@@ -734,6 +754,11 @@ struct AreaDetailView: View {
             .disabled(isCameraDisabled)
             .accessibilityLabel(String(localized: "areaDetail.camera.checkIn"))
             .accessibilityHint(cameraDisabledReason ?? "")
+
+            if isCameraDisabled == false {
+                cameraSourceControls(showPicker: $showCameraSourcePicker)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+            }
 
             if let reason = cameraDisabledReason {
                 Text(reason)
@@ -776,46 +801,27 @@ struct AreaDetailView: View {
 
     private func checkForVerificationPrompt() {
         guard let bowl = area.latestBowl else { return }
-        guard bowl.isCompleted, bowl.verificationRequested == false else { return }
-        guard showPierogiDrop == false else { return }
+        guard bowl.isCompleted else { return }
+        guard bowl.verificationOutcome == .skipped else { return }
+        guard bowl.verificationRequestedAt == nil else { return }
         verificationBowl = bowl
-        verificationTier = viewModel.isGoldenEligible() ? .golden : .blue
-        showPierogiDrop = true
+        viewModel.markVerificationDecisionPending(for: bowl)
     }
 
     private var isVerificationDecisionPending: Bool {
         guard let bowl = area.latestBowl else { return false }
-        return bowl.verificationRequested && bowl.verificationOutcome == .pending
+        return bowl.isCompleted && bowl.verificationOutcome == .pending
     }
 
-    private func markVerificationPending() {
-        guard let bowl = verificationBowl ?? area.latestBowl else { return }
-        viewModel.markVerificationDecisionPending(for: bowl)
-    }
-
-    private func takeBasePointsOnly() {
-        guard let bowl = area.latestBowl else { return }
+    private func takeBasePointsOnly(for bowl: AreaBowl) {
         viewModel.skipVerification(for: bowl)
+        showExitPrompt = true
     }
 
-    private func beginVerificationFlow() {
+    private func beginVerificationFlow(for bowl: AreaBowl) {
+        verificationBowl = bowl
         verificationTier = viewModel.isGoldenEligible() ? .golden : .blue
-        showVerificationReady = true
-    }
-
-    private func verificationPointsLabel(for bowl: AreaBowl) -> String {
-        let tier = bowl.verificationTier == .none ? (viewModel.isGoldenEligible() ? .golden : .blue) : bowl.verificationTier
-        let points = points(for: tier)
-        return String(format: String(localized: "areaDetail.verify.callout.points"), points)
-    }
-
-    private func points(for tier: BowlVerificationTier) -> Int {
-        switch tier {
-        case .golden:
-            return AppConfigService.shared.verificationGoldenPoints
-        case .blue, .none:
-            return AppConfigService.shared.verificationBluePoints
-        }
+        startDefaultVerificationCapture()
     }
 
     private func handleVerificationCapturedImage(_ image: UIImage) {
@@ -886,12 +892,6 @@ struct AreaDetailView: View {
                 : String(localized: "areaDetail.verify.celebration.message.blue")
         }
         return String(localized: "areaDetail.verify.celebration.message.failed")
-    }
-
-    private var verificationReadyMessage: String {
-        verificationTier == .golden
-            ? String(localized: "areaDetail.verify.ready.message.golden")
-            : String(localized: "areaDetail.verify.ready.message.blue")
     }
 
     // MARK: - Toolbar
