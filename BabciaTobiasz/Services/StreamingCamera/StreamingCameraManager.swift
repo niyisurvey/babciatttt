@@ -112,9 +112,8 @@ final class StreamingCameraManager {
     func captureFrame(for config: StreamingCameraConfig) async throws -> UIImage {
         let provider = try provider(for: config)
         try await provider.connect()
-        let image = try await provider.captureFrame()
-        await provider.disconnect()
-        return image
+        defer { Task { @MainActor in await provider.disconnect() } }
+        return try await provider.captureFrame()
     }
 
     func streamURL(for config: StreamingCameraConfig) -> URL? {

@@ -3,7 +3,7 @@
 //  BabciaTobiasz
 //
 
-import Foundation
+@preconcurrency import Foundation
 
 @MainActor
 @Observable
@@ -44,20 +44,23 @@ extension TapoDiscoveryService: NetServiceBrowserDelegate, NetServiceDelegate {
         didFind service: NetService,
         moreComing: Bool
     ) {
-        Task { @MainActor in
-            services.append(service)
-            service.delegate = self
-            service.resolve(withTimeout: 5)
+        let serviceCopy = service
+        Task { @MainActor [serviceCopy] in
+            services.append(serviceCopy)
+            serviceCopy.delegate = self
+            serviceCopy.resolve(withTimeout: 5)
         }
     }
 
     nonisolated func netServiceDidResolveAddress(_ sender: NetService) {
+        let name = sender.name
+        let hostName = sender.hostName ?? sender.name
+        let port = sender.port > 0 ? sender.port : nil
         Task { @MainActor in
-            let hostName = sender.hostName ?? sender.name
             let entry = DiscoveredService(
-                name: sender.name,
+                name: name,
                 host: hostName,
-                port: sender.port > 0 ? sender.port : nil
+                port: port
             )
             if !discovered.contains(where: { $0.host == entry.host && $0.port == entry.port }) {
                 discovered.append(entry)

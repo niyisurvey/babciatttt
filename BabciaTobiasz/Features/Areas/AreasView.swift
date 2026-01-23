@@ -21,15 +21,29 @@ struct AreasView: View {
 
 private struct AreasHeroCard: View {
     @Environment(\.dsTheme) private var theme
+    @AppStorage("primaryPersonaRaw") private var primaryPersonaRaw: String = BabciaPersona.classic.rawValue
+
+    private var persona: BabciaPersona {
+        BabciaPersona(rawValue: primaryPersonaRaw) ?? .classic
+    }
 
     var body: some View {
         GlassCardView(padding: 0) {
-            Image("DreamRoom_Test_1200x1600")
-                .resizable()
-                .scaledToFill()
-                .frame(maxWidth: .infinity)
+            if let uiImage = UIImage(named: persona.fullBodyImageName(for: .happy)) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: theme.grid.heroCardHeight)
+                    .clipped()
+            } else {
+                DreamHeaderPlaceholderView(
+                    title: String(localized: "areas.hero.placeholder.title"),
+                    message: String(localized: "areas.hero.placeholder.message"),
+                    icon: "sparkles"
+                )
                 .frame(height: theme.grid.heroCardHeight)
-                .clipped()
+            }
         }
         .scrollTransition { content, phase in
             content

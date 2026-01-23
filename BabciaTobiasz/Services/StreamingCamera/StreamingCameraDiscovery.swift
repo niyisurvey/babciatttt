@@ -3,7 +3,7 @@
 //  BabciaTobiasz
 //
 
-import Foundation
+@preconcurrency import Foundation
 
 enum StreamingCameraDiscoveryKind: String, CaseIterable, Identifiable {
     case rtsp
@@ -88,15 +88,20 @@ final class StreamingCameraDiscoveryHub: NSObject {
         isScanning = false
     }
 
-    private func handleResolvedService(_ service: NetService) {
-        let host = normalizeHost(service.hostName ?? service.name)
-        let port = service.port > 0 ? service.port : nil
-        guard let (kind, serviceType) = serviceKinds[ObjectIdentifier(service)] else { return }
+    private func handleResolvedServiceData(
+        id: ObjectIdentifier,
+        name: String,
+        hostName: String,
+        port: Int?,
+        txtData: Data?
+    ) {
+        let host = normalizeHost(hostName)
+        guard let (kind, serviceType) = serviceKinds[id] else { return }
 
-        let suggestion = suggestedURL(for: kind, host: host, port: port, service: service)
+        let suggestion = suggestedURLFromData(for: kind, host: host, port: port, txtData: txtData)
         let entry = StreamingCameraDiscoveryResult(
             kind: kind,
-            name: service.name,
+            name: name,
             host: host,
             port: port,
             serviceType: serviceType,
@@ -109,18 +114,18 @@ final class StreamingCameraDiscoveryHub: NSObject {
         results.append(entry)
     }
 
-    private func suggestedURL(
+    private func suggestedURLFromData(
         for kind: StreamingCameraDiscoveryKind,
         host: String,
         port: Int?,
-        service: NetService
+        txtData: Data?
     ) -> URL? {
         switch kind {
         case .rtsp:
             let resolvedPort = port ?? 554
             return URL(string: "rtsp://\(host):\(resolvedPort)/")
         case .homeAssistant:
-            let txt = parseTXT(service)
+            let txt = parseTXTData(txtData)
             if let base = txt["base_url"] ?? txt["api_base_url"], let url = URL(string: base) {
                 return url
             }
@@ -134,8 +139,8 @@ final class StreamingCameraDiscoveryHub: NSObject {
         }
     }
 
-    private func parseTXT(_ service: NetService) -> [String: String] {
-        guard let data = service.txtRecordData() else { return [:] }
+    private func parseTXTData(_ data: Data?) -> [String: String] {
+        guard let data else { return [:] }
         let dict = NetService.dictionary(fromTXTRecord: data)
         var output: [String: String] = [:]
         for (key, value) in dict {
@@ -145,6 +150,8 @@ final class StreamingCameraDiscoveryHub: NSObject {
         }
         return output
     }
+
+
 
     private func normalizeHost(_ host: String) -> String {
         if host.hasSuffix(".") {
@@ -160,17 +167,25 @@ extension StreamingCameraDiscoveryHub: NetServiceBrowserDelegate, NetServiceDele
         didFind service: NetService,
         moreComing: Bool
     ) {
-        Task { @MainActor in
-            guard let (kind, serviceType) = browserKinds[ObjectIdentifier(browser)] else { return }
-            serviceKinds[ObjectIdentifier(service)] = (kind, serviceType)
-            service.delegate = self
-            service.resolve(withTimeout: 5)
+        let browserId = ObjectIdentifier(browser)
+        let serviceId = ObjectIdentifier(service)
+        let serviceCopy = service
+        Task { @MainActor [browserId, serviceId, serviceCopy] in
+            guard let (kind, serviceType) = browserKinds[browserId] else { return }
+            serviceKinds[serviceId] = (kind, serviceType)
+            serviceCopy.delegate = self
+            serviceCopy.resolve(withTimeout: 5)
         }
     }
 
     nonisolated func netServiceDidResolveAddress(_ sender: NetService) {
+        let serviceId = ObjectIdentifier(sender)
+        let name = sender.name
+        let hostName = sender.hostName ?? sender.name
+        let port = sender.port > 0 ? sender.port : nil
+        let txtData = sender.txtRecordData()
         Task { @MainActor in
-            handleResolvedService(sender)
+            handleResolvedServiceData(id: serviceId, name: name, hostName: hostName, port: port, txtData: txtData)
         }
     }
 

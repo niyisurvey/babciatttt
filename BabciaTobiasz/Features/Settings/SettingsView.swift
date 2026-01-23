@@ -13,7 +13,7 @@ struct SettingsView: View {
         NavigationStack {
             ZStack {
                 // Background
-                backgroundGradient
+                LiquidGlassBackground(style: .default)
                 
                 ScrollView {
                     VStack(spacing: theme.grid.sectionSpacing) {
@@ -200,41 +200,6 @@ struct SettingsView: View {
                 }
             }
         }
-    }
-    
-    private var backgroundGradient: some View {
-        TimelineView(.animation(minimumInterval: theme.motion.meshAnimationInterval)) { timeline in
-            MeshGradient(
-                width: 3,
-                height: 3,
-                points: animatedMeshPoints(for: timeline.date),
-                colors: [
-                    theme.palette.primary.opacity(0.15),
-                    theme.palette.secondary.opacity(0.1),
-                    theme.palette.tertiary.opacity(0.15),
-                    theme.palette.secondary.opacity(0.1),
-                    theme.palette.primary.opacity(0.2),
-                    theme.palette.tertiary.opacity(0.1),
-                    theme.palette.primary.opacity(0.1),
-                    theme.palette.secondary.opacity(0.15),
-                    theme.palette.tertiary.opacity(0.15)
-                ]
-            )
-        }
-        .ignoresSafeArea()
-    }
-    
-    private func animatedMeshPoints(for date: Date) -> [SIMD2<Float>] {
-        let time = Float(date.timeIntervalSince1970)
-        let interval = Float(max(theme.motion.meshAnimationInterval, 0.1))
-        let baseSpeed = 1.0 / interval
-        let offset = sin(time * (baseSpeed * 0.5)) * 0.2
-        let offset2 = cos(time * (baseSpeed * 0.35)) * 0.14
-        return [
-            [0.0, 0.0], [0.5 + offset2, 0.0], [1.0, 0.0],
-            [0.0, 0.5], [0.5 + offset, 0.5 - offset], [1.0, 0.5],
-            [0.0, 1.0], [0.5 - offset2, 1.0], [1.0, 1.0]
-        ]
     }
 }
 

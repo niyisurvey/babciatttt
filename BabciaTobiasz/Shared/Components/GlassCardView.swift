@@ -75,14 +75,17 @@ extension View {
 struct NativeGlassButtonStyle: ButtonStyle {
     var isProminent: Bool = false
     @Environment(\.dsTheme) private var theme
-    
+
     func makeBody(configuration: Configuration) -> some View {
-        #if compiler(>=7.0)
+        #if compiler(>=6.0)
         if #available(iOS 26.0, macOS 26.0, *) {
             configuration.label
                 .padding(.horizontal, theme.grid.buttonHorizontalPadding)
                 .padding(.vertical, theme.grid.buttonVerticalPadding)
-                .glassEffect(isProminent ? .regular.interactive() : .regular, in: .capsule)
+                .glassEffect(
+                    isProminent ? theme.glass.effectStyle.nativeGlassInteractive : theme.glass.effectStyle.nativeGlass,
+                    in: .capsule
+                )
                 .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
                 .animation(theme.motion.pressSpring, value: configuration.isPressed)
         } else {
@@ -92,7 +95,7 @@ struct NativeGlassButtonStyle: ButtonStyle {
         fallbackButton(configuration)
         #endif
     }
-    
+
     @ViewBuilder
     private func fallbackButton(_ configuration: Configuration) -> some View {
         configuration.label
@@ -113,14 +116,17 @@ struct GlassButtonStyle: ButtonStyle {
     var color: Color = .appAccent
     var isProminent: Bool = false
     @Environment(\.dsTheme) private var theme
-    
+
     func makeBody(configuration: Configuration) -> some View {
-        #if compiler(>=7.0)
+        #if compiler(>=6.0)
         if #available(iOS 26.0, macOS 26.0, *) {
             configuration.label
                 .padding(.horizontal, theme.grid.buttonHorizontalPadding)
                 .padding(.vertical, theme.grid.buttonVerticalPadding)
-                .glassEffect(isProminent ? .regular.interactive() : .regular, in: .capsule)
+                .glassEffect(
+                    isProminent ? theme.glass.effectStyle.nativeGlassInteractive : theme.glass.effectStyle.nativeGlass,
+                    in: .capsule
+                )
                 .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
                 .animation(theme.motion.pressSpring, value: configuration.isPressed)
         } else {
@@ -130,7 +136,7 @@ struct GlassButtonStyle: ButtonStyle {
         fallbackButton(configuration)
         #endif
     }
-    
+
     @ViewBuilder
     private func fallbackButton(_ configuration: Configuration) -> some View {
         configuration.label

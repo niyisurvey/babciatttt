@@ -6,3 +6,4 @@
 
 // No additional debug-specific overrides needed
 // All debug settings use Xcode project defaults
+ENABLE_USER_SCRIPT_SANDBOXING = NO

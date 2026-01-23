@@ -173,6 +173,7 @@ logs/
 
 # API Keys (if stored in a file)
 APIConfig.swift
+AppHost/Config/Local.xcconfig
 
 # Screenshots
 screenshots/

@@ -313,7 +313,8 @@ struct AreaDetailView: View {
 
     @ViewBuilder
     private var dreamHeaderImageView: some View {
-        if let uiImage = UIImage(named: areaHeroImageName) {
+        if let imageData = area.latestBowl?.galleryImageData,
+           let uiImage = UIImage(data: imageData) {
             Image(uiImage: uiImage)
                 .resizable()
                 .scaledToFill()
@@ -324,20 +325,6 @@ struct AreaDetailView: View {
                 icon: "camera.fill"
             )
         }
-    }
-
-    private var areaHeroImageName: String {
-        let persona = area.persona
-        if area.latestBowl == nil {
-            return persona.portraitThinkingImageName
-        }
-        if area.inProgressBowl != nil {
-            return persona.fullBodyImageName(for: .happy)
-        }
-        if area.latestBowl?.isCompleted == true {
-            return persona.fullBodyImageName(for: .victory)
-        }
-        return persona.fullBodyImageName(for: .happy)
     }
 
     // MARK: - Camera Capture

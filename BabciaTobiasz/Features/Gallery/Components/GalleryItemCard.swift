@@ -39,47 +39,24 @@ struct GalleryItemCard: View {
             hapticFeedback(.light)
             onTap()
         }) {
-            GlassCardView {
-                VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
-                    ZStack(alignment: .bottom) {
-                        GalleryImageView(imageData: bowl.galleryImageData)
-                            .frame(height: theme.grid.detailCardHeightLarge)
-                        HStack {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(title)
-                                    .dsFont(.caption2, weight: .bold)
-                                Text(subtitle)
-                                    .dsFont(.caption2)
-                            }
-                            .foregroundStyle(.white)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 6)
-                            .background(.black.opacity(0.35), in: Capsule())
+            VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
+                GalleryImageView(imageData: bowl.galleryImageData)
+                    .frame(height: theme.grid.detailCardHeightLarge)
+                    .clipShape(RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius))
 
-                            Spacer()
-
-                            personaBadge
-                        }
-                        .padding(theme.grid.cardPaddingTight)
-                    }
-
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(personaLabel)
-                            .dsFont(.caption)
-                            .foregroundStyle(.secondary)
-                            .lineLimit(1)
-                    }
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(title)
+                        .dsFont(.caption, weight: .bold)
+                        .lineLimit(1)
+                    Text(subtitle)
+                        .dsFont(.caption2)
+                        .foregroundStyle(.secondary)
                 }
-                .padding(theme.grid.cardPadding)
             }
+            .padding(theme.grid.cardPaddingTight)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: theme.shape.cardCornerRadius))
         }
         .buttonStyle(.plain)
-        .scrollTransition { content, phase in
-            content
-                .opacity(phase.isIdentity ? 1 : 0.8)
-                .scaleEffect(phase.isIdentity ? 1 : 0.98)
-                .blur(radius: phase.isIdentity ? 0 : 2)
-        }
     }
 
     private var personaBadge: some View {

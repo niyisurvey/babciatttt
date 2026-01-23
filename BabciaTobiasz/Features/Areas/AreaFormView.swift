@@ -48,7 +48,7 @@ struct AreaFormView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                backgroundGradient
+                LiquidGlassBackground()
 
                 ScrollView {
                     VStack(spacing: theme.grid.sectionSpacing) {
@@ -228,6 +228,7 @@ struct AreaFormView: View {
                     .padding()
                 }
             }
+            .scrollContentBackground(.hidden)
             .navigationTitle("")
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
@@ -258,8 +259,10 @@ struct AreaFormView: View {
                 NavigationStack {
                     CameraSetupView()
                 }
+                .liquidGlassSheetBackground()
             }
         }
+        .liquidGlassSheetBackground()
     }
 
     private var iconPicker: some View {
@@ -387,41 +390,6 @@ struct AreaFormView: View {
 
             dismiss()
         }
-    }
-
-    private var backgroundGradient: some View {
-        TimelineView(.animation(minimumInterval: theme.motion.meshAnimationInterval)) { timeline in
-            MeshGradient(
-                width: 3,
-                height: 3,
-                points: animatedMeshPoints(for: timeline.date),
-                colors: [
-                    selectedColor.opacity(0.15),
-                    theme.palette.secondary.opacity(0.1),
-                    selectedColor.opacity(0.1),
-                    theme.palette.tertiary.opacity(0.15),
-                    selectedColor.opacity(0.2),
-                    theme.palette.primary.opacity(0.1),
-                    selectedColor.opacity(0.1),
-                    theme.palette.secondary.opacity(0.15),
-                    selectedColor.opacity(0.15)
-                ]
-            )
-        }
-        .ignoresSafeArea()
-    }
-
-    private func animatedMeshPoints(for date: Date) -> [SIMD2<Float>] {
-        let time = Float(date.timeIntervalSince1970)
-        let interval = Float(max(theme.motion.meshAnimationInterval, 0.1))
-        let baseSpeed = 1.0 / interval
-        let offset = sin(time * (baseSpeed * 0.5)) * 0.2
-        let offset2 = cos(time * (baseSpeed * 0.35)) * 0.14
-        return [
-            [0.0, 0.0], [0.5 + offset2, 0.0], [1.0, 0.0],
-            [0.0, 0.5], [0.5 + offset, 0.5 - offset], [1.0, 0.5],
-            [0.0, 1.0], [0.5 - offset2, 1.0], [1.0, 1.0]
-        ]
     }
 
     private func personaRow(_ persona: BabciaPersona) -> some View {

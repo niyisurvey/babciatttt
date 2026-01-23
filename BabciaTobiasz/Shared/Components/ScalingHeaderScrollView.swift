@@ -86,7 +86,7 @@ struct ScalingHeaderScrollView<Header: View, Content: View>: View {
             }
         }
         
-        #if compiler(>=7.0)
+        #if compiler(>=6.0)
         if #available(iOS 26.0, *) {
             let base = scrollContent.scrollEdgeEffectHidden(true, for: .top)
             if let onRefresh {

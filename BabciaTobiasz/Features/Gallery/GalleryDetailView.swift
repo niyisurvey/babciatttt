@@ -49,14 +49,22 @@ struct GalleryDetailView: View {
         max(0, Int(bowl.totalPoints) - bowl.basePoints)
     }
 
+    @State private var headerProgress: CGFloat = 0
+
     var body: some View {
         ZStack {
             LiquidGlassBackground(style: .default)
 
-            ScrollView(showsIndicators: false) {
+            ScalingHeaderScrollView(
+                maxHeight: theme.grid.heroCardHeight,
+                minHeight: theme.grid.heroHeaderCollapsedHeight,
+                snapMode: .none,
+                progress: $headerProgress
+            ) { progress in
+                dreamHeroImage(progress: progress)
+            } content: {
                 VStack(spacing: theme.grid.sectionSpacing) {
                     headerSection
-                    imageCard
                     metaCard
                     tasksCard
                 }
@@ -71,28 +79,32 @@ struct GalleryDetailView: View {
         .toolbar { toolbarContent }
     }
 
+    @ViewBuilder
+    private func dreamHeroImage(progress: CGFloat) -> some View {
+        Group {
+            if let imageData = bowl.galleryImageData,
+               let uiImage = UIImage(data: imageData) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFill()
+            } else {
+                DreamHeaderPlaceholderView(
+                    title: String(localized: "gallery.detail.hero.placeholder.title"),
+                    message: String(localized: "gallery.detail.hero.placeholder.message"),
+                    icon: "photo"
+                )
+            }
+        }
+        .opacity(max(0.0, 1.0 - progress * 1.2))
+    }
+
     private var headerSection: some View {
         VStack(spacing: 8) {
             Text(areaName)
                 .dsFont(.title2, weight: .bold)
-            Text(personaName)
-                .dsFont(.body)
-                .foregroundStyle(.secondary)
+            personaBadge
         }
         .padding(.top, 4)
-    }
-
-    private var imageCard: some View {
-        GlassCardView {
-            ZStack(alignment: .bottomTrailing) {
-                GalleryImageView(imageData: bowl.galleryImageData)
-                    .frame(height: theme.grid.heroCardHeight)
-                    .padding(theme.grid.cardPadding)
-
-                personaBadge
-                    .padding(theme.grid.cardPadding)
-            }
-        }
     }
 
     private var metaCard: some View {

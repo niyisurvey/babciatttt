@@ -40,7 +40,7 @@ struct AreaListView: View {
 
     private var heroImage: Image {
         #if canImport(UIKit)
-        if let uiImage = heroDreamUIImage {
+        if let uiImage = UIImage(named: heroImageName) {
             return Image(uiImage: uiImage)
         }
         #endif

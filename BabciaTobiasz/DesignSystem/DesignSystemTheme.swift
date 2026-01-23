@@ -99,12 +99,118 @@ enum DSGlassStrength {
     }
 }
 
+/// Controls the visual style of glass effects across the app.
+/// Use `.clear` for transparent, background-sampling glass.
+/// Use `.regular` for more opaque, frosted glass.
+enum DSGlassEffectStyle {
+    case clear
+    case regular
+}
+
+// MARK: - Glass Context System
+
+/// Defines the context in which glass elements appear.
+/// Each context can have independent settings for mesh opacity, native glass, etc.
+enum DSGlassContext: String, CaseIterable {
+    case mainView      // Tab views, primary screens (Home, Areas, Gallery, Settings)
+    case sheet         // Modal sheets
+    case detailView    // Detail/drill-down views
+    case card          // Glass cards within views
+    case overlay       // Floating elements (toasts, tooltips)
+}
+
+/// Per-context glass settings
+struct DSGlassContextSettings {
+    var meshOpacity: Double           // 0.0 = no mesh, 1.0 = full opacity
+    var usesNativeGlass: Bool         // Use iOS 26+ native glass presentation
+    var effectStyle: DSGlassEffectStyle
+
+    static let defaultMainView = DSGlassContextSettings(
+        meshOpacity: 0.08,
+        usesNativeGlass: false,
+        effectStyle: .clear
+    )
+
+    static let defaultSheet = DSGlassContextSettings(
+        meshOpacity: 0.06,
+        usesNativeGlass: true,
+        effectStyle: .clear
+    )
+
+    static let defaultDetailView = DSGlassContextSettings(
+        meshOpacity: 0.05,
+        usesNativeGlass: false,
+        effectStyle: .clear
+    )
+
+    static let defaultCard = DSGlassContextSettings(
+        meshOpacity: 0.0,
+        usesNativeGlass: false,
+        effectStyle: .clear
+    )
+
+    static let defaultOverlay = DSGlassContextSettings(
+        meshOpacity: 0.0,
+        usesNativeGlass: true,
+        effectStyle: .clear
+    )
+}
+
+// MARK: - Native iOS 26 Glass Bridging
+
+#if compiler(>=6.0)
+@available(iOS 26.0, macOS 26.0, *)
+extension DSGlassEffectStyle {
+    /// Bridges design token to native iOS 26 Glass type
+    var nativeGlass: Glass {
+        switch self {
+        case .clear: return .clear
+        case .regular: return .regular
+        }
+    }
+
+    /// Interactive glass for touch targets
+    var nativeGlassInteractive: Glass {
+        nativeGlass.interactive()
+    }
+
+    /// Tinted glass with specified color and opacity
+    func nativeGlassTinted(_ color: Color, opacity: Double) -> Glass {
+        nativeGlass.tint(color.opacity(opacity))
+    }
+
+    /// Interactive tinted glass
+    func nativeGlassTintedInteractive(_ color: Color, opacity: Double) -> Glass {
+        nativeGlass.tint(color.opacity(opacity)).interactive()
+    }
+}
+#endif
+
 struct DSGlass {
     var strength: DSGlassStrength
     var prominentStrength: DSGlassStrength
+    var effectStyle: DSGlassEffectStyle
     var tintOpacity: Double
     var glowOpacityHigh: Double
     var glowOpacityLow: Double
+
+    /// Per-context settings for grouped control
+    var contextSettings: [DSGlassContext: DSGlassContextSettings]
+
+    /// Get settings for a specific context, with fallback to defaults
+    func settings(for context: DSGlassContext) -> DSGlassContextSettings {
+        if let settings = contextSettings[context] {
+            return settings
+        }
+        // Fallback defaults
+        switch context {
+        case .mainView: return .defaultMainView
+        case .sheet: return .defaultSheet
+        case .detailView: return .defaultDetailView
+        case .card: return .defaultCard
+        case .overlay: return .defaultOverlay
+        }
+    }
 }
 
 enum DSMotionPreset: String, CaseIterable {
@@ -253,9 +359,9 @@ extension DesignSystemTheme {
         ),
         gradients: DSGradients(
             backgroundDefault: [
-                .blue.opacity(0.2), .cyan.opacity(0.15), .teal.opacity(0.2),
-                .purple.opacity(0.1), .blue.opacity(0.1), .cyan.opacity(0.15),
-                .indigo.opacity(0.15), .purple.opacity(0.1), .blue.opacity(0.2)
+                .blue, .cyan, .teal,
+                .purple, .blue, .cyan,
+                .indigo, .purple, .blue
             ],
             backgroundWeather: [
                 Color(red: 0.4, green: 0.7, blue: 0.9), Color(red: 0.5, green: 0.8, blue: 0.95), Color(red: 0.6, green: 0.85, blue: 1.0),
@@ -263,9 +369,9 @@ extension DesignSystemTheme {
                 Color(red: 0.5, green: 0.7, blue: 0.85), Color(red: 0.55, green: 0.75, blue: 0.88), Color(red: 0.6, green: 0.78, blue: 0.9)
             ],
             backgroundAreas: [
-                .green.opacity(0.25), .teal.opacity(0.2), .cyan.opacity(0.25),
-                .mint.opacity(0.15), .green.opacity(0.2), .teal.opacity(0.2),
-                .teal.opacity(0.2), .mint.opacity(0.15), .green.opacity(0.25)
+                .green, .teal, .cyan,
+                .mint, .green, .teal,
+                .teal, .mint, .green
             ],
             splash: [
                 .blue.opacity(0.3), .purple.opacity(0.2), .cyan.opacity(0.3)
@@ -330,9 +436,17 @@ extension DesignSystemTheme {
         glass: DSGlass(
             strength: .regular,
             prominentStrength: .thin,
+            effectStyle: .clear,
             tintOpacity: 0.02,
             glowOpacityHigh: 0.7,
-            glowOpacityLow: 0.2
+            glowOpacityLow: 0.2,
+            contextSettings: [
+                .mainView: .defaultMainView,
+                .sheet: .defaultSheet,
+                .detailView: .defaultDetailView,
+                .card: .defaultCard,
+                .overlay: .defaultOverlay
+            ]
         )
     )
 }
@@ -341,10 +455,19 @@ private struct DesignSystemThemeKey: EnvironmentKey {
     static let defaultValue = DesignSystemTheme.default
 }
 
+private struct GlassContextKey: EnvironmentKey {
+    static let defaultValue: DSGlassContext = .mainView
+}
+
 extension EnvironmentValues {
     var dsTheme: DesignSystemTheme {
         get { self[DesignSystemThemeKey.self] }
         set { self[DesignSystemThemeKey.self] = newValue }
+    }
+
+    var glassContext: DSGlassContext {
+        get { self[GlassContextKey.self] }
+        set { self[GlassContextKey.self] = newValue }
     }
 }
 
@@ -367,5 +490,11 @@ extension View {
 
     func dsFont(_ style: DSTextStyle, weight: DSFontWeight = .regular, italic: Bool = false) -> some View {
         modifier(DSFontModifier(style: style, weight: weight, italic: italic))
+    }
+
+    /// Sets the glass context for this view and its descendants.
+    /// Glass elements will automatically adapt their appearance based on context.
+    func glassContext(_ context: DSGlassContext) -> some View {
+        environment(\.glassContext, context)
     }
 }

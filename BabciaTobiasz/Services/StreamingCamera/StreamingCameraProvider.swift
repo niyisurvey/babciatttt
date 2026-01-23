@@ -25,6 +25,7 @@ enum CameraProviderType: String, Codable, CaseIterable, Identifiable {
     }
 }
 
+@MainActor
 protocol StreamingCameraProvider: AnyObject {
     var id: UUID { get }
     var name: String { get }
