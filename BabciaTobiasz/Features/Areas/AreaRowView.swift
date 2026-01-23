@@ -71,7 +71,7 @@ struct AreaRowView: View {
 
     private var areaIcon: some View {
         ZStack {
-            Circle()
+            RoundedRectangle(cornerRadius: theme.shape.controlCornerRadius, style: .continuous)
                 .fill(area.color.opacity(0.15))
                 .frame(width: 44, height: 44)
 

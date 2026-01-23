@@ -18,9 +18,7 @@ struct StreamingCameraSupportedListView: View {
 
     private func supportedRow(icon: String, title: String, detail: String) -> some View {
         HStack(alignment: .top, spacing: 12) {
-            Image(systemName: icon)
-                .font(.system(size: theme.grid.iconSmall))
-                .foregroundStyle(theme.palette.primary)
+            SparkleIconView(systemName: icon, size: theme.grid.iconSmall, color: theme.palette.primary)
                 .frame(width: 26)
 
             VStack(alignment: .leading, spacing: 2) {

@@ -44,7 +44,7 @@ struct DreamHeaderPlaceholderView: View {
 #Preview {
     DreamHeaderPlaceholderView(
         title: "Start your first check-in",
-        message: "Snap a photo to generate tasks and dream visions.",
+        message: "Snap a photo to generate tasks and points.",
         icon: "sparkles"
     )
     .frame(height: 260)

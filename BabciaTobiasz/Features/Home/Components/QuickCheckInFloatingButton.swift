@@ -16,8 +16,6 @@ struct QuickCheckInFloatingButton: View {
         } label: {
             Label(String(localized: "home.quickCheckIn"), systemImage: "camera.fill")
                 .dsFont(.headline, weight: .bold)
-                .padding(.horizontal, theme.grid.buttonHorizontalPadding)
-                .padding(.vertical, theme.grid.buttonVerticalPadding)
         }
         .buttonStyle(.nativeGlassProminent)
         .accessibilityLabel(String(localized: "home.quickCheckIn"))

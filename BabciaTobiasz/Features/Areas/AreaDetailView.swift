@@ -601,7 +601,7 @@ struct AreaDetailView: View {
                 Button(String(localized: "cameraSource.choose")) {
                     showPicker.wrappedValue = true
                 }
-                .dsFont(.caption2, weight: .semibold)
+                .dsFont(.caption2, weight: .bold)
                 .foregroundStyle(.secondary)
                 .buttonStyle(.plain)
             }
@@ -657,16 +657,18 @@ struct AreaDetailView: View {
 
             TaskPierogiDropCard(
                 tasks: taskDropTasks,
-                goldenChancePercent: AppConfigService.shared.verificationGoldenChancePercent
-            ) { task in
-                withAnimation(theme.motion.listSpring) {
-                    completeTask(task, haptic: .success)
+                goldenChancePercent: AppConfigService.shared.verificationGoldenChancePercent,
+                onDropTask: { task in
+                    withAnimation(theme.motion.listSpring) {
+                        completeTask(task, haptic: .success)
+                    }
+                },
+                onToggleTask: { task in
+                    withAnimation(theme.motion.listSpring) {
+                        completeTask(task, haptic: .selection)
+                    }
                 }
-            } onToggleTask: { task in
-                withAnimation(theme.motion.listSpring) {
-                    completeTask(task, haptic: .selection)
-                }
-            }
+            )
         }
         .overlay(alignment: .topLeading) {
             if showTaskTapHint {

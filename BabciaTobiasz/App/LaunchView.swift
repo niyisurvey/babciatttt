@@ -48,14 +48,14 @@ struct LaunchView: View {
             
             VStack(spacing: 24) {
                 ZStack {
-                    Image(systemName: "cloud.sun.fill")
+                    Image(systemName: "camera.fill")
                         .font(.system(size: theme.grid.iconXL))
-                        .symbolRenderingMode(.multicolor)
+                        .symbolRenderingMode(.hierarchical)
                         .offset(x: -20, y: -10)
-                    
-                    Image(systemName: "checkmark.circle.fill")
+
+                    Image(systemName: "checklist")
                         .font(.system(size: theme.grid.iconSplashSecondary))
-                        .foregroundStyle(.green)
+                        .foregroundStyle(theme.palette.primary)
                         .offset(x: 30, y: 20)
                 }
                 .scaleEffect(iconScale)

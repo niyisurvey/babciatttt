@@ -46,4 +46,3 @@ extension AreaBowl {
         dreamHeroImageData ?? dreamRawImageData ?? afterPhotoData ?? beforePhotoData
     }
 }
-

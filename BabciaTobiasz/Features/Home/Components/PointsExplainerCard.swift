@@ -14,7 +14,7 @@ struct PointsExplainerCard: View {
             GlassCardView {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack(spacing: 8) {
-                        Image(systemName: "sparkles")
+                        Image(systemName: "star.fill")
                             .foregroundStyle(theme.palette.warmAccent)
                         Text(String(localized: "home.pointsExplainer.title"))
                             .dsFont(.headline, weight: .bold)

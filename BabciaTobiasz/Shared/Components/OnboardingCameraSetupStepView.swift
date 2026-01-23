@@ -41,12 +41,14 @@ struct OnboardingCameraSetupStepView: View {
                             hapticFeedback(.selection)
                         }
                         .buttonStyle(.nativeGlassProminent)
+                        .frame(maxWidth: .infinity)
 
                         Button(String(localized: "onboarding.camera.manual")) {
                             showCameraEditor = true
                             hapticFeedback(.selection)
                         }
                         .buttonStyle(.nativeGlass)
+                        .frame(maxWidth: .infinity)
                     }
                 }
                 .padding(theme.grid.cardPadding)

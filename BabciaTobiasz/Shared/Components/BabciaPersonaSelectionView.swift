@@ -104,9 +104,11 @@ private struct BabciaPersonaCard: View {
                 VStack(spacing: 4) {
                     Text(persona.localizedDisplayName)
                         .dsFont(.headline, weight: .bold)
+                        .lineLimit(1)
                     Text(persona.localizedArchetype)
                         .dsFont(.caption, weight: .bold)
                         .foregroundStyle(accentColor)
+                        .lineLimit(1)
                     Text(persona.localizedTagline)
                         .dsFont(.caption)
                         .foregroundStyle(.secondary)
@@ -119,13 +121,19 @@ private struct BabciaPersonaCard: View {
                         .lineLimit(2)
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .padding(theme.grid.cardPadding)
         }
-        .overlay(selectionRing)
+        .frame(width: theme.grid.heroCardWidth, height: theme.grid.heroCardHeight)
+        .overlay(alignment: .topLeading) {
+            if isSelected {
+                SparkleIconView(systemName: "checkmark", size: theme.grid.iconTiny, color: accentColor)
+                    .padding(.top, 8)
+                    .padding(.leading, 8)
+            }
+        }
         .overlay(alignment: .topTrailing) {
-            Image(systemName: "info.circle")
-                .font(.system(size: theme.grid.iconTiny))
-                .foregroundStyle(accentColor)
+            SparkleIconView(systemName: "info.circle", size: theme.grid.iconTiny, color: accentColor)
                 .padding(.top, 8)
                 .padding(.trailing, 8)
         }
@@ -138,29 +146,14 @@ private struct BabciaPersonaCard: View {
         if let uiImage = UIImage(named: persona.headshotImageName) {
             Image(uiImage: uiImage)
                 .resizable()
-                .scaledToFill()
+                .scaledToFit()
                 .frame(width: theme.grid.iconXXL, height: theme.grid.iconXXL)
-                .clipShape(Circle())
         } else {
-            Circle()
-                .fill(theme.glass.strength.fallbackMaterial)
+            SparkleIconView(systemName: "sparkles", size: theme.grid.iconMedium, color: accentColor)
                 .frame(width: theme.grid.iconXXL, height: theme.grid.iconXXL)
-                .overlay(
-                    Image(systemName: "sparkles")
-                        .font(.system(size: theme.grid.iconMedium))
-                        .foregroundStyle(accentColor)
-                )
         }
     }
 
-    private var selectionRing: some View {
-        Circle()
-            .strokeBorder(accentColor, lineWidth: isSelected ? 3 : 1)
-            .frame(width: theme.grid.iconXXL + 16, height: theme.grid.iconXXL + 16)
-            .shadow(color: accentColor.opacity(isSelected ? 0.35 : 0), radius: 12)
-            .opacity(isSelected ? 1 : 0.3)
-            .offset(y: -theme.grid.cardPadding)
-    }
 }
 
 private struct BabciaPersonaDetailSheet: View {
@@ -198,9 +191,8 @@ private struct BabciaPersonaDetailSheet: View {
             if let uiImage = UIImage(named: persona.headshotImageName) {
                 Image(uiImage: uiImage)
                     .resizable()
-                    .scaledToFill()
+                    .scaledToFit()
                     .frame(width: theme.grid.iconXXL, height: theme.grid.iconXXL)
-                    .clipShape(Circle())
             }
             Text(persona.localizedArchetype)
                 .dsFont(.headline, weight: .bold)

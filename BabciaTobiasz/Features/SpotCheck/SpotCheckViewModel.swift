@@ -88,23 +88,22 @@ final class SpotCheckViewModel {
     }
 
     func pickRandomArea() {
-        let eligible = eligibleAreas()
+        let eligible = eligibleAreasList()
         selectedArea = eligible.randomElement()
     }
 
     func canDoSpotCheck() -> Bool {
         refreshDailyState()
         guard meetsMinimumAreas else { return false }
-        return dailyCount < spotCheckLimit && !eligibleAreas().isEmpty
+        return dailyCount < spotCheckLimit && !eligibleAreasList().isEmpty
     }
 
     func clearSelection() {
         selectedArea = nil
     }
 
-    func performSpotCheck(imageData: Data) async {
+    func performSpotCheck(imageData: Data, area: Area) async {
         guard canDoSpotCheck() else { return }
-        guard let area = selectedArea else { return }
         guard isAreaEligible(area) else { return }
         guard let scanPipelineService else {
             errorMessage = String(localized: "spotCheck.error.pipelineUnavailable")
@@ -140,7 +139,7 @@ final class SpotCheckViewModel {
             dailyCount += 1
             persistDailyState()
             updateCooldown(for: area.id)
-            clearSelection()
+            selectedArea = nil
         } catch {
             handleError(error)
         }
@@ -155,8 +154,10 @@ final class SpotCheckViewModel {
     var spotCheckTidyThreshold: Int { configService.spotCheckTidyThreshold }
     var spotCheckCooldownHours: Int { configService.spotCheckCooldownHours }
     var spotCheckPoints: AppConfig.SpotCheck.Points { configService.spotCheckPoints }
-    var eligibleAreaCount: Int { eligibleAreas().count }
+    var eligibleAreas: [Area] { eligibleAreasList() }
+    var eligibleAreaCount: Int { eligibleAreasList().count }
     var totalAreaCount: Int { areas.count }
+    var remainingScans: Int { max(0, spotCheckLimit - dailyCount) }
 
     var cooldownRemaining: TimeInterval? {
         let now = Date().timeIntervalSince1970
@@ -176,7 +177,7 @@ final class SpotCheckViewModel {
         return formatter.string(from: remaining)
     }
 
-    private func eligibleAreas() -> [Area] {
+    private func eligibleAreasList() -> [Area] {
         areas.filter { isAreaEligible($0) }
     }
 

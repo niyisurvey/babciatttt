@@ -20,7 +20,7 @@
     "maxTarget": 10
   },
   "tutorial": {
-    "showWalkthrough": true,
+    "showWalkthrough": false,
     "showCameraSetup": true,
     "showThemeSelection": true
   },

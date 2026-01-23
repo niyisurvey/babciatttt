@@ -113,7 +113,7 @@ struct PierogiDropView: View {
             }
 
             if showReveal {
-                Circle()
+                RoundedRectangle(cornerRadius: theme.shape.controlCornerRadius, style: .continuous)
                     .stroke(glowColor, lineWidth: theme.grid.iconTiny)
                     .frame(width: baseSize + theme.grid.iconLarge, height: baseSize + theme.grid.iconLarge)
                     .shadow(color: glowColor.opacity(theme.glass.glowOpacityHigh), radius: theme.grid.iconMedium)
@@ -129,7 +129,7 @@ struct PierogiDropView: View {
 
     private func boilEffect(color: Color) -> some View {
         let pulseRatio = theme.grid.pierogiPotGrowStep / theme.grid.pierogiPotSize
-        return Circle()
+        return RoundedRectangle(cornerRadius: theme.shape.controlCornerRadius, style: .continuous)
             .stroke(color.opacity(theme.glass.glowOpacityHigh), lineWidth: theme.grid.iconTiny)
             .frame(width: theme.grid.pierogiPotSize + theme.grid.iconXL, height: theme.grid.pierogiPotSize + theme.grid.iconXL)
             .scaleEffect(showBoil ? 1 + pulseRatio : 1 - pulseRatio)

@@ -16,7 +16,7 @@ struct OnboardingView: View {
     
     private let pages: [OnboardingPage] = [
         OnboardingPage(
-            icon: "cloud.sun.fill",
+            icon: "camera.fill",
             title: String(localized: "onboarding.page.weather.title"),
             description: String(localized: "onboarding.page.weather.description"),
             accentColor: .blue
@@ -28,7 +28,7 @@ struct OnboardingView: View {
             accentColor: .green
         ),
         OnboardingPage(
-            icon: "sparkles",
+            icon: "star.fill",
             title: String(localized: "onboarding.page.insights.title"),
             description: String(localized: "onboarding.page.insights.description"),
             accentColor: .purple
@@ -187,15 +187,6 @@ struct OnboardingView: View {
             )
         }
 
-        if AppConfigService.shared.tutorialShowWalkthrough {
-            steps.append(
-                OnboardingStep(
-                    accentColor: theme.palette.coolAccent,
-                    view: AnyView(OnboardingWalkthroughStepView())
-                )
-            )
-        }
-
         if AppConfigService.shared.tutorialShowThemeSelection {
             steps.append(
                 OnboardingStep(
@@ -237,18 +228,12 @@ struct OnboardingPageView: View {
         VStack(spacing: 40) {
             Spacer()
             
-            // Icon
-            ZStack {
-                Circle()
-                    .fill(page.accentColor.opacity(0.15))
-                    .frame(width: 140, height: 140)
-                
-                Image(systemName: page.icon)
-                    .font(.system(size: theme.grid.iconXL))
-                    .symbolRenderingMode(.hierarchical)
-                    .foregroundStyle(page.accentColor)
-            }
-            .liquidGlass(cornerRadius: theme.shape.heroCornerRadius)
+            SparkleIconView(
+                systemName: page.icon,
+                size: theme.grid.iconXXL,
+                color: page.accentColor,
+                sparkleColor: page.accentColor
+            )
             
             // Text content
             VStack(spacing: 16) {

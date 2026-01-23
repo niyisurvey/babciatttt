@@ -39,7 +39,7 @@ struct SkeletonLoadingView: View {
             HStack(alignment: .top, spacing: 20) {
                 // Icon placeholder
                 SkeletonBox(width: 80, height: 80)
-                    .clipShape(Circle())
+                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                 
                 VStack(alignment: .leading, spacing: 8) {
                     // Temperature
@@ -59,7 +59,7 @@ struct SkeletonLoadingView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 SkeletonBox(width: 24, height: 24)
-                    .clipShape(Circle())
+                    .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
                 SkeletonBox(width: 100, height: 18)
                 Spacer()
             }
@@ -76,7 +76,7 @@ struct SkeletonLoadingView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         SkeletonBox(width: 20, height: 20)
-                            .clipShape(Circle())
+                            .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
                         SkeletonBox(width: 60, height: 14)
                     }
                     SkeletonBox(width: 80, height: 24)
@@ -99,7 +99,7 @@ struct SkeletonLoadingView: View {
                         SkeletonBox(width: 50, height: 16)
                         Spacer()
                         SkeletonBox(width: 30, height: 30)
-                            .clipShape(Circle())
+                            .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
                         Spacer()
                         SkeletonBox(width: 100, height: 6)
                             .clipShape(Capsule())
@@ -180,7 +180,7 @@ struct AreaSkeletonLoadingView: View {
     private var statsCardSkeleton: some View {
         VStack(spacing: 16) {
             SkeletonBox(width: 100, height: 100)
-                .clipShape(Circle())
+                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
             
             HStack(spacing: 30) {
                 VStack(spacing: 4) {
@@ -219,7 +219,7 @@ struct AreaSkeletonLoadingView: View {
             ForEach(0..<4, id: \.self) { _ in
                 HStack(spacing: 12) {
                     SkeletonBox(width: 44, height: 44)
-                        .clipShape(Circle())
+                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                     
                     VStack(alignment: .leading, spacing: 6) {
                         SkeletonBox(width: 120, height: 18)
@@ -229,7 +229,7 @@ struct AreaSkeletonLoadingView: View {
                     Spacer()
                     
                     SkeletonBox(width: 28, height: 28)
-                        .clipShape(Circle())
+                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                 }
                 .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)

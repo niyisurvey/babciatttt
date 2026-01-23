@@ -21,8 +21,8 @@ struct LatestDreamCard: View {
             GlassCardView {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
-                        Image(systemName: "sparkles")
-                            .foregroundStyle(.yellow)
+                        Image(systemName: "photo.fill")
+                            .foregroundStyle(theme.palette.primary)
                             .font(.system(size: theme.grid.iconTitle3))
                             .symbolEffect(.pulse, options: .repeating)
 
@@ -42,7 +42,7 @@ struct LatestDreamCard: View {
                             .resizable()
                             .scaledToFill()
                             .frame(height: 180)
-                            .clipShape(RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius))
+                            .clipped()
                     } else {
                         emptyDreamPlaceholder
                     }
@@ -60,20 +60,19 @@ struct LatestDreamCard: View {
     }
 
     private var emptyDreamPlaceholder: some View {
-        RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius)
-            .fill(theme.palette.glassTint.opacity(0.05))
-            .frame(height: 180)
-            .overlay {
-                VStack(spacing: 8) {
-                    Image(systemName: "photo")
-                        .font(.system(size: theme.grid.iconLarge))
-                        .foregroundStyle(.secondary)
+        ZStack {
+            Color.black.opacity(0.08)
+            VStack(spacing: 8) {
+                Image(systemName: "photo")
+                    .font(.system(size: theme.grid.iconLarge))
+                    .foregroundStyle(.secondary)
 
-                    Text(String(localized: "home.latestDream.empty"))
-                        .dsFont(.caption)
-                        .foregroundStyle(.secondary)
-                }
+                Text(String(localized: "home.latestDream.empty"))
+                    .dsFont(.caption)
+                    .foregroundStyle(.secondary)
             }
+        }
+        .frame(height: 180)
     }
 }
 

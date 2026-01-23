@@ -4,19 +4,31 @@
 import SwiftUI
 import SwiftData
 import OSLog
+#if canImport(UIKit)
+import UIKit
+#endif
 
 /// Main area list with management and statistics
 struct AreaListView: View {
     @Bindable var viewModel: AreaViewModel
     @AppStorage("primaryPersonaRaw") private var primaryPersonaRaw: String = BabciaPersona.classic.rawValue
     @AppStorage("needsFirstArea") private var needsFirstArea = false
+    @AppStorage(DreamHeroStorageKeys.pinnedDreamId) private var pinnedDreamId: String = ""
+    @AppStorage(DreamHeroStorageKeys.areasHeroRotationCursor) private var heroRotationCursor: Int = 0
     @State private var showStatsTooltip = false
     @State private var headerProgress: CGFloat = 0
     @State private var showVictoryHero = false
     @State private var pendingDeleteArea: Area?
     @State private var showDeleteConfirmation = false
+    @State private var heroDreamBowl: AreaBowl?
     @Environment(\.dsTheme) private var theme
     private let logger = Logger(subsystem: "com.babcia.tobiasz", category: "navigation")
+    @Query(
+        filter: #Predicate<AreaBowl> { bowl in
+            bowl.dreamHeroImageData != nil || bowl.dreamRawImageData != nil
+        },
+        sort: [SortDescriptor(\AreaBowl.createdAt, order: .reverse)]
+    ) private var dreamBowls: [AreaBowl]
 
     private var heroImageName: String {
         let persona = BabciaPersona(rawValue: primaryPersonaRaw) ?? .classic
@@ -25,6 +37,28 @@ struct AreaListView: View {
         }
         return persona.fullBodyImageName(for: heroPose)
     }
+
+    private var heroImage: Image {
+        #if canImport(UIKit)
+        if let uiImage = heroDreamUIImage {
+            return Image(uiImage: uiImage)
+        }
+        #endif
+        return Image(heroImageName)
+    }
+
+    #if canImport(UIKit)
+    private var heroDreamUIImage: UIImage? {
+        guard let bowl = heroDreamBowl else { return nil }
+        if let data = bowl.dreamHeroImageData, let image = UIImage(data: data) {
+            return image
+        }
+        if let data = bowl.dreamRawImageData, let image = UIImage(data: data) {
+            return image
+        }
+        return nil
+    }
+    #endif
 
     private var heroPose: BabciaPose {
         if viewModel.isInactiveForHero {
@@ -59,12 +93,16 @@ struct AreaListView: View {
             .sheet(isPresented: $viewModel.showAreaForm) {
                 AreaFormView(viewModel: viewModel, area: viewModel.editingArea)
             }
-            .safeAreaInset(edge: .bottom) {
-                areasSearchBar
-            }
             .onAppear {
                 viewModel.loadAreas()
                 handleFirstAreaIfNeeded()
+                selectHeroDream()
+            }
+            .onChange(of: pinnedDreamId) { _, _ in
+                selectHeroDream()
+            }
+            .onChange(of: dreamBowls) { _, _ in
+                selectHeroDream()
             }
             .onChange(of: viewModel.totalCompletions) { _, _ in
                 guard viewModel.isInactiveForHero == false else { return }
@@ -130,6 +168,28 @@ struct AreaListView: View {
             viewModel.addNewArea()
         }
     }
+
+    private func selectHeroDream() {
+        if !pinnedDreamId.isEmpty,
+           let pinned = dreamBowls.first(where: { $0.id.uuidString == pinnedDreamId }) {
+            heroDreamBowl = pinned
+            return
+        }
+
+        if !pinnedDreamId.isEmpty {
+            pinnedDreamId = ""
+        }
+
+        guard !dreamBowls.isEmpty else {
+            heroDreamBowl = nil
+            return
+        }
+
+        heroRotationCursor = heroRotationCursor &+ 1
+        let count = dreamBowls.count
+        let index = Int(UInt(bitPattern: heroRotationCursor) % UInt(count))
+        heroDreamBowl = dreamBowls[index]
+    }
     
     // MARK: - Background
     
@@ -147,7 +207,7 @@ struct AreaListView: View {
             progress: $headerProgress
         ) { progress in
             AreasHeroHeader(
-                imageName: heroImageName,
+                image: heroImage,
                 message: heroMessage,
                 progress: progress
             )
@@ -156,6 +216,7 @@ struct AreaListView: View {
                 if viewModel.areas.isEmpty {
                     emptyStateView
                 } else {
+                    areasSearchBar
                     statisticsCard
                     filterPicker
                     areasList
@@ -463,7 +524,7 @@ struct AreaListView: View {
 }
 
 private struct AreasHeroHeader: View {
-    let imageName: String
+    let image: Image
     let message: String?
     let progress: CGFloat
     @Environment(\.dsTheme) private var theme
@@ -471,11 +532,11 @@ private struct AreasHeroHeader: View {
     var body: some View {
         let fade = max(CGFloat.zero, CGFloat(1) - progress * CGFloat(1.2))
         ZStack(alignment: .bottom) {
-            Image(imageName)
+            image
                 .resizable()
-                .scaledToFit()
-                .frame(maxWidth: .infinity)
-                .padding(.top, theme.grid.sectionSpacing)
+                .scaledToFill()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .clipped()
                 .opacity(fade)
             if let message {
                 Text(message)
@@ -489,7 +550,6 @@ private struct AreasHeroHeader: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .animation(.easeOut(duration: 0.2), value: progress)
     }
 }
 

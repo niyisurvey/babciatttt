@@ -17,10 +17,10 @@ struct ScanProcessingOverlayView: View {
 
     var body: some View {
         ZStack {
-            Color.black.opacity(0.35)
+            Color.black.opacity(0.18)
                 .ignoresSafeArea()
 
-            GlassCardView {
+            GlassCardView(showBorder: false) {
                 VStack(spacing: theme.grid.sectionSpacing) {
                     portraitView
 

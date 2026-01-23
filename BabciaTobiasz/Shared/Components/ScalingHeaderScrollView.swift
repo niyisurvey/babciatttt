@@ -119,12 +119,14 @@ struct ScalingHeaderScrollView<Header: View, Content: View>: View {
             let collapse = min(max(-minY / range, 0), 1)
             let stretch = max(minY, 0)
             let height = maxHeight + stretch
+            let stretchScale = 1 + min(stretch / max(maxHeight, 1), 0.35)
             let offset: CGFloat = minY > 0 ? -minY : 0
 
             ZStack(alignment: .top) {
                 header(collapse)
                     .frame(height: height)
                     .frame(maxWidth: .infinity)
+                    .scaleEffect(stretchScale, anchor: .top)
                     .offset(y: offset)
 
                 Color.clear

@@ -84,6 +84,10 @@ struct AreaFormView: View {
                             Text(String(localized: "areaForm.appearance.title"))
                                 .dsFont(.headline, weight: .bold)
                                 .padding(.horizontal, 4)
+                            Text(String(localized: "areaForm.appearance.helper"))
+                                .dsFont(.caption)
+                                .foregroundStyle(.secondary)
+                                .padding(.horizontal, 4)
 
                             GlassCardView {
                                 VStack(alignment: .leading, spacing: 20) {
@@ -270,10 +274,10 @@ struct AreaFormView: View {
                         .frame(width: 44, height: 44)
                         .background(
                             selectedIcon == icon ? selectedColor.opacity(0.2) : Color.clear,
-                            in: Circle()
+                            in: RoundedRectangle(cornerRadius: 12, style: .continuous)
                         )
                         .overlay(
-                            Circle()
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
                                 .stroke(selectedIcon == icon ? selectedColor : Color.clear, lineWidth: 2)
                         )
                 }
@@ -289,16 +293,16 @@ struct AreaFormView: View {
                 Button {
                     selectedColor = color
                 } label: {
-                    Circle()
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
                         .fill(color)
                         .frame(width: 36, height: 36)
                         .overlay(
-                            Circle()
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .stroke(theme.palette.primary.opacity(selectedColor == color ? 0.9 : 0), lineWidth: 3)
                                 .padding(1)
                         )
                         .overlay(
-                            Circle()
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
                                 .stroke(Color.white.opacity(selectedColor == color ? 0.8 : 0), lineWidth: 1)
                                 .padding(4)
                         )
@@ -318,7 +322,7 @@ struct AreaFormView: View {
     private var previewCard: some View {
         HStack(spacing: 16) {
             ZStack {
-                Circle()
+                RoundedRectangle(cornerRadius: theme.shape.controlCornerRadius, style: .continuous)
                     .fill(selectedColor.opacity(0.2))
                     .frame(width: 50, height: 50)
 

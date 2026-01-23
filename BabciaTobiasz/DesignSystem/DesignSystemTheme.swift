@@ -57,6 +57,7 @@ struct DSGrid {
     var cardPaddingTight: CGFloat
     var sectionSpacing: CGFloat
     var listSpacing: CGFloat
+    var buttonMinHeight: CGFloat
     var buttonHorizontalPadding: CGFloat
     var buttonVerticalPadding: CGFloat
     var iconTiny: CGFloat
@@ -74,6 +75,7 @@ struct DSGrid {
     var detailCardHeightSmall: CGFloat
     var detailCardHeightLarge: CGFloat
     var heroHeaderCollapsedHeight: CGFloat
+    var heroCardWidth: CGFloat
     var heroCardHeight: CGFloat
     var pierogiSize: CGFloat
     var pierogiEmojiScale: CGFloat
@@ -162,6 +164,7 @@ struct DSMotion {
 
 enum DSFontWeight {
     case regular
+    case semibold
     case bold
 }
 
@@ -174,8 +177,10 @@ struct DSFontFamily {
     func name(weight: DSFontWeight, italic isItalic: Bool) -> String {
         switch (weight, isItalic) {
         case (.regular, false): return regular
+        case (.semibold, false): return bold
         case (.bold, false): return bold
         case (.regular, true): return italic
+        case (.semibold, true): return boldItalic
         case (.bold, true): return boldItalic
         }
     }
@@ -297,6 +302,7 @@ extension DesignSystemTheme {
             cardPaddingTight: 12,
             sectionSpacing: 20,
             listSpacing: 12,
+            buttonMinHeight: 48,
             buttonHorizontalPadding: 24,
             buttonVerticalPadding: 12,
             iconTiny: 12,
@@ -314,6 +320,7 @@ extension DesignSystemTheme {
             detailCardHeightSmall: 120,
             detailCardHeightLarge: 150,
             heroHeaderCollapsedHeight: 120,
+            heroCardWidth: 260,
             heroCardHeight: 260,
             pierogiSize: 60,
             pierogiEmojiScale: 2.2,

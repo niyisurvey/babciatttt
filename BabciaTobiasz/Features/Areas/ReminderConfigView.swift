@@ -74,7 +74,8 @@ struct ReminderConfigView: View {
                 createConfig()
                 hapticFeedback(.selection)
             }
-            .buttonStyle(.borderedProminent)
+            .dsFont(.headline, weight: .bold)
+            .buttonStyle(.nativeGlassProminent)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 4)

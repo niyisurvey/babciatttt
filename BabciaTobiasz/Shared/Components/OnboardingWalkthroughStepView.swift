@@ -6,7 +6,6 @@
 import SwiftUI
 
 struct OnboardingWalkthroughStepView: View {
-    @AppStorage("tutorial.walkthroughEnabled") private var walkthroughEnabled: Bool = AppConfigService.shared.tutorialShowWalkthrough
     @Environment(\.dsTheme) private var theme
 
     var body: some View {
@@ -23,9 +22,6 @@ struct OnboardingWalkthroughStepView: View {
                 .padding(theme.grid.cardPadding)
             }
 
-            Toggle(String(localized: "onboarding.tutorial.toggle"), isOn: $walkthroughEnabled)
-                .dsFont(.subheadline, weight: .bold)
-                .toggleStyle(SwitchToggleStyle(tint: theme.palette.primary))
         }
         .padding(.horizontal, theme.grid.cardPadding)
     }
@@ -45,9 +41,7 @@ struct OnboardingWalkthroughStepView: View {
 
     private func walkthroughRow(icon: String, title: String, detail: String) -> some View {
         HStack(alignment: .top, spacing: 12) {
-            Image(systemName: icon)
-                .font(.system(size: theme.grid.iconSmall))
-                .foregroundStyle(theme.palette.warmAccent)
+            SparkleIconView(systemName: icon, size: theme.grid.iconSmall, color: theme.palette.warmAccent)
                 .frame(width: 26)
 
             VStack(alignment: .leading, spacing: 2) {

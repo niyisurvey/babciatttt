@@ -23,6 +23,8 @@ struct SpotCheckView: View {
     @State private var showCameraAlert = false
     @State private var cameraAlertMessage = ""
     @State private var didConfigure = false
+    @State private var capturedImageData: Data?
+    @State private var showAreaPicker = false
 
     var body: some View {
         ZStack {
@@ -94,6 +96,23 @@ struct SpotCheckView: View {
                 }
             )
         }
+        .sheet(isPresented: $showAreaPicker) {
+            SpotCheckAreaPickerSheet(
+                areas: viewModel.eligibleAreas,
+                remainingScans: viewModel.remainingScans,
+                onSelect: { area in
+                    runSpotCheck(for: area)
+                },
+                onCreateArea: {
+                    showAreaPicker = false
+                    onCreateArea()
+                },
+                onCancel: {
+                    showAreaPicker = false
+                    capturedImageData = nil
+                }
+            )
+        }
         .fullScreenCover(isPresented: $showCameraPermissionPrimer) {
             CameraPermissionPrimerView(
                 title: String(localized: "cameraPermission.title"),
@@ -133,9 +152,6 @@ struct SpotCheckView: View {
     }
 
     private func startQuickScan() {
-        guard viewModel.canDoSpotCheck() else { return }
-        viewModel.pickRandomArea()
-        guard viewModel.selectedArea != nil else { return }
         requestCameraCapture()
         hapticFeedback(.medium)
     }
@@ -183,17 +199,24 @@ struct SpotCheckView: View {
             presentCameraAlert(String(localized: "spotCheck.camera.captureFailed"))
             return
         }
-        Task {
-            await viewModel.performSpotCheck(imageData: data)
-            if viewModel.lastResult != nil {
-                hapticFeedback(.success)
-            }
-        }
+        capturedImageData = data
+        showAreaPicker = true
     }
 
     private func presentCameraAlert(_ message: String) {
         cameraAlertMessage = message
         showCameraAlert = true
+    }
+
+    private func runSpotCheck(for area: Area) {
+        guard let data = capturedImageData else { return }
+        Task {
+            await viewModel.performSpotCheck(imageData: data, area: area)
+            if viewModel.lastResult != nil {
+                hapticFeedback(.success)
+            }
+            capturedImageData = nil
+        }
     }
 
     private func handleErrorAction(_ action: FriendlyErrorAction) {
@@ -207,6 +230,97 @@ struct SpotCheckView: View {
         }
     }
 
+}
+
+private struct SpotCheckAreaPickerSheet: View {
+    let areas: [Area]
+    let remainingScans: Int
+    let onSelect: (Area) -> Void
+    let onCreateArea: () -> Void
+    let onCancel: () -> Void
+    @Environment(\.dsTheme) private var theme
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                LiquidGlassBackground(style: .default)
+                VStack(spacing: theme.grid.sectionSpacing) {
+                    VStack(spacing: 6) {
+                        Text(String(localized: "spotCheck.areaPicker.title"))
+                            .dsFont(.title2, weight: .bold)
+                        Text(String(format: String(localized: "spotCheck.areaPicker.remaining"), remainingScans))
+                            .dsFont(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .multilineTextAlignment(.center)
+
+                    if areas.isEmpty {
+                        GlassCardView {
+                            VStack(spacing: 12) {
+                                Text(String(localized: "spotCheck.areaPicker.empty.title"))
+                                    .dsFont(.headline, weight: .bold)
+                                Text(String(localized: "spotCheck.areaPicker.empty.message"))
+                                    .dsFont(.subheadline)
+                                    .foregroundStyle(.secondary)
+                                    .multilineTextAlignment(.center)
+                                Button(String(localized: "spotCheck.areaPicker.empty.action")) {
+                                    onCreateArea()
+                                }
+                                .buttonStyle(.nativeGlassProminent)
+                            }
+                            .padding(.vertical, theme.grid.sectionSpacing)
+                        }
+                    } else {
+                        ScrollView(showsIndicators: false) {
+                            VStack(spacing: theme.grid.listSpacing) {
+                                ForEach(areas) { area in
+                                    Button {
+                                        onSelect(area)
+                                    } label: {
+                                        HStack(spacing: 12) {
+                                            Image(systemName: area.iconName)
+                                                .font(.system(size: theme.grid.iconSmall))
+                                                .foregroundStyle(area.color)
+                                                .frame(width: 28)
+                                            VStack(alignment: .leading, spacing: 2) {
+                                                Text(area.name)
+                                                    .dsFont(.headline, weight: .bold)
+                                                Text(area.persona.localizedDisplayName)
+                                                    .dsFont(.caption)
+                                                    .foregroundStyle(.secondary)
+                                            }
+                                            Spacer()
+                                            Image(systemName: "chevron.right")
+                                                .foregroundStyle(.secondary)
+                                        }
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
+                                    .buttonStyle(.plain)
+                                    .glassCard()
+                                }
+                            }
+                            .padding(.horizontal, theme.grid.cardPadding)
+                            .padding(.bottom, theme.grid.sectionSpacing)
+                        }
+                    }
+                }
+                .padding(.horizontal, theme.grid.cardPadding)
+                .padding(.top, theme.grid.sectionSpacing)
+            }
+            .navigationTitle("")
+            #if os(iOS)
+            .navigationBarTitleDisplayMode(.inline)
+            #endif
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(String(localized: "common.cancel")) {
+                        onCancel()
+                    }
+                    .dsFont(.headline)
+                }
+            }
+        }
+    }
 }
 
 #Preview {

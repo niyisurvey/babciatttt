@@ -36,12 +36,14 @@ struct RoomReminderPromptView: View {
                     Button(String(localized: "common.notNow")) {
                         onDismiss()
                     }
-                    .buttonStyle(.bordered)
+                    .dsFont(.headline, weight: .bold)
+                    .buttonStyle(.nativeGlass)
 
                     Button(String(localized: "reminderPrompt.start")) {
                         onStart()
                     }
-                    .buttonStyle(.borderedProminent)
+                    .dsFont(.headline, weight: .bold)
+                    .buttonStyle(.nativeGlassProminent)
                 }
             }
             .padding()

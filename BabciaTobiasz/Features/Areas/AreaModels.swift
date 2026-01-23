@@ -246,8 +246,11 @@ final class Area {
         bowls?
             .sorted { $0.createdAt > $1.createdAt }
             .first { bowl in
-                if let heroData = bowl.dreamHeroImageData {
-                    return !heroData.isEmpty
+                if let heroData = bowl.dreamHeroImageData, !heroData.isEmpty {
+                    return true
+                }
+                if let rawData = bowl.dreamRawImageData, !rawData.isEmpty {
+                    return true
                 }
                 return false
             }
@@ -257,7 +260,7 @@ final class Area {
         if let heroData = latestDreamBowl?.dreamHeroImageData, !heroData.isEmpty {
             return true
         }
-        if let name = dreamImageName, !name.isEmpty {
+        if let rawData = latestDreamBowl?.dreamRawImageData, !rawData.isEmpty {
             return true
         }
         return false

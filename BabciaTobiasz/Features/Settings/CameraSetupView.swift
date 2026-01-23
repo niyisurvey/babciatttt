@@ -147,6 +147,20 @@ struct CameraSetupView: View {
                     }
                 }
 
+                if discoveryHub.isScanning {
+                    HStack(spacing: 8) {
+                        ProgressView()
+                            .tint(theme.palette.primary)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(String(localized: "cameraSetup.quickAdd.scanning"))
+                                .dsFont(.caption, weight: .bold)
+                            Text(String(localized: "cameraSetup.quickAdd.scanning.detail"))
+                                .dsFont(.caption2)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+
                 if discoveryHub.results.isEmpty {
                     Text(String(localized: "cameraSetup.quickAdd.none"))
                         .dsFont(.body)

@@ -16,7 +16,7 @@ struct PotCard: View {
         GlassCardView {
             VStack(spacing: 16) {
                 HStack {
-                    Image(systemName: "fork.knife")
+                    Image(systemName: "star.fill")
                         .foregroundStyle(theme.palette.primary)
                         .font(.system(size: theme.grid.iconTitle3))
                         .symbolEffect(.pulse, options: .repeating)

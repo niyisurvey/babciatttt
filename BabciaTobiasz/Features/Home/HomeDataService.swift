@@ -69,7 +69,7 @@ final class HomeDataService {
     private func fetchLatestDreamImage() throws -> Data? {
         var descriptor = FetchDescriptor<AreaBowl>(
             predicate: #Predicate { bowl in
-                bowl.dreamHeroImageData != nil
+                bowl.dreamHeroImageData != nil || bowl.dreamRawImageData != nil
             },
             sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
         )
@@ -77,6 +77,9 @@ final class HomeDataService {
         let bowls = try modelContext.fetch(descriptor)
         for bowl in bowls {
             if let data = bowl.dreamHeroImageData, !data.isEmpty {
+                return data
+            }
+            if let data = bowl.dreamRawImageData, !data.isEmpty {
                 return data
             }
         }

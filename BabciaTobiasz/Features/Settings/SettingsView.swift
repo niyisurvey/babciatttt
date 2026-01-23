@@ -34,8 +34,32 @@ struct SettingsView: View {
                                 .padding(.vertical, 4)
                             }
                         }
-                        
 
+                        VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
+                            Text(String(localized: "settings.babcia.title"))
+                                .dsFont(.headline, weight: .bold)
+                                .padding(.horizontal, 4)
+                            Text(String(localized: "settings.babcia.subtitle"))
+                                .dsFont(.caption)
+                                .foregroundStyle(.secondary)
+                                .padding(.horizontal, 4)
+
+                            GlassCardView {
+                                NavigationLink {
+                                    BabciaPersonaSettingsView()
+                                } label: {
+                                    HStack {
+                                        Text(String(localized: "settings.babcia.action"))
+                                            .dsFont(.headline)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .font(.system(size: theme.grid.iconTiny))
+                                            .foregroundStyle(.tertiary)
+                                    }
+                                    .padding(.vertical, 4)
+                                }
+                            }
+                        }
 
                         APIKeysSectionView()
 
