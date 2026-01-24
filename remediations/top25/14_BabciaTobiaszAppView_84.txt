@@ -1,0 +1,9 @@
+file_path: BabciaTobiasz/App/BabciaTobiaszAppView.swift
+line_number: 84
+category: Color
+severity: Critical
+problem: hardcoded UI primitive bypasses theme tokens and blocks consistent theming.
+proposed_tokens: palette.error
+replacement_snippet: theme.palette.error
+risks: verify contrast, dark mode, animation states, and hierarchy/elevation visuals after token swap.
+evidence: .foregroundStyle(.red)

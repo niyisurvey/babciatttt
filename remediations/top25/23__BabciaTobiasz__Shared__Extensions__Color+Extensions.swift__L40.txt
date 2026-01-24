@@ -1,5 +1,0 @@
-Problem: Color literal at BabciaTobiasz/Shared/Extensions/Color+Extensions.swift:40 increases theming drift and blocks global tuning.
-Proposed tokens: palette.primary (and related semantic variants if needed).
-Replacement snippet: theme.palette.primary
-Risks: Visual deltas may reveal implicit dependencies; verify contrast, state colors, and spacing rhythm on the containing screen.
-Code: static let weatherRainy = Color(red: 0.4, green: 0.5, blue: 0.6)

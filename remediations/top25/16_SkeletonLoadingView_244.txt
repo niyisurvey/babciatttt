@@ -1,0 +1,9 @@
+file_path: BabciaTobiasz/Shared/Components/SkeletonLoadingView.swift
+line_number: 244
+category: Gradient
+severity: High
+problem: hardcoded UI primitive bypasses theme tokens and blocks consistent theming.
+proposed_tokens: backgrounds.heroGradient
+replacement_snippet: theme.backgrounds.heroGradient
+risks: verify contrast, dark mode, animation states, and hierarchy/elevation visuals after token swap.
+evidence: LinearGradient(colors: [Color.appAccent.opacity(0.3), Color.cyan.opacity(0.3)], startPoint: .top, endPoint: .bottom)

@@ -1,67 +1,118 @@
-Palette
+existing_token_system:
+- file: BabciaTobiasz/DesignSystem/DesignSystemTheme.swift
+- groups_detected: palette, gradients, typography, motion, shape, grid, glass, elevation
+- note: violations should map into these groups first; introduce new tokens only when the existing groups cannot express the semantic intent.
+
+token_groups:
+Palette:
 - palette.primary: Primary brand/action color.
 - palette.onPrimary: Content on primary surfaces.
 - palette.secondary: Secondary accent color.
+- palette.onSecondary: Content on secondary surfaces.
 - palette.success: Success/status positive color.
 - palette.warning: Warning/status caution color.
 - palette.error: Error/status negative color.
-- palette.neutral: Neutral ramp entry point; use semantic neutral tokens instead of raw grays.
+- palette.neutral.0: White/near-white base.
+- palette.neutral.100: Light neutral surface.
+- palette.neutral.500: Mid neutral for borders/dividers.
+- palette.neutral.900: Dark neutral for text/shadows.
+- palette.textPrimary: Default text/icon color on main backgrounds.
+- palette.textSecondary: Secondary text/icon color.
+- palette.textInverse: Text/icon color on dark/primary surfaces.
+- palette.borderSubtle: Subtle border/divider color.
+- palette.borderStrong: Strong border/divider color.
 
-Backgrounds
+Backgrounds:
 - backgrounds.main: App root background.
-- backgrounds.sheet: Modal/sheet backgrounds.
-- backgrounds.card: Card/grouped content background.
-- backgrounds.overlay: Overlay/scrim background.
-- backgrounds.gradient.hero: Hero/header gradient token.
-- backgrounds.gradient.accent: Accent gradient token.
+- backgrounds.sheet: Modal/sheet background.
+- backgrounds.card: Card background.
+- backgrounds.overlayDim: Dimming overlays.
+- backgrounds.heroGradient: Branded hero gradient.
+- backgrounds.surfaceGradient: Default surface gradient.
+- backgrounds.successGradient: Positive state gradient.
+- backgrounds.warningGradient: Warning state gradient.
+- backgrounds.errorGradient: Error state gradient.
 
-Surfaces
-- surfaces.card: Default elevated container surface.
-- surfaces.toast: Toast/banner background surface.
-- surfaces.tooltip: Tooltip/help surface.
+Surfaces:
+- surfaces.card: Standard elevated surface.
+- surfaces.cardOn: Content color on cards.
+- surfaces.toast: Transient messaging surface.
+- surfaces.toastOn: Content color on toast.
+- surfaces.tooltip: Small informational surface.
+- surfaces.tooltipOn: Content color on tooltip.
+- surfaces.control: Controls like buttons, toggles, and inputs.
+- surfaces.controlOn: Content color on controls.
 
-Elevation
-- elevation.shadow.color: Canonical shadow color.
-- elevation.shadow.opacity.low: Low elevation opacity.
-- elevation.shadow.opacity.medium: Medium elevation opacity.
-- elevation.shadow.opacity.high: High elevation opacity.
-- elevation.level.1: Small elevation preset (radius/offset/opacity).
-- elevation.level.2: Card elevation preset.
-- elevation.level.3: Modal elevation preset.
-- elevation.overlayDim: Overlay dim opacity token.
+Elevation:
+- elevation.shadowColor: Global shadow color.
+- elevation.overlayDim: Standard overlay opacity.
+- elevation.level0: Flat surfaces (no shadow).
+- elevation.level1.radius: Shadow radius for small elevation.
+- elevation.level1.opacity: Shadow opacity for small elevation.
+- elevation.level1.x: Shadow x-offset for small elevation.
+- elevation.level1.y: Shadow y-offset for small elevation.
+- elevation.level2.radius: Shadow radius for cards.
+- elevation.level2.opacity: Shadow opacity for cards.
+- elevation.level2.x: Shadow x-offset for cards.
+- elevation.level2.y: Shadow y-offset for cards.
+- elevation.level3.radius: Shadow radius for modals/hero.
+- elevation.level3.opacity: Shadow opacity for modals/hero.
+- elevation.level3.x: Shadow x-offset for modals/hero.
+- elevation.level3.y: Shadow y-offset for modals/hero.
+- elevation.levelN.cornerRadius: Optional coupling between elevation level and corner radius.
 
-Grid
-- grid.xxl: Largest spacing scale step.
-- grid.xl: Extra large spacing scale step.
-- grid.l: Large spacing scale step.
-- grid.m: Medium spacing scale step.
-- grid.s: Small spacing scale step.
-- grid.xs: Extra small spacing scale step.
-- grid.cardPadding: Standard padding inside cards.
-- grid.listSpacing: Standard spacing between list items.
-- grid.buttonPadding: Standard button content padding.
+Grid:
+- grid.xxl: Extra large spacing.
+- grid.xl: Large spacing.
+- grid.l: Medium-large spacing.
+- grid.m: Medium spacing.
+- grid.s: Small spacing.
+- grid.xs: Extra small spacing.
+- grid.cardPadding: Default card padding.
+- grid.cardPaddingTight: Dense card padding.
+- grid.listSpacing: Default spacing between list rows.
+- grid.sectionSpacing: Spacing between major sections.
+- grid.stackSpacing: Default stack spacing.
+- grid.inlineSpacing: Small inline gaps.
+- grid.buttonPaddingHorizontal: Standard button horizontal padding.
+- grid.buttonPaddingVertical: Standard button vertical padding.
+- grid.controlMinHeight: Minimum control height.
 
-Shape
-- shape.hero: Large/hero radius.
-- shape.card: Default card radius.
-- shape.control: Control/button radius.
-- shape.tooltip: Tooltip radius.
-- shape.subtle: Small/subtle rounding.
+Shape:
+- shape.hero: Large radius for hero containers.
+- shape.card: Standard card corner radius.
+- shape.control: Control corner radius.
+- shape.tooltip: Tooltip corner radius.
+- shape.subtle: Small rounding for chips/dividers.
+- shape.pill: Fully rounded pill radius.
+- shape.borderWidth: Standard border width.
+- shape.borderWidthStrong: Emphasized border width.
 
-Typography
-- typography.largeTitle: Primary large title style.
-- typography.title: Primary screen title.
-- typography.title2: Secondary title style.
-- typography.headline: Emphasized body headline.
-- typography.body: Default body style.
-- typography.caption: Supporting/caption style.
+Typography:
+- typography.largeTitle: Largest hero title style.
+- typography.title: Primary section title style.
+- typography.title2: Secondary section title style.
+- typography.title3: Tertiary section title style.
+- typography.headline: Emphasized inline title style.
+- typography.subheadline: Secondary inline title style.
+- typography.body: Default body text style.
+- typography.bodyEmphasis: Emphasized body text.
+- typography.callout: Prominent body text.
+- typography.caption: Small supporting text.
+- typography.captionStrong: Small emphasized supporting text.
+- typography.footnote: Tiny supporting text.
 
-Motion and Icon Sizes
-- motion.duration.fast: Fast transitions.
-- motion.duration.normal: Default transitions.
-- motion.duration.slow: Emphasis transitions.
-- motion.curve.standard: Default easing.
-- motion.curve.emphasized: Emphasized easing.
-- icon.size.small: Small icons.
-- icon.size.medium: Default icons.
-- icon.size.large: Hero icons.
+Motion:
+- motion.fast: Quick transitions.
+- motion.standard: Default transitions.
+- motion.slow: Emphasized transitions.
+- motion.spring.standard: Default spring parameters.
+- motion.spring.bouncy: High energy spring parameters.
+- motion.reduce: Reduced motion variant.
+
+IconSizes:
+- iconSizes.xl: Hero icon size.
+- iconSizes.l: Large icon size.
+- iconSizes.m: Standard icon size.
+- iconSizes.s: Small icon size.
+- iconSizes.xs: Tiny icon size.

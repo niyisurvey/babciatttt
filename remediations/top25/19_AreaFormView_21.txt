@@ -1,0 +1,9 @@
+file_path: BabciaTobiasz/Features/Areas/AreaFormView.swift
+line_number: 21
+category: Color
+severity: High
+problem: hardcoded UI primitive bypasses theme tokens and blocks consistent theming.
+proposed_tokens: palette.primary
+replacement_snippet: theme.palette.primary
+risks: verify contrast, dark mode, animation states, and hierarchy/elevation visuals after token swap.
+evidence: @State private var selectedColor: Color = .teal
