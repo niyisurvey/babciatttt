@@ -14,10 +14,10 @@ struct StreakCard: View {
 
     var body: some View {
         GlassCardView {
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                 HStack {
                     Image(systemName: "flame.fill")
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(theme.palette.warning)
                         .font(.system(size: theme.grid.iconTitle3))
                         .symbolEffect(.pulse, options: .repeating)
 
@@ -36,12 +36,12 @@ struct StreakCard: View {
                          ? String(localized: "home.streak.unit.singular")
                          : String(localized: "home.streak.unit.plural"))
                         .dsFont(.title3)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
 
                 Text(String(localized: "home.streak.message"))
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding()

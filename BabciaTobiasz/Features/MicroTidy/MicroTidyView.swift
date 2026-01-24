@@ -101,7 +101,7 @@ struct MicroTidyView: View {
                 .dsFont(.title2, weight: .bold)
             Text(String(localized: "microTidy.subtitle"))
                 .dsFont(.body)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -112,12 +112,12 @@ struct MicroTidyView: View {
             VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                 Text(String(localized: "microTidy.limit.title"))
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                 Text(String(format: String(localized: "microTidy.limit.status"), remaining, viewModel.microTidyLimit))
                     .dsFont(.headline, weight: .bold)
                 Text(String(format: String(localized: "microTidy.points.reward"), viewModel.microTidyPoints))
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -130,7 +130,7 @@ struct MicroTidyView: View {
                     .dsFont(.headline, weight: .bold)
                 Text(String(localized: "microTidy.empty.message"))
                     .dsFont(.body)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                 Button {
                     onOpenAreas()
                     hapticFeedback(.selection)
@@ -149,23 +149,23 @@ struct MicroTidyView: View {
             VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                 Text(String(localized: "microTidy.area.title"))
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
 
                 if let area = viewModel.selectedArea {
                     Text(area.name)
                         .dsFont(.headline, weight: .bold)
                     Text(area.persona.localizedDisplayName)
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
 
                     if viewModel.areas.count > 1 {
                         Text(String(localized: "microTidy.area.randomPrompt"))
                             .dsFont(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                     } else {
                         Text(String(localized: "microTidy.area.singlePrompt"))
                             .dsFont(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                     }
                 }
             }
@@ -189,7 +189,7 @@ struct MicroTidyView: View {
                 GlassCardView {
                     Text(String(localized: "microTidy.limit.reached"))
                         .dsFont(.body)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }

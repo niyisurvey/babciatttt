@@ -37,11 +37,11 @@ struct CompletionSummaryView: View {
                 VStack(spacing: theme.grid.cardPaddingTight) {
                     Text(String(localized: "areaDetail.completion.message"))
                         .dsFont(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                         .multilineTextAlignment(.center)
                     Text(String(format: String(localized: "areaDetail.completion.points"), pointsReward))
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
                 .padding(.horizontal, theme.grid.cardPadding)
 

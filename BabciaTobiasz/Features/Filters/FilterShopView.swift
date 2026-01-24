@@ -69,7 +69,7 @@ struct FilterShopView: View {
                 .dsFont(.title2, weight: .bold)
             Text(String(localized: "filters.subtitle"))
                 .dsFont(.body)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
                 .multilineTextAlignment(.center)
         }
         .padding(.top, 4)
@@ -81,7 +81,7 @@ struct FilterShopView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(String(localized: "filters.points.available"))
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                     Text("\(viewModel.availablePotPoints)")
                         .dsFont(.title2, weight: .bold)
                 }
@@ -91,7 +91,7 @@ struct FilterShopView: View {
                 VStack(alignment: .trailing, spacing: 4) {
                     Text(String(localized: "filters.points.allTime"))
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                     Text("\(viewModel.totalPotPoints)")
                         .dsFont(.headline, weight: .bold)
                 }
@@ -114,14 +114,14 @@ struct FilterShopView: View {
         let canAfford = viewModel.availablePotPoints >= filter.cost
 
         return GlassCardView {
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(filter.name)
                             .dsFont(.headline, weight: .bold)
                         Text(filter.description)
                             .dsFont(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                     }
 
                     Spacer()
@@ -132,7 +132,7 @@ struct FilterShopView: View {
 
                 Text(filter.ingredientNote)
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
 
                 HStack {
                     if unlocked {

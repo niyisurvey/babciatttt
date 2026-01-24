@@ -47,7 +47,7 @@ private extension View {
 }
 
 #Preview {
-    SparkleIconView(systemName: "checkmark.seal.fill", size: 56, color: .orange)
+    SparkleIconView(systemName: "checkmark.seal.fill", size: 56, color: DesignSystemTheme.default.palette.warning)
         .padding()
         .dsTheme(.default)
 }

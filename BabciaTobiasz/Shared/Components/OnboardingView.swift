@@ -19,25 +19,25 @@ struct OnboardingView: View {
             icon: "camera.fill",
             title: String(localized: "onboarding.page.weather.title"),
             description: String(localized: "onboarding.page.weather.description"),
-            accentColor: .blue
+            accentColor: .appAccent
         ),
         OnboardingPage(
             icon: "checklist",
             title: String(localized: "onboarding.page.areas.title"),
             description: String(localized: "onboarding.page.areas.description"),
-            accentColor: .green
+            accentColor: .appSuccess
         ),
         OnboardingPage(
             icon: "star.fill",
             title: String(localized: "onboarding.page.insights.title"),
             description: String(localized: "onboarding.page.insights.description"),
-            accentColor: .purple
+            accentColor: .purple // DS secondary
         ),
         OnboardingPage(
             icon: "checkmark.seal.fill",
             title: String(localized: "onboarding.page.verdict.title"),
             description: String(localized: "onboarding.page.verdict.description"),
-            accentColor: .orange
+            accentColor: .appWarning
         )
     ]
     
@@ -56,7 +56,7 @@ struct OnboardingView: View {
                     }
                     .dsFont(.subheadline)
                     .fontWeight(.medium)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                     .padding()
                 }
                 
@@ -77,7 +77,7 @@ struct OnboardingView: View {
                     HStack(spacing: 8) {
                         ForEach(steps.indices, id: \.self) { index in
                             Capsule()
-                                .fill(index == currentPage ? steps[currentPage].accentColor : .secondary.opacity(0.3))
+                                .fill(index == currentPage ? steps[currentPage].accentColor : theme.palette.textSecondary.opacity(0.3))
                                 .frame(width: index == currentPage ? 24 : 8, height: 8)
                                 .animation(theme.motion.pressSpring, value: currentPage)
                         }
@@ -240,10 +240,10 @@ struct OnboardingPageView: View {
                 Text(page.title)
                     .dsFont(.title, weight: .bold)
                     .multilineTextAlignment(.center)
-                
+
                 Text(page.description)
                     .dsFont(.body)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
             }

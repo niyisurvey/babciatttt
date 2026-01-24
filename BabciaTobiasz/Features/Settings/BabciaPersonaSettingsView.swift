@@ -48,7 +48,7 @@ struct BabciaPersonaSettingsView: View {
                 .dsFont(.title2, weight: .bold)
             Text(String(localized: "settings.babcia.subtitle"))
                 .dsFont(.body)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
                 .multilineTextAlignment(.center)
         }
         .padding(.top, 4)

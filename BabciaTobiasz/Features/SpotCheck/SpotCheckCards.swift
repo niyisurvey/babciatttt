@@ -14,7 +14,7 @@ struct SpotCheckHeaderSection: View {
                 .dsFont(.title2, weight: .bold)
             Text(String(localized: "spotCheck.subtitle"))
                 .dsFont(.body)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -31,21 +31,21 @@ struct SpotCheckLimitCard: View {
             VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                 Text(String(localized: "spotCheck.limit.title"))
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                 Text(String(format: String(localized: "spotCheck.limit.status"), remaining, limit))
                     .dsFont(.headline, weight: .bold)
 
-                VStack(alignment: .leading, spacing: 6) {
+                VStack(alignment: .leading, spacing: theme.grid.listSpacing / 2) {
                     Text(String(localized: "spotCheck.points.title"))
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                     Text(String(format: String(localized: "spotCheck.points.spotless"), points.spotless))
                         .dsFont(.caption)
                     Text(String(format: String(localized: "spotCheck.points.tidy"), points.tidy))
                         .dsFont(.caption)
                     Text(String(format: String(localized: "spotCheck.points.messy"), points.messy))
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -68,10 +68,10 @@ struct SpotCheckMinimumAreasCard: View {
                     .dsFont(.headline, weight: .bold)
                 Text(String(format: String(localized: "spotCheck.minimum.message"), minAreas))
                     .dsFont(.body)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                 Text(String(format: String(localized: "spotCheck.minimum.progress"), clampedCurrent, minAreas))
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                 ProgressView(value: progress)
                     .tint(theme.palette.primary)
                 Button {
@@ -99,7 +99,7 @@ struct SpotCheckQuickScanCard: View {
                     .dsFont(.headline, weight: .bold)
                 Text(String(localized: "spotCheck.quickScan.message"))
                     .dsFont(.body)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                 Button {
                     onScan()
                 } label: {
@@ -122,18 +122,18 @@ struct SpotCheckAreaCard: View {
             VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                 Text(String(localized: "spotCheck.area.title"))
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
 
                 if let area {
                     Text(area.name)
                         .dsFont(.headline, weight: .bold)
                     Text(area.persona.localizedDisplayName)
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 } else {
                     Text(String(localized: "spotCheck.area.empty"))
                         .dsFont(.body)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -142,22 +142,26 @@ struct SpotCheckAreaCard: View {
 }
 
 struct SpotCheckAwaitingCard: View {
+    @Environment(\.dsTheme) private var theme
+
     var body: some View {
         GlassCardView {
             Text(String(localized: "spotCheck.action.awaiting"))
                 .dsFont(.body)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }
 
 struct SpotCheckLimitReachedCard: View {
+    @Environment(\.dsTheme) private var theme
+
     var body: some View {
         GlassCardView {
             Text(String(localized: "spotCheck.limit.reached"))
                 .dsFont(.body)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
@@ -165,17 +169,18 @@ struct SpotCheckLimitReachedCard: View {
 
 struct SpotCheckCooldownCard: View {
     let remainingText: String?
+    @Environment(\.dsTheme) private var theme
 
     var body: some View {
         GlassCardView {
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: theme.grid.listSpacing / 2) {
                 Text(String(localized: "spotCheck.cooldown.all"))
                     .dsFont(.body)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                 if let remainingText {
                     Text(String(format: String(localized: "spotCheck.cooldown.remaining"), remainingText))
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -195,25 +200,25 @@ struct SpotCheckResultCard: View {
             VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                 Text(String(localized: "spotCheck.result.title"))
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                 Text(resultTitle)
                     .dsFont(.headline, weight: .bold)
 
                 if let areaName {
                     Text(String(format: String(localized: "spotCheck.result.area"), areaName))
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
 
                 if let taskCount {
                     Text(String(format: String(localized: "spotCheck.result.tasks"), taskCount))
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
 
                 Text(String(format: String(localized: "spotCheck.result.points"), resultPoints))
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -251,7 +256,7 @@ struct SpotCheckResponseCard: View {
             VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                 Text(String(localized: "spotCheck.response.title"))
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                 Text(response)
                     .dsFont(.headline, weight: .bold)
             }

@@ -17,7 +17,7 @@ struct ScanProcessingOverlayView: View {
 
     var body: some View {
         ZStack {
-            Color.black.opacity(0.18)
+            theme.palette.neutral.opacity(0.18)
                 .ignoresSafeArea()
 
             GlassCardView(showBorder: false) {
@@ -33,10 +33,10 @@ struct ScanProcessingOverlayView: View {
                                 let isActive = index <= messageIndex(for: timeline.date)
                                 HStack(spacing: 8) {
                                     Image(systemName: isActive ? "checkmark.circle.fill" : "circle")
-                                        .foregroundStyle(isActive ? theme.palette.primary : .secondary)
+                                        .foregroundStyle(isActive ? theme.palette.primary : theme.palette.textSecondary)
                                     Text(progressSteps[index])
                                         .dsFont(.subheadline, weight: isActive ? .bold : .regular)
-                                        .foregroundStyle(isActive ? .primary : .secondary)
+                                        .foregroundStyle(isActive ? theme.palette.primary : theme.palette.textSecondary)
                                 }
                             }
                         }

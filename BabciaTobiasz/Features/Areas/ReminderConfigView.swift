@@ -12,6 +12,7 @@ struct ReminderConfigView: View {
     @Environment(\.appDependencies) private var dependencies
     @Environment(\.modelContext) private var modelContext
     @Query private var configs: [ReminderConfig]
+    @Environment(\.dsTheme) private var theme
 
     @State private var showError = false
     @State private var errorMessage = ""
@@ -25,10 +26,10 @@ struct ReminderConfigView: View {
 
     var body: some View {
         GlassCardView {
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                 Text(String(localized: "reminders.helper"))
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
 
                 if let config = configs.first {
                     ReminderConfigEditor(
@@ -65,10 +66,10 @@ struct ReminderConfigView: View {
     }
 
     private var emptyState: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
             Text(String(localized: "reminders.empty.message"))
                 .dsFont(.subheadline)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
 
             Button(String(localized: "reminders.empty.action")) {
                 createConfig()

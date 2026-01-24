@@ -12,32 +12,33 @@ struct DreamAPIKeyCardView: View {
     @State private var statusMessage: String?
     @State private var testMessage: String?
     @State private var isTesting = false
+    @Environment(\.dsTheme) private var theme
 
     var body: some View {
         GlassCardView {
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                 Text(String(localized: "settings.apiKeys.dream.title"))
                     .dsFont(.caption, weight: .bold)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
 
                 Text(String(localized: "settings.apiKeys.dream.helper"))
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
 
                 Text(String(localized: "settings.apiKeys.dream.where"))
                     .dsFont(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
 
                 Text(String(localized: "settings.apiKeys.apiKey.label"))
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
 
                 SecureField(String(localized: "settings.apiKeys.dream.placeholder"), text: $apiKey)
                     .dsFont(.body)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
 
-                HStack(spacing: 12) {
+                HStack(spacing: theme.grid.listSpacing) {
                     Button(String(localized: "common.save")) {
                         _ = saveKey()
                     }
@@ -64,12 +65,12 @@ struct DreamAPIKeyCardView: View {
 
                 Text(String(localized: "settings.apiKeys.stored"))
                     .dsFont(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
 
                 if let statusMessage {
                     Text(statusMessage)
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
 
                 if let testMessage {

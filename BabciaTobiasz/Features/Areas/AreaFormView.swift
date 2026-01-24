@@ -58,7 +58,7 @@ struct AreaFormView: View {
                                 .padding(.horizontal, 4)
 
                             GlassCardView {
-                                VStack(spacing: 16) {
+                                VStack(spacing: theme.grid.cardPadding) {
                                     TextField(String(localized: "areaForm.basicInfo.name.placeholder"), text: $name)
                                         .dsFont(.headline)
 
@@ -70,13 +70,13 @@ struct AreaFormView: View {
 
                                     Text(String(localized: "areaForm.basicInfo.description.hint"))
                                         .dsFont(.caption2)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(theme.palette.textSecondary)
                                 }
                             }
 
                             Text(String(localized: "areaForm.basicInfo.helper"))
                                 .dsFont(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(theme.palette.textSecondary)
                                 .padding(.horizontal, 4)
                         }
 
@@ -86,25 +86,25 @@ struct AreaFormView: View {
                                 .padding(.horizontal, 4)
                             Text(String(localized: "areaForm.appearance.helper"))
                                 .dsFont(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(theme.palette.textSecondary)
                                 .padding(.horizontal, 4)
 
                             GlassCardView {
-                                VStack(alignment: .leading, spacing: 20) {
-                                    VStack(alignment: .leading, spacing: 12) {
+                                VStack(alignment: .leading, spacing: theme.grid.sectionSpacing) {
+                                    VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                                         Text(String(localized: "areaForm.appearance.icon"))
                                             .dsFont(.subheadline, weight: .bold)
-                                            .foregroundStyle(.secondary)
+                                            .foregroundStyle(theme.palette.textSecondary)
 
                                         iconPicker
                                     }
 
                                     Divider()
 
-                                    VStack(alignment: .leading, spacing: 12) {
+                                VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                                         Text(String(localized: "areaForm.appearance.color"))
                                             .dsFont(.subheadline, weight: .bold)
-                                            .foregroundStyle(.secondary)
+                                            .foregroundStyle(theme.palette.textSecondary)
 
                                         colorPicker
                                     }
@@ -122,14 +122,14 @@ struct AreaFormView: View {
                                     VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                                         Text(String(localized: "areaForm.persona.readonly.label"))
                                             .dsFont(.caption)
-                                            .foregroundStyle(.secondary)
+                                            .foregroundStyle(theme.palette.textSecondary)
                                         Text(area.persona.localizedDisplayName)
                                             .dsFont(.headline, weight: .bold)
                                     }
                                 }
                             } else {
                                 GlassCardView {
-                                    VStack(spacing: 12) {
+                                    VStack(spacing: theme.grid.listSpacing) {
                                         ForEach(BabciaPersona.allCases) { persona in
                                             personaRow(persona)
                                             if persona != BabciaPersona.allCases.last {
@@ -150,7 +150,7 @@ struct AreaFormView: View {
                                 VStack(alignment: .leading, spacing: 12) {
                                     Text(String(localized: "areaForm.camera.helper"))
                                         .dsFont(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(theme.palette.textSecondary)
 
                                     if streamingManager.configs.isEmpty {
                                         Button {
@@ -191,7 +191,7 @@ struct AreaFormView: View {
                                 .padding(.horizontal, 4)
                             Text(String(localized: "areaForm.reminders.helper"))
                                 .dsFont(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(theme.palette.textSecondary)
                                 .padding(.horizontal, 4)
 
                             if let area {
@@ -200,7 +200,7 @@ struct AreaFormView: View {
                                 GlassCardView {
                                     Text(String(localized: "areaForm.reminders.empty"))
                                         .dsFont(.subheadline)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(theme.palette.textSecondary)
                                 }
                             }
                         }
@@ -214,7 +214,7 @@ struct AreaFormView: View {
                                 VStack(alignment: .leading, spacing: 12) {
                                     Text(String(localized: "areaForm.preview.helper"))
                                         .dsFont(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(theme.palette.textSecondary)
                                     previewCard
                                 }
                                 .padding(.vertical, 6)
@@ -273,14 +273,14 @@ struct AreaFormView: View {
                 } label: {
                     Image(systemName: icon)
                         .font(.system(size: theme.grid.iconTitle2))
-                        .foregroundStyle(selectedIcon == icon ? selectedColor : .secondary)
+                        .foregroundStyle(selectedIcon == icon ? selectedColor : theme.palette.textSecondary)
                         .frame(width: 44, height: 44)
                         .background(
                             selectedIcon == icon ? selectedColor.opacity(0.2) : Color.clear,
-                            in: RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            in: RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius, style: .continuous)
                         )
                         .overlay(
-                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius, style: .continuous)
                                 .stroke(selectedIcon == icon ? selectedColor : Color.clear, lineWidth: 2)
                         )
                 }
@@ -296,24 +296,24 @@ struct AreaFormView: View {
                 Button {
                     selectedColor = color
                 } label: {
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    RoundedRectangle(cornerRadius: theme.shape.controlCornerRadius, style: .continuous)
                         .fill(color)
                         .frame(width: 36, height: 36)
                         .overlay(
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            RoundedRectangle(cornerRadius: theme.shape.controlCornerRadius, style: .continuous)
                                 .stroke(theme.palette.primary.opacity(selectedColor == color ? 0.9 : 0), lineWidth: 3)
                                 .padding(1)
                         )
                         .overlay(
-                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                .stroke(Color.white.opacity(selectedColor == color ? 0.8 : 0), lineWidth: 1)
+                            RoundedRectangle(cornerRadius: theme.shape.controlCornerRadius, style: .continuous)
+                                .stroke(theme.palette.onPrimary.opacity(selectedColor == color ? 0.8 : 0), lineWidth: 1)
                                 .padding(4)
                         )
                         .overlay {
                             if selectedColor == color {
                                 Image(systemName: "checkmark")
                                     .dsFont(.caption, weight: .bold)
-                                    .foregroundStyle(.white)
+                                    .foregroundStyle(theme.palette.onPrimary)
                             }
                         }
                 }
@@ -323,7 +323,7 @@ struct AreaFormView: View {
     }
 
     private var previewCard: some View {
-        HStack(spacing: 16) {
+        HStack(spacing: theme.grid.cardPadding) {
             ZStack {
                 RoundedRectangle(cornerRadius: theme.shape.controlCornerRadius, style: .continuous)
                     .fill(selectedColor.opacity(0.2))
@@ -337,12 +337,12 @@ struct AreaFormView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(name.isEmpty ? String(localized: "areaForm.preview.placeholder") : name)
                     .dsFont(.headline)
-                    .foregroundStyle(name.isEmpty ? .secondary : .primary)
+                    .foregroundStyle(name.isEmpty ? theme.palette.textSecondary : theme.palette.primary)
 
                 if !description.isEmpty {
                     Text(description)
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                         .lineLimit(1)
                 }
             }
@@ -402,13 +402,13 @@ struct AreaFormView: View {
                         .dsFont(.headline, weight: .bold)
                     Text(persona.localizedTagline)
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
 
                 Spacer()
 
                 Image(systemName: selectedPersona == persona ? "checkmark.circle.fill" : "circle")
-                    .foregroundStyle(selectedPersona == persona ? selectedColor : .secondary)
+                    .foregroundStyle(selectedPersona == persona ? selectedColor : theme.palette.textSecondary)
                     .dsFont(.title3)
             }
             .padding(.vertical, 4)

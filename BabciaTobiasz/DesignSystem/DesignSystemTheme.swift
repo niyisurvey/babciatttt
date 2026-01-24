@@ -15,6 +15,7 @@ struct DesignSystemTheme {
     var shape: DSShape
     var grid: DSGrid
     var glass: DSGlass
+    var elevation: DSElevation
 }
 
 struct DSPalette {
@@ -27,6 +28,11 @@ struct DSPalette {
     var glassTint: Color
     var coolAccent: Color
     var warmAccent: Color
+
+    // Semantic surface/text tokens
+    var onPrimary: Color       // Content color on primary surfaces (typically white)
+    var textSecondary: Color   // Secondary text (replaces .secondary)
+    var neutral: Color         // Neutral color for shadows/overlays
 }
 
 struct DSGradients {
@@ -213,6 +219,40 @@ struct DSGlass {
     }
 }
 
+// MARK: - Elevation System
+
+/// Shadow preset defining a complete shadow configuration
+struct DSShadowPreset {
+    var color: Color
+    var opacity: Double
+    var radius: CGFloat
+    var x: CGFloat
+    var y: CGFloat
+
+    /// Applies this shadow preset to a view
+    func apply<T: View>(to view: T) -> some View {
+        view.shadow(color: color.opacity(opacity), radius: radius, x: x, y: y)
+    }
+}
+
+/// Elevation system for consistent shadows and overlays
+struct DSElevation {
+    /// Small elevation - subtle lift (e.g., buttons, small cards)
+    var level1: DSShadowPreset
+
+    /// Medium elevation - standard cards and containers
+    var level2: DSShadowPreset
+
+    /// High elevation - modals, floating elements
+    var level3: DSShadowPreset
+
+    /// Overlay/scrim dim opacity
+    var overlayDim: Double
+
+    /// Shimmer effect opacity (loading states)
+    var shimmerOpacity: Double
+}
+
 enum DSMotionPreset: String, CaseIterable {
     case slow
     case normal
@@ -355,7 +395,10 @@ extension DesignSystemTheme {
             error: .appError,
             glassTint: .white,
             coolAccent: .teal,
-            warmAccent: .orange
+            warmAccent: .orange,
+            onPrimary: .white,
+            textSecondary: Color(.secondaryLabel),
+            neutral: .black
         ),
         gradients: DSGradients(
             backgroundDefault: [
@@ -447,6 +490,13 @@ extension DesignSystemTheme {
                 .card: .defaultCard,
                 .overlay: .defaultOverlay
             ]
+        ),
+        elevation: DSElevation(
+            level1: DSShadowPreset(color: .black, opacity: 0.08, radius: 4, x: 0, y: 2),
+            level2: DSShadowPreset(color: .black, opacity: 0.12, radius: 10, x: 0, y: 4),
+            level3: DSShadowPreset(color: .black, opacity: 0.15, radius: 20, x: 0, y: 10),
+            overlayDim: 0.4,
+            shimmerOpacity: 0.3
         )
     )
 }
@@ -496,5 +546,39 @@ extension View {
     /// Glass elements will automatically adapt their appearance based on context.
     func glassContext(_ context: DSGlassContext) -> some View {
         environment(\.glassContext, context)
+    }
+}
+
+// MARK: - Elevation Modifier
+
+enum DSElevationLevel {
+    case level1, level2, level3
+}
+
+struct DSElevationModifier: ViewModifier {
+    let level: DSElevationLevel
+    @Environment(\.dsTheme) private var theme
+
+    func body(content: Content) -> some View {
+        let preset: DSShadowPreset = {
+            switch level {
+            case .level1: return theme.elevation.level1
+            case .level2: return theme.elevation.level2
+            case .level3: return theme.elevation.level3
+            }
+        }()
+        content.shadow(
+            color: preset.color.opacity(preset.opacity),
+            radius: preset.radius,
+            x: preset.x,
+            y: preset.y
+        )
+    }
+}
+
+extension View {
+    /// Applies a design system elevation shadow
+    func dsElevation(_ level: DSElevationLevel) -> some View {
+        modifier(DSElevationModifier(level: level))
     }
 }

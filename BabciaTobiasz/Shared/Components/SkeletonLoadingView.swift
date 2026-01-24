@@ -150,7 +150,7 @@ struct SkeletonBox: View {
     
     private var shimmerGradient: some View {
         LinearGradient(
-            colors: [.clear, .white.opacity(0.2), .clear],
+            colors: [.clear, theme.palette.onPrimary.opacity(0.2), .clear],
             startPoint: .leading,
             endPoint: .trailing
         )
@@ -241,7 +241,7 @@ struct AreaSkeletonLoadingView: View {
 
 #Preview("Weather Skeleton") {
     ZStack {
-        LinearGradient(colors: [.blue.opacity(0.3), .cyan.opacity(0.3)], startPoint: .top, endPoint: .bottom)
+        LinearGradient(colors: [Color.appAccent.opacity(0.3), Color.cyan.opacity(0.3)], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         SkeletonLoadingView()
     }
@@ -249,7 +249,7 @@ struct AreaSkeletonLoadingView: View {
 
 #Preview("Area Skeleton") {
     ZStack {
-        LinearGradient(colors: [.green.opacity(0.3), .teal.opacity(0.3)], startPoint: .top, endPoint: .bottom)
+        LinearGradient(colors: [Color.appSuccess.opacity(0.3), Color.teal.opacity(0.3)], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         AreaSkeletonLoadingView()
     }

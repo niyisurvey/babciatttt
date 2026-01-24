@@ -23,15 +23,19 @@ struct ErrorView: View {
     /// SF Symbol name for the error icon
     var iconName: String = "exclamationmark.triangle.fill"
     
-    /// Icon color
-    var iconColor: Color = .orange
-    
+    /// Icon color (defaults to theme.palette.warning if nil)
+    var iconColor: Color?
+
     /// Optional retry action
     var retryAction: (() -> Void)?
-    
+
     /// Optional dismiss action
     var dismissAction: (() -> Void)?
     @Environment(\.dsTheme) private var theme
+
+    private var resolvedIconColor: Color {
+        iconColor ?? theme.palette.warning
+    }
     
     // MARK: - Body
     
@@ -41,7 +45,7 @@ struct ErrorView: View {
                 // Error icon
                 Image(systemName: iconName)
                     .font(.system(size: theme.grid.iconError))
-                    .foregroundStyle(iconColor)
+                    .foregroundStyle(resolvedIconColor)
                     .symbolEffect(.pulse)
                 
                 // Error text
@@ -49,10 +53,10 @@ struct ErrorView: View {
                     Text(title)
                         .dsFont(.headline, weight: .bold)
                         .multilineTextAlignment(.center)
-                    
+
                     Text(message)
                         .dsFont(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                         .multilineTextAlignment(.center)
                 }
                 
@@ -90,7 +94,7 @@ struct ErrorView: View {
                         .dsFont(.headline)
                         .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.glass(color: .blue, prominent: true))
+                .buttonStyle(.glass(color: theme.palette.primary, prominent: true))
             }
         }
         .padding(.top, 8)
@@ -101,7 +105,7 @@ struct ErrorView: View {
 
 /// Common error display configurations
 extension ErrorView {
-    /// Creates an error view for network errors
+    /// Creates an error view for network errors (uses theme.palette.error)
     static func networkError(
         message: String = String(localized: "errorView.network.message"),
         retryAction: @escaping () -> Void
@@ -110,12 +114,12 @@ extension ErrorView {
             title: String(localized: "errorView.network.title"),
             message: message,
             iconName: "wifi.exclamationmark",
-            iconColor: .red,
+            iconColor: .appError,
             retryAction: retryAction
         )
     }
-    
-    /// Creates an error view for location errors
+
+    /// Creates an error view for location errors (uses theme.palette.warning)
     static func locationError(
         message: String = String(localized: "errorView.location.message"),
         retryAction: (() -> Void)? = nil
@@ -124,12 +128,12 @@ extension ErrorView {
             title: String(localized: "errorView.location.title"),
             message: message,
             iconName: "location.slash.fill",
-            iconColor: .orange,
+            iconColor: nil, // Uses default warning from theme
             retryAction: retryAction
         )
     }
-    
-    /// Creates an error view for data loading errors
+
+    /// Creates an error view for data loading errors (uses neutral color)
     static func dataError(
         message: String = String(localized: "errorView.data.message"),
         retryAction: @escaping () -> Void
@@ -138,7 +142,7 @@ extension ErrorView {
             title: String(localized: "errorView.data.title"),
             message: message,
             iconName: "exclamationmark.icloud.fill",
-            iconColor: .gray,
+            iconColor: Color(.secondaryLabel),
             retryAction: retryAction
         )
     }
@@ -165,7 +169,7 @@ private struct PermissionErrorCard: View {
             VStack(spacing: 20) {
                 Image(systemName: "lock.fill")
                     .font(.system(size: theme.grid.iconError))
-                    .foregroundStyle(.orange)
+                    .foregroundStyle(theme.palette.warning)
 
                 VStack(spacing: 8) {
                     Text(title)
@@ -173,7 +177,7 @@ private struct PermissionErrorCard: View {
 
                     Text(message)
                         .dsFont(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                         .multilineTextAlignment(.center)
                 }
 
@@ -183,7 +187,7 @@ private struct PermissionErrorCard: View {
                     Label(String(localized: "common.openSettings"), systemImage: "gear")
                         .dsFont(.headline)
                 }
-                .buttonStyle(.glass(color: .blue, prominent: true))
+                .buttonStyle(.glass(color: theme.palette.primary, prominent: true))
             }
             .padding(.vertical, 12)
         }
@@ -202,32 +206,32 @@ struct ErrorBanner: View {
     @Environment(\.dsTheme) private var theme
     
     // MARK: - Body
-    
+
     var body: some View {
         HStack(spacing: 12) {
             Image(systemName: "exclamationmark.circle.fill")
-                .foregroundStyle(.orange)
-            
+                .foregroundStyle(theme.palette.warning)
+
             Text(message)
                 .dsFont(.subheadline)
                 .lineLimit(2)
-            
+
             Spacer()
-            
+
             if let dismissAction = dismissAction {
                 Button {
                     dismissAction()
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
             }
         }
         .padding()
-        .background(.orange.opacity(0.1), in: RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius))
+        .background(theme.palette.warning.opacity(0.1), in: RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius))
         .overlay(
             RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius)
-                .stroke(.orange.opacity(0.3), lineWidth: 1)
+                .stroke(theme.palette.warning.opacity(0.3), lineWidth: 1)
         )
     }
 }
@@ -258,7 +262,7 @@ struct ErrorOverlayModifier: ViewModifier {
             .overlay {
                 if let errorMessage = error {
                     ZStack {
-                        Color.black.opacity(0.4)
+                        theme.palette.neutral.opacity(theme.elevation.overlayDim)
                             .ignoresSafeArea()
 
                         ErrorView(

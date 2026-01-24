@@ -21,6 +21,7 @@ struct HomeView: View {
     @State private var showAnalytics = false
     @State private var showMicroTidy = false
     let onQuickCheckIn: () -> Void
+    @Environment(\.dsTheme) private var theme
 
     var body: some View {
         NavigationStack {
@@ -49,7 +50,7 @@ struct HomeView: View {
                 }
                 .overlay(alignment: .bottomTrailing) {
                     QuickCheckInFloatingButton(action: onQuickCheckIn)
-                        .padding(.trailing, 20)
+                        .padding(.trailing, theme.grid.sectionSpacing)
                         .padding(.bottom, 24)
                 }
                 .task {
@@ -114,7 +115,7 @@ private struct HomeScreenContent: View {
                     onAnalyticsTap: onAnalyticsTap,
                     onMicroTidyTap: onMicroTidyTap
                 )
-                .padding()
+                .padding(theme.grid.cardPadding)
                 .frame(maxWidth: .infinity)
             }
         }
@@ -154,7 +155,7 @@ private struct HomeScrollContent: View {
     @Environment(\.dsTheme) private var theme
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: theme.grid.sectionSpacing) {
             if viewModel.isLoading && viewModel.potBalance == 0 {
                 SkeletonLoadingView()
                     .transition(.opacity)
@@ -173,17 +174,16 @@ private struct HomeScrollContent: View {
     }
 }
 
-// MARK: - Dashboard Content
-
 private struct HomeDashboardContent: View {
     @Bindable var viewModel: HomeViewModel
     let onShopTap: () -> Void
     let onGalleryTap: () -> Void
     let onAnalyticsTap: () -> Void
     let onMicroTidyTap: () -> Void
+    @Environment(\.dsTheme) private var theme
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: theme.grid.sectionSpacing) {
             // Pot (points balance)
             PotCard(balance: viewModel.potBalance)
 

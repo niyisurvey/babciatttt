@@ -24,10 +24,10 @@ struct DailyProgressCard: View {
 
     var body: some View {
         GlassCardView {
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                 HStack {
                     Image(systemName: isTargetMet ? "checkmark.circle.fill" : "target")
-                        .foregroundStyle(isTargetMet ? .green : theme.palette.primary)
+                        .foregroundStyle(isTargetMet ? theme.palette.success : theme.palette.primary)
                         .font(.system(size: theme.grid.iconTitle3))
                         .symbolEffect(.pulse, options: .repeating)
 
@@ -44,32 +44,32 @@ struct DailyProgressCard: View {
 
                     Text("/")
                         .dsFont(.title2)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
 
                     Text("\(target)")
                         .dsFont(.title2, weight: .bold)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
 
                     Text(String(localized: "home.dailyProgress.unit"))
                         .dsFont(.title3)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                         .padding(.leading, 4)
                 }
 
                 ProgressView(value: progressFraction)
-                    .tint(isTargetMet ? .green : theme.palette.primary)
+                    .tint(isTargetMet ? theme.palette.success : theme.palette.primary)
 
                 if isTargetMet {
                     HStack {
                         Image(systemName: "moon.zzz.fill")
-                            .foregroundStyle(.yellow)
+                            .foregroundStyle(theme.palette.warning)
                         Text(String(localized: "home.dailyProgress.kitchenClosed"))
                             .dsFont(.caption)
                             .foregroundStyle(.secondary)
                     }
                 }
             }
-            .padding()
+            .padding(theme.grid.cardPadding)
         }
         .scrollTransition { content, phase in
             content

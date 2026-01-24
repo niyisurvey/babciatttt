@@ -29,13 +29,13 @@ struct GalleryImageView: View {
                     )
             } else {
                 Image(systemName: "photo")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                     .font(.system(size: theme.grid.iconLarge))
             }
         }
         .overlay(
             RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius)
-                .strokeBorder(.white.opacity(0.08))
+                .strokeBorder(theme.palette.onPrimary.opacity(0.08))
         )
         .clipped()
     }

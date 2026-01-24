@@ -33,7 +33,7 @@ struct GlassCardView<Content: View>: View {
             .overlay {
                 if showBorder && theme.shape.borderWidth > 0 {
                     RoundedRectangle(cornerRadius: resolvedCornerRadius, style: .continuous)
-                        .stroke(Color.white.opacity(theme.shape.borderOpacity), lineWidth: theme.shape.borderWidth)
+                        .stroke(theme.palette.onPrimary.opacity(theme.shape.borderOpacity), lineWidth: theme.shape.borderWidth)
                 }
             }
     }
@@ -143,7 +143,7 @@ struct GlassButtonStyle: ButtonStyle {
             .padding(.horizontal, theme.grid.buttonHorizontalPadding)
             .padding(.vertical, theme.grid.buttonVerticalPadding)
             .background(isProminent ? AnyShapeStyle(color.gradient) : AnyShapeStyle(.ultraThinMaterial))
-            .foregroundStyle(isProminent ? .white : .primary)
+            .foregroundStyle(isProminent ? theme.palette.onPrimary : theme.palette.primary)
             .clipShape(Capsule())
             .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
             .animation(theme.motion.pressSpring, value: configuration.isPressed)
@@ -158,25 +158,23 @@ extension ButtonStyle where Self == GlassButtonStyle {
 }
 
 #Preview("Glass Cards") {
-    ScrollView {
-        VStack(spacing: 20) {
-            GlassCardView {
-                VStack(spacing: 12) {
-                    Image(systemName: "sun.max.fill")
-                        .font(.system(size: 40))
-                        .foregroundStyle(.yellow)
-                    Text(String(localized: "preview.glassCard.title"))
-                        .dsFont(.headline)
-                }
+    VStack(spacing: DesignSystemTheme.default.grid.sectionSpacing) {
+        GlassCardView {
+            VStack(spacing: DesignSystemTheme.default.grid.listSpacing) {
+                Image(systemName: "sun.max.fill")
+                    .font(.system(size: 40))
+                    .foregroundStyle(DesignSystemTheme.default.palette.warning)
+                Text(String(localized: "preview.glassCard.title"))
+                    .dsFont(.headline)
             }
-            
-            Button(String(localized: "preview.glassCard.button")) {}
-                .buttonStyle(.nativeGlass)
-            
-            Button(String(localized: "preview.glassCard.prominent")) {}
-                .buttonStyle(.nativeGlassProminent)
         }
-        .padding()
+        
+        Button(String(localized: "preview.glassCard.button")) {}
+            .buttonStyle(.nativeGlass)
+        
+        Button(String(localized: "preview.glassCard.prominent")) {}
+            .buttonStyle(.nativeGlassProminent)
     }
+    .padding()
     .background(LiquidGlassBackground())
 }

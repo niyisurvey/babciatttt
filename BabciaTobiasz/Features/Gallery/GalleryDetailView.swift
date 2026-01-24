@@ -109,7 +109,7 @@ struct GalleryDetailView: View {
 
     private var metaCard: some View {
         GlassCardView {
-            VStack(spacing: 12) {
+            VStack(spacing: theme.grid.listSpacing) {
                 metadataRow(label: String(localized: "gallery.detail.meta.created"), value: bowl.createdAt.formatted(date: .abbreviated, time: .shortened))
                 metadataRow(label: String(localized: "gallery.detail.meta.babcia"), value: personaName)
                 metadataRow(label: String(localized: "gallery.detail.meta.verification"), value: verificationLabel)
@@ -132,7 +132,7 @@ struct GalleryDetailView: View {
                 if tasks.isEmpty {
                     Text(String(localized: "gallery.detail.tasks.empty"))
                         .dsFont(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                         .padding(.vertical, theme.grid.sectionSpacing)
                 } else {
                     VStack(spacing: 0) {
@@ -166,7 +166,7 @@ struct GalleryDetailView: View {
             Text(persona.localizedDisplayName)
                 .dsFont(.caption, weight: .bold)
         }
-        .padding(.horizontal, 12)
+        .padding(.horizontal, theme.grid.cardPaddingTight)
         .padding(.vertical, 8)
         .background(.ultraThinMaterial, in: Capsule())
         .overlay(

@@ -23,7 +23,7 @@ struct BabciaPersonaSelectionView: View {
 
             Text(String(localized: "onboarding.persona.helper"))
                 .dsFont(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, theme.grid.cardPadding)
         }
@@ -31,14 +31,14 @@ struct BabciaPersonaSelectionView: View {
     }
 
     private var header: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: theme.grid.listSpacing) {
             Text(String(localized: "onboarding.persona.title"))
                 .dsFont(.title, weight: .bold)
                 .multilineTextAlignment(.center)
 
             Text(String(localized: "onboarding.persona.subtitle"))
                 .dsFont(.body)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, theme.grid.cardPadding)
         }
@@ -99,7 +99,7 @@ private struct BabciaPersonaCard: View {
 
     var body: some View {
         GlassCardView {
-            VStack(spacing: 12) {
+            VStack(spacing: theme.grid.listSpacing) {
                 personaHeadshot
                 VStack(spacing: 4) {
                     Text(persona.localizedDisplayName)
@@ -111,12 +111,12 @@ private struct BabciaPersonaCard: View {
                         .lineLimit(1)
                     Text(persona.localizedTagline)
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                         .multilineTextAlignment(.center)
                         .lineLimit(2)
                     Text("“\(persona.localizedQuote)”")
                         .dsFont(.caption2, weight: .bold)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                         .multilineTextAlignment(.center)
                         .lineLimit(2)
                 }
@@ -199,7 +199,7 @@ private struct BabciaPersonaDetailSheet: View {
                 .foregroundStyle(theme.palette.primary)
             Text(persona.localizedTagline)
                 .dsFont(.body)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
                 .multilineTextAlignment(.center)
         }
     }

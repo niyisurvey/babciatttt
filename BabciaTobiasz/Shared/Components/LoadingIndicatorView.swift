@@ -79,7 +79,7 @@ struct LoadingIndicatorView: View {
             if let message = message {
                 Text(message)
                     .dsFont(size.textStyle)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                     .multilineTextAlignment(.center)
             }
         }
@@ -88,7 +88,7 @@ struct LoadingIndicatorView: View {
             if showBackground {
                 RoundedRectangle(cornerRadius: theme.shape.cardCornerRadius)
                     .fill(theme.glass.strength.fallbackMaterial)
-                    .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 4)
+                    .dsElevation(.level2)
             }
         }
         .onAppear {
@@ -134,24 +134,26 @@ struct LoadingIndicatorView: View {
 
 /// A full-screen loading overlay with blur background
 struct LoadingOverlay: View {
-    
+
     // MARK: - Properties
-    
+
     /// Message to display
     var message: String = String(localized: "loading.default")
-    
+
     /// Whether the overlay is visible
     @Binding var isLoading: Bool
-    
+
+    @Environment(\.dsTheme) private var theme
+
     // MARK: - Body
-    
+
     var body: some View {
         if isLoading {
             ZStack {
                 // Blur background
-                Color.black.opacity(0.3)
+                theme.palette.neutral.opacity(theme.elevation.overlayDim)
                     .ignoresSafeArea()
-                
+
                 // Loading indicator
                 LoadingIndicatorView(message: message, size: .large)
             }
@@ -164,20 +166,20 @@ struct LoadingOverlay: View {
 
 /// A shimmer effect for loading placeholders
 struct ShimmerView: View {
-    
+
     // MARK: - State
-    
+
     @State private var isAnimating = false
     @Environment(\.dsTheme) private var theme
-    
+
     // MARK: - Body
-    
+
     var body: some View {
         LinearGradient(
             colors: [
-                .gray.opacity(0.3),
-                .gray.opacity(0.1),
-                .gray.opacity(0.3)
+                theme.palette.textSecondary.opacity(theme.elevation.shimmerOpacity),
+                theme.palette.textSecondary.opacity(theme.elevation.shimmerOpacity * 0.33),
+                theme.palette.textSecondary.opacity(theme.elevation.shimmerOpacity)
             ],
             startPoint: isAnimating ? .leading : .trailing,
             endPoint: isAnimating ? .trailing : .leading

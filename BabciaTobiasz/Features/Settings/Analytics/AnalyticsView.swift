@@ -82,12 +82,12 @@ struct AnalyticsView: View {
     }
 
     private var headerSection: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: theme.grid.listSpacing) {
             Text(String(localized: "analytics.title"))
                 .dsFont(.title2, weight: .bold)
             Text(String(localized: "analytics.subtitle"))
                 .dsFont(.body)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
                 .multilineTextAlignment(.center)
         }
         .padding(.top, 4)
@@ -100,7 +100,7 @@ struct AnalyticsView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(String(localized: "analytics.summary.totalCompletions"))
                             .dsFont(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                         Text("\(events.count)")
                             .dsFont(.title2, weight: .bold)
                     }
@@ -108,24 +108,24 @@ struct AnalyticsView: View {
                     VStack(alignment: .trailing, spacing: 4) {
                         Text(String(localized: "analytics.summary.uniqueAreas"))
                             .dsFont(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                         Text("\(uniqueAreasCount)")
                             .dsFont(.title3, weight: .bold)
                     }
                 }
-                .padding(.vertical, 8)
+                .padding(.vertical, theme.grid.listSpacing)
             }
 
             GlassCardView {
                 HStack {
                     Text(String(localized: "analytics.summary.mostRecent"))
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                     Spacer()
                     Text(mostRecentDate?.formatted(date: .abbreviated, time: .shortened) ?? "—")
                         .dsFont(.subheadline, weight: .bold)
                 }
-                .padding(.vertical, 6)
+                .padding(.vertical, theme.grid.listSpacing)
             }
         }
     }
@@ -137,43 +137,43 @@ struct AnalyticsView: View {
                 .padding(.horizontal, 4)
 
             GlassCardView {
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                     Text(String(localized: "analytics.patterns.dayOfWeek"))
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                     AnalyticsCountList(items: dayOfWeekCounts)
                 }
-                .padding(.vertical, 6)
+                .padding(.vertical, theme.grid.listSpacing)
             }
 
             GlassCardView {
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                     Text(String(localized: "analytics.patterns.hour"))
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                     AnalyticsCountList(items: hourOfDayCounts)
                 }
-                .padding(.vertical, 6)
+                .padding(.vertical, theme.grid.listSpacing)
             }
 
             GlassCardView {
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                     Text(String(localized: "analytics.patterns.topAreas"))
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                     AnalyticsCountList(items: topAreas)
                 }
-                .padding(.vertical, 6)
+                .padding(.vertical, theme.grid.listSpacing)
             }
 
             GlassCardView {
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                     Text(String(localized: "analytics.patterns.topPersonas"))
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                     AnalyticsCountList(items: topPersonas)
                 }
-                .padding(.vertical, 6)
+                .padding(.vertical, theme.grid.listSpacing)
             }
         }
     }
@@ -186,7 +186,7 @@ struct AnalyticsView: View {
 
             if events.isEmpty {
                 GlassCardView {
-                    VStack(spacing: 12) {
+                    VStack(spacing: theme.grid.listSpacing) {
                         Image(systemName: "chart.bar")
                             .foregroundStyle(theme.palette.primary)
                             .font(.system(size: theme.grid.iconLarge))
@@ -194,7 +194,7 @@ struct AnalyticsView: View {
                             .dsFont(.headline, weight: .bold)
                         Text(String(localized: "analytics.events.empty.message"))
                             .dsFont(.subheadline)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                     }
                     .padding(.vertical, theme.grid.sectionSpacing)
                 }
@@ -225,20 +225,21 @@ struct AnalyticsView: View {
 }
 
 private struct AnalyticsCountList: View {
+    @Environment(\.dsTheme) private var theme
     let items: [(String, Int)]
 
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: theme.grid.listSpacing) {
             if items.isEmpty {
                 Text(String(localized: "analytics.countList.empty"))
                     .dsFont(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
             } else {
                 ForEach(items, id: \.0) { item in
                     HStack {
                         Text(item.0)
                             .dsFont(.subheadline)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                         Spacer()
                         Text("\(item.1)")
                             .dsFont(.subheadline, weight: .bold)
@@ -254,7 +255,7 @@ private struct AnalyticsEventRow: View {
     @Environment(\.dsTheme) private var theme
 
     var body: some View {
-        HStack(alignment: .top, spacing: 12) {
+        HStack(alignment: .top, spacing: theme.grid.listSpacing) {
             Image(systemName: "checkmark.seal.fill")
                 .foregroundStyle(theme.palette.warmAccent)
                 .font(.system(size: theme.grid.iconSmall))
@@ -267,7 +268,7 @@ private struct AnalyticsEventRow: View {
 
                 Text(event.areaName.isEmpty ? String(localized: "analytics.event.area.fallback") : event.areaName)
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
             }
 
             Spacer()
@@ -275,12 +276,12 @@ private struct AnalyticsEventRow: View {
             VStack(alignment: .trailing, spacing: 4) {
                 Text(event.completedAt.formatted(date: .abbreviated, time: .shortened))
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                 Text(String(format: String(localized: "analytics.event.points"), event.taskPoints))
                     .dsFont(.caption, weight: .bold)
             }
         }
-        .padding(.vertical, 6)
+        .padding(.vertical, theme.grid.listSpacing)
     }
 }
 

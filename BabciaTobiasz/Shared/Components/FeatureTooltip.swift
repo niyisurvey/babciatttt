@@ -12,7 +12,7 @@ struct FeatureTooltip: View {
     @Environment(\.dsTheme) private var theme
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
             HStack(spacing: 10) {
                 Image(systemName: icon)
                     .font(.system(size: theme.grid.iconSmall))
@@ -30,7 +30,7 @@ struct FeatureTooltip: View {
                     hapticFeedback(.light)
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
             }
             
@@ -42,7 +42,7 @@ struct FeatureTooltip: View {
         .padding()
         .frame(maxWidth: 300)
         .liquidGlass(cornerRadius: theme.shape.tooltipCornerRadius)
-        .shadow(color: .black.opacity(0.15), radius: 20, x: 0, y: 10)
+        .dsElevation(.level3)
     }
 }
 
@@ -65,7 +65,7 @@ struct TooltipModifier: ViewModifier {
                 } label: {
                     Image(systemName: "info.circle")
                         .font(.system(size: theme.grid.iconTiny))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
                 .offset(x: 8, y: -8)
             }
@@ -122,7 +122,7 @@ enum HapticStyle {
         Text(String(localized: "preview.tooltip.cardTitle"))
             .padding()
             .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystemTheme.default.shape.subtleCornerRadius))
             .featureTooltip(
                 title: String(localized: "preview.tooltip.title"),
                 description: String(localized: "preview.tooltip.description"),

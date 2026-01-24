@@ -212,7 +212,7 @@ struct AreaListView: View {
                 progress: progress
             )
         } content: {
-            VStack(spacing: 20) {
+            VStack(spacing: theme.grid.sectionSpacing) {
                 if viewModel.areas.isEmpty {
                     emptyStateView
                 } else {
@@ -222,7 +222,7 @@ struct AreaListView: View {
                     areasList
                 }
             }
-            .padding()
+            .padding(theme.grid.cardPadding)
         }
     }
     
@@ -231,14 +231,14 @@ struct AreaListView: View {
             HStack(spacing: theme.grid.listSpacing) {
                 Image(systemName: "magnifyingglass")
                     .font(.system(size: theme.grid.iconSmall))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                 
                 TextField(
                     "",
                     text: $viewModel.searchText,
                     prompt: Text(String(localized: "areas.search.placeholder"))
                         .font(theme.typography.font(.body, weight: .regular, italic: false))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 )
                 .dsFont(.body)
                 .textInputAutocapitalization(.never)
@@ -277,7 +277,7 @@ struct AreaListView: View {
                             .contentTransition(.numericText())
                         Text(String(localized: "areas.stats.today"))
                             .dsFont(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                     }
                 }
                 
@@ -286,16 +286,16 @@ struct AreaListView: View {
                         icon: "flame.fill",
                         value: "\(viewModel.bestStreak)",
                         label: String(localized: "areas.stats.streak"),
-                        color: .orange
+                        color: theme.palette.warning
                     )
-                    
+
                     Divider().frame(height: 40)
-                    
+
                     statisticItem(
                         icon: "checkmark.circle.fill",
                         value: "\(viewModel.totalCompletions)",
                         label: String(localized: "areas.stats.totalDone"),
-                        color: .green
+                        color: theme.palette.success
                     )
                 }
 
@@ -309,10 +309,10 @@ struct AreaListView: View {
                              ? String(localized: "areas.stats.kitchenClosed")
                              : String(localized: "areas.stats.kitchenOpen"))
                             .dsFont(.caption)
-                            .foregroundStyle(viewModel.isKitchenClosed ? .red : .secondary)
+                            .foregroundStyle(viewModel.isKitchenClosed ? theme.palette.error : theme.palette.textSecondary)
                         Text(String(format: String(localized: "areas.stats.dailyTarget.helper"), AppConfigService.shared.kitchenDefaultTarget))
                             .dsFont(.caption2)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                     }
 
                     Spacer()
@@ -336,7 +336,7 @@ struct AreaListView: View {
                         Text(String(localized: "areas.stats.tooltip.cta"))
                     }
                     .dsFont(.caption, weight: .bold)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                 }
             }
             .padding(.vertical, 12)
@@ -350,7 +350,7 @@ struct AreaListView: View {
             } label: {
                 Image(systemName: "info.circle")
                     .font(.system(size: theme.grid.iconTiny))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
             }
             .padding(12)
         }
@@ -385,7 +385,7 @@ struct AreaListView: View {
             
             Text(label)
                 .dsFont(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
         }
     }
     
@@ -476,7 +476,7 @@ struct AreaListView: View {
             VStack(spacing: 24) {
                 Image(systemName: "checklist")
                     .font(.system(size: theme.grid.iconXXL))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                 
                 VStack(spacing: 8) {
                     Text(String(localized: "areas.empty.title"))
@@ -484,7 +484,7 @@ struct AreaListView: View {
                     
                     Text(String(localized: "areas.empty.message"))
                         .dsFont(.body)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                         .multilineTextAlignment(.center)
                 }
                 
@@ -497,7 +497,7 @@ struct AreaListView: View {
                 }
                 .buttonStyle(.nativeGlassProminent)
             }
-            .padding()
+            .padding(theme.grid.cardPadding)
         }
     }
     
@@ -541,7 +541,7 @@ private struct AreasHeroHeader: View {
             if let message {
                 Text(message)
                     .dsFont(.caption, weight: .bold)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                     .padding(.horizontal, theme.grid.cardPadding)
                     .padding(.vertical, theme.grid.cardPaddingTight)
                     .background(.ultraThinMaterial, in: Capsule())

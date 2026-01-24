@@ -19,7 +19,7 @@ struct LatestDreamCard: View {
             onTap()
         }) {
             GlassCardView {
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                     HStack {
                         Image(systemName: "photo.fill")
                             .foregroundStyle(theme.palette.primary)
@@ -47,7 +47,7 @@ struct LatestDreamCard: View {
                         emptyDreamPlaceholder
                     }
                 }
-                .padding()
+                .padding(theme.grid.cardPadding)
             }
         }
         .buttonStyle(.plain)
@@ -61,11 +61,11 @@ struct LatestDreamCard: View {
 
     private var emptyDreamPlaceholder: some View {
         ZStack {
-            Color.black.opacity(0.08)
+            theme.palette.neutral.opacity(0.08)
             VStack(spacing: 8) {
                 Image(systemName: "photo")
                     .font(.system(size: theme.grid.iconLarge))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
 
                 Text(String(localized: "home.latestDream.empty"))
                     .dsFont(.caption)

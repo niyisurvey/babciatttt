@@ -156,7 +156,7 @@ struct CameraSetupView: View {
                                 .dsFont(.caption, weight: .bold)
                             Text(String(localized: "cameraSetup.quickAdd.scanning.detail"))
                                 .dsFont(.caption2)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(theme.palette.textSecondary)
                         }
                     }
                 }
@@ -186,12 +186,12 @@ struct CameraSetupView: View {
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(result.kind.localizedTitle)
                                         .dsFont(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(theme.palette.textSecondary)
                                     Text(result.name)
                                         .dsFont(.headline)
                                     Text(discoveryDetail(result))
                                         .dsFont(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(theme.palette.textSecondary)
                                 }
                                 Spacer()
                                 Text(String(localized: "cameraSetup.quickAdd.action"))

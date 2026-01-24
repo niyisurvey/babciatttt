@@ -16,19 +16,19 @@ struct BabciaStatusView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(maxWidth: 260)
-                    .shadow(color: .black.opacity(0.12), radius: 20, x: 0, y: 10)
+                    .dsElevation(.level3)
 
                 GlassCardView {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(String(localized: "babciaStatus.pot.title"))
                                 .dsFont(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(theme.palette.textSecondary)
                             Text("\(viewModel.availablePotPoints)")
                                 .dsFont(.title2, weight: .bold)
                             Text(String(localized: "babciaStatus.pot.available"))
                                 .dsFont(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(theme.palette.textSecondary)
                         }
 
                         Spacer()
@@ -36,7 +36,7 @@ struct BabciaStatusView: View {
                         VStack(alignment: .trailing, spacing: 4) {
                             Text(String(localized: "babciaStatus.pot.allTime"))
                                 .dsFont(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(theme.palette.textSecondary)
                             Text("\(viewModel.totalPotPoints)")
                                 .dsFont(.headline, weight: .bold)
                         }

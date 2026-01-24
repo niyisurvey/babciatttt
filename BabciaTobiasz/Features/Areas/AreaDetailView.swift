@@ -494,21 +494,21 @@ struct AreaDetailView: View {
     private var babciaSparkleCard: some View {
         GlassCardView {
             HStack(spacing: theme.grid.listSpacing) {
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack(spacing: 8) {
+                VStack(alignment: .leading, spacing: theme.grid.listSpacing / 1.5) {
+                    HStack(spacing: theme.grid.listSpacing / 1.5) {
                         Image(systemName: "sparkles")
                             .foregroundStyle(theme.palette.warmAccent)
                             .font(.system(size: theme.grid.iconTitle3))
                             .symbolEffect(.pulse, options: .repeating)
                     Text(String(localized: "areaDetail.babcia.label"))
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
                     Text(area.persona.localizedDisplayName)
                         .dsFont(.headline, weight: .bold)
                     Text(area.persona.localizedTagline)
                         .dsFont(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                     reminderPreviewRow
                 }
 
@@ -516,7 +516,7 @@ struct AreaDetailView: View {
 
                 personaHeadshotView
             }
-            .padding(.vertical, 6)
+            .padding(.vertical, theme.grid.listSpacing / 2)
         }
     }
 
@@ -541,16 +541,16 @@ struct AreaDetailView: View {
     }
 
     private var reminderPreviewRow: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: theme.grid.listSpacing / 2) {
             Image(systemName: "bell.badge")
                 .font(.system(size: theme.grid.iconTiny))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
             Text(String(localized: "reminders.preview.label"))
                 .dsFont(.caption2)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
             Text(reminderTimesText)
                 .dsFont(.caption2, weight: .bold)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
                 .lineLimit(1)
         }
     }
@@ -577,7 +577,7 @@ struct AreaDetailView: View {
     private func cameraSourceControls(showPicker: Binding<Bool>) -> some View {
         let hasLinkedCamera = linkedStreamingCamera != nil
         if hasLinkedCamera || streamingManager.configs.isEmpty == false {
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: theme.grid.listSpacing / 2) {
                 if let linkedCamera = linkedStreamingCamera {
                     Toggle(isOn: $prefersLinkedCamera) {
                         Text(String(format: String(localized: "cameraSource.linked"), linkedCamera.name))
@@ -589,10 +589,10 @@ struct AreaDetailView: View {
                     showPicker.wrappedValue = true
                 }
                 .dsFont(.caption2, weight: .bold)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
                 .buttonStyle(.plain)
             }
-            .padding(.top, 4)
+            .padding(.top, theme.grid.listSpacing / 3)
         }
     }
 
@@ -600,15 +600,15 @@ struct AreaDetailView: View {
     private var kitchenClosedCard: some View {
         if viewModel.isKitchenClosed {
             GlassCardView {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: theme.grid.listSpacing / 1.5) {
                     Text(String(localized: "areaDetail.kitchenClosed.title"))
                         .dsFont(.headline, weight: .bold)
                     Text(String(format: String(localized: "areaDetail.kitchenClosed.message"), viewModel.completedTodayCount, viewModel.dailyBowlTarget))
                         .dsFont(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                     Text(String(localized: "areaDetail.kitchenClosed.helper"))
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
                 .padding(theme.grid.cardPadding)
             }
@@ -619,19 +619,19 @@ struct AreaDetailView: View {
 
     // Added 2026-01-14 23:20 GMT
     private var taskListSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
             Text(String(localized: "areaDetail.tasks.title"))
                 .dsFont(.headline, weight: .bold)
-                .padding(.horizontal, 4)
+                .padding(.horizontal, theme.grid.listSpacing / 3)
 
             if showTaskExplanation {
                 GlassCardView {
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: theme.grid.listSpacing / 1.5) {
                         Text(String(localized: "areaDetail.tasks.explainer.title"))
                             .dsFont(.headline, weight: .bold)
                         Text(String(localized: "areaDetail.tasks.explainer.message"))
                             .dsFont(.subheadline)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                         Button(String(localized: "areaDetail.tasks.explainer.action")) {
                             showTaskExplanation = false
                             taskExplanationShown = true
@@ -665,7 +665,7 @@ struct AreaDetailView: View {
                     icon: "hand.tap.fill",
                     isVisible: $showTaskTapHint
                 )
-                .offset(x: 12, y: -8)
+                .offset(x: theme.grid.listSpacing, y: -theme.grid.listSpacing / 1.5)
             }
         }
         .onAppear {
@@ -699,12 +699,12 @@ struct AreaDetailView: View {
     private var verificationCallout: some View {
         if let bowl = area.latestBowl, bowl.isCompleted, isVerificationDecisionPending {
             GlassCardView {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: theme.grid.listSpacing / 1.5) {
                     Text(String(localized: "areaDetail.verify.callout.title"))
                         .dsFont(.headline, weight: .bold)
                     Text(String(localized: "areaDetail.verify.callout.message"))
                         .dsFont(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                     cameraSourceControls(showPicker: $showVerificationSourcePicker)
                     Button {
                         beginVerificationFlow(for: bowl)
@@ -713,7 +713,7 @@ struct AreaDetailView: View {
                             .dsFont(.headline)
                     }
                     .buttonStyle(.nativeGlassProminent)
-                    .padding(.top, 4)
+                    .padding(.top, theme.grid.listSpacing / 3)
                     Button {
                         takeBasePointsOnly(for: bowl)
                     } label: {
@@ -722,7 +722,7 @@ struct AreaDetailView: View {
                     }
                     .buttonStyle(.nativeGlass)
                 }
-                .padding()
+                .padding(theme.grid.cardPadding)
             }
         }
     }
@@ -731,7 +731,7 @@ struct AreaDetailView: View {
 
     // Added 2026-01-14 22:02 GMT
     private var floatingCameraButton: some View {
-        VStack(alignment: .trailing, spacing: 6) {
+        VStack(alignment: .trailing, spacing: theme.grid.listSpacing / 2) {
             Button {
                 requestCameraCapture()
                 hapticFeedback(.medium)
@@ -752,9 +752,9 @@ struct AreaDetailView: View {
             if let reason = cameraDisabledReason {
                 Text(reason)
                     .dsFont(.caption2)
-                    .foregroundStyle(.secondary)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
+                    .foregroundStyle(theme.palette.textSecondary)
+                    .padding(.horizontal, theme.grid.listSpacing)
+                    .padding(.vertical, theme.grid.listSpacing / 2)
                     .background(.ultraThinMaterial, in: Capsule())
             }
         }

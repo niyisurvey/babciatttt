@@ -30,7 +30,7 @@ struct AreaRowView: View {
 
     var body: some View {
         GlassCardView {
-            HStack(spacing: 16) {
+            HStack(spacing: theme.grid.cardPadding) {
                 progressIndicator
                 areaIcon
                 areaInfo
@@ -63,7 +63,7 @@ struct AreaRowView: View {
 
             Text(total == 0 ? "0" : "\(completed)")
                 .dsFont(.caption2)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
         }
     }
 
@@ -102,7 +102,7 @@ struct AreaRowView: View {
             HStack(spacing: 8) {
                 Text(ageLabel)
                     .dsFont(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
 
                 if let milestone {
                     milestoneBadge(milestone)
@@ -134,10 +134,10 @@ struct AreaRowView: View {
         HStack(spacing: 6) {
             Image(systemName: "bell.badge")
                 .font(.system(size: theme.grid.iconTiny))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
             Text(String(localized: "reminders.preview.label"))
                 .dsFont(.caption2)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
             Text(reminderTimesText)
                 .dsFont(.caption2, weight: .bold)
                 .foregroundStyle(.secondary)
@@ -167,11 +167,20 @@ struct AreaRowView: View {
                     .frame(width: theme.grid.iconTiny / 2, height: theme.grid.iconTiny / 2)
                 Text(status.label)
                     .dsFont(.caption2, weight: .bold)
-                    .foregroundStyle(status.color)
+                    .foregroundStyle(statusColor(status))
             }
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
-            .background(status.color.opacity(0.12), in: Capsule())
+            .background(statusColor(status).opacity(0.12), in: Capsule())
+        }
+    }
+
+    private func statusColor(_ status: AreaRowStatus) -> Color {
+        switch status {
+        case .needsScan: return theme.palette.warning
+        case .inProgress: return theme.palette.primary
+        case .doneToday: return theme.palette.success
+        case .verificationPending: return theme.palette.secondary
         }
     }
 
@@ -219,13 +228,13 @@ private enum AreaRowStatus {
     var color: Color {
         switch self {
         case .needsScan:
-            return .orange
+            return .appWarning
         case .inProgress:
-            return .blue
+            return .appAccent
         case .doneToday:
-            return .green
+            return .appSuccess
         case .verificationPending:
-            return .purple
+            return .purple // DS secondary
         }
     }
 }

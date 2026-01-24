@@ -45,7 +45,7 @@ struct PierogiDropView: View {
                             .dsFont(.title2, weight: .bold)
                         Text(String(localized: autoReveal ? "pierogiDrop.reveal.subtitle" : "pierogiDrop.subtitle"))
                             .dsFont(.subheadline)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                         if !autoReveal {
                             Text(
                                 String(
@@ -55,7 +55,7 @@ struct PierogiDropView: View {
                                 )
                             )
                             .dsFont(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                         }
                     }
                     .multilineTextAlignment(.center)

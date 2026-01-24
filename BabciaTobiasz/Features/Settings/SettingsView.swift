@@ -41,7 +41,7 @@ struct SettingsView: View {
                                 .padding(.horizontal, 4)
                             Text(String(localized: "settings.babcia.subtitle"))
                                 .dsFont(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(theme.palette.textSecondary)
                                 .padding(.horizontal, 4)
 
                             GlassCardView {
@@ -69,7 +69,7 @@ struct SettingsView: View {
                                 .padding(.horizontal, 4)
                             Text(String(localized: "settings.cameras.subtitle"))
                                 .dsFont(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(theme.palette.textSecondary)
                                 .padding(.horizontal, 4)
 
                             GlassCardView {
@@ -95,7 +95,7 @@ struct SettingsView: View {
                                 .padding(.horizontal, 4)
                             Text(String(localized: "settings.microTidy.subtitle"))
                                 .dsFont(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(theme.palette.textSecondary)
                                 .padding(.horizontal, 4)
 
                             GlassCardView {
@@ -149,7 +149,7 @@ struct SettingsView: View {
                                 .padding(.horizontal, 4)
                             
                             GlassCardView {
-                                VStack(spacing: 16) {
+                                VStack(spacing: theme.grid.cardPadding) {
                                     Button {
                                         showChangelog = true
                                     } label: {
@@ -159,7 +159,7 @@ struct SettingsView: View {
                                             Spacer()
                                             Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
                                                 .dsFont(.body)
-                                                .foregroundStyle(.secondary)
+                                                .foregroundStyle(theme.palette.textSecondary)
                                             Image(systemName: "chevron.right")
                                                 .font(.system(size: theme.grid.iconTiny))
                                                 .foregroundStyle(.tertiary)
@@ -174,7 +174,7 @@ struct SettingsView: View {
                                         Spacer()
                                         Text(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1")
                                             .dsFont(.body)
-                                            .foregroundStyle(.secondary)
+                                            .foregroundStyle(theme.palette.textSecondary)
                                     }
                                 }
                             }
