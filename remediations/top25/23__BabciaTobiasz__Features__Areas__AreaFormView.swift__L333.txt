@@ -1,0 +1,6 @@
+Problem: Typography literal at BabciaTobiasz/Features/Areas/AreaFormView.swift:333
+Snippet: .font(.system(size: theme.grid.iconTitle2))
+Why: System font literals bypass semantic typography tokens and complicate dynamic type, branding, and consistency.
+Proposed tokens: typography.body
+Replacement snippet: font(theme.typography.body)
+Risks: Visual changes to contrast, emphasis, or layout rhythm; verify on-device and check accessibility contrast after token swap.

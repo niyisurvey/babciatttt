@@ -1,0 +1,6 @@
+Problem: Color literal at BabciaTobiasz/Shared/Components/SkeletonLoadingView.swift:252
+Snippet: LinearGradient(colors: [Color.appSuccess.opacity(0.3), Color.teal.opacity(0.3)], startPoint: .top, endPoint: .bottom)
+Why: Literal colors bypass the design token palette, blocking global theming, accessibility tuning, and brand updates.
+Proposed tokens: palette.primary
+Replacement snippet: foregroundStyle(theme.palette.primary)
+Risks: Visual changes to contrast, emphasis, or layout rhythm; verify on-device and check accessibility contrast after token swap.
