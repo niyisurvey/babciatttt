@@ -1,0 +1,9 @@
+file_path: BabciaTobiasz/Features/Home/HomeView.swift
+line_number: 261
+category: Color
+severity: Critical
+code_snippet: .foregroundStyle(.yellow)
+problem: Literal UI primitive bypasses the theme and prevents consistent theming across app surfaces.
+proposed_tokens: palette.warning
+replacement_snippet: .foregroundStyle(theme.palette.warning)
+risks: Verify contrast, state colors, and gradients visually; token mapping may shift perceived emphasis.

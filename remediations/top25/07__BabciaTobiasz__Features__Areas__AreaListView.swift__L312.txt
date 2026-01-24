@@ -1,5 +1,0 @@
-Problem: Color literal at BabciaTobiasz/Features/Areas/AreaListView.swift:312 increases theming drift and blocks global tuning.
-Proposed tokens: palette.status (and related semantic variants if needed).
-Replacement snippet: theme.palette.status
-Risks: Visual deltas may reveal implicit dependencies; verify contrast, state colors, and spacing rhythm on the containing screen.
-Code: .foregroundStyle(viewModel.isKitchenClosed ? .red : .secondary)

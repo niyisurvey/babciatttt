@@ -1,50 +1,40 @@
-total_matches,1001
-unique_files,72
-
-category_counts
-ButtonStyle,252
-Color,95
-Gradient,2
-Opacity,34
-SemanticColor,261
-Shadow,3
-Shape,32
-Spacing,315
-Typography,7
-
-severity_counts
-Critical,50
-High,50
-Medium,640
-Low,261
-
-excluded_paths
-LiquidGlassLab/
-AppHost/.derivedDataDevice/
-**/.git/**
-**/Tests/**
-docs/
-Docs/
-Documentation/
-
-top_offenders
-BabciaTobiasz/Features/Areas/AreaFormView.swift,81
-BabciaTobiasz/Features/Settings/Analytics/AnalyticsView.swift,52
-BabciaTobiasz/Shared/Components/SkeletonLoadingView.swift,49
-BabciaTobiasz/Features/Areas/AreaDetailView.swift,46
-BabciaTobiasz/Features/Areas/AreaListView.swift,41
-BabciaTobiasz/Features/Areas/AreaRowView.swift,41
-BabciaTobiasz/Features/SpotCheck/SpotCheckCards.swift,40
-BabciaTobiasz/Features/Settings/SettingsView.swift,35
-BabciaTobiasz/Shared/Components/ErrorView.swift,33
-BabciaTobiasz/Features/Settings/CameraSetupView.swift,33
-BabciaTobiasz/Shared/Components/OnboardingView.swift,31
-BabciaTobiasz/Shared/Components/LoadingIndicatorView.swift,26
-BabciaTobiasz/Shared/Components/BabciaPersonaSelectionView.swift,25
-BabciaTobiasz/Shared/Extensions/Color+Extensions.swift,20
-BabciaTobiasz/Features/Gallery/GalleryDetailView.swift,20
-BabciaTobiasz/Features/Filters/FilterShopView.swift,20
-BabciaTobiasz/Features/MicroTidy/MicroTidyView.swift,20
-BabciaTobiasz/DesignSystem/DesignSystemTheme.swift,17
-BabciaTobiasz/Features/Settings/DreamAPIKeyCardView.swift,16
-BabciaTobiasz/Features/Settings/GeminiAPIKeyCardView.swift,16
+total_matches: 619
+unique_files: 73
+production_paths: BabciaTobiasz, AppHost
+excluded_paths: .git, BabciaScanPipeline, DreamRoomEngine, External, LiquidGlassLab, TempDreamStuff, Tests, design-system, remediations
+counts_by_category:
+  ButtonStyle: 2
+  Color: 69
+  Gradient: 3
+  Opacity: 47
+  SemanticColor: 166
+  Shadow: 8
+  Shape: 11
+  Spacing: 253
+  Typography: 60
+counts_by_severity:
+  Critical: 12
+  High: 65
+  Medium: 348
+  Low: 194
+top_offenders:
+  BabciaTobiasz/Shared/Components/SkeletonLoadingView.swift: 41
+  BabciaTobiasz/Shared/Components/OnboardingView.swift: 36
+  BabciaTobiasz/Features/Areas/AreaFormView.swift: 34
+  BabciaTobiasz/Features/Areas/AreaRowView.swift: 28
+  BabciaTobiasz/DesignSystem/DesignSystemTheme.swift: 26
+  BabciaTobiasz/Features/Settings/SettingsView.swift: 24
+  BabciaTobiasz/Shared/Extensions/Color+Extensions.swift: 20
+  BabciaTobiasz/Shared/Components/BabciaPersonaSelectionView.swift: 20
+  BabciaTobiasz/Features/Areas/AreaListView.swift: 19
+  BabciaTobiasz/Features/Settings/CameraSetupView.swift: 19
+  BabciaTobiasz/Shared/Components/ErrorView.swift: 18
+  BabciaTobiasz/Features/Gallery/GalleryDetailView.swift: 17
+  BabciaTobiasz/Features/Settings/Analytics/AnalyticsView.swift: 14
+  BabciaTobiasz/Features/Areas/AreaDetailView.swift: 13
+  BabciaTobiasz/Shared/Components/LoadingIndicatorView.swift: 12
+  BabciaTobiasz/Features/Home/Components/ShopCard.swift: 12
+  BabciaTobiasz/Features/Home/HomeView.swift: 11
+  BabciaTobiasz/Features/Home/Components/LatestDreamCard.swift: 11
+  BabciaTobiasz/Shared/Components/DreamHeaderPlaceholderView.swift: 11
+  BabciaTobiasz/Features/SpotCheck/SpotCheckView.swift: 10

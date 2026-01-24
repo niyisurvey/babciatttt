@@ -1,0 +1,9 @@
+file_path: BabciaTobiasz/DesignSystem/DesignSystemTheme.swift
+line_number: 423
+category: Color
+severity: Critical
+code_snippet: .green, .teal
+problem: Literal UI primitive bypasses the theme and prevents consistent theming across app surfaces.
+proposed_tokens: palette.success
+replacement_snippet: .foregroundStyle(theme.palette.success)
+risks: Verify contrast, state colors, and gradients visually; token mapping may shift perceived emphasis.

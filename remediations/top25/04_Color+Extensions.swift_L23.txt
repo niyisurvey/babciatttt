@@ -1,0 +1,9 @@
+file_path: BabciaTobiasz/Shared/Extensions/Color+Extensions.swift
+line_number: 23
+category: Color
+severity: Critical
+code_snippet: static let appSuccess = Color.green
+problem: Literal UI primitive bypasses the theme and prevents consistent theming across app surfaces.
+proposed_tokens: palette.success
+replacement_snippet: .foregroundStyle(theme.palette.success)
+risks: Verify contrast, state colors, and gradients visually; token mapping may shift perceived emphasis.

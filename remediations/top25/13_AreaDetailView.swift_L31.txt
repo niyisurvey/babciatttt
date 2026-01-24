@@ -1,0 +1,9 @@
+file_path: BabciaTobiasz/Features/Areas/AreaDetailView.swift
+line_number: 31
+category: Color
+severity: High
+code_snippet: @State private var verificationTier: BowlVerificationTier = .blue
+problem: Literal UI primitive bypasses the theme and prevents consistent theming across app surfaces.
+proposed_tokens: palette.primary
+replacement_snippet: .foregroundStyle(theme.palette.primary)
+risks: Verify contrast, state colors, and gradients visually; token mapping may shift perceived emphasis.

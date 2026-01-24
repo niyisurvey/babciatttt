@@ -1,0 +1,9 @@
+file_path: BabciaTobiasz/Features/Areas/AreaModels.swift
+line_number: 237
+category: Color
+severity: High
+code_snippet: Color(hex: colorHex) ?? .teal
+problem: Literal UI primitive bypasses the theme and prevents consistent theming across app surfaces.
+proposed_tokens: palette.primary
+replacement_snippet: .foregroundStyle(theme.palette.primary)
+risks: Verify contrast, state colors, and gradients visually; token mapping may shift perceived emphasis.

@@ -1,0 +1,9 @@
+file_path: BabciaTobiasz/Features/Areas/Components/PierogiDropView.swift
+line_number: 119
+category: Shadow
+severity: High
+code_snippet: .shadow(color: glowColor.opacity(theme.glass.glowOpacityHigh), radius: theme.grid.iconMedium)
+problem: Literal UI primitive bypasses the theme and prevents consistent theming across app surfaces.
+proposed_tokens: elevation.shadowColor
+replacement_snippet: .shadow(color: theme.elevation.shadowColor, radius: theme.elevation.level1.radius, y: theme.elevation.level1.y)
+risks: Verify contrast, state colors, and gradients visually; token mapping may shift perceived emphasis.

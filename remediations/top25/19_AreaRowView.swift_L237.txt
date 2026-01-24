@@ -1,0 +1,9 @@
+file_path: BabciaTobiasz/Features/Areas/AreaRowView.swift
+line_number: 237
+category: Color
+severity: High
+code_snippet: return .purple // DS secondary
+problem: Literal UI primitive bypasses the theme and prevents consistent theming across app surfaces.
+proposed_tokens: palette.secondary
+replacement_snippet: .foregroundStyle(theme.palette.secondary)
+risks: Verify contrast, state colors, and gradients visually; token mapping may shift perceived emphasis.

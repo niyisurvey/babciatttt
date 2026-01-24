@@ -1,0 +1,9 @@
+file_path: BabciaTobiasz/Features/Areas/Components/CompletionSummaryView.swift
+line_number: 19
+category: Color
+severity: High
+code_snippet: tier == .blue ? "Bowl_Clay_Blue" : "Bowl_Clay_Natural"
+problem: Literal UI primitive bypasses the theme and prevents consistent theming across app surfaces.
+proposed_tokens: palette.primary
+replacement_snippet: .foregroundStyle(theme.palette.primary)
+risks: Verify contrast, state colors, and gradients visually; token mapping may shift perceived emphasis.

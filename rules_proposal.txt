@@ -1,139 +1,100 @@
-Generic replacement rules (language-agnostic)
+Generic replacement rules and codemod guidance
 
-Colors
-- Rule: Replace literal color values and named primitives with semantic tokens.
-- Replacement: Color literals -> theme.palette.<semantic>; gradients -> theme.backgrounds.gradient.<name>.
-- Codemod patterns:
-  - Regex: (?<!theme\.|tokens\.)Color\(
-  - Regex: (?<!theme\.|tokens\.)\.(black|white|red|orange|blue|green|teal|cyan|purple|pink|indigo|mint|yellow|brown)
-- AST note: SwiftSyntax recommended to avoid matching enum cases and non-UI contexts.
+Color
+- Rule: Replace literal Color(...) and named primitives with semantic palette tokens.
+- Replacement: Color(...) or .blue -> theme.palette.<semantic>
+- Detection regexes:
+  - (?<!theme\.|tokens\.)Color\(
+  - (?<!theme\.|tokens\.)\.(black|white|red|orange|blue|green|teal|cyan|purple|pink|indigo|mint|yellow|brown)
+- Codemod note: SwiftSyntax recommended to avoid matching asset names and enum cases.
 
-Semantic system colors
-- Rule: System semantic colors (.secondary/.tertiary/etc.) should be mapped to theme tokens.
-- Replacement: .secondary -> theme.palette.textSecondary (example).
-- Codemod pattern:
-  - Regex: (?<!theme\.|tokens\.)\.(secondary|tertiary|primary|accentColor)
-- AST note: SwiftSyntax recommended for scope-aware replacements.
+SemanticColor
+- Rule: Replace system semantic colors (.secondary/.tertiary/etc.) with theme tokens when consistency is required.
+- Replacement: .secondary -> theme.palette.textSecondary
+- Detection regex:
+  - (?<!theme\.|tokens\.)\.(secondary|tertiary|primary|accentColor)
+- Codemod note: Requires manual mapping in contexts where system colors are intentionally used.
 
 Opacity
-- Rule: Replace literal opacity values with semantic opacity tokens.
+- Rule: Replace literal opacities with semantic opacity tokens.
 - Replacement: .opacity(0.4) -> .opacity(theme.elevation.overlayDim)
-- Codemod pattern:
-  - Regex: \.opacity\(\s*([0-9]+(?:\.[0-9]+)?)
-- AST note: Safe with regex but review needed for animation math.
+- Detection regex:
+  - \.opacity\s*\(\s*[0-9]*\.?[0-9]+\s*\)
+- Codemod note: SwiftSyntax helpful to distinguish color.opacity versus view.opacity semantics.
 
-Shadow/Elevation
-- Rule: Replace literal shadows with elevation presets.
-- Replacement: .shadow(...) -> .shadow(theme.elevation.level.2)
-- Codemod patterns:
-  - Regex: \.shadow\(
-  - Regex: \.shadow\([^)]*opacity\(
-- AST note: SwiftSyntax preferred to map args into structured presets.
+Shadow
+- Rule: Replace literal shadow colors/opacities and radii with elevation tokens.
+- Replacement: .shadow(color: .black.opacity(0.2), radius: 8) -> .shadow(color: theme.elevation.shadowColor.opacity(theme.elevation.level1.opacity), radius: theme.elevation.level1.radius, y: theme.elevation.level1.y)
+- Detection regex:
+  - \.shadow\s*\(
+- Codemod note: Needs AST + manual review to choose correct elevation level.
 
-Spacing/Layout
-- Rule: Replace numeric layout literals with spacing scale tokens.
+Spacing
+- Rule: Replace numeric layout literals with grid spacing tokens.
 - Replacement: padding(16) -> padding(theme.grid.m)
-- Codemod patterns:
-  - Regex: padding\(\s*\d+
-  - Regex: padding\(\.\w+,\s*\d+
-  - Regex: spacing:\s*\d+
-  - Regex: frame\([^)]*(width|height):\s*\d+
-  - Regex: offset\(\s*[xy]:\s*\d+
-- AST note: Regex works for detection; SwiftSyntax needed for safe conversion.
+- Detection regexes:
+  - padding\s*\(\s*\d+
+  - padding\s*\(\s*\.\w+\s*,\s*\d+
+  - spacing\s*:\s*\d+
+  - frame\s*\([^\)]*(width|height)\s*:\s*\d+
+  - offset\s*\(\s*(x|y)\s*:\s*\d+
+- Codemod note: SwiftSyntax strongly recommended to avoid hitting non-UI numeric values.
 
-Shape/Radius
-- Rule: Replace literal radii with shape tokens.
-- Replacement: cornerRadius: 12 -> cornerRadius: theme.shape.card
-- Codemod patterns:
-  - Regex: cornerRadius:\s*\d+
-  - Regex: RoundedRectangle\(cornerRadius:\s*\d+
-- AST note: SwiftSyntax recommended for custom shapes and computed radii.
+Shape
+- Rule: Replace literal corner radii with shape tokens.
+- Replacement: RoundedRectangle(cornerRadius: 12) -> RoundedRectangle(cornerRadius: theme.shape.card)
+- Detection regexes:
+  - cornerRadius\s*:\s*\d+
+  - RoundedRectangle\s*\(\s*cornerRadius\s*:\s*\d+
+  - clipShape\s*\(\s*RoundedRectangle\s*\(\s*cornerRadius\s*:\s*\d+
+- Codemod note: Map by component type; manual review required.
 
 Typography
-- Rule: Replace hardcoded fonts/styles with semantic typography tokens.
+- Rule: Replace hardcoded font styles with semantic typography tokens.
 - Replacement: .font(.title2.bold()) -> .font(theme.typography.title2)
-- Codemod patterns:
-  - Regex: \.font\(\.system
-  - Regex: \.font\(\.(title|title2|title3|headline|body|caption|subheadline)
-- AST note: SwiftSyntax recommended due to chained modifiers.
+- Detection regexes:
+  - \.font\s*\(\s*\.system
+  - \.font\s*\(\s*\.(title|headline|subheadline|body|caption|callout)
+- Codemod note: AST tool required to preserve modifiers (weight/design).
 
-Gradients
-- Rule: Replace literal gradient arrays with gradient tokens.
-- Replacement: LinearGradient(colors:[...]) -> theme.backgrounds.gradient.hero
-- Codemod patterns:
-  - Regex: LinearGradient\(colors:\s*\[
-  - Regex: Gradient\(colors:\s*\[
-- AST note: SwiftSyntax preferred to map gradient stop semantics.
+Gradient
+- Rule: Replace literal color arrays in gradients with named background gradient tokens.
+- Replacement: LinearGradient(colors: [Color.red, Color.orange], ...) -> LinearGradient(colors: theme.backgrounds.gradient.sunrise, ...)
+- Detection regexes:
+  - LinearGradient\s*\(\s*colors\s*:\s*\[
+  - AngularGradient\s*\(
+  - Gradient\s*\(\s*colors\s*:\s*\[
+- Codemod note: AST + manual grouping required to create meaningful gradient tokens.
 
-Priority plan (ordered checklist)
+CI enforcement examples
 
-Phase 1 — Critical/High palette and status colors on primary flows
-- Focus files (highest offender counts):
-  - BabciaTobiasz/Features/Areas/AreaFormView.swift (81)
-  - BabciaTobiasz/Features/Settings/Analytics/AnalyticsView.swift (52)
-  - BabciaTobiasz/Shared/Components/SkeletonLoadingView.swift (49)
-  - BabciaTobiasz/Features/Areas/AreaDetailView.swift (46)
-  - BabciaTobiasz/Features/Areas/AreaListView.swift (41)
-  - BabciaTobiasz/Features/Areas/AreaRowView.swift (41)
-  - BabciaTobiasz/Features/SpotCheck/SpotCheckCards.swift (40)
-  - BabciaTobiasz/Features/Settings/SettingsView.swift (35)
-  - BabciaTobiasz/Shared/Components/ErrorView.swift (33)
-  - BabciaTobiasz/Features/Settings/CameraSetupView.swift (33)
-  - BabciaTobiasz/Shared/Components/OnboardingView.swift (31)
-  - BabciaTobiasz/Shared/Components/LoadingIndicatorView.swift (26)
-- Checklist:
-  1) Replace status literals (.red/.green/.yellow/.orange) with palette.success/warning/error tokens.
-  2) Replace black/white literals that affect text/backgrounds with semantic palette tokens.
-  3) Normalize literal gradients into named background gradient tokens.
+SwiftLint custom rules (swiftlint.yml snippet)
+- literal_colors:
+    name: "Literal Colors"
+    regex: '(?<!theme\.|tokens\.)Color\('
+    message: "Use theme tokens instead of Color(...) literals."
+    severity: error
+- named_colors:
+    name: "Named Colors"
+    regex: '(?<!theme\.|tokens\.)\.(black|white|red|orange|blue|green|teal|cyan|purple|pink|indigo|mint|yellow|brown)'
+    message: "Use theme palette tokens instead of named colors."
+    severity: error
+- literal_spacing:
+    name: "Literal Spacing"
+    regex: 'padding\s*\(\s*\d+'
+    message: "Use theme grid tokens for spacing."
+    severity: warning
+- literal_radius:
+    name: "Literal Radius"
+    regex: 'cornerRadius\s*:\s*\d+'
+    message: "Use theme shape tokens for radii."
+    severity: warning
 
-Phase 2 — Elevation and overlay consistency
-- Checklist:
-  1) Replace literal .shadow(...) calls with elevation.level.* presets.
-  2) Replace literal opacity values used for overlays/dims with elevation.overlayDim tokens.
+ripgrep CI checks (fail on matches)
+- rg -n "(?<!theme\.|tokens\.)\bColor\(" BabciaTobiasz AppHost
+- rg -n "(?<!theme\.|tokens\.)\.(black|white|red|orange|blue|green|teal|cyan|purple|pink|indigo|mint|yellow|brown)\b" BabciaTobiasz AppHost
+- rg -n "padding\s*\(\s*\d+|spacing\s*:\s*\d+|cornerRadius\s*:\s*\d+" BabciaTobiasz AppHost
 
-Phase 3 — Spacing and shape scale normalization in shared components
-- Checklist:
-  1) Update shared components under BabciaTobiasz/Shared/Components first.
-  2) Normalize padding/spacing/frame numeric literals to grid scale tokens.
-  3) Normalize corner radii to shape.* tokens.
-
-Phase 4 — Typography and semantic system color cleanup
-- Checklist:
-  1) Replace .font(.system(...)) and .font(.title...) usages with typography.* tokens.
-  2) Replace .secondary/.tertiary/etc. with palette semantic tokens where appropriate.
-
-CI/Lint enforcement
-
-SwiftLint custom rules (example)
-- hardcoded_color_literals:
-  regex: '(?<!theme\.|tokens\.)\bColor\('
-  message: 'Use theme tokens instead of Color(...) literals.'
-  severity: error
-- hardcoded_named_colors:
-  regex: '(?<!theme\.|tokens\.)\.(black|white|red|orange|blue|green|teal|cyan|purple|pink|indigo|mint|yellow|brown)\b'
-  message: 'Use theme palette tokens instead of named colors.'
-  severity: error
-- hardcoded_spacing:
-  regex: 'padding\(\s*\d+|spacing:\s*\d+'
-  message: 'Use theme grid tokens for spacing.'
-  severity: warning
-- hardcoded_radius:
-  regex: 'cornerRadius:\s*\d+|RoundedRectangle\(cornerRadius:'
-  message: 'Use theme shape tokens for radii.'
-  severity: warning
-
-Ripgrep CI checks (fail build on matches)
-- rg -n "(?<!theme\.|tokens\.)\bColor\(" BabciaTobiasz
-- rg -n "(?<!theme\.|tokens\.)\.(black|white|red|orange|blue|green|teal|cyan|purple|pink|indigo|mint|yellow|brown)\b" BabciaTobiasz
-- rg -n "padding\(\s*\d+|spacing:\s*\d+|cornerRadius:\s*\d+" BabciaTobiasz
-
-Visual diff enforcement
-- Require PR template checkbox: 'I attached before/after screenshots for UI changes.'
-- CI job: fail if UI-related files changed without image artifacts in PR description.
-
-Manual review effort estimate
-- Phase 1: Medium (critical palette choices need product review).
-- Phase 2: Medium (elevation changes can shift perceived depth).
-- Phase 3: High (spacing/radius changes impact many layouts).
-- Phase 4: Medium (typography updates need accessibility checks).
-- Automation: detection is reliable; replacements need manual verification for gradients, shadows, and typography.
+PR quality gates
+- Require at least one screenshot or visual diff attachment for UI-impacting PRs.
+- Require updated audit.csv delta (or a clean audit) when touching SwiftUI views.
