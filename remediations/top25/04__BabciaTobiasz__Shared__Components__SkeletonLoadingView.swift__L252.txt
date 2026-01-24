@@ -1,0 +1,5 @@
+Problem: Gradient literal at BabciaTobiasz/Shared/Components/SkeletonLoadingView.swift:252 increases theming drift and blocks global tuning.
+Proposed tokens: backgrounds.gradient.hero (and related semantic variants if needed).
+Replacement snippet: theme.backgrounds.gradient.hero
+Risks: Visual deltas may reveal implicit dependencies; verify contrast, state colors, and spacing rhythm on the containing screen.
+Code: LinearGradient(colors: [.green.opacity(0.3), .teal.opacity(0.3)], startPoint: .top, endPoint: .bottom)

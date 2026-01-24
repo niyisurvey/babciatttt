@@ -1,0 +1,67 @@
+Palette
+- palette.primary: Primary brand/action color.
+- palette.onPrimary: Content on primary surfaces.
+- palette.secondary: Secondary accent color.
+- palette.success: Success/status positive color.
+- palette.warning: Warning/status caution color.
+- palette.error: Error/status negative color.
+- palette.neutral: Neutral ramp entry point; use semantic neutral tokens instead of raw grays.
+
+Backgrounds
+- backgrounds.main: App root background.
+- backgrounds.sheet: Modal/sheet backgrounds.
+- backgrounds.card: Card/grouped content background.
+- backgrounds.overlay: Overlay/scrim background.
+- backgrounds.gradient.hero: Hero/header gradient token.
+- backgrounds.gradient.accent: Accent gradient token.
+
+Surfaces
+- surfaces.card: Default elevated container surface.
+- surfaces.toast: Toast/banner background surface.
+- surfaces.tooltip: Tooltip/help surface.
+
+Elevation
+- elevation.shadow.color: Canonical shadow color.
+- elevation.shadow.opacity.low: Low elevation opacity.
+- elevation.shadow.opacity.medium: Medium elevation opacity.
+- elevation.shadow.opacity.high: High elevation opacity.
+- elevation.level.1: Small elevation preset (radius/offset/opacity).
+- elevation.level.2: Card elevation preset.
+- elevation.level.3: Modal elevation preset.
+- elevation.overlayDim: Overlay dim opacity token.
+
+Grid
+- grid.xxl: Largest spacing scale step.
+- grid.xl: Extra large spacing scale step.
+- grid.l: Large spacing scale step.
+- grid.m: Medium spacing scale step.
+- grid.s: Small spacing scale step.
+- grid.xs: Extra small spacing scale step.
+- grid.cardPadding: Standard padding inside cards.
+- grid.listSpacing: Standard spacing between list items.
+- grid.buttonPadding: Standard button content padding.
+
+Shape
+- shape.hero: Large/hero radius.
+- shape.card: Default card radius.
+- shape.control: Control/button radius.
+- shape.tooltip: Tooltip radius.
+- shape.subtle: Small/subtle rounding.
+
+Typography
+- typography.largeTitle: Primary large title style.
+- typography.title: Primary screen title.
+- typography.title2: Secondary title style.
+- typography.headline: Emphasized body headline.
+- typography.body: Default body style.
+- typography.caption: Supporting/caption style.
+
+Motion and Icon Sizes
+- motion.duration.fast: Fast transitions.
+- motion.duration.normal: Default transitions.
+- motion.duration.slow: Emphasis transitions.
+- motion.curve.standard: Default easing.
+- motion.curve.emphasized: Emphasized easing.
+- icon.size.small: Small icons.
+- icon.size.medium: Default icons.
+- icon.size.large: Hero icons.
