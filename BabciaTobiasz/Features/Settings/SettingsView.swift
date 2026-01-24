@@ -21,7 +21,7 @@ struct SettingsView: View {
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                             Text(String(localized: "settings.appearance.title"))
                                 .dsFont(.headline, weight: .bold)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
                             
                             GlassCardView {
                                 Picker(String(localized: "settings.appearance.theme.label"), selection: $appTheme) {
@@ -31,18 +31,18 @@ struct SettingsView: View {
                                     }
                                 }
                                 .pickerStyle(.segmented)
-                                .padding(.vertical, 4)
+                                .padding(.vertical, theme.grid.cardPaddingTight / 3)
                             }
                         }
 
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                             Text(String(localized: "settings.babcia.title"))
                                 .dsFont(.headline, weight: .bold)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
                             Text(String(localized: "settings.babcia.subtitle"))
                                 .dsFont(.caption)
                                 .foregroundStyle(theme.palette.textSecondary)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
 
                             GlassCardView {
                                 NavigationLink {
@@ -53,10 +53,10 @@ struct SettingsView: View {
                                             .dsFont(.headline)
                                         Spacer()
                                         Image(systemName: "chevron.right")
-                                            .font(.system(size: theme.grid.iconTiny))
-                                            .foregroundStyle(.tertiary)
+                                            .font(theme.typography.font(.caption2))
+                                            .foregroundStyle(theme.palette.textSecondary).opacity(theme.glass.glowOpacityLow)
                                     }
-                                    .padding(.vertical, 4)
+                                    .padding(.vertical, theme.grid.cardPaddingTight / 3)
                                 }
                             }
                         }
@@ -66,11 +66,11 @@ struct SettingsView: View {
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                             Text(String(localized: "settings.cameras.title"))
                                 .dsFont(.headline, weight: .bold)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
                             Text(String(localized: "settings.cameras.subtitle"))
                                 .dsFont(.caption)
                                 .foregroundStyle(theme.palette.textSecondary)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
 
                             GlassCardView {
                                 NavigationLink {
@@ -81,10 +81,10 @@ struct SettingsView: View {
                                             .dsFont(.headline)
                                         Spacer()
                                         Image(systemName: "chevron.right")
-                                            .font(.system(size: theme.grid.iconTiny))
-                                            .foregroundStyle(.tertiary)
+                                            .font(theme.typography.font(.caption2))
+                                            .foregroundStyle(theme.palette.textSecondary).opacity(theme.glass.glowOpacityLow)
                                     }
-                                    .padding(.vertical, 4)
+                                    .padding(.vertical, theme.grid.cardPaddingTight / 3)
                                 }
                             }
                         }
@@ -92,11 +92,11 @@ struct SettingsView: View {
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                             Text(String(localized: "settings.microTidy.title"))
                                 .dsFont(.headline, weight: .bold)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
                             Text(String(localized: "settings.microTidy.subtitle"))
                                 .dsFont(.caption)
                                 .foregroundStyle(theme.palette.textSecondary)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
 
                             GlassCardView {
                                 NavigationLink {
@@ -109,10 +109,10 @@ struct SettingsView: View {
                                             .dsFont(.headline)
                                         Spacer()
                                         Image(systemName: "chevron.right")
-                                            .font(.system(size: theme.grid.iconTiny))
-                                            .foregroundStyle(.tertiary)
+                                            .font(theme.typography.font(.caption2))
+                                            .foregroundStyle(theme.palette.textSecondary).opacity(theme.glass.glowOpacityLow)
                                     }
-                                    .padding(.vertical, 4)
+                                    .padding(.vertical, theme.grid.cardPaddingTight / 3)
                                 }
                             }
                         }
@@ -123,7 +123,7 @@ struct SettingsView: View {
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                             Text(String(localized: "settings.analytics.title"))
                                 .dsFont(.headline, weight: .bold)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
 
                             GlassCardView {
                                 NavigationLink {
@@ -134,10 +134,10 @@ struct SettingsView: View {
                                             .dsFont(.headline)
                                         Spacer()
                                         Image(systemName: "chevron.right")
-                                            .font(.system(size: theme.grid.iconTiny))
-                                            .foregroundStyle(.tertiary)
+                                            .font(theme.typography.font(.caption2))
+                                            .foregroundStyle(theme.palette.textSecondary).opacity(theme.glass.glowOpacityLow)
                                     }
-                                    .padding(.vertical, 4)
+                                    .padding(.vertical, theme.grid.cardPaddingTight / 3)
                                 }
                             }
                         }
@@ -146,7 +146,7 @@ struct SettingsView: View {
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                             Text(String(localized: "settings.about.title"))
                                 .dsFont(.headline, weight: .bold)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
                             
                             GlassCardView {
                                 VStack(spacing: theme.grid.cardPadding) {
@@ -161,8 +161,8 @@ struct SettingsView: View {
                                                 .dsFont(.body)
                                                 .foregroundStyle(theme.palette.textSecondary)
                                             Image(systemName: "chevron.right")
-                                                .font(.system(size: theme.grid.iconTiny))
-                                                .foregroundStyle(.tertiary)
+                                                .font(theme.typography.font(.caption2))
+                                                .foregroundStyle(theme.palette.textSecondary).opacity(theme.glass.glowOpacityLow)
                                         }
                                     }
                                     .buttonStyle(.plain)

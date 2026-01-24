@@ -101,7 +101,7 @@ private struct BabciaPersonaCard: View {
         GlassCardView {
             VStack(spacing: theme.grid.listSpacing) {
                 personaHeadshot
-                VStack(spacing: 4) {
+                VStack(spacing: theme.grid.cardPaddingTight / 3) {
                     Text(persona.localizedDisplayName)
                         .dsFont(.headline, weight: .bold)
                         .lineLimit(1)
@@ -128,14 +128,14 @@ private struct BabciaPersonaCard: View {
         .overlay(alignment: .topLeading) {
             if isSelected {
                 SparkleIconView(systemName: "checkmark", size: theme.grid.iconTiny, color: accentColor)
-                    .padding(.top, 8)
-                    .padding(.leading, 8)
+                    .padding(.top, theme.grid.listSpacing / 1.5)
+                    .padding(.leading, theme.grid.listSpacing / 1.5)
             }
         }
         .overlay(alignment: .topTrailing) {
             SparkleIconView(systemName: "info.circle", size: theme.grid.iconTiny, color: accentColor)
-                .padding(.top, 8)
-                .padding(.trailing, 8)
+                .padding(.top, theme.grid.listSpacing / 1.5)
+                .padding(.trailing, theme.grid.listSpacing / 1.5)
         }
         .scaleEffect(isSelected ? 1.02 : 0.98)
         .animation(theme.motion.listSpring, value: isSelected)
@@ -187,7 +187,7 @@ private struct BabciaPersonaDetailSheet: View {
     }
 
     private var header: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: theme.grid.listSpacing) {
             if let uiImage = UIImage(named: persona.headshotImageName) {
                 Image(uiImage: uiImage)
                     .resizable()
@@ -206,12 +206,12 @@ private struct BabciaPersonaDetailSheet: View {
 
     private var detailCard: some View {
         GlassCardView {
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: theme.grid.listSpacing / 1.5) {
                 Text(String(localized: "persona.detail.title"))
                     .dsFont(.headline, weight: .bold)
                 Text(persona.localizedDescription)
                     .dsFont(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
             }
             .padding(theme.grid.cardPadding)
         }
@@ -219,7 +219,7 @@ private struct BabciaPersonaDetailSheet: View {
 
     private var quoteCard: some View {
         GlassCardView {
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: theme.grid.listSpacing / 1.5) {
                 Text(String(localized: "persona.detail.quoteTitle"))
                     .dsFont(.headline, weight: .bold)
                 Text("“\(persona.localizedQuote)”")
@@ -241,22 +241,22 @@ private struct BabciaInviteAuraView: View {
                 .fill(
                     LinearGradient(
                         colors: [
-                            accentColor.opacity(0.35),
-                            theme.palette.primary.opacity(0.2),
-                            theme.palette.secondary.opacity(0.18)
+                            accentColor.opacity(theme.elevation.shimmerOpacity * 1.15),
+                            theme.palette.primary.opacity(theme.elevation.shimmerOpacity / 1.5),
+                            theme.palette.secondary.opacity(theme.elevation.shimmerOpacity / 1.6)
                         ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
                 )
-                .blur(radius: 26)
+                .blur(radius: theme.grid.sectionSpacing * 1.3)
 
             Circle()
                 .fill(
                     RadialGradient(
                         colors: [
-                            accentColor.opacity(0.6),
-                            theme.palette.coolAccent.opacity(0.2),
+                            accentColor.opacity(theme.elevation.overlayDim * 1.5),
+                            theme.palette.coolAccent.opacity(theme.elevation.shimmerOpacity / 1.5),
                             Color.clear
                         ],
                         center: .center,
@@ -265,7 +265,7 @@ private struct BabciaInviteAuraView: View {
                     )
                 )
                 .blendMode(.screen)
-                .blur(radius: 30)
+                .blur(radius: theme.grid.sectionSpacing * 1.5)
         }
         .phaseAnimator([false, true]) { content, shift in
             content

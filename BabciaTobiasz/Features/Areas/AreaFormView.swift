@@ -18,7 +18,7 @@ struct AreaFormView: View {
     @State private var name: String = ""
     @State private var description: String = ""
     @State private var selectedIcon: String = "square.grid.2x2.fill"
-    @State private var selectedColor: Color = .teal
+    @State private var selectedColor: Color = DesignSystemTheme.default.palette.coolAccent
     @State private var selectedPersona: BabciaPersona = .classic
     @State private var selectedCameraId: UUID?
     @State private var showCameraSetup = false
@@ -32,10 +32,14 @@ struct AreaFormView: View {
         "door.left.hand.open", "figure.walk", "music.note.house.fill", "car.fill"
     ]
 
-    private let colorOptions: [Color] = [
-        .teal, .green, .mint, .cyan, .blue, .indigo,
-        .purple, .pink, .orange, .yellow, .brown, .gray
-    ]
+    private var colorOptions: [Color] {
+        [
+            theme.palette.coolAccent, theme.palette.success, theme.palette.tertiary,
+            theme.palette.primary, theme.palette.secondary,
+            theme.palette.warmAccent, theme.palette.warning,
+            .mint, .indigo, .pink, .brown, .gray // Keep some as fallback if no token
+        ]
+    }
 
     private var isValid: Bool {
         !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -55,7 +59,7 @@ struct AreaFormView: View {
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                             Text(String(localized: "areaForm.basicInfo.title"))
                                 .dsFont(.headline, weight: .bold)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
 
                             GlassCardView {
                                 VStack(spacing: theme.grid.cardPadding) {
@@ -77,17 +81,17 @@ struct AreaFormView: View {
                             Text(String(localized: "areaForm.basicInfo.helper"))
                                 .dsFont(.caption)
                                 .foregroundStyle(theme.palette.textSecondary)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
                         }
 
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                             Text(String(localized: "areaForm.appearance.title"))
                                 .dsFont(.headline, weight: .bold)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
                             Text(String(localized: "areaForm.appearance.helper"))
                                 .dsFont(.caption)
                                 .foregroundStyle(theme.palette.textSecondary)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
 
                             GlassCardView {
                                 VStack(alignment: .leading, spacing: theme.grid.sectionSpacing) {
@@ -115,7 +119,7 @@ struct AreaFormView: View {
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                             Text(String(localized: "areaForm.persona.title"))
                                 .dsFont(.headline, weight: .bold)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
 
                             if isEditing, let area {
                                 GlassCardView {
@@ -144,10 +148,10 @@ struct AreaFormView: View {
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                             Text(String(localized: "areaForm.camera.title"))
                                 .dsFont(.headline, weight: .bold)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
 
                             GlassCardView {
-                                VStack(alignment: .leading, spacing: 12) {
+                                VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                                     Text(String(localized: "areaForm.camera.helper"))
                                         .dsFont(.caption)
                                         .foregroundStyle(theme.palette.textSecondary)
@@ -188,11 +192,11 @@ struct AreaFormView: View {
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                             Text(String(localized: "areaForm.reminders.title"))
                                 .dsFont(.headline, weight: .bold)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
                             Text(String(localized: "areaForm.reminders.helper"))
                                 .dsFont(.caption)
                                 .foregroundStyle(theme.palette.textSecondary)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
 
                             if let area {
                                 ReminderConfigView(area: area)
@@ -208,7 +212,7 @@ struct AreaFormView: View {
                         VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                             Text(String(localized: "areaForm.preview.title"))
                                 .dsFont(.headline, weight: .bold)
-                                .padding(.horizontal, 4)
+                                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
 
                             GlassCardView {
                                 VStack(alignment: .leading, spacing: 12) {
@@ -217,11 +221,11 @@ struct AreaFormView: View {
                                         .foregroundStyle(theme.palette.textSecondary)
                                     previewCard
                                 }
-                                .padding(.vertical, 6)
+                                .padding(.vertical, theme.grid.cardPaddingTight / 2)
                             }
                             .overlay(
                                 RoundedRectangle(cornerRadius: theme.shape.cardCornerRadius)
-                                    .stroke(selectedColor.opacity(0.5), lineWidth: 2)
+                                    .stroke(selectedColor.opacity(theme.elevation.overlayDim), lineWidth: 2)
                             )
                         }
                     }
@@ -266,17 +270,17 @@ struct AreaFormView: View {
     }
 
     private var iconPicker: some View {
-        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), spacing: 12) {
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), spacing: theme.grid.listSpacing) {
             ForEach(iconOptions, id: \.self) { icon in
                 Button {
                     selectedIcon = icon
                 } label: {
                     Image(systemName: icon)
-                        .font(.system(size: theme.grid.iconTitle2))
+                        .font(theme.typography.font(.title2))
                         .foregroundStyle(selectedIcon == icon ? selectedColor : theme.palette.textSecondary)
-                        .frame(width: 44, height: 44)
+                        .frame(width: theme.grid.iconLarge, height: theme.grid.iconLarge)
                         .background(
-                            selectedIcon == icon ? selectedColor.opacity(0.2) : Color.clear,
+                            selectedIcon == icon ? selectedColor.opacity(theme.elevation.shimmerOpacity) : Color.clear,
                             in: RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius, style: .continuous)
                         )
                         .overlay(
@@ -291,14 +295,14 @@ struct AreaFormView: View {
     }
 
     private var colorPicker: some View {
-        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), spacing: 12) {
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), spacing: theme.grid.listSpacing) {
             ForEach(colorOptions, id: \.self) { color in
                 Button {
                     selectedColor = color
                 } label: {
                     RoundedRectangle(cornerRadius: theme.shape.controlCornerRadius, style: .continuous)
                         .fill(color)
-                        .frame(width: 36, height: 36)
+                        .frame(width: theme.grid.listSpacing * 3, height: theme.grid.listSpacing * 3)
                         .overlay(
                             RoundedRectangle(cornerRadius: theme.shape.controlCornerRadius, style: .continuous)
                                 .stroke(theme.palette.primary.opacity(selectedColor == color ? 0.9 : 0), lineWidth: 3)
@@ -326,11 +330,11 @@ struct AreaFormView: View {
         HStack(spacing: theme.grid.cardPadding) {
             ZStack {
                 RoundedRectangle(cornerRadius: theme.shape.controlCornerRadius, style: .continuous)
-                    .fill(selectedColor.opacity(0.2))
-                    .frame(width: 50, height: 50)
+                    .fill(selectedColor.opacity(theme.elevation.shimmerOpacity))
+                    .frame(width: theme.grid.iconError, height: theme.grid.iconError)
 
                 Image(systemName: selectedIcon)
-                    .font(.system(size: theme.grid.iconTitle2))
+                    .font(theme.typography.font(.title2))
                     .foregroundStyle(selectedColor)
             }
 
@@ -396,8 +400,8 @@ struct AreaFormView: View {
         Button {
             selectedPersona = persona
         } label: {
-            HStack(spacing: 12) {
-                VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: theme.grid.listSpacing) {
+                VStack(alignment: .leading, spacing: theme.grid.cardPaddingTight / 3) {
                     Text(persona.localizedDisplayName)
                         .dsFont(.headline, weight: .bold)
                     Text(persona.localizedTagline)
@@ -409,9 +413,9 @@ struct AreaFormView: View {
 
                 Image(systemName: selectedPersona == persona ? "checkmark.circle.fill" : "circle")
                     .foregroundStyle(selectedPersona == persona ? selectedColor : theme.palette.textSecondary)
-                    .dsFont(.title3)
+                    .font(theme.typography.font(.title3))
             }
-            .padding(.vertical, 4)
+            .padding(.vertical, theme.grid.cardPaddingTight / 3)
         }
         .buttonStyle(.plain)
     }

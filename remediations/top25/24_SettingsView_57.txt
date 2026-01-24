@@ -1,9 +1,0 @@
-file_path: BabciaTobiasz/Features/Settings/SettingsView.swift
-line_number: 57
-category: ButtonStyle
-severity: High
-problem: hardcoded UI primitive bypasses theme tokens and blocks consistent theming.
-proposed_tokens: palette.primary
-replacement_snippet: theme.palette.primary
-risks: verify contrast, dark mode, animation states, and hierarchy/elevation visuals after token swap.
-evidence: .foregroundStyle(.tertiary)

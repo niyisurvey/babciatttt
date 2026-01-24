@@ -75,26 +75,27 @@ public struct BabciaTobiaszAppView: View {
 
 /// Error view shown when SwiftData fails to initialize
 private struct DatabaseErrorView: View {
+    @Environment(\.dsTheme) var theme
     let error: Error?
     
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: theme.grid.sectionSpacing) {
             Image(systemName: "exclamationmark.triangle.fill")
-                .font(.system(size: 60))
-                .foregroundStyle(.red)
+                .font(theme.typography.custom(size: theme.grid.iconXL))
+                .foregroundStyle(theme.palette.error)
             
             Text(String(localized: "app.initError.title"))
-                .font(.title.bold())
+                .dsFont(.title, weight: .bold)
             
             Text(String(localized: "app.initError.message"))
                 .multilineTextAlignment(.center)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
                 .padding(.horizontal)
             
             if let error = error {
                 Text(error.localizedDescription)
-                    .font(.caption)
-                    .foregroundStyle(.tertiary)
+                    .dsFont(.caption)
+                    .foregroundStyle(theme.palette.textSecondary)
                     .padding(.horizontal)
             }
         }

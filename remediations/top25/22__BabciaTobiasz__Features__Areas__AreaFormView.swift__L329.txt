@@ -1,6 +1,0 @@
-Problem: Opacity literal at BabciaTobiasz/Features/Areas/AreaFormView.swift:329
-Snippet: .fill(selectedColor.opacity(0.2))
-Why: Literal opacity values hardcode contrast/elevation and break theme-wide adjustments for overlays and glass effects.
-Proposed tokens: elevation.overlayDim
-Replacement snippet: opacity(theme.elevation.overlayDim)
-Risks: Visual changes to contrast, emphasis, or layout rhythm; verify on-device and check accessibility contrast after token swap.

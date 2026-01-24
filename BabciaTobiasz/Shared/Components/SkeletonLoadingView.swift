@@ -10,7 +10,7 @@ struct SkeletonLoadingView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: 20) {
+        VStack(spacing: theme.grid.sectionSpacing) {
                 // Weather card skeleton
                 weatherCardSkeleton
                 
@@ -31,17 +31,17 @@ struct SkeletonLoadingView: View {
     // MARK: - Weather Card Skeleton
     
     private var weatherCardSkeleton: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: theme.grid.cardPadding) {
             // Location
             SkeletonBox(width: 120, height: 24)
             SkeletonBox(width: 80, height: 14)
             
-            HStack(alignment: .top, spacing: 20) {
+            HStack(alignment: .top, spacing: theme.grid.sectionSpacing) {
                 // Icon placeholder
                 SkeletonBox(width: 80, height: 80)
-                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .clipShape(RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius, style: .continuous))
                 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                     // Temperature
                     SkeletonBox(width: 100, height: 60)
                     SkeletonBox(width: 80, height: 20)
@@ -50,16 +50,16 @@ struct SkeletonLoadingView: View {
             
             SkeletonBox(width: 100, height: 16)
         }
-        .padding(.vertical, 20)
+        .padding(.vertical, theme.grid.sectionSpacing)
         .frame(maxWidth: .infinity)
         .glassCard()
     }
     
     private var insightSkeleton: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
             HStack {
                 SkeletonBox(width: 24, height: 24)
-                    .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+                    .clipShape(RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius / 2, style: .continuous))
                 SkeletonBox(width: 100, height: 18)
                 Spacer()
             }
@@ -71,17 +71,17 @@ struct SkeletonLoadingView: View {
     }
     
     private var detailsGridSkeleton: some View {
-        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: theme.grid.cardPadding) {
             ForEach(0..<6, id: \.self) { _ in
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                     HStack {
                         SkeletonBox(width: 20, height: 20)
-                            .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+                            .clipShape(RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius / 2, style: .continuous))
                         SkeletonBox(width: 60, height: 14)
                     }
                     SkeletonBox(width: 80, height: 24)
                 }
-                .padding(.vertical, 8)
+                .padding(.vertical, theme.grid.listSpacing)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .glassCard(padding: 12)
             }
@@ -89,22 +89,22 @@ struct SkeletonLoadingView: View {
     }
     
     private var forecastSkeleton: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
             SkeletonBox(width: 120, height: 20)
-                .padding(.horizontal, 4)
+                .padding(.horizontal, theme.grid.cardPaddingTight / 3)
             
-            VStack(spacing: 16) {
+            VStack(spacing: theme.grid.cardPadding) {
                 ForEach(0..<5, id: \.self) { _ in
                     HStack {
                         SkeletonBox(width: 50, height: 16)
                         Spacer()
                         SkeletonBox(width: 30, height: 30)
-                            .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+                            .clipShape(RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius / 2, style: .continuous))
                         Spacer()
                         SkeletonBox(width: 100, height: 6)
                             .clipShape(Capsule())
                     }
-                    .padding(.vertical, 4)
+                    .padding(.vertical, theme.grid.cardPaddingTight / 3)
                 }
             }
             .padding()
@@ -150,7 +150,7 @@ struct SkeletonBox: View {
     
     private var shimmerGradient: some View {
         LinearGradient(
-            colors: [.clear, theme.palette.onPrimary.opacity(0.2), .clear],
+            colors: [.clear, theme.palette.onPrimary.opacity(theme.elevation.shimmerOpacity), .clear],
             startPoint: .leading,
             endPoint: .trailing
         )
@@ -163,7 +163,7 @@ struct AreaSkeletonLoadingView: View {
     @Environment(\.dsTheme) private var theme
     var body: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: 20) {
+            VStack(spacing: theme.grid.sectionSpacing) {
                 // Stats skeleton
                 statsCardSkeleton
                 
@@ -178,12 +178,12 @@ struct AreaSkeletonLoadingView: View {
     }
     
     private var statsCardSkeleton: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: theme.grid.cardPadding) {
             SkeletonBox(width: 100, height: 100)
-                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                .clipShape(RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius, style: .continuous))
             
             HStack(spacing: 30) {
-                VStack(spacing: 4) {
+                VStack(spacing: theme.grid.cardPaddingTight / 3) {
                     SkeletonBox(width: 60, height: 20)
                     SkeletonBox(width: 50, height: 12)
                 }
@@ -192,36 +192,36 @@ struct AreaSkeletonLoadingView: View {
                     .fill(.quaternary)
                     .frame(width: 1, height: 40)
                 
-                VStack(spacing: 4) {
+                VStack(spacing: theme.grid.cardPaddingTight / 3) {
                     SkeletonBox(width: 60, height: 20)
                     SkeletonBox(width: 50, height: 12)
                 }
             }
         }
-        .padding(.vertical, 12)
+        .padding(.vertical, theme.grid.cardPaddingTight)
         .frame(maxWidth: .infinity)
         .glassCard()
     }
     
     private var filterSkeleton: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: theme.grid.listSpacing) {
             ForEach(0..<3, id: \.self) { _ in
                 SkeletonBox(width: nil, height: 32)
                     .frame(maxWidth: .infinity)
             }
         }
-        .padding(4)
-        .background(theme.glass.strength.fallbackMaterial, in: RoundedRectangle(cornerRadius: 8))
+        .padding(theme.grid.cardPaddingTight / 3)
+        .background(theme.glass.strength.fallbackMaterial, in: RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius / 1.5))
     }
     
     private var areaRowsSkeleton: some View {
-        LazyVStack(spacing: 12) {
+        LazyVStack(spacing: theme.grid.listSpacing) {
             ForEach(0..<4, id: \.self) { _ in
-                HStack(spacing: 12) {
+                HStack(spacing: theme.grid.listSpacing) {
                     SkeletonBox(width: 44, height: 44)
-                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                        .clipShape(RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius / 1.2, style: .continuous))
                     
-                    VStack(alignment: .leading, spacing: 6) {
+                    VStack(alignment: .leading, spacing: theme.grid.cardPaddingTight / 2) {
                         SkeletonBox(width: 120, height: 18)
                         SkeletonBox(width: 80, height: 14)
                     }
@@ -229,7 +229,7 @@ struct AreaSkeletonLoadingView: View {
                     Spacer()
                     
                     SkeletonBox(width: 28, height: 28)
-                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                        .clipShape(RoundedRectangle(cornerRadius: theme.shape.subtleCornerRadius / 1.5, style: .continuous))
                 }
                 .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -241,7 +241,8 @@ struct AreaSkeletonLoadingView: View {
 
 #Preview("Weather Skeleton") {
     ZStack {
-        LinearGradient(colors: [Color.appAccent.opacity(0.3), Color.cyan.opacity(0.3)], startPoint: .top, endPoint: .bottom)
+        let theme = DesignSystemTheme.default
+        LinearGradient(colors: [theme.palette.primary.opacity(theme.elevation.overlayDim), theme.palette.tertiary.opacity(theme.elevation.overlayDim)], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         SkeletonLoadingView()
     }
@@ -249,7 +250,8 @@ struct AreaSkeletonLoadingView: View {
 
 #Preview("Area Skeleton") {
     ZStack {
-        LinearGradient(colors: [Color.appSuccess.opacity(0.3), Color.teal.opacity(0.3)], startPoint: .top, endPoint: .bottom)
+        let theme = DesignSystemTheme.default
+        LinearGradient(colors: [theme.palette.success.opacity(theme.elevation.overlayDim), theme.palette.coolAccent.opacity(theme.elevation.overlayDim)], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         AreaSkeletonLoadingView()
     }

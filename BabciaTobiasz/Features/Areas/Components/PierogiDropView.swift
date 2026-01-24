@@ -106,7 +106,7 @@ struct PierogiDropView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: baseSize, height: baseSize)
-                .shadow(color: theme.palette.glassTint.opacity(0.2), radius: theme.grid.iconSmall, x: 0, y: theme.grid.iconSmall / 2)
+                .shadow(color: theme.palette.glassTint.opacity(theme.glass.glowOpacityLow), radius: theme.grid.iconSmall, x: 0, y: theme.grid.iconSmall / 2)
 
             if showBoil {
                 boilEffect(color: glowColor)
@@ -351,7 +351,7 @@ private struct TierBadgeView: View {
             .foregroundStyle(tint)
             .padding(.horizontal, theme.grid.cardPadding)
             .padding(.vertical, theme.grid.cardPaddingTight)
-            .background(.ultraThinMaterial, in: Capsule())
+            .background(theme.glass.strength.fallbackMaterial, in: Capsule())
     }
 }
 

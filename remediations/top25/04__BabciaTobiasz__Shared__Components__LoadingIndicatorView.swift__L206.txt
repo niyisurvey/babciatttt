@@ -1,6 +1,0 @@
-Problem: Color literal at BabciaTobiasz/Shared/Components/LoadingIndicatorView.swift:206
-Snippet: .redacted(reason: isLoading ? .placeholder : [])
-Why: Literal colors bypass the design token palette, blocking global theming, accessibility tuning, and brand updates.
-Proposed tokens: palette.error
-Replacement snippet: foregroundStyle(theme.palette.error)
-Risks: Visual changes to contrast, emphasis, or layout rhythm; verify on-device and check accessibility contrast after token swap.

@@ -76,7 +76,7 @@ struct DreamAPIKeyCardView: View {
                 if let testMessage {
                     Text(testMessage)
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
             }
         }

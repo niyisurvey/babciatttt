@@ -51,7 +51,7 @@ struct HomeView: View {
                 .overlay(alignment: .bottomTrailing) {
                     QuickCheckInFloatingButton(action: onQuickCheckIn)
                         .padding(.trailing, theme.grid.sectionSpacing)
-                        .padding(.bottom, 24)
+                        .padding(.bottom, theme.grid.sectionSpacing)
                 }
                 .task {
                     await viewModel.fetchDashboardData()
@@ -255,11 +255,11 @@ private struct HomeInsightCard: View {
 
     var body: some View {
         GlassCardView {
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                 HStack {
                     Image(systemName: "lightbulb.fill")
-                        .foregroundStyle(.yellow)
-                        .font(.system(size: theme.grid.iconTitle3))
+                        .foregroundStyle(theme.palette.warning)
+                        .font(theme.typography.font(.title3))
                         .symbolEffect(.pulse, options: .repeating)
 
                     Text(String(localized: "home.insight.title"))
@@ -268,7 +268,7 @@ private struct HomeInsightCard: View {
                     Spacer()
                 }
 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                     InsightRow(
                         icon: "camera.fill",
                         text: String(localized: "home.insight.scan")
@@ -304,15 +304,15 @@ private struct InsightRow: View {
     @Environment(\.dsTheme) private var theme
 
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: theme.grid.listSpacing) {
             Image(systemName: icon)
                 .foregroundStyle(theme.palette.primary)
-                .font(.system(size: theme.grid.iconSmall))
-                .frame(width: 24)
+                .font(theme.typography.font(.body))
+                .frame(width: theme.grid.sectionSpacing)
 
             Text(text)
                 .dsFont(.subheadline)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
     }

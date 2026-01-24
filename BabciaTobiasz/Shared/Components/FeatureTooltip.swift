@@ -36,7 +36,7 @@ struct FeatureTooltip: View {
             
             Text(description)
                 .dsFont(.subheadline)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding()
@@ -67,7 +67,7 @@ struct TooltipModifier: ViewModifier {
                         .font(.system(size: theme.grid.iconTiny))
                         .foregroundStyle(theme.palette.textSecondary)
                 }
-                .offset(x: 8, y: -8)
+                .offset(x: theme.grid.cardPaddingTight / 1.5, y: -theme.grid.cardPaddingTight / 1.5)
             }
             .overlay {
                 if showTooltip {

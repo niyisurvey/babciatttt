@@ -755,7 +755,7 @@ struct AreaDetailView: View {
                     .foregroundStyle(theme.palette.textSecondary)
                     .padding(.horizontal, theme.grid.listSpacing)
                     .padding(.vertical, theme.grid.listSpacing / 2)
-                    .background(.ultraThinMaterial, in: Capsule())
+                    .background(theme.glass.strength.fallbackMaterial, in: Capsule())
             }
         }
         .padding(.trailing, theme.grid.sectionSpacing)

@@ -36,10 +36,10 @@ struct AreaRowView: View {
                 areaInfo
                 Spacer()
                 Image(systemName: "chevron.right")
-                    .font(.system(size: theme.grid.iconTiny))
-                    .foregroundStyle(.tertiary)
+                    .font(theme.typography.font(.caption2))
+                    .foregroundStyle(theme.palette.textSecondary).opacity(theme.glass.glowOpacityLow)
             }
-            .padding(.vertical, 4)
+            .padding(.vertical, theme.grid.cardPaddingTight / 3)
         }
     }
 
@@ -52,13 +52,13 @@ struct AreaRowView: View {
 
         return ZStack {
             Circle()
-                .stroke(.quaternary, lineWidth: 3)
-                .frame(width: 32, height: 32)
+                .stroke(theme.palette.neutral.opacity(theme.elevation.shimmerOpacity), lineWidth: 3)
+                .frame(width: theme.grid.listSpacing * 2.6, height: theme.grid.listSpacing * 2.6)
 
             Circle()
                 .trim(from: 0, to: progress)
                 .stroke(area.color, style: StrokeStyle(lineWidth: 3, lineCap: .round))
-                .frame(width: 32, height: 32)
+                .frame(width: theme.grid.listSpacing * 2.6, height: theme.grid.listSpacing * 2.6)
                 .rotationEffect(.degrees(-90))
 
             Text(total == 0 ? "0" : "\(completed)")
@@ -72,11 +72,11 @@ struct AreaRowView: View {
     private var areaIcon: some View {
         ZStack {
             RoundedRectangle(cornerRadius: theme.shape.controlCornerRadius, style: .continuous)
-                .fill(area.color.opacity(0.15))
-                .frame(width: 44, height: 44)
+                .fill(area.color.opacity(theme.elevation.shimmerOpacity / 2))
+                .frame(width: theme.grid.iconLarge, height: theme.grid.iconLarge)
 
             Image(systemName: area.iconName)
-                .font(.system(size: theme.grid.iconTitle3))
+                .font(theme.typography.font(.title3))
                 .foregroundStyle(area.color)
         }
     }
@@ -91,7 +91,7 @@ struct AreaRowView: View {
             if let description = area.areaDescription, !description.isEmpty {
                 Text(description)
                     .dsFont(.caption)
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(theme.palette.textSecondary).opacity(theme.glass.glowOpacityLow)
                     .lineLimit(1)
             }
 
@@ -99,7 +99,7 @@ struct AreaRowView: View {
 
             reminderPreviewRow
 
-            HStack(spacing: 8) {
+            HStack(spacing: theme.grid.listSpacing) {
                 Text(ageLabel)
                     .dsFont(.caption2)
                     .foregroundStyle(theme.palette.textSecondary)
@@ -116,31 +116,31 @@ struct AreaRowView: View {
     }
 
     private func milestoneBadge(_ milestone: MilestoneDisplay) -> some View {
-        HStack(spacing: 4) {
+        HStack(spacing: theme.grid.cardPaddingTight / 3) {
             if let badge = milestone.badgeSystemName {
                 Image(systemName: badge)
-                    .font(.system(size: theme.grid.iconTiny))
+                    .font(theme.typography.font(.caption2))
             }
             Text(String(format: String(localized: "areaRow.milestone.day"), milestone.day))
                 .dsFont(.caption2, weight: .bold)
         }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 4)
-        .background(area.color.opacity(0.15), in: Capsule())
+        .padding(.horizontal, theme.grid.cardPaddingTight / 1.5)
+        .padding(.vertical, theme.grid.cardPaddingTight / 3)
+        .background(area.color.opacity(theme.elevation.shimmerOpacity / 2), in: Capsule())
         .foregroundStyle(area.color)
     }
 
     private var reminderPreviewRow: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: theme.grid.cardPaddingTight / 2) {
             Image(systemName: "bell.badge")
-                .font(.system(size: theme.grid.iconTiny))
+                .font(theme.typography.font(.caption2))
                 .foregroundStyle(theme.palette.textSecondary)
             Text(String(localized: "reminders.preview.label"))
                 .dsFont(.caption2)
                 .foregroundStyle(theme.palette.textSecondary)
             Text(reminderTimesText)
                 .dsFont(.caption2, weight: .bold)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.palette.textSecondary)
                 .lineLimit(1)
         }
     }
@@ -161,17 +161,17 @@ struct AreaRowView: View {
     @ViewBuilder
     private var statusBadge: some View {
         if let status = statusState {
-            HStack(spacing: 6) {
+            HStack(spacing: theme.grid.cardPaddingTight / 2) {
                 Circle()
-                    .fill(status.color)
+                    .fill(statusColor(status))
                     .frame(width: theme.grid.iconTiny / 2, height: theme.grid.iconTiny / 2)
                 Text(status.label)
                     .dsFont(.caption2, weight: .bold)
                     .foregroundStyle(statusColor(status))
             }
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .background(statusColor(status).opacity(0.12), in: Capsule())
+            .padding(.horizontal, theme.grid.cardPaddingTight / 1.5)
+            .padding(.vertical, theme.grid.cardPaddingTight / 3)
+            .background(statusColor(status).opacity(theme.glass.glowOpacityLow), in: Capsule())
         }
     }
 
@@ -226,27 +226,19 @@ private enum AreaRowStatus {
     }
 
     var color: Color {
-        switch self {
-        case .needsScan:
-            return .appWarning
-        case .inProgress:
-            return .appAccent
-        case .doneToday:
-            return .appSuccess
-        case .verificationPending:
-            return .purple // DS secondary
-        }
+        .gray // Placeholder, use statusColor in view
     }
 }
 
 #Preview {
+    let theme = DesignSystemTheme.default
     VStack(spacing: 12) {
         ForEach(Area.sampleAreas) { area in
             AreaRowView(area: area, milestone: nil)
         }
     }
     .padding()
-    .background(Color.gray.opacity(0.1))
+    .background(theme.palette.neutral.opacity(theme.glass.glowOpacityLow / 2))
     .modelContainer(for: [
         Area.self,
         AreaBowl.self,

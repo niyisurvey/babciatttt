@@ -101,10 +101,10 @@ struct CameraSetupView: View {
                     .dsFont(.headline, weight: .bold)
                 Text(String(localized: "cameraSetup.empty.message"))
                     .dsFont(.body)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                 Text(String(localized: "cameraSetup.empty.supportedTitle"))
                     .dsFont(.caption, weight: .bold)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
                 StreamingCameraSupportedListView()
                 Button {
                     editingCamera = nil
@@ -124,12 +124,12 @@ struct CameraSetupView: View {
         GlassCardView {
             VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                 HStack {
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: theme.grid.cardPaddingTight / 3) {
                         Text(String(localized: "cameraSetup.quickAdd.title"))
                             .dsFont(.headline, weight: .bold)
                         Text(String(localized: "cameraSetup.quickAdd.subtitle"))
                             .dsFont(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                     }
                     Spacer()
                     Button {
@@ -148,15 +148,15 @@ struct CameraSetupView: View {
                 }
 
                 if discoveryHub.isScanning {
-                    HStack(spacing: 8) {
+                    HStack(spacing: theme.grid.listSpacing / 1.5) {
                         ProgressView()
                             .tint(theme.palette.primary)
-                        VStack(alignment: .leading, spacing: 2) {
+                        VStack(alignment: .leading, spacing: theme.grid.listSpacing / 4) {
                             Text(String(localized: "cameraSetup.quickAdd.scanning"))
                                 .dsFont(.caption, weight: .bold)
                             Text(String(localized: "cameraSetup.quickAdd.scanning.detail"))
                                 .dsFont(.caption2)
-                                .foregroundStyle(theme.palette.textSecondary)
+                                .foregroundStyle(theme.palette.textSecondary).opacity(theme.glass.glowOpacityLow)
                         }
                     }
                 }
@@ -164,17 +164,17 @@ struct CameraSetupView: View {
                 if discoveryHub.results.isEmpty {
                     Text(String(localized: "cameraSetup.quickAdd.none"))
                         .dsFont(.body)
-                        .foregroundStyle(.secondary)
-                    VStack(alignment: .leading, spacing: 6) {
+                        .foregroundStyle(theme.palette.textSecondary)
+                    VStack(alignment: .leading, spacing: theme.grid.listSpacing / 1.5) {
                         Text(String(localized: "cameraSetup.quickAdd.tip.network"))
                             .dsFont(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                         Text(String(localized: "cameraSetup.quickAdd.tip.power"))
                             .dsFont(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                         Text(String(localized: "cameraSetup.quickAdd.tip.manual"))
                             .dsFont(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                     }
                 } else {
                     ForEach(discoveryHub.results) { result in
@@ -183,7 +183,7 @@ struct CameraSetupView: View {
                             hapticFeedback(.selection)
                         } label: {
                             HStack(alignment: .top, spacing: theme.grid.listSpacing) {
-                                VStack(alignment: .leading, spacing: 2) {
+                                VStack(alignment: .leading, spacing: theme.grid.listSpacing / 4) {
                                     Text(result.kind.localizedTitle)
                                         .dsFont(.caption)
                                         .foregroundStyle(theme.palette.textSecondary)
@@ -225,14 +225,14 @@ struct CameraSetupView: View {
 
     private func cameraCard(_ camera: StreamingCameraConfig) -> some View {
         GlassCardView {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: theme.grid.listSpacing) {
                 HStack {
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: theme.grid.cardPaddingTight / 3) {
                         Text(camera.name)
                             .dsFont(.headline, weight: .bold)
                         Text(camera.providerType.localizedName)
                             .dsFont(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                     }
                     Spacer()
                     Menu {
@@ -250,14 +250,14 @@ struct CameraSetupView: View {
                         }
                     } label: {
                         Image(systemName: "ellipsis.circle")
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(theme.palette.textSecondary)
                     }
                 }
 
                 if let detail = cameraDetail(camera) {
                     Text(detail)
                         .dsFont(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(theme.palette.textSecondary)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)

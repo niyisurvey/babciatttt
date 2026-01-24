@@ -1,6 +1,0 @@
-Problem: Color literal at BabciaTobiasz/Features/Areas/AreaFormView.swift:381
-Snippet: name: name.trimmingCharacters(in: .whitespacesAndNewlines),
-Why: Literal colors bypass the design token palette, blocking global theming, accessibility tuning, and brand updates.
-Proposed tokens: palette.neutral.0
-Replacement snippet: foregroundStyle(theme.palette.neutral.0)
-Risks: Visual changes to contrast, emphasis, or layout rhythm; verify on-device and check accessibility contrast after token swap.

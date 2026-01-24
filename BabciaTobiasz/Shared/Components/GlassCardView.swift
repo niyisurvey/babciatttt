@@ -58,7 +58,7 @@ struct GlassCardModifier: ViewModifier {
             .overlay {
                 if theme.shape.borderWidth > 0 {
                     RoundedRectangle(cornerRadius: resolvedCornerRadius, style: .continuous)
-                        .stroke(Color.white.opacity(theme.shape.borderOpacity), lineWidth: theme.shape.borderWidth)
+                        .stroke(theme.palette.onPrimary.opacity(theme.shape.borderOpacity), lineWidth: theme.shape.borderWidth)
                 }
             }
     }

@@ -1,9 +1,0 @@
-file_path: BabciaTobiasz/Features/Areas/AreaRowView.swift
-line_number: 237
-category: Color
-severity: High
-problem: hardcoded UI primitive bypasses theme tokens and blocks consistent theming.
-proposed_tokens: palette.secondary
-replacement_snippet: theme.palette.secondary
-risks: verify contrast, dark mode, animation states, and hierarchy/elevation visuals after token swap.
-evidence: return .purple // DS secondary

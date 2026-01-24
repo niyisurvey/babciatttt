@@ -1,6 +1,0 @@
-Problem: Gradient literal at BabciaTobiasz/Shared/Components/SkeletonLoadingView.swift:244
-Snippet: LinearGradient(colors: [Color.appAccent.opacity(0.3), Color.cyan.opacity(0.3)], startPoint: .top, endPoint: .bottom)
-Why: Literal gradient color arrays bypass background tokens, making theme swaps and accessibility overrides unsafe.
-Proposed tokens: backgrounds.gradientPrimary
-Replacement snippet: background(theme.backgrounds.gradientPrimary)
-Risks: Visual changes to contrast, emphasis, or layout rhythm; verify on-device and check accessibility contrast after token swap.

@@ -32,7 +32,7 @@ struct LatestDreamCard: View {
                         Spacer()
 
                         Image(systemName: "chevron.right")
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(theme.palette.textSecondary).opacity(theme.glass.glowOpacityLow)
                             .font(.system(size: theme.grid.iconSmall))
                     }
 
@@ -53,7 +53,7 @@ struct LatestDreamCard: View {
         .buttonStyle(.plain)
         .scrollTransition { content, phase in
             content
-                .opacity(phase.isIdentity ? 1 : 0.8)
+                .opacity(phase.isIdentity ? 1 : theme.glass.glowOpacityHigh)
                 .scaleEffect(phase.isIdentity ? 1 : 0.98)
                 .blur(radius: phase.isIdentity ? 0 : 2)
         }
@@ -61,15 +61,15 @@ struct LatestDreamCard: View {
 
     private var emptyDreamPlaceholder: some View {
         ZStack {
-            theme.palette.neutral.opacity(0.08)
-            VStack(spacing: 8) {
+            theme.palette.neutral.opacity(theme.glass.glowOpacityLow)
+            VStack(spacing: theme.grid.cardPaddingTight / 2) {
                 Image(systemName: "photo")
                     .font(.system(size: theme.grid.iconLarge))
                     .foregroundStyle(theme.palette.textSecondary)
 
                 Text(String(localized: "home.latestDream.empty"))
                     .dsFont(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.palette.textSecondary)
             }
         }
         .frame(height: 180)

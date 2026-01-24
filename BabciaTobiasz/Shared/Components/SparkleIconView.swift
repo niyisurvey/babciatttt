@@ -17,7 +17,7 @@ struct SparkleIconView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             Image(systemName: systemName)
-                .font(.system(size: size, weight: .semibold))
+                .font(theme.typography.custom(size: size, weight: .semibold))
                 .symbolRenderingMode(.hierarchical)
                 .foregroundStyle(color)
 
@@ -47,7 +47,8 @@ private extension View {
 }
 
 #Preview {
-    SparkleIconView(systemName: "checkmark.seal.fill", size: 56, color: DesignSystemTheme.default.palette.warning)
+    let theme = DesignSystemTheme.default
+    SparkleIconView(systemName: "checkmark.seal.fill", size: theme.grid.iconXL, color: theme.palette.warning)
         .padding()
         .dsTheme(.default)
 }

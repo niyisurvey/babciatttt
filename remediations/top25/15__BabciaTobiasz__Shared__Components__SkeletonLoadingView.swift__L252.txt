@@ -1,6 +1,0 @@
-Problem: Opacity literal at BabciaTobiasz/Shared/Components/SkeletonLoadingView.swift:252
-Snippet: LinearGradient(colors: [Color.appSuccess.opacity(0.3), Color.teal.opacity(0.3)], startPoint: .top, endPoint: .bottom)
-Why: Literal opacity values hardcode contrast/elevation and break theme-wide adjustments for overlays and glass effects.
-Proposed tokens: elevation.overlayDim
-Replacement snippet: opacity(theme.elevation.overlayDim)
-Risks: Visual changes to contrast, emphasis, or layout rhythm; verify on-device and check accessibility contrast after token swap.

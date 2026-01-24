@@ -19,25 +19,25 @@ struct OnboardingView: View {
             icon: "camera.fill",
             title: String(localized: "onboarding.page.weather.title"),
             description: String(localized: "onboarding.page.weather.description"),
-            accentColor: .appAccent
+            accentColor: DesignSystemTheme.default.palette.primary
         ),
         OnboardingPage(
             icon: "checklist",
             title: String(localized: "onboarding.page.areas.title"),
             description: String(localized: "onboarding.page.areas.description"),
-            accentColor: .appSuccess
+            accentColor: DesignSystemTheme.default.palette.success
         ),
         OnboardingPage(
             icon: "star.fill",
             title: String(localized: "onboarding.page.insights.title"),
             description: String(localized: "onboarding.page.insights.description"),
-            accentColor: .purple // DS secondary
+            accentColor: DesignSystemTheme.default.palette.secondary
         ),
         OnboardingPage(
             icon: "checkmark.seal.fill",
             title: String(localized: "onboarding.page.verdict.title"),
             description: String(localized: "onboarding.page.verdict.description"),
-            accentColor: .appWarning
+            accentColor: DesignSystemTheme.default.palette.warning
         )
     ]
     
@@ -72,13 +72,13 @@ struct OnboardingView: View {
                 #endif
                 
                 // Page indicator and button
-                VStack(spacing: 30) {
+                VStack(spacing: theme.grid.sectionSpacing + theme.grid.listSpacing) {
                     // Custom page indicator
-                    HStack(spacing: 8) {
+                    HStack(spacing: theme.grid.cardPaddingTight / 1.5) {
                         ForEach(steps.indices, id: \.self) { index in
                             Capsule()
-                                .fill(index == currentPage ? steps[currentPage].accentColor : theme.palette.textSecondary.opacity(0.3))
-                                .frame(width: index == currentPage ? 24 : 8, height: 8)
+                                .fill(index == currentPage ? steps[currentPage].accentColor : theme.palette.textSecondary.opacity(theme.glass.glowOpacityLow))
+                                .frame(width: index == currentPage ? theme.grid.buttonHorizontalPadding : theme.grid.cardPaddingTight / 1.5, height: theme.grid.cardPaddingTight / 1.5)
                                 .animation(theme.motion.pressSpring, value: currentPage)
                         }
                     }
@@ -98,12 +98,12 @@ struct OnboardingView: View {
                              : String(localized: "onboarding.getStarted"))
                             .dsFont(.headline)
                             .frame(maxWidth: .infinity)
-                            .padding(.vertical, 16)
+                            .padding(.vertical, theme.grid.cardPadding)
                     }
                     .buttonStyle(.nativeGlassProminent)
-                    .padding(.horizontal, 32)
+                    .padding(.horizontal, theme.grid.sectionSpacing * 1.6)
                 }
-                .padding(.bottom, 50)
+                .padding(.bottom, theme.grid.iconError)
             }
         }
         .onAppear {
@@ -122,15 +122,15 @@ struct OnboardingView: View {
                 height: 3,
                 points: animatedMeshPoints(for: timeline.date),
                 colors: [
-                    steps[currentPage].accentColor.opacity(0.3),
-                    theme.palette.primary.opacity(0.2),
-                    steps[currentPage].accentColor.opacity(0.2),
-                    theme.palette.secondary.opacity(0.15),
-                    steps[currentPage].accentColor.opacity(0.15),
-                    theme.palette.tertiary.opacity(0.2),
-                    theme.palette.primary.opacity(0.2),
-                    theme.palette.secondary.opacity(0.15),
-                    steps[currentPage].accentColor.opacity(0.25)
+                    steps[currentPage].accentColor.opacity(theme.elevation.shimmerOpacity),
+                    theme.palette.primary.opacity(theme.elevation.shimmerOpacity / 1.5),
+                    steps[currentPage].accentColor.opacity(theme.elevation.shimmerOpacity / 1.5),
+                    theme.palette.secondary.opacity(theme.elevation.shimmerOpacity / 2),
+                    steps[currentPage].accentColor.opacity(theme.elevation.shimmerOpacity / 2),
+                    theme.palette.tertiary.opacity(theme.elevation.shimmerOpacity / 1.5),
+                    theme.palette.primary.opacity(theme.elevation.shimmerOpacity / 1.5),
+                    theme.palette.secondary.opacity(theme.elevation.shimmerOpacity / 2),
+                    steps[currentPage].accentColor.opacity(theme.elevation.shimmerOpacity * 0.8)
                 ]
             )
         }
@@ -225,7 +225,7 @@ struct OnboardingPageView: View {
     @Environment(\.dsTheme) private var theme
     
     var body: some View {
-        VStack(spacing: 40) {
+        VStack(spacing: theme.grid.iconSplashSecondary) {
             Spacer()
             
             SparkleIconView(
@@ -236,7 +236,7 @@ struct OnboardingPageView: View {
             )
             
             // Text content
-            VStack(spacing: 16) {
+            VStack(spacing: theme.grid.cardPadding) {
                 Text(page.title)
                     .dsFont(.title, weight: .bold)
                     .multilineTextAlignment(.center)
@@ -245,7 +245,7 @@ struct OnboardingPageView: View {
                     .dsFont(.body)
                     .foregroundStyle(theme.palette.textSecondary)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, 32)
+                    .padding(.horizontal, theme.grid.buttonHorizontalPadding * 1.33)
             }
             
             Spacer()
