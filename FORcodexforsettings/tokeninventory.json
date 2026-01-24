@@ -1,0 +1,2987 @@
+[
+    {
+        "id": "palette.primary",
+        "path": "palette.primary",
+        "category": "Color",
+        "type": "Color",
+        "default": ".appAccent",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 390,
+            "end_line": 390
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because the token is a color. Resolved from Color.appAccent -> Color.blue (system color).",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid sRGB color or system color name."
+    },
+    {
+        "id": "palette.secondary",
+        "path": "palette.secondary",
+        "category": "Color",
+        "type": "Color",
+        "default": ".purple",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 391,
+            "end_line": 391
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because the token is a color.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid sRGB color or system color name."
+    },
+    {
+        "id": "palette.tertiary",
+        "path": "palette.tertiary",
+        "category": "Color",
+        "type": "Color",
+        "default": ".cyan",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 392,
+            "end_line": 392
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because the token is a color.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid sRGB color or system color name."
+    },
+    {
+        "id": "palette.success",
+        "path": "palette.success",
+        "category": "Color",
+        "type": "Color",
+        "default": ".appSuccess",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 393,
+            "end_line": 393
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because the token is a color. Resolved from Color.appSuccess -> Color.green (system color).",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid sRGB color or system color name."
+    },
+    {
+        "id": "palette.warning",
+        "path": "palette.warning",
+        "category": "Color",
+        "type": "Color",
+        "default": ".appWarning",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 394,
+            "end_line": 394
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because the token is a color. Resolved from Color.appWarning -> Color.orange (system color).",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid sRGB color or system color name."
+    },
+    {
+        "id": "palette.error",
+        "path": "palette.error",
+        "category": "Color",
+        "type": "Color",
+        "default": ".appError",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 395,
+            "end_line": 395
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because the token is a color. Resolved from Color.appError -> Color.red (system color).",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid sRGB color or system color name."
+    },
+    {
+        "id": "palette.glassTint",
+        "path": "palette.glassTint",
+        "category": "Color",
+        "type": "Color",
+        "default": ".white",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 396,
+            "end_line": 396
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because the token is a color. Approx hex: #FFFFFF.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid sRGB color or system color name."
+    },
+    {
+        "id": "palette.coolAccent",
+        "path": "palette.coolAccent",
+        "category": "Color",
+        "type": "Color",
+        "default": ".teal",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 397,
+            "end_line": 397
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because the token is a color.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid sRGB color or system color name."
+    },
+    {
+        "id": "palette.warmAccent",
+        "path": "palette.warmAccent",
+        "category": "Color",
+        "type": "Color",
+        "default": ".orange",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 398,
+            "end_line": 398
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because the token is a color.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid sRGB color or system color name."
+    },
+    {
+        "id": "palette.onPrimary",
+        "path": "palette.onPrimary",
+        "category": "Color",
+        "type": "Color",
+        "default": ".white",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 399,
+            "end_line": 399
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because the token is a color. Approx hex: #FFFFFF.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid sRGB color or system color name."
+    },
+    {
+        "id": "palette.textSecondary",
+        "path": "palette.textSecondary",
+        "category": "Color",
+        "type": "Color",
+        "default": "Color(.secondaryLabel)",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 400,
+            "end_line": 400
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because the token is a color. System color; exact RGB depends on platform appearance.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid sRGB color or system color name."
+    },
+    {
+        "id": "palette.neutral",
+        "path": "palette.neutral",
+        "category": "Color",
+        "type": "Color",
+        "default": ".black",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 401,
+            "end_line": 401
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because the token is a color. Approx hex: #000000.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid sRGB color or system color name."
+    },
+    {
+        "id": "gradients.backgroundDefault",
+        "path": "gradients.backgroundDefault",
+        "category": "Gradient",
+        "type": "[Color]",
+        "default": [
+            ".blue",
+            ".cyan",
+            ".teal",
+            ".purple",
+            ".blue",
+            ".cyan",
+            ".indigo",
+            ".purple",
+            ".blue"
+        ],
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 404,
+            "end_line": 408
+        },
+        "controls": {
+            "macControl": "jsonEditor",
+            "controlConstraints": {
+                "options": [
+                    "gradientEditor",
+                    "colorPicker"
+                ]
+            }
+        },
+        "notes": "Control: jsonEditor because this is a multi-stop gradient array; provide a gradient editor in UI if available.",
+        "confidence": "confirmed",
+        "validationHints": "Expect array length 9 (used as 3x3 mesh colors in LiquidGlassStyle)."
+    },
+    {
+        "id": "gradients.backgroundWeather",
+        "path": "gradients.backgroundWeather",
+        "category": "Gradient",
+        "type": "[Color]",
+        "default": [
+            "#66B2E6",
+            "#80CCF2",
+            "#99D9FF",
+            "#80BFE6",
+            "#8CCCEB",
+            "#99D1F2",
+            "#80B2D9",
+            "#8CBFE0",
+            "#99C7E6"
+        ],
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 409,
+            "end_line": 413
+        },
+        "controls": {
+            "macControl": "jsonEditor",
+            "controlConstraints": {
+                "options": [
+                    "gradientEditor",
+                    "colorPicker"
+                ]
+            }
+        },
+        "notes": "Control: jsonEditor because this is a multi-stop gradient array; provide a gradient editor in UI if available.",
+        "confidence": "confirmed",
+        "validationHints": "Expect array length 9 (used as 3x3 mesh colors in LiquidGlassStyle)."
+    },
+    {
+        "id": "gradients.backgroundAreas",
+        "path": "gradients.backgroundAreas",
+        "category": "Gradient",
+        "type": "[Color]",
+        "default": [
+            ".green",
+            ".teal",
+            ".cyan",
+            ".mint",
+            ".green",
+            ".teal",
+            ".teal",
+            ".mint",
+            ".green"
+        ],
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 414,
+            "end_line": 418
+        },
+        "controls": {
+            "macControl": "jsonEditor",
+            "controlConstraints": {
+                "options": [
+                    "gradientEditor",
+                    "colorPicker"
+                ]
+            }
+        },
+        "notes": "Control: jsonEditor because this is a multi-stop gradient array; provide a gradient editor in UI if available.",
+        "confidence": "confirmed",
+        "validationHints": "Expect array length 9 (used as 3x3 mesh colors in LiquidGlassStyle)."
+    },
+    {
+        "id": "gradients.splash",
+        "path": "gradients.splash",
+        "category": "Gradient",
+        "type": "[Color]",
+        "default": [
+            ".blue.opacity(0.3)",
+            ".purple.opacity(0.2)",
+            ".cyan.opacity(0.3)"
+        ],
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 419,
+            "end_line": 421
+        },
+        "controls": {
+            "macControl": "jsonEditor",
+            "controlConstraints": {
+                "options": [
+                    "gradientEditor",
+                    "colorPicker"
+                ]
+            }
+        },
+        "notes": "Control: jsonEditor because this is a multi-stop gradient array; include alpha support.",
+        "confidence": "confirmed",
+        "validationHints": "Expect array length 3; opacity values must be 0-1."
+    },
+    {
+        "id": "gradients.areasProgress",
+        "path": "gradients.areasProgress",
+        "category": "Gradient",
+        "type": "[Color]",
+        "default": [
+            ".green",
+            ".teal"
+        ],
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 422,
+            "end_line": 424
+        },
+        "controls": {
+            "macControl": "jsonEditor",
+            "controlConstraints": {
+                "options": [
+                    "gradientEditor",
+                    "colorPicker"
+                ]
+            }
+        },
+        "notes": "Control: jsonEditor because this is a gradient array with two stops.",
+        "confidence": "confirmed",
+        "validationHints": "Expect array length 2."
+    },
+    {
+        "id": "gradients.sunrise",
+        "path": "gradients.sunrise",
+        "category": "Gradient",
+        "type": "[Color]",
+        "default": "Color.sunriseGradient",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 425,
+            "end_line": 425
+        },
+        "controls": {
+            "macControl": "jsonEditor",
+            "controlConstraints": {
+                "options": [
+                    "gradientEditor",
+                    "colorPicker"
+                ]
+            }
+        },
+        "notes": "Control: jsonEditor because this references a Color extension gradient array.",
+        "confidence": "confirmed",
+        "validationHints": "Expect array length 3 as defined in Color+Extensions."
+    },
+    {
+        "id": "gradients.day",
+        "path": "gradients.day",
+        "category": "Gradient",
+        "type": "[Color]",
+        "default": "Color.dayGradient",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 426,
+            "end_line": 426
+        },
+        "controls": {
+            "macControl": "jsonEditor",
+            "controlConstraints": {
+                "options": [
+                    "gradientEditor",
+                    "colorPicker"
+                ]
+            }
+        },
+        "notes": "Control: jsonEditor because this references a Color extension gradient array.",
+        "confidence": "confirmed",
+        "validationHints": "Expect array length 3 as defined in Color+Extensions."
+    },
+    {
+        "id": "gradients.sunset",
+        "path": "gradients.sunset",
+        "category": "Gradient",
+        "type": "[Color]",
+        "default": "Color.sunsetGradient",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 427,
+            "end_line": 427
+        },
+        "controls": {
+            "macControl": "jsonEditor",
+            "controlConstraints": {
+                "options": [
+                    "gradientEditor",
+                    "colorPicker"
+                ]
+            }
+        },
+        "notes": "Control: jsonEditor because this references a Color extension gradient array.",
+        "confidence": "confirmed",
+        "validationHints": "Expect array length 3 as defined in Color+Extensions."
+    },
+    {
+        "id": "gradients.night",
+        "path": "gradients.night",
+        "category": "Gradient",
+        "type": "[Color]",
+        "default": "Color.nightGradient",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 428,
+            "end_line": 428
+        },
+        "controls": {
+            "macControl": "jsonEditor",
+            "controlConstraints": {
+                "options": [
+                    "gradientEditor",
+                    "colorPicker"
+                ]
+            }
+        },
+        "notes": "Control: jsonEditor because this references a Color extension gradient array.",
+        "confidence": "confirmed",
+        "validationHints": "Expect array length 3 as defined in Color+Extensions."
+    },
+    {
+        "id": "typography.family.regular",
+        "path": "typography.family.regular",
+        "category": "Typography",
+        "type": "String",
+        "default": "LinLibertine",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 432,
+            "end_line": 432
+        },
+        "controls": {
+            "macControl": "text",
+            "controlConstraints": {}
+        },
+        "notes": "Control: text because this is a font family name string.",
+        "confidence": "confirmed",
+        "validationHints": "Expect installed font family name."
+    },
+    {
+        "id": "typography.family.bold",
+        "path": "typography.family.bold",
+        "category": "Typography",
+        "type": "String",
+        "default": "LinLibertineB",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 433,
+            "end_line": 433
+        },
+        "controls": {
+            "macControl": "text",
+            "controlConstraints": {}
+        },
+        "notes": "Control: text because this is a font family name string.",
+        "confidence": "confirmed",
+        "validationHints": "Expect installed font family name."
+    },
+    {
+        "id": "typography.family.italic",
+        "path": "typography.family.italic",
+        "category": "Typography",
+        "type": "String",
+        "default": "LinLibertineI",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 434,
+            "end_line": 434
+        },
+        "controls": {
+            "macControl": "text",
+            "controlConstraints": {}
+        },
+        "notes": "Control: text because this is a font family name string.",
+        "confidence": "confirmed",
+        "validationHints": "Expect installed font family name."
+    },
+    {
+        "id": "typography.family.boldItalic",
+        "path": "typography.family.boldItalic",
+        "category": "Typography",
+        "type": "String",
+        "default": "LinLibertineBI",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 435,
+            "end_line": 435
+        },
+        "controls": {
+            "macControl": "text",
+            "controlConstraints": {}
+        },
+        "notes": "Control: text because this is a font family name string.",
+        "confidence": "confirmed",
+        "validationHints": "Expect installed font family name."
+    },
+    {
+        "id": "typography.textStyles.largeTitle.size",
+        "path": "typography.textStyles.largeTitle.size",
+        "category": "Typography",
+        "type": "CGFloat",
+        "default": 34,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 348,
+            "end_line": 348
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 8,
+                "max": 64,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric font size.",
+        "confidence": "inferred",
+        "validationHints": "Ensure readable font size between 8 and 64."
+    },
+    {
+        "id": "typography.textStyles.title.size",
+        "path": "typography.textStyles.title.size",
+        "category": "Typography",
+        "type": "CGFloat",
+        "default": 28,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 349,
+            "end_line": 349
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 8,
+                "max": 64,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric font size.",
+        "confidence": "inferred",
+        "validationHints": "Ensure readable font size between 8 and 64."
+    },
+    {
+        "id": "typography.textStyles.title2.size",
+        "path": "typography.textStyles.title2.size",
+        "category": "Typography",
+        "type": "CGFloat",
+        "default": 22,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 350,
+            "end_line": 350
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 8,
+                "max": 64,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric font size.",
+        "confidence": "inferred",
+        "validationHints": "Ensure readable font size between 8 and 64."
+    },
+    {
+        "id": "typography.textStyles.title3.size",
+        "path": "typography.textStyles.title3.size",
+        "category": "Typography",
+        "type": "CGFloat",
+        "default": 20,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 351,
+            "end_line": 351
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 8,
+                "max": 64,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric font size.",
+        "confidence": "inferred",
+        "validationHints": "Ensure readable font size between 8 and 64."
+    },
+    {
+        "id": "typography.textStyles.headline.size",
+        "path": "typography.textStyles.headline.size",
+        "category": "Typography",
+        "type": "CGFloat",
+        "default": 17,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 352,
+            "end_line": 352
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 8,
+                "max": 64,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric font size.",
+        "confidence": "inferred",
+        "validationHints": "Ensure readable font size between 8 and 64."
+    },
+    {
+        "id": "typography.textStyles.subheadline.size",
+        "path": "typography.textStyles.subheadline.size",
+        "category": "Typography",
+        "type": "CGFloat",
+        "default": 15,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 353,
+            "end_line": 353
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 8,
+                "max": 64,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric font size.",
+        "confidence": "inferred",
+        "validationHints": "Ensure readable font size between 8 and 64."
+    },
+    {
+        "id": "typography.textStyles.body.size",
+        "path": "typography.textStyles.body.size",
+        "category": "Typography",
+        "type": "CGFloat",
+        "default": 17,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 354,
+            "end_line": 354
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 8,
+                "max": 64,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric font size.",
+        "confidence": "inferred",
+        "validationHints": "Ensure readable font size between 8 and 64."
+    },
+    {
+        "id": "typography.textStyles.caption.size",
+        "path": "typography.textStyles.caption.size",
+        "category": "Typography",
+        "type": "CGFloat",
+        "default": 12,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 355,
+            "end_line": 355
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 8,
+                "max": 64,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric font size.",
+        "confidence": "inferred",
+        "validationHints": "Ensure readable font size between 8 and 64."
+    },
+    {
+        "id": "typography.textStyles.caption2.size",
+        "path": "typography.textStyles.caption2.size",
+        "category": "Typography",
+        "type": "CGFloat",
+        "default": 11,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 356,
+            "end_line": 356
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 8,
+                "max": 64,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric font size.",
+        "confidence": "inferred",
+        "validationHints": "Ensure readable font size between 8 and 64."
+    },
+    {
+        "id": "motion.preset",
+        "path": "motion.preset",
+        "category": "Animation",
+        "type": "DSMotionPreset",
+        "default": ".normal",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 438,
+            "end_line": 438
+        },
+        "controls": {
+            "macControl": "dropdown",
+            "controlConstraints": {
+                "options": [
+                    "slow",
+                    "normal",
+                    "fast"
+                ]
+            }
+        },
+        "notes": "Control: dropdown because motion preset is an enum.",
+        "confidence": "confirmed",
+        "validationHints": "Expect one of slow|normal|fast."
+    },
+    {
+        "id": "motion.shimmerDuration",
+        "path": "motion.shimmerDuration",
+        "category": "Animation",
+        "type": "Double",
+        "default": 1.2,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 305,
+            "end_line": 305
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 10,
+                "step": 0.1
+            }
+        },
+        "notes": "Control: slider because this is a duration in seconds derived from preset.",
+        "confidence": "inferred",
+        "validationHints": "Duration should be non-negative."
+    },
+    {
+        "id": "motion.shimmerLongDuration",
+        "path": "motion.shimmerLongDuration",
+        "category": "Animation",
+        "type": "Double",
+        "default": 1.5,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 306,
+            "end_line": 306
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 10,
+                "step": 0.1
+            }
+        },
+        "notes": "Control: slider because this is a duration in seconds derived from preset.",
+        "confidence": "inferred",
+        "validationHints": "Duration should be non-negative."
+    },
+    {
+        "id": "motion.spinnerDuration",
+        "path": "motion.spinnerDuration",
+        "category": "Animation",
+        "type": "Double",
+        "default": 1.0,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 307,
+            "end_line": 307
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 10,
+                "step": 0.1
+            }
+        },
+        "notes": "Control: slider because this is a duration in seconds derived from preset.",
+        "confidence": "inferred",
+        "validationHints": "Duration should be non-negative."
+    },
+    {
+        "id": "motion.meshAnimationInterval",
+        "path": "motion.meshAnimationInterval",
+        "category": "Animation",
+        "type": "Double",
+        "default": 3.0,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 308,
+            "end_line": 308
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 10,
+                "step": 0.1
+            }
+        },
+        "notes": "Control: slider because this is a duration in seconds derived from preset.",
+        "confidence": "inferred",
+        "validationHints": "Duration should be non-negative."
+    },
+    {
+        "id": "motion.pressSpring",
+        "path": "motion.pressSpring",
+        "category": "Animation",
+        "type": "Animation",
+        "default": ".spring(response: 0.3)",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 277,
+            "end_line": 278
+        },
+        "controls": {
+            "macControl": "text",
+            "controlConstraints": {}
+        },
+        "notes": "Control: text because animation curves are code-defined presets.",
+        "confidence": "inferred",
+        "validationHints": "Expect valid Swift animation preset descriptor."
+    },
+    {
+        "id": "motion.toggleSpring",
+        "path": "motion.toggleSpring",
+        "category": "Animation",
+        "type": "Animation",
+        "default": ".spring(response: 0.3, dampingFraction: 0.6)",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 281,
+            "end_line": 282
+        },
+        "controls": {
+            "macControl": "text",
+            "controlConstraints": {}
+        },
+        "notes": "Control: text because animation curves are code-defined presets.",
+        "confidence": "inferred",
+        "validationHints": "Expect valid Swift animation preset descriptor."
+    },
+    {
+        "id": "motion.listSpring",
+        "path": "motion.listSpring",
+        "category": "Animation",
+        "type": "Animation",
+        "default": ".spring(response: 0.4)",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 285,
+            "end_line": 286
+        },
+        "controls": {
+            "macControl": "text",
+            "controlConstraints": {}
+        },
+        "notes": "Control: text because animation curves are code-defined presets.",
+        "confidence": "inferred",
+        "validationHints": "Expect valid Swift animation preset descriptor."
+    },
+    {
+        "id": "motion.statsSpring",
+        "path": "motion.statsSpring",
+        "category": "Animation",
+        "type": "Animation",
+        "default": ".spring(duration: 0.5)",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 289,
+            "end_line": 290
+        },
+        "controls": {
+            "macControl": "text",
+            "controlConstraints": {}
+        },
+        "notes": "Control: text because animation curves are code-defined presets.",
+        "confidence": "inferred",
+        "validationHints": "Expect valid Swift animation preset descriptor."
+    },
+    {
+        "id": "motion.launchSpring",
+        "path": "motion.launchSpring",
+        "category": "Animation",
+        "type": "Animation",
+        "default": ".spring(response: 0.6, dampingFraction: 0.7)",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 293,
+            "end_line": 294
+        },
+        "controls": {
+            "macControl": "text",
+            "controlConstraints": {}
+        },
+        "notes": "Control: text because animation curves are code-defined presets.",
+        "confidence": "inferred",
+        "validationHints": "Expect valid Swift animation preset descriptor."
+    },
+    {
+        "id": "motion.fadeStandard",
+        "path": "motion.fadeStandard",
+        "category": "Animation",
+        "type": "Animation",
+        "default": ".easeInOut(duration: 0.5)",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 297,
+            "end_line": 298
+        },
+        "controls": {
+            "macControl": "text",
+            "controlConstraints": {}
+        },
+        "notes": "Control: text because animation curves are code-defined presets.",
+        "confidence": "inferred",
+        "validationHints": "Expect valid Swift animation preset descriptor."
+    },
+    {
+        "id": "motion.fadeFast",
+        "path": "motion.fadeFast",
+        "category": "Animation",
+        "type": "Animation",
+        "default": ".easeOut(duration: 0.3)",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 301,
+            "end_line": 302
+        },
+        "controls": {
+            "macControl": "text",
+            "controlConstraints": {}
+        },
+        "notes": "Control: text because animation curves are code-defined presets.",
+        "confidence": "inferred",
+        "validationHints": "Expect valid Swift animation preset descriptor."
+    },
+    {
+        "id": "shape.cardCornerRadius",
+        "path": "shape.cardCornerRadius",
+        "category": "Radius",
+        "type": "CGFloat",
+        "default": 20,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 440,
+            "end_line": 440
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 100,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric dimension.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative radius/width and opacity 0-1."
+    },
+    {
+        "id": "shape.glassCornerRadius",
+        "path": "shape.glassCornerRadius",
+        "category": "Radius",
+        "type": "CGFloat",
+        "default": 24,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 441,
+            "end_line": 441
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 100,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric dimension.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative radius/width and opacity 0-1."
+    },
+    {
+        "id": "shape.subtleCornerRadius",
+        "path": "shape.subtleCornerRadius",
+        "category": "Radius",
+        "type": "CGFloat",
+        "default": 12,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 442,
+            "end_line": 442
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 100,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric dimension.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative radius/width and opacity 0-1."
+    },
+    {
+        "id": "shape.tooltipCornerRadius",
+        "path": "shape.tooltipCornerRadius",
+        "category": "Radius",
+        "type": "CGFloat",
+        "default": 16,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 443,
+            "end_line": 443
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 100,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric dimension.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative radius/width and opacity 0-1."
+    },
+    {
+        "id": "shape.heroCornerRadius",
+        "path": "shape.heroCornerRadius",
+        "category": "Radius",
+        "type": "CGFloat",
+        "default": 70,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 444,
+            "end_line": 444
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 100,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric dimension.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative radius/width and opacity 0-1."
+    },
+    {
+        "id": "shape.controlCornerRadius",
+        "path": "shape.controlCornerRadius",
+        "category": "Radius",
+        "type": "CGFloat",
+        "default": 16,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 445,
+            "end_line": 445
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 100,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric dimension.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative radius/width and opacity 0-1."
+    },
+    {
+        "id": "shape.borderWidth",
+        "path": "shape.borderWidth",
+        "category": "Shape",
+        "type": "CGFloat",
+        "default": 0,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 446,
+            "end_line": 446
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 100,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric dimension.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative radius/width and opacity 0-1."
+    },
+    {
+        "id": "shape.borderOpacity",
+        "path": "shape.borderOpacity",
+        "category": "Shape",
+        "type": "Double",
+        "default": 0.0,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 447,
+            "end_line": 447
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 1,
+                "step": 0.01
+            }
+        },
+        "notes": "Control: slider because this is an opacity scalar.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative radius/width and opacity 0-1."
+    },
+    {
+        "id": "grid.cardPadding",
+        "path": "grid.cardPadding",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 16,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 450,
+            "end_line": 450
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.cardPaddingTight",
+        "path": "grid.cardPaddingTight",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 12,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 451,
+            "end_line": 451
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.sectionSpacing",
+        "path": "grid.sectionSpacing",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 20,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 452,
+            "end_line": 452
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.listSpacing",
+        "path": "grid.listSpacing",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 12,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 453,
+            "end_line": 453
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.buttonMinHeight",
+        "path": "grid.buttonMinHeight",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 48,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 454,
+            "end_line": 454
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.buttonHorizontalPadding",
+        "path": "grid.buttonHorizontalPadding",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 24,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 455,
+            "end_line": 455
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.buttonVerticalPadding",
+        "path": "grid.buttonVerticalPadding",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 12,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 456,
+            "end_line": 456
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.iconTiny",
+        "path": "grid.iconTiny",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 12,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 457,
+            "end_line": 457
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.iconSmall",
+        "path": "grid.iconSmall",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 20,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 458,
+            "end_line": 458
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.iconTitle2",
+        "path": "grid.iconTitle2",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 22,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 459,
+            "end_line": 459
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.iconTitle3",
+        "path": "grid.iconTitle3",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 20,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 460,
+            "end_line": 460
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.iconMedium",
+        "path": "grid.iconMedium",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 32,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 461,
+            "end_line": 461
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.iconLarge",
+        "path": "grid.iconLarge",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 44,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 462,
+            "end_line": 462
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.iconSplashSecondary",
+        "path": "grid.iconSplashSecondary",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 40,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 463,
+            "end_line": 463
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.iconError",
+        "path": "grid.iconError",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 50,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 464,
+            "end_line": 464
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.iconXL",
+        "path": "grid.iconXL",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 60,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 465,
+            "end_line": 465
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.iconXXL",
+        "path": "grid.iconXXL",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 80,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 466,
+            "end_line": 466
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.iconXXXL",
+        "path": "grid.iconXXXL",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 110,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 467,
+            "end_line": 467
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.ringSize",
+        "path": "grid.ringSize",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 100,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 468,
+            "end_line": 468
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.detailCardHeightSmall",
+        "path": "grid.detailCardHeightSmall",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 120,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 469,
+            "end_line": 469
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.detailCardHeightLarge",
+        "path": "grid.detailCardHeightLarge",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 150,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 470,
+            "end_line": 470
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.heroHeaderCollapsedHeight",
+        "path": "grid.heroHeaderCollapsedHeight",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 120,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 471,
+            "end_line": 471
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.heroCardWidth",
+        "path": "grid.heroCardWidth",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 260,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 472,
+            "end_line": 472
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.heroCardHeight",
+        "path": "grid.heroCardHeight",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 260,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 473,
+            "end_line": 473
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.pierogiSize",
+        "path": "grid.pierogiSize",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 60,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 474,
+            "end_line": 474
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.pierogiEmojiScale",
+        "path": "grid.pierogiEmojiScale",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 2.2,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 475,
+            "end_line": 475
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 5,
+                "step": 0.1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.pierogiPotSize",
+        "path": "grid.pierogiPotSize",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 140,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 476,
+            "end_line": 476
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "grid.pierogiPotGrowStep",
+        "path": "grid.pierogiPotGrowStep",
+        "category": "Grid",
+        "type": "CGFloat",
+        "default": 6,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 477,
+            "end_line": 477
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 300,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because this is a numeric layout/size token.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative sizes; large values affect layout."
+    },
+    {
+        "id": "glass.strength",
+        "path": "glass.strength",
+        "category": "Glass",
+        "type": "DSGlassStrength",
+        "default": ".regular",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 480,
+            "end_line": 480
+        },
+        "controls": {
+            "macControl": "dropdown",
+            "controlConstraints": {
+                "options": [
+                    "ultraThin",
+                    "thin",
+                    "regular",
+                    "thick"
+                ]
+            }
+        },
+        "notes": "Control: dropdown because glass strength is an enum.",
+        "confidence": "confirmed",
+        "validationHints": "Expect one of ultraThin|thin|regular|thick."
+    },
+    {
+        "id": "glass.prominentStrength",
+        "path": "glass.prominentStrength",
+        "category": "Glass",
+        "type": "DSGlassStrength",
+        "default": ".thin",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 481,
+            "end_line": 481
+        },
+        "controls": {
+            "macControl": "dropdown",
+            "controlConstraints": {
+                "options": [
+                    "ultraThin",
+                    "thin",
+                    "regular",
+                    "thick"
+                ]
+            }
+        },
+        "notes": "Control: dropdown because glass strength is an enum.",
+        "confidence": "confirmed",
+        "validationHints": "Expect one of ultraThin|thin|regular|thick."
+    },
+    {
+        "id": "glass.effectStyle",
+        "path": "glass.effectStyle",
+        "category": "Glass",
+        "type": "DSGlassEffectStyle",
+        "default": ".clear",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 482,
+            "end_line": 482
+        },
+        "controls": {
+            "macControl": "dropdown",
+            "controlConstraints": {
+                "options": [
+                    "clear",
+                    "regular"
+                ]
+            }
+        },
+        "notes": "Control: dropdown because glass effect style is an enum.",
+        "confidence": "confirmed",
+        "validationHints": "Expect one of clear|regular."
+    },
+    {
+        "id": "glass.tintOpacity",
+        "path": "glass.tintOpacity",
+        "category": "Glass",
+        "type": "Double",
+        "default": 0.02,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 483,
+            "end_line": 483
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 1,
+                "step": 0.01
+            }
+        },
+        "notes": "Control: slider because this is an opacity scalar.",
+        "confidence": "confirmed",
+        "validationHints": "Opacity should be 0-1."
+    },
+    {
+        "id": "glass.glowOpacityHigh",
+        "path": "glass.glowOpacityHigh",
+        "category": "Glass",
+        "type": "Double",
+        "default": 0.7,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 484,
+            "end_line": 484
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 1,
+                "step": 0.01
+            }
+        },
+        "notes": "Control: slider because this is an opacity scalar.",
+        "confidence": "confirmed",
+        "validationHints": "Opacity should be 0-1."
+    },
+    {
+        "id": "glass.glowOpacityLow",
+        "path": "glass.glowOpacityLow",
+        "category": "Glass",
+        "type": "Double",
+        "default": 0.2,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 485,
+            "end_line": 485
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 1,
+                "step": 0.01
+            }
+        },
+        "notes": "Control: slider because this is an opacity scalar.",
+        "confidence": "confirmed",
+        "validationHints": "Opacity should be 0-1."
+    },
+    {
+        "id": "glass.contextSettings.mainView.meshOpacity",
+        "path": "glass.contextSettings.mainView.meshOpacity",
+        "category": "Glass",
+        "type": "Double",
+        "default": 0.08,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 135,
+            "end_line": 135
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 1,
+                "step": 0.01
+            }
+        },
+        "notes": "Control: slider because this is a mesh opacity scalar.",
+        "confidence": "confirmed",
+        "validationHints": "Opacity should be 0-1."
+    },
+    {
+        "id": "glass.contextSettings.mainView.usesNativeGlass",
+        "path": "glass.contextSettings.mainView.usesNativeGlass",
+        "category": "Glass",
+        "type": "Bool",
+        "default": false,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 136,
+            "end_line": 136
+        },
+        "controls": {
+            "macControl": "dropdown",
+            "controlConstraints": {
+                "options": [
+                    true,
+                    false
+                ]
+            }
+        },
+        "notes": "Control: dropdown because this is a boolean toggle.",
+        "confidence": "confirmed",
+        "validationHints": "Expect boolean true/false."
+    },
+    {
+        "id": "glass.contextSettings.mainView.effectStyle",
+        "path": "glass.contextSettings.mainView.effectStyle",
+        "category": "Glass",
+        "type": "DSGlassEffectStyle",
+        "default": ".clear",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 137,
+            "end_line": 137
+        },
+        "controls": {
+            "macControl": "dropdown",
+            "controlConstraints": {
+                "options": [
+                    "clear",
+                    "regular"
+                ]
+            }
+        },
+        "notes": "Control: dropdown because glass effect style is an enum.",
+        "confidence": "confirmed",
+        "validationHints": "Expect one of clear|regular."
+    },
+    {
+        "id": "glass.contextSettings.sheet.meshOpacity",
+        "path": "glass.contextSettings.sheet.meshOpacity",
+        "category": "Glass",
+        "type": "Double",
+        "default": 0.06,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 141,
+            "end_line": 141
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 1,
+                "step": 0.01
+            }
+        },
+        "notes": "Control: slider because this is a mesh opacity scalar.",
+        "confidence": "confirmed",
+        "validationHints": "Opacity should be 0-1."
+    },
+    {
+        "id": "glass.contextSettings.sheet.usesNativeGlass",
+        "path": "glass.contextSettings.sheet.usesNativeGlass",
+        "category": "Glass",
+        "type": "Bool",
+        "default": true,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 142,
+            "end_line": 142
+        },
+        "controls": {
+            "macControl": "dropdown",
+            "controlConstraints": {
+                "options": [
+                    true,
+                    false
+                ]
+            }
+        },
+        "notes": "Control: dropdown because this is a boolean toggle.",
+        "confidence": "confirmed",
+        "validationHints": "Expect boolean true/false."
+    },
+    {
+        "id": "glass.contextSettings.sheet.effectStyle",
+        "path": "glass.contextSettings.sheet.effectStyle",
+        "category": "Glass",
+        "type": "DSGlassEffectStyle",
+        "default": ".clear",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 143,
+            "end_line": 143
+        },
+        "controls": {
+            "macControl": "dropdown",
+            "controlConstraints": {
+                "options": [
+                    "clear",
+                    "regular"
+                ]
+            }
+        },
+        "notes": "Control: dropdown because glass effect style is an enum.",
+        "confidence": "confirmed",
+        "validationHints": "Expect one of clear|regular."
+    },
+    {
+        "id": "glass.contextSettings.detailView.meshOpacity",
+        "path": "glass.contextSettings.detailView.meshOpacity",
+        "category": "Glass",
+        "type": "Double",
+        "default": 0.05,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 147,
+            "end_line": 147
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 1,
+                "step": 0.01
+            }
+        },
+        "notes": "Control: slider because this is a mesh opacity scalar.",
+        "confidence": "confirmed",
+        "validationHints": "Opacity should be 0-1."
+    },
+    {
+        "id": "glass.contextSettings.detailView.usesNativeGlass",
+        "path": "glass.contextSettings.detailView.usesNativeGlass",
+        "category": "Glass",
+        "type": "Bool",
+        "default": false,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 148,
+            "end_line": 148
+        },
+        "controls": {
+            "macControl": "dropdown",
+            "controlConstraints": {
+                "options": [
+                    true,
+                    false
+                ]
+            }
+        },
+        "notes": "Control: dropdown because this is a boolean toggle.",
+        "confidence": "confirmed",
+        "validationHints": "Expect boolean true/false."
+    },
+    {
+        "id": "glass.contextSettings.detailView.effectStyle",
+        "path": "glass.contextSettings.detailView.effectStyle",
+        "category": "Glass",
+        "type": "DSGlassEffectStyle",
+        "default": ".clear",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 149,
+            "end_line": 149
+        },
+        "controls": {
+            "macControl": "dropdown",
+            "controlConstraints": {
+                "options": [
+                    "clear",
+                    "regular"
+                ]
+            }
+        },
+        "notes": "Control: dropdown because glass effect style is an enum.",
+        "confidence": "confirmed",
+        "validationHints": "Expect one of clear|regular."
+    },
+    {
+        "id": "glass.contextSettings.card.meshOpacity",
+        "path": "glass.contextSettings.card.meshOpacity",
+        "category": "Glass",
+        "type": "Double",
+        "default": 0.0,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 153,
+            "end_line": 153
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 1,
+                "step": 0.01
+            }
+        },
+        "notes": "Control: slider because this is a mesh opacity scalar.",
+        "confidence": "confirmed",
+        "validationHints": "Opacity should be 0-1."
+    },
+    {
+        "id": "glass.contextSettings.card.usesNativeGlass",
+        "path": "glass.contextSettings.card.usesNativeGlass",
+        "category": "Glass",
+        "type": "Bool",
+        "default": false,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 154,
+            "end_line": 154
+        },
+        "controls": {
+            "macControl": "dropdown",
+            "controlConstraints": {
+                "options": [
+                    true,
+                    false
+                ]
+            }
+        },
+        "notes": "Control: dropdown because this is a boolean toggle.",
+        "confidence": "confirmed",
+        "validationHints": "Expect boolean true/false."
+    },
+    {
+        "id": "glass.contextSettings.card.effectStyle",
+        "path": "glass.contextSettings.card.effectStyle",
+        "category": "Glass",
+        "type": "DSGlassEffectStyle",
+        "default": ".clear",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 155,
+            "end_line": 155
+        },
+        "controls": {
+            "macControl": "dropdown",
+            "controlConstraints": {
+                "options": [
+                    "clear",
+                    "regular"
+                ]
+            }
+        },
+        "notes": "Control: dropdown because glass effect style is an enum.",
+        "confidence": "confirmed",
+        "validationHints": "Expect one of clear|regular."
+    },
+    {
+        "id": "glass.contextSettings.overlay.meshOpacity",
+        "path": "glass.contextSettings.overlay.meshOpacity",
+        "category": "Glass",
+        "type": "Double",
+        "default": 0.0,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 159,
+            "end_line": 159
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 1,
+                "step": 0.01
+            }
+        },
+        "notes": "Control: slider because this is a mesh opacity scalar.",
+        "confidence": "confirmed",
+        "validationHints": "Opacity should be 0-1."
+    },
+    {
+        "id": "glass.contextSettings.overlay.usesNativeGlass",
+        "path": "glass.contextSettings.overlay.usesNativeGlass",
+        "category": "Glass",
+        "type": "Bool",
+        "default": true,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 160,
+            "end_line": 160
+        },
+        "controls": {
+            "macControl": "dropdown",
+            "controlConstraints": {
+                "options": [
+                    true,
+                    false
+                ]
+            }
+        },
+        "notes": "Control: dropdown because this is a boolean toggle.",
+        "confidence": "confirmed",
+        "validationHints": "Expect boolean true/false."
+    },
+    {
+        "id": "glass.contextSettings.overlay.effectStyle",
+        "path": "glass.contextSettings.overlay.effectStyle",
+        "category": "Glass",
+        "type": "DSGlassEffectStyle",
+        "default": ".clear",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 161,
+            "end_line": 161
+        },
+        "controls": {
+            "macControl": "dropdown",
+            "controlConstraints": {
+                "options": [
+                    "clear",
+                    "regular"
+                ]
+            }
+        },
+        "notes": "Control: dropdown because glass effect style is an enum.",
+        "confidence": "confirmed",
+        "validationHints": "Expect one of clear|regular."
+    },
+    {
+        "id": "elevation.level1.color",
+        "path": "elevation.level1.color",
+        "category": "Shadow",
+        "type": "Color",
+        "default": ".black",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 495,
+            "end_line": 495
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because shadow color is a color token. Approx hex #000000.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid color."
+    },
+    {
+        "id": "elevation.level1.opacity",
+        "path": "elevation.level1.opacity",
+        "category": "Shadow",
+        "type": "Double",
+        "default": 0.08,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 495,
+            "end_line": 495
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 1,
+                "step": 0.01
+            }
+        },
+        "notes": "Control: slider because shadow opacity is a scalar.",
+        "confidence": "confirmed",
+        "validationHints": "Opacity should be 0-1."
+    },
+    {
+        "id": "elevation.level1.radius",
+        "path": "elevation.level1.radius",
+        "category": "Shadow",
+        "type": "CGFloat",
+        "default": 4,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 495,
+            "end_line": 495
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 50,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because shadow radius is numeric.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative radius."
+    },
+    {
+        "id": "elevation.level1.x",
+        "path": "elevation.level1.x",
+        "category": "Shadow",
+        "type": "CGFloat",
+        "default": 0,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 495,
+            "end_line": 495
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": -50,
+                "max": 50,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because shadow offset is numeric.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure offsets are within reasonable range."
+    },
+    {
+        "id": "elevation.level1.y",
+        "path": "elevation.level1.y",
+        "category": "Shadow",
+        "type": "CGFloat",
+        "default": 2,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 495,
+            "end_line": 495
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": -50,
+                "max": 50,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because shadow offset is numeric.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure offsets are within reasonable range."
+    },
+    {
+        "id": "elevation.level2.color",
+        "path": "elevation.level2.color",
+        "category": "Shadow",
+        "type": "Color",
+        "default": ".black",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 496,
+            "end_line": 496
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because shadow color is a color token. Approx hex #000000.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid color."
+    },
+    {
+        "id": "elevation.level2.opacity",
+        "path": "elevation.level2.opacity",
+        "category": "Shadow",
+        "type": "Double",
+        "default": 0.12,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 496,
+            "end_line": 496
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 1,
+                "step": 0.01
+            }
+        },
+        "notes": "Control: slider because shadow opacity is a scalar.",
+        "confidence": "confirmed",
+        "validationHints": "Opacity should be 0-1."
+    },
+    {
+        "id": "elevation.level2.radius",
+        "path": "elevation.level2.radius",
+        "category": "Shadow",
+        "type": "CGFloat",
+        "default": 10,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 496,
+            "end_line": 496
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 50,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because shadow radius is numeric.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative radius."
+    },
+    {
+        "id": "elevation.level2.x",
+        "path": "elevation.level2.x",
+        "category": "Shadow",
+        "type": "CGFloat",
+        "default": 0,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 496,
+            "end_line": 496
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": -50,
+                "max": 50,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because shadow offset is numeric.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure offsets are within reasonable range."
+    },
+    {
+        "id": "elevation.level2.y",
+        "path": "elevation.level2.y",
+        "category": "Shadow",
+        "type": "CGFloat",
+        "default": 4,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 496,
+            "end_line": 496
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": -50,
+                "max": 50,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because shadow offset is numeric.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure offsets are within reasonable range."
+    },
+    {
+        "id": "elevation.level3.color",
+        "path": "elevation.level3.color",
+        "category": "Shadow",
+        "type": "Color",
+        "default": ".black",
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 497,
+            "end_line": 497
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because shadow color is a color token. Approx hex #000000.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid color."
+    },
+    {
+        "id": "elevation.level3.opacity",
+        "path": "elevation.level3.opacity",
+        "category": "Shadow",
+        "type": "Double",
+        "default": 0.15,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 497,
+            "end_line": 497
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 1,
+                "step": 0.01
+            }
+        },
+        "notes": "Control: slider because shadow opacity is a scalar.",
+        "confidence": "confirmed",
+        "validationHints": "Opacity should be 0-1."
+    },
+    {
+        "id": "elevation.level3.radius",
+        "path": "elevation.level3.radius",
+        "category": "Shadow",
+        "type": "CGFloat",
+        "default": 20,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 497,
+            "end_line": 497
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 50,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because shadow radius is numeric.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure non-negative radius."
+    },
+    {
+        "id": "elevation.level3.x",
+        "path": "elevation.level3.x",
+        "category": "Shadow",
+        "type": "CGFloat",
+        "default": 0,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 497,
+            "end_line": 497
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": -50,
+                "max": 50,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because shadow offset is numeric.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure offsets are within reasonable range."
+    },
+    {
+        "id": "elevation.level3.y",
+        "path": "elevation.level3.y",
+        "category": "Shadow",
+        "type": "CGFloat",
+        "default": 10,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 497,
+            "end_line": 497
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": -50,
+                "max": 50,
+                "step": 1
+            }
+        },
+        "notes": "Control: slider because shadow offset is numeric.",
+        "confidence": "confirmed",
+        "validationHints": "Ensure offsets are within reasonable range."
+    },
+    {
+        "id": "elevation.overlayDim",
+        "path": "elevation.overlayDim",
+        "category": "Elevation",
+        "type": "Double",
+        "default": 0.4,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 498,
+            "end_line": 498
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 1,
+                "step": 0.01
+            }
+        },
+        "notes": "Control: slider because this is an opacity scalar.",
+        "confidence": "confirmed",
+        "validationHints": "Opacity should be 0-1."
+    },
+    {
+        "id": "elevation.shimmerOpacity",
+        "path": "elevation.shimmerOpacity",
+        "category": "Elevation",
+        "type": "Double",
+        "default": 0.3,
+        "source": {
+            "file": "BabciaTobiasz/DesignSystem/DesignSystemTheme.swift",
+            "start_line": 499,
+            "end_line": 499
+        },
+        "controls": {
+            "macControl": "slider",
+            "controlConstraints": {
+                "min": 0,
+                "max": 1,
+                "step": 0.01
+            }
+        },
+        "notes": "Control: slider because this is an opacity scalar.",
+        "confidence": "confirmed",
+        "validationHints": "Opacity should be 0-1."
+    },
+    {
+        "id": "color.appAccent",
+        "path": "extensions.color.appAccent",
+        "category": "Color",
+        "type": "Color",
+        "default": "Color.blue",
+        "source": {
+            "file": "BabciaTobiasz/Shared/Extensions/Color+Extensions.swift",
+            "start_line": 20,
+            "end_line": 20
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because this is a color extension token.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid color."
+    },
+    {
+        "id": "color.appSuccess",
+        "path": "extensions.color.appSuccess",
+        "category": "Color",
+        "type": "Color",
+        "default": "Color.green",
+        "source": {
+            "file": "BabciaTobiasz/Shared/Extensions/Color+Extensions.swift",
+            "start_line": 23,
+            "end_line": 23
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because this is a color extension token.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid color."
+    },
+    {
+        "id": "color.appWarning",
+        "path": "extensions.color.appWarning",
+        "category": "Color",
+        "type": "Color",
+        "default": "Color.orange",
+        "source": {
+            "file": "BabciaTobiasz/Shared/Extensions/Color+Extensions.swift",
+            "start_line": 26,
+            "end_line": 26
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because this is a color extension token.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid color."
+    },
+    {
+        "id": "color.appError",
+        "path": "extensions.color.appError",
+        "category": "Color",
+        "type": "Color",
+        "default": "Color.red",
+        "source": {
+            "file": "BabciaTobiasz/Shared/Extensions/Color+Extensions.swift",
+            "start_line": 29,
+            "end_line": 29
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because this is a color extension token.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid color."
+    },
+    {
+        "id": "color.weatherSunny",
+        "path": "extensions.color.weatherSunny",
+        "category": "Color",
+        "type": "Color",
+        "default": "#66B2FF",
+        "source": {
+            "file": "BabciaTobiasz/Shared/Extensions/Color+Extensions.swift",
+            "start_line": 34,
+            "end_line": 34
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because this is a color extension token.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid color."
+    },
+    {
+        "id": "color.weatherCloudy",
+        "path": "extensions.color.weatherCloudy",
+        "category": "Color",
+        "type": "Color",
+        "default": "#99A6B2",
+        "source": {
+            "file": "BabciaTobiasz/Shared/Extensions/Color+Extensions.swift",
+            "start_line": 37,
+            "end_line": 37
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because this is a color extension token.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid color."
+    },
+    {
+        "id": "color.weatherRainy",
+        "path": "extensions.color.weatherRainy",
+        "category": "Color",
+        "type": "Color",
+        "default": "#668099",
+        "source": {
+            "file": "BabciaTobiasz/Shared/Extensions/Color+Extensions.swift",
+            "start_line": 40,
+            "end_line": 40
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because this is a color extension token.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid color."
+    },
+    {
+        "id": "color.weatherNight",
+        "path": "extensions.color.weatherNight",
+        "category": "Color",
+        "type": "Color",
+        "default": "#263359",
+        "source": {
+            "file": "BabciaTobiasz/Shared/Extensions/Color+Extensions.swift",
+            "start_line": 43,
+            "end_line": 43
+        },
+        "controls": {
+            "macControl": "colorPicker",
+            "controlConstraints": {}
+        },
+        "notes": "Control: colorPicker because this is a color extension token.",
+        "confidence": "confirmed",
+        "validationHints": "Expect valid color."
+    },
+    {
+        "id": "gradient.sunriseGradient",
+        "path": "extensions.gradient.sunriseGradient",
+        "category": "Gradient",
+        "type": "[Color]",
+        "default": [
+            "#FFCC66",
+            "#FF9980",
+            "#B280CC"
+        ],
+        "source": {
+            "file": "BabciaTobiasz/Shared/Extensions/Color+Extensions.swift",
+            "start_line": 48,
+            "end_line": 52
+        },
+        "controls": {
+            "macControl": "jsonEditor",
+            "controlConstraints": {
+                "options": [
+                    "gradientEditor",
+                    "colorPicker"
+                ]
+            }
+        },
+        "notes": "Control: jsonEditor because this is a multi-stop gradient array defined in Color extensions.",
+        "confidence": "confirmed",
+        "validationHints": "Expect array length 3."
+    },
+    {
+        "id": "gradient.dayGradient",
+        "path": "extensions.gradient.dayGradient",
+        "category": "Gradient",
+        "type": "[Color]",
+        "default": [
+            "#66B2FF",
+            "#80CCFF",
+            "#99E6FF"
+        ],
+        "source": {
+            "file": "BabciaTobiasz/Shared/Extensions/Color+Extensions.swift",
+            "start_line": 55,
+            "end_line": 59
+        },
+        "controls": {
+            "macControl": "jsonEditor",
+            "controlConstraints": {
+                "options": [
+                    "gradientEditor",
+                    "colorPicker"
+                ]
+            }
+        },
+        "notes": "Control: jsonEditor because this is a multi-stop gradient array defined in Color extensions.",
+        "confidence": "confirmed",
+        "validationHints": "Expect array length 3."
+    },
+    {
+        "id": "gradient.sunsetGradient",
+        "path": "extensions.gradient.sunsetGradient",
+        "category": "Gradient",
+        "type": "[Color]",
+        "default": [
+            "#FF804C",
+            "#E66680",
+            "#804C99"
+        ],
+        "source": {
+            "file": "BabciaTobiasz/Shared/Extensions/Color+Extensions.swift",
+            "start_line": 62,
+            "end_line": 66
+        },
+        "controls": {
+            "macControl": "jsonEditor",
+            "controlConstraints": {
+                "options": [
+                    "gradientEditor",
+                    "colorPicker"
+                ]
+            }
+        },
+        "notes": "Control: jsonEditor because this is a multi-stop gradient array defined in Color extensions.",
+        "confidence": "confirmed",
+        "validationHints": "Expect array length 3."
+    },
+    {
+        "id": "gradient.nightGradient",
+        "path": "extensions.gradient.nightGradient",
+        "category": "Gradient",
+        "type": "[Color]",
+        "default": [
+            "#1A264C",
+            "#263359",
+            "#334066"
+        ],
+        "source": {
+            "file": "BabciaTobiasz/Shared/Extensions/Color+Extensions.swift",
+            "start_line": 68,
+            "end_line": 72
+        },
+        "controls": {
+            "macControl": "jsonEditor",
+            "controlConstraints": {
+                "options": [
+                    "gradientEditor",
+                    "colorPicker"
+                ]
+            }
+        },
+        "notes": "Control: jsonEditor because this is a multi-stop gradient array defined in Color extensions.",
+        "confidence": "confirmed",
+        "validationHints": "Expect array length 3."
+    }
+]

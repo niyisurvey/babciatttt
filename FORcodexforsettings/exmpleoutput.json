@@ -1,0 +1,652 @@
+{
+    "full_theme_example": {
+        "palette": {
+            "primary": "systemBlue",
+            "secondary": "systemPurple",
+            "tertiary": "systemCyan",
+            "success": "systemGreen",
+            "warning": "systemOrange",
+            "error": "systemRed",
+            "glassTint": "#FFFFFF",
+            "coolAccent": "systemTeal",
+            "warmAccent": "systemOrange",
+            "onPrimary": "#FFFFFF",
+            "textSecondary": "secondaryLabel",
+            "neutral": "#000000"
+        },
+        "gradients": {
+            "backgroundDefault": [
+                "systemBlue",
+                "systemCyan",
+                "systemTeal",
+                "systemPurple",
+                "systemBlue",
+                "systemCyan",
+                "systemIndigo",
+                "systemPurple",
+                "systemBlue"
+            ],
+            "backgroundWeather": [
+                "#66B2E6",
+                "#80CCF2",
+                "#99D9FF",
+                "#80BFE6",
+                "#8CCCEB",
+                "#99D1F2",
+                "#80B2D9",
+                "#8CBFE0",
+                "#99C7E6"
+            ],
+            "backgroundAreas": [
+                "systemGreen",
+                "systemTeal",
+                "systemCyan",
+                "systemMint",
+                "systemGreen",
+                "systemTeal",
+                "systemTeal",
+                "systemMint",
+                "systemGreen"
+            ],
+            "splash": [
+                {
+                    "color": "systemBlue",
+                    "opacity": 0.3
+                },
+                {
+                    "color": "systemPurple",
+                    "opacity": 0.2
+                },
+                {
+                    "color": "systemCyan",
+                    "opacity": 0.3
+                }
+            ],
+            "areasProgress": [
+                "systemGreen",
+                "systemTeal"
+            ],
+            "sunrise": [
+                "#FFCC66",
+                "#FF9980",
+                "#B280CC"
+            ],
+            "day": [
+                "#66B2FF",
+                "#80CCFF",
+                "#99E6FF"
+            ],
+            "sunset": [
+                "#FF804C",
+                "#E66680",
+                "#804C99"
+            ],
+            "night": [
+                "#1A264C",
+                "#263359",
+                "#334066"
+            ]
+        },
+        "typography": {
+            "family": {
+                "regular": "LinLibertine",
+                "bold": "LinLibertineB",
+                "italic": "LinLibertineI",
+                "boldItalic": "LinLibertineBI"
+            },
+            "textStyles": {
+                "largeTitle": {
+                    "size": 34
+                },
+                "title": {
+                    "size": 28
+                },
+                "title2": {
+                    "size": 22
+                },
+                "title3": {
+                    "size": 20
+                },
+                "headline": {
+                    "size": 17
+                },
+                "subheadline": {
+                    "size": 15
+                },
+                "body": {
+                    "size": 17
+                },
+                "caption": {
+                    "size": 12
+                },
+                "caption2": {
+                    "size": 11
+                }
+            }
+        },
+        "motion": {
+            "preset": "normal",
+            "pressSpring": "spring(response: 0.3)",
+            "toggleSpring": "spring(response: 0.3, dampingFraction: 0.6)",
+            "listSpring": "spring(response: 0.4)",
+            "statsSpring": "spring(duration: 0.5)",
+            "launchSpring": "spring(response: 0.6, dampingFraction: 0.7)",
+            "fadeStandard": "easeInOut(duration: 0.5)",
+            "fadeFast": "easeOut(duration: 0.3)",
+            "shimmerDuration": 1.2,
+            "shimmerLongDuration": 1.5,
+            "spinnerDuration": 1.0,
+            "meshAnimationInterval": 3.0
+        },
+        "shape": {
+            "cardCornerRadius": 20,
+            "glassCornerRadius": 24,
+            "subtleCornerRadius": 12,
+            "tooltipCornerRadius": 16,
+            "heroCornerRadius": 70,
+            "controlCornerRadius": 16,
+            "borderWidth": 0,
+            "borderOpacity": 0.0
+        },
+        "grid": {
+            "cardPadding": 16,
+            "cardPaddingTight": 12,
+            "sectionSpacing": 20,
+            "listSpacing": 12,
+            "buttonMinHeight": 48,
+            "buttonHorizontalPadding": 24,
+            "buttonVerticalPadding": 12,
+            "iconTiny": 12,
+            "iconSmall": 20,
+            "iconTitle2": 22,
+            "iconTitle3": 20,
+            "iconMedium": 32,
+            "iconLarge": 44,
+            "iconSplashSecondary": 40,
+            "iconError": 50,
+            "iconXL": 60,
+            "iconXXL": 80,
+            "iconXXXL": 110,
+            "ringSize": 100,
+            "detailCardHeightSmall": 120,
+            "detailCardHeightLarge": 150,
+            "heroHeaderCollapsedHeight": 120,
+            "heroCardWidth": 260,
+            "heroCardHeight": 260,
+            "pierogiSize": 60,
+            "pierogiEmojiScale": 2.2,
+            "pierogiPotSize": 140,
+            "pierogiPotGrowStep": 6
+        },
+        "glass": {
+            "strength": "regular",
+            "prominentStrength": "thin",
+            "effectStyle": "clear",
+            "tintOpacity": 0.02,
+            "glowOpacityHigh": 0.7,
+            "glowOpacityLow": 0.2,
+            "contextSettings": {
+                "mainView": {
+                    "meshOpacity": 0.08,
+                    "usesNativeGlass": false,
+                    "effectStyle": "clear"
+                },
+                "sheet": {
+                    "meshOpacity": 0.06,
+                    "usesNativeGlass": true,
+                    "effectStyle": "clear"
+                },
+                "detailView": {
+                    "meshOpacity": 0.05,
+                    "usesNativeGlass": false,
+                    "effectStyle": "clear"
+                },
+                "card": {
+                    "meshOpacity": 0.0,
+                    "usesNativeGlass": false,
+                    "effectStyle": "clear"
+                },
+                "overlay": {
+                    "meshOpacity": 0.0,
+                    "usesNativeGlass": true,
+                    "effectStyle": "clear"
+                }
+            }
+        },
+        "elevation": {
+            "level1": {
+                "color": "#000000",
+                "opacity": 0.08,
+                "radius": 4,
+                "x": 0,
+                "y": 2
+            },
+            "level2": {
+                "color": "#000000",
+                "opacity": 0.12,
+                "radius": 10,
+                "x": 0,
+                "y": 4
+            },
+            "level3": {
+                "color": "#000000",
+                "opacity": 0.15,
+                "radius": 20,
+                "x": 0,
+                "y": 10
+            },
+            "overlayDim": 0.4,
+            "shimmerOpacity": 0.3
+        },
+        "extensions": {
+            "color": {
+                "appAccent": "systemBlue",
+                "appSuccess": "systemGreen",
+                "appWarning": "systemOrange",
+                "appError": "systemRed",
+                "weatherSunny": "#66B2FF",
+                "weatherCloudy": "#99A6B2",
+                "weatherRainy": "#668099",
+                "weatherNight": "#263359"
+            },
+            "gradient": {
+                "sunriseGradient": [
+                    "#FFCC66",
+                    "#FF9980",
+                    "#B280CC"
+                ],
+                "dayGradient": [
+                    "#66B2FF",
+                    "#80CCFF",
+                    "#99E6FF"
+                ],
+                "sunsetGradient": [
+                    "#FF804C",
+                    "#E66680",
+                    "#804C99"
+                ],
+                "nightGradient": [
+                    "#1A264C",
+                    "#263359",
+                    "#334066"
+                ]
+            }
+        }
+    },
+    "incremental_example": {
+        "path": "palette.primary",
+        "value": "#FF00FF"
+    },
+    "validation_schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "required": [
+            "palette",
+            "gradients",
+            "typography",
+            "motion",
+            "shape",
+            "grid",
+            "glass",
+            "elevation"
+        ],
+        "properties": {
+            "palette": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "primary": {
+                        "type": "string"
+                    },
+                    "secondary": {
+                        "type": "string"
+                    },
+                    "tertiary": {
+                        "type": "string"
+                    },
+                    "success": {
+                        "type": "string"
+                    },
+                    "warning": {
+                        "type": "string"
+                    },
+                    "error": {
+                        "type": "string"
+                    },
+                    "glassTint": {
+                        "type": "string"
+                    },
+                    "coolAccent": {
+                        "type": "string"
+                    },
+                    "warmAccent": {
+                        "type": "string"
+                    },
+                    "onPrimary": {
+                        "type": "string"
+                    },
+                    "textSecondary": {
+                        "type": "string"
+                    },
+                    "neutral": {
+                        "type": "string"
+                    }
+                }
+            },
+            "gradients": {
+                "type": "object",
+                "properties": {
+                    "backgroundDefault": {
+                        "type": "array",
+                        "minItems": 9,
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "backgroundWeather": {
+                        "type": "array",
+                        "minItems": 9,
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "backgroundAreas": {
+                        "type": "array",
+                        "minItems": 9,
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "splash": {
+                        "type": "array",
+                        "minItems": 3,
+                        "items": {
+                            "type": [
+                                "string",
+                                "object"
+                            ]
+                        }
+                    },
+                    "areasProgress": {
+                        "type": "array",
+                        "minItems": 2,
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "sunrise": {
+                        "type": "array",
+                        "minItems": 3,
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "day": {
+                        "type": "array",
+                        "minItems": 3,
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "sunset": {
+                        "type": "array",
+                        "minItems": 3,
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "night": {
+                        "type": "array",
+                        "minItems": 3,
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "typography": {
+                "type": "object",
+                "properties": {
+                    "family": {
+                        "type": "object",
+                        "properties": {
+                            "regular": {
+                                "type": "string"
+                            },
+                            "bold": {
+                                "type": "string"
+                            },
+                            "italic": {
+                                "type": "string"
+                            },
+                            "boldItalic": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "textStyles": {
+                        "type": "object"
+                    }
+                }
+            },
+            "motion": {
+                "type": "object",
+                "properties": {
+                    "preset": {
+                        "type": "string",
+                        "enum": [
+                            "slow",
+                            "normal",
+                            "fast"
+                        ]
+                    },
+                    "shimmerDuration": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 10
+                    },
+                    "shimmerLongDuration": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 10
+                    },
+                    "spinnerDuration": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 10
+                    },
+                    "meshAnimationInterval": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 10
+                    }
+                }
+            },
+            "shape": {
+                "type": "object",
+                "properties": {
+                    "cardCornerRadius": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                    },
+                    "glassCornerRadius": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                    },
+                    "subtleCornerRadius": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                    },
+                    "tooltipCornerRadius": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                    },
+                    "heroCornerRadius": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                    },
+                    "controlCornerRadius": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                    },
+                    "borderWidth": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 20
+                    },
+                    "borderOpacity": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                    }
+                }
+            },
+            "grid": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 300
+                }
+            },
+            "glass": {
+                "type": "object",
+                "properties": {
+                    "strength": {
+                        "type": "string",
+                        "enum": [
+                            "ultraThin",
+                            "thin",
+                            "regular",
+                            "thick"
+                        ]
+                    },
+                    "prominentStrength": {
+                        "type": "string",
+                        "enum": [
+                            "ultraThin",
+                            "thin",
+                            "regular",
+                            "thick"
+                        ]
+                    },
+                    "effectStyle": {
+                        "type": "string",
+                        "enum": [
+                            "clear",
+                            "regular"
+                        ]
+                    },
+                    "tintOpacity": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                    },
+                    "glowOpacityHigh": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                    },
+                    "glowOpacityLow": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                    },
+                    "contextSettings": {
+                        "type": "object"
+                    }
+                }
+            },
+            "elevation": {
+                "type": "object",
+                "properties": {
+                    "level1": {
+                        "type": "object"
+                    },
+                    "level2": {
+                        "type": "object"
+                    },
+                    "level3": {
+                        "type": "object"
+                    },
+                    "overlayDim": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                    },
+                    "shimmerOpacity": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                    }
+                }
+            }
+        }
+    },
+    "aliasing": {
+        "equivalences": [
+            {
+                "tokens": [
+                    "palette.primary",
+                    "color.appAccent"
+                ],
+                "reason": "palette.primary defaults to Color.appAccent"
+            },
+            {
+                "tokens": [
+                    "palette.success",
+                    "color.appSuccess"
+                ],
+                "reason": "palette.success defaults to Color.appSuccess"
+            },
+            {
+                "tokens": [
+                    "palette.warning",
+                    "color.appWarning"
+                ],
+                "reason": "palette.warning defaults to Color.appWarning"
+            },
+            {
+                "tokens": [
+                    "palette.error",
+                    "color.appError"
+                ],
+                "reason": "palette.error defaults to Color.appError"
+            },
+            {
+                "tokens": [
+                    "gradients.sunrise",
+                    "gradient.sunriseGradient"
+                ],
+                "reason": "gradients.sunrise points to Color.sunriseGradient"
+            },
+            {
+                "tokens": [
+                    "gradients.day",
+                    "gradient.dayGradient"
+                ],
+                "reason": "gradients.day points to Color.dayGradient"
+            },
+            {
+                "tokens": [
+                    "gradients.sunset",
+                    "gradient.sunsetGradient"
+                ],
+                "reason": "gradients.sunset points to Color.sunsetGradient"
+            },
+            {
+                "tokens": [
+                    "gradients.night",
+                    "gradient.nightGradient"
+                ],
+                "reason": "gradients.night points to Color.nightGradient"
+            }
+        ]
+    }
+}

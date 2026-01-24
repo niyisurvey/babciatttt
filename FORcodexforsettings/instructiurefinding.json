@@ -1,0 +1,34 @@
+{
+    "persistence": {
+        "appStorage_or_userdefaults": [
+            {
+                "path": "BabciaTobiasz/App/BabciaTobiaszAppView.swift",
+                "key": "appTheme",
+                "usage": "@AppStorage(\"appTheme\") persisted AppTheme selection for preferredColorScheme."
+            },
+            {
+                "path": "BabciaTobiasz/Shared/Components/OnboardingThemeSelectionStepView.swift",
+                "key": "appTheme",
+                "usage": "@AppStorage(\"appTheme\") used in onboarding theme picker."
+            },
+            {
+                "path": "BabciaTobiasz/Features/Settings/SettingsView.swift",
+                "key": "appTheme",
+                "usage": "@AppStorage(\"appTheme\") used in Settings theme picker."
+            }
+        ]
+    },
+    "debug_menus": [],
+    "existing_theme_formats": [],
+    "network_code": [
+        {
+            "path": "BabciaTobiasz/Services/StreamingCamera/StreamingCameraDiscovery.swift",
+            "usage": "NetServiceBrowser/NetService for Bonjour discovery."
+        },
+        {
+            "path": "BabciaTobiasz/Services/StreamingCamera/TapoDiscoveryService.swift",
+            "usage": "NetServiceBrowser/NetService for Bonjour discovery."
+        }
+    ],
+    "notes": "DESIGN_SYSTEM_REMEDIATION_HANDOVER.md was not found in the repository; token mapping rules may be missing."
+}
